@@ -36,3 +36,8 @@ print('forest importances:',dict(zip(COLS,rf.feature_importances_.round(2))))
 nm={w['id']:w['name'].replace('Ward ','') for w in json.load(open(ROOT/'web/data/zones.json'))['wards']}
 top=out.sort_values('S',ascending=False).head(15); print('\nMost flood-prone 15:',[f"{nm[i]}" for i in top.index])
 print('Least flood-prone 10:',[nm[i] for i in out.sort_values('S').head(10).index])
+
+card={'events':{e:int(len(pos[e])) for e in events},'loeo_auc_ensemble':{h:round(float(v[2]),3) for h,v in res.items()},
+      'loeo_auc_mean':round(float(np.mean([v[2] for v in res.values()])),3),'features':COLS,
+      'baseline_old_demo_model_auc_mean':0.49}
+(ROOT/'research/model_card.json').write_text(json.dumps(card,indent=1))

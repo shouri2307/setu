@@ -180,32 +180,42 @@ def main():
     print(f"[ok] reco.json")
 
     # --- validation ---
+    # v4: the 2020 view uses inundation-only labels harvested in research/labels.csv.
+    # "high_conf" = ward also named as flooded in a DIFFERENT event (repeat flooder).
+    import csv
     val = json.loads((config.DATA / "validation_2020.json").read_text(encoding="utf-8"))
+    rows = list(csv.DictReader(open(config.ROOT / "research" / "labels.csv", encoding="utf-8")))
+    ev20 = {int(r["ward_id"]) for r in rows if r["event"] == "2020-10-13"}
+    other = {int(r["ward_id"]) for r in rows if r["event"] != "2020-10-13"}
     vslim = {
-        "event": val["event"],
+        "event": "October 2020 Hyderabad floods (inundation reports only)",
         "rainfall_mm": val["rainfall_reference"]["imd_begumpet_24h_mm"],
-        "flooded_ids": [w["zone_id"] for w in val["modeled_wards_flooded"]],
-        "high_conf_ids": [w["zone_id"] for w in val["modeled_wards_flooded"]
-                          if w["confidence"] == "high"],
+        "flooded_ids": sorted(ev20),
+        "high_conf_ids": sorted(ev20 & other),
         "outside": [o["area"] for o in val["flooded_areas_outside_modeled_wards"]],
     }
     (WEB_DATA / "validation.json").write_text(json.dumps(vslim), encoding="utf-8")
     print(f"[ok] validation.json  ({len(vslim['flooded_ids'])} documented flooded wards, "
-          f"{len(vslim['high_conf_ids'])} high-confidence)")
+          f"{len(vslim['high_conf_ids'])} also flooded in another event)")
 
     # --- meta: limitations text for the panel ---
     p = scen["params"]
+    v = scen.get("validation", {})
+    ev_txt = ", ".join(sorted(v.get("events_used", {}).keys()))
     meta = {
         "title": "SETU — Hyderabad Monsoon Flood & Japanese Intervention Planner",
         "resolution": "145 GHMC wards (open data; the city's 16 stormwater zones are not public)",
         "limitations": [
-            f"Modelled at ward resolution, not street level — needs GHMC's private drain network for finer.",
-            f"Flood model calibrated to the Oct-2020 event ({p.get('calibrated_against','')}).",
-            f"runoff_coefficient={p['runoff_coefficient']}, drain_capacity={p['drain_capacity_mm_per_hr']} mm/hr — global, tuned only against 2020.",
-            "Drainage scales with elevation & distance-to-water by one uniform formula (no per-ward forcing).",
+            "Modelled at ward resolution, not street level — needs GHMC's private drain network for finer.",
+            f"Which wards flood first is LEARNED from terrain & drainage features using flooded localities from 6 real floods ({ev_txt}).",
+            f"Tested on floods it never saw (leave-one-event-out): AUC {v.get('loeo_auc_mean','?')} (0.5 = coin flip). Useful for ranking, not exact prediction.",
+            "The 2020 validation map is NOT independent — 2020 is one of the events the model learned from.",
+            "The rainfall scale is anchored to documented extents (~3% of wards at 50 mm, ~20% at 192 mm, ~55% at 300 mm) — an assumption, not learned.",
+            "Rain is assumed equal over all wards ('what if X mm fell everywhere'); real storms are uneven (Oct 2020: ~197 mm Begumpet vs ~320 mm Ghatkesar).",
+            "Flood records are news-reported place names (presence-only, ~60 ward mentions); unnamed wards are unknown, not dry.",
             "Flood depths are shallow ward-averages; severity is relative to the city distribution.",
             "Intervention 'after' effect is a modelled estimate, not a hydraulic re-simulation.",
-            "Water bodies & roads from OpenStreetMap — some tanks (e.g. breached lakes) may be unmapped.",
+            "Water bodies, nalas & roads from OpenStreetMap — some may be unmapped.",
         ],
     }
     (WEB_DATA / "meta.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")

@@ -1,0 +1,28 @@
+{
+ "events": {
+  "2016-09": 17,
+  "2020-10-13": 16,
+  "2023-07-27": 4,
+  "2025-06-12": 3,
+  "2025-07-18": 15,
+  "2025-09-18": 11
+ },
+ "loeo_auc_ensemble": {
+  "2016-09": 0.824,
+  "2020-10-13": 0.638,
+  "2025-07-18": 0.761,
+  "2025-09-18": 0.728
+ },
+ "loeo_auc_mean": 0.738,
+ "features": [
+  "hand_low_frac",
+  "twi_mean",
+  "sink_frac",
+  "waterway_near_frac",
+  "builtup_frac",
+  "elev_rel_nbrs",
+  "upstream_km2",
+  "waterbody_near_frac"
+ ],
+ "baseline_old_demo_model_auc_mean": 0.49
+}
