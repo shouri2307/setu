@@ -800,7 +800,9 @@ function showLimits(){
       <div class="card" style="margin-top:6px">`;
     for(const e in t.by_event)h+=bar('Held-out flood '+e,t.by_event[e]);
     h+=bar('Average of held-out floods',t.mean);
+    if(t.within_size!=null)h+=bar('  …comparing wards of similar size only',t.within_size);
     if(t.independent_ghmc!=null)h+=bar('GHMC official waterlogging list (independent)',t.independent_ghmc);
+    if(t.vulnerable_localities!=null)h+=bar('GHMC official vulnerable localities (independent, weak link)',t.vulnerable_localities);
     h+=bar('Previous model (same floods)',t.old_model)+`</div>`;
   }
   h+=`<h4 style="margin-top:16px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em">Flooded in 2020 but outside our 145 wards</h4>

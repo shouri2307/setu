@@ -1,0 +1,1076 @@
+[
+{
+"kind": "critical",
+"sn": "1",
+"loc": "Oliphant Bridge both sides, near Chilkalguda X Roads, Secunderabad",
+"circle": "29"
+},
+{
+"kind": "critical",
+"sn": "2",
+"loc": "Between Graveyard & RUB Chilaklguda on The Road between Alugaddabavi & Chilkalguda",
+"circle": "29"
+},
+{
+"kind": "critical",
+"sn": "3",
+"loc": "Lake View Guest House, Raj Bhavan Road",
+"circle": "17"
+},
+{
+"kind": "critical",
+"sn": "4",
+"loc": "Villa Mary College, Raj Bhavan Road",
+"circle": "17"
+},
+{
+"kind": "critical",
+"sn": "5",
+"loc": "Near Model House, Panjagutta",
+"circle": "17"
+},
+{
+"kind": "critical",
+"sn": "6",
+"loc": "K.C.P Junction, Near RTA office, Khairatabad.",
+"circle": "17"
+},
+{
+"kind": "critical",
+"sn": "7",
+"loc": "Near Balkampet , RUB",
+"circle": "17"
+},
+{
+"kind": "critical",
+"sn": "10",
+"loc": "Opp: Bombay Hotel, Ranigunj \u201cx\u201d Road",
+"circle": "30"
+},
+{
+"kind": "critical",
+"sn": "11",
+"loc": "Near Tapadia Diagnostic Centre, Opp. Chikkadpally L&O PS.",
+"circle": "15"
+},
+{
+"kind": "critical",
+"sn": "13",
+"loc": "Near Rajiv Gandhi Statue, Khairthabad",
+"circle": "17"
+},
+{
+"kind": "critical",
+"sn": "14",
+"loc": "Lakdi-Ka-Pool",
+"circle": "17"
+},
+{
+"kind": "critical",
+"sn": "15",
+"loc": "Rethibowli Jn towards Attapur.",
+"circle": "12"
+},
+{
+"kind": "critical",
+"sn": "18",
+"loc": "Opp Medivision Eye Hospital, NMDC",
+"circle": "12"
+},
+{
+"kind": "critical",
+"sn": "20",
+"loc": "Nampally \u201cT\u201d Junction, Opp: Nampally Rly, Station",
+"circle": "12"
+},
+{
+"kind": "critical",
+"sn": "23",
+"loc": "Malakpet RUB",
+"circle": "6"
+},
+{
+"kind": "critical",
+"sn": "24",
+"loc": "Malakpet Gunj.",
+"circle": "6"
+},
+{
+"kind": "critical",
+"sn": "26",
+"loc": "In front of Fiza Hotel, Bhadurpura \u201cX\u201d Road",
+"circle": "10"
+},
+{
+"kind": "major",
+"sn": "1",
+"loc": "YMCA Flyover starting & ending opp: DCP office, North Zone",
+"circle": "30"
+},
+{
+"kind": "major",
+"sn": "2",
+"loc": "Old Gandhi hospital",
+"circle": "30"
+},
+{
+"kind": "major",
+"sn": "3",
+"loc": "In front of Nissan Show Room SP Road",
+"circle": "30"
+},
+{
+"kind": "major",
+"sn": "4",
+"loc": "Bombay Hotel, Ranigunj X Road",
+"circle": "30"
+},
+{
+"kind": "major",
+"sn": "5",
+"loc": "Ranigunj Depot. Near Karbala Junction",
+"circle": "30"
+},
+{
+"kind": "major",
+"sn": "6",
+"loc": "P&T Flyover ending in front of Nandini Hotel",
+"circle": "30"
+},
+{
+"kind": "major",
+"sn": "7",
+"loc": "C.T.O Junction",
+"circle": "30"
+},
+{
+"kind": "major",
+"sn": "8",
+"loc": "MG Road, Gandhi Statue",
+"circle": "30"
+},
+{
+"kind": "major",
+"sn": "9",
+"loc": "Rocha Bazar towards Ranigunj",
+"circle": "30"
+},
+{
+"kind": "major",
+"sn": "10",
+"loc": "Panjagutta Starting Flyover",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "11",
+"loc": "Venkat Plaza, Opp Joy Alukas Showroom Panjaguta",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "12",
+"loc": "Delhi wala Sweet House towards Shalimar Junction",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "13",
+"loc": "Ameerpet near Charmas",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "14",
+"loc": "Nims Hospital",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "15",
+"loc": "Ansar Manzil, opp: More super market",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "16",
+"loc": "Panjagutta x road, near Masjid",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "17",
+"loc": "Near CM Camp office",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "18",
+"loc": "Near Lal Banglow, DK Road",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "19",
+"loc": "More Jewellers, Panjagutta",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "20",
+"loc": "Sheesh Mahal Theater, Ameerpet",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "21",
+"loc": "D.G.P Residence ,Kundhan bagh",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "22",
+"loc": "A ) Maithrivanam junction B) In front of Plot No D-76,Ramanna Enclave Apartment , Madura Nagar.",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "23",
+"loc": "Near Harsha mess",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "24",
+"loc": "Satyam theatre Diversion",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "25",
+"loc": "Near Chest hospital",
+"circle": "19"
+},
+{
+"kind": "major",
+"sn": "26",
+"loc": "Opp. Mental hospital",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "27",
+"loc": "Between SR.Nagar Community hall to L&O PS.SR.Nagar",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "28",
+"loc": "Prime Hospital, near Mythrivanam",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "29",
+"loc": "Vengal Rao Nagar",
+"circle": "19"
+},
+{
+"kind": "major",
+"sn": "30",
+"loc": "Balkampet petrol pump",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "31",
+"loc": "Showrya Bhavan Junction",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "32",
+"loc": "Road No -10c",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "33",
+"loc": "Road No 1, Jubille Hills (Opp:Balakrishna Residence )",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "34",
+"loc": "Sri Chaithnya jr collage Near BVBP Junction (near CVR News building)",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "35",
+"loc": "Road 10 opp: apple bee school",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "36",
+"loc": "Poorna junction",
+"circle": "19"
+},
+{
+"kind": "major",
+"sn": "37",
+"loc": "Green Bawarchi hotel towards Srinagar colony Infront of VINFLORA Hotel.",
+"circle": "19"
+},
+{
+"kind": "major",
+"sn": "39",
+"loc": "Road no 12 Banjara Hills Opp side to Traffic P.S Banjara Hills.",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "40",
+"loc": "Before VLCC Bus stop towards Orrissa Island from Bharatiya Vidya Bhavan towards K.B.R.Park Side",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "41",
+"loc": "TRS Bhavan",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "42",
+"loc": "Infront of Cinemax Theater Parking place (Open Land)",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "43",
+"loc": "Venkateshwara hotel to HDFC bank",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "44",
+"loc": "Intelligence office New bridge turning, Lakdikapool",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "45",
+"loc": "Old P S Saifabad Khairtabad",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "46",
+"loc": "Shadan College, Khairtabad",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "47",
+"loc": "Telugu Talli (Medicity Hospital)",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "48",
+"loc": "infront of IMAX theater",
+"circle": "17"
+},
+{
+"kind": "major",
+"sn": "49",
+"loc": "King Koti X Road.",
+"circle": "14"
+},
+{
+"kind": "major",
+"sn": "50",
+"loc": "Near BJP office, Nampally",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "51",
+"loc": "NEAR KLK BUILDING TOWARDS RED ROASE OPP; UDAY OMNI HOSPITAL;",
+"circle": "14"
+},
+{
+"kind": "major",
+"sn": "52",
+"loc": "NIZAM LAW COLLEGE UP TO BASHEERBAGH TEMPLE ; WATER LOGGING PLACE",
+"circle": "14"
+},
+{
+"kind": "major",
+"sn": "53",
+"loc": "Near BJR Statue",
+"circle": "14"
+},
+{
+"kind": "major",
+"sn": "54",
+"loc": "Opp Axis Bank, near Cafe Bhar",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "55",
+"loc": "Near Lokayutha office, Basheerbagh",
+"circle": "14"
+},
+{
+"kind": "major",
+"sn": "56",
+"loc": "Near swadish hotel, Basheerbagh",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "57",
+"loc": "Telugu Academy",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "58",
+"loc": "Hyderguda petrol pump",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "59",
+"loc": "Narayanaguda x roads to Rathnabhavan Hotel",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "60",
+"loc": "Street no 6 KFC",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "61",
+"loc": "Galaxy Hotels",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "62",
+"loc": "CP office towards Caf\u00e9 Bahar Hotel.",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "63",
+"loc": "Narayanaguda fly over down (due to road damage )",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "64",
+"loc": "Rajmohalla Darga",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "65",
+"loc": "Street No.5, Himayath Nagar",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "66",
+"loc": "MRO office, Lower Tank Bund",
+"circle": "15"
+},
+{
+"kind": "major",
+"sn": "67",
+"loc": "Metro Line near Raja Deluxe theatre",
+"circle": "15"
+},
+{
+"kind": "major",
+"sn": "68",
+"loc": "Engine Bowli X road",
+"circle": "10"
+},
+{
+"kind": "major",
+"sn": "69",
+"loc": "Old Chandrayangutta",
+"circle": "9"
+},
+{
+"kind": "major",
+"sn": "70",
+"loc": "MBNR X road",
+"circle": "9"
+},
+{
+"kind": "major",
+"sn": "71",
+"loc": "Royal sea Hotel, Santsoh Nagar,",
+"circle": "6"
+},
+{
+"kind": "major",
+"sn": "72",
+"loc": "Hashamabad",
+"circle": "9"
+},
+{
+"kind": "major",
+"sn": "73",
+"loc": "Dabirpura Kaman towards Landing of Dabirpura Bridge",
+"circle": "6"
+},
+{
+"kind": "major",
+"sn": "74",
+"loc": "Champapet (Opposite D- Mart Indian Petrol Pump)",
+"circle": "4"
+},
+{
+"kind": "major",
+"sn": "75",
+"loc": "S. J Rotary towards APAT Junction",
+"circle": "6"
+},
+{
+"kind": "major",
+"sn": "76",
+"loc": "Puranapool Greave yard",
+"circle": "9"
+},
+{
+"kind": "major",
+"sn": "77",
+"loc": "Hasan Nagar",
+"circle": "11"
+},
+{
+"kind": "major",
+"sn": "78",
+"loc": "Near ENT hospital, Bank Street",
+"circle": "14"
+},
+{
+"kind": "major",
+"sn": "79",
+"loc": "Near Central Bus Station",
+"circle": "14"
+},
+{
+"kind": "major",
+"sn": "80",
+"loc": "Bademiya Petrol pump",
+"circle": "14"
+},
+{
+"kind": "major",
+"sn": "81",
+"loc": "Opp Samsung showroom to City life Furniture shop, Nalgonda\u2019X\u2019roads",
+"circle": "6"
+},
+{
+"kind": "major",
+"sn": "82",
+"loc": "Infront of Malakpet L&O PS.",
+"circle": "6"
+},
+{
+"kind": "major",
+"sn": "83",
+"loc": "At starting of Moosarambagh Moosi Bridge and on the bridge.",
+"circle": "6"
+},
+{
+"kind": "major",
+"sn": "84",
+"loc": "Classic ice cream to opp Orient medicals Malakpet\u201d junction.",
+"circle": "6"
+},
+{
+"kind": "major",
+"sn": "85",
+"loc": "Opp Shiva Ganga Theatre,Gaddiannaram",
+"circle": "5"
+},
+{
+"kind": "major",
+"sn": "86",
+"loc": "Malakpet T junction",
+"circle": "6"
+},
+{
+"kind": "major",
+"sn": "87",
+"loc": "Akshya Hoyel",
+"circle": "6"
+},
+{
+"kind": "major",
+"sn": "88",
+"loc": "Bajaj Electronic show room Malakpet main road",
+"circle": "6"
+},
+{
+"kind": "major",
+"sn": "89",
+"loc": "RTA Moosarambagh",
+"circle": "6"
+},
+{
+"kind": "major",
+"sn": "90",
+"loc": "Railway Degree Collage",
+"circle": "29"
+},
+{
+"kind": "major",
+"sn": "91",
+"loc": "Hotel pizza & Bakers near Vidya nagar",
+"circle": "15"
+},
+{
+"kind": "major",
+"sn": "92",
+"loc": "Road No.6, Amberpet",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "93",
+"loc": "In front of Amberpet L&O P.S",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "94",
+"loc": "Syndicate Bank beside J.D. Electronics",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "95",
+"loc": "Tilaknagar junction free left near Hero show room",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "96",
+"loc": "Nimboli adda",
+"circle": "16"
+},
+{
+"kind": "major",
+"sn": "97",
+"loc": "Puranapool, Gandhi Chowk",
+"circle": "14"
+},
+{
+"kind": "major",
+"sn": "98",
+"loc": "M.J. Market in front of Bilal Ice cream",
+"circle": "14"
+},
+{
+"kind": "major",
+"sn": "99",
+"loc": "Taxi Stand (Nampally)",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "100",
+"loc": "Ek Minar Diversion",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "101",
+"loc": "PCR X Road , Nampally",
+"circle": "14"
+},
+{
+"kind": "major",
+"sn": "102",
+"loc": "In front of Brilliant Grammar School, near NMDC.",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "103",
+"loc": "Near pillar No.2 & 3 Humayun Nagar.",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "104",
+"loc": "Near Pillar No.23, besides defence boundary wall.",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "105",
+"loc": "Mehdipanam near Chilla.",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "106",
+"loc": "Meraj caf\u00e9 to Chilla Road.",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "107",
+"loc": "Labour adda Vijayanagar Colony.",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "108",
+"loc": "Asifnagar X Roads near Petrol Bunk.",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "109",
+"loc": "Mallepally Junction.",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "110",
+"loc": "Flyover ending Point near NMDC",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "111",
+"loc": "Yadav Bhavan Hotel X Road, Gidimalkapur",
+"circle": "12"
+},
+{
+"kind": "major",
+"sn": "112",
+"loc": "Seven Toms Rd. in between Satya Colony and Shaik pet Nala i.e. in front Aditya Apartment 15 to 20 mtrs stretch",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "113",
+"loc": "Ramdevguda abutting to Millitary compound wall",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "114",
+"loc": "Deccan park, Golconda",
+"circle": "13"
+},
+{
+"kind": "major",
+"sn": "115",
+"loc": "At Bharath petrol Pump Shaik Pet Narayanama College towards ShaikPet.",
+"circle": "18"
+},
+{
+"kind": "major",
+"sn": "116",
+"loc": "Bapuji Ghat Y Junction",
+"circle": "13"
+},
+{
+"kind": "minor",
+"sn": "1",
+"loc": "St. Anns School main gate",
+"circle": "18A"
+},
+{
+"kind": "minor",
+"sn": "2",
+"loc": "Alugadda Bavi Near Mysamma temple",
+"circle": "18B"
+},
+{
+"kind": "minor",
+"sn": "3",
+"loc": "Opp. Shradha Stationary",
+"circle": "18A"
+},
+{
+"kind": "minor",
+"sn": "4",
+"loc": "Garden Hotel near Anand Tiffins",
+"circle": "18A"
+},
+{
+"kind": "minor",
+"sn": "5",
+"loc": "Alugadda bavi Bus Stop towards mettuguda",
+"circle": "18B"
+},
+{
+"kind": "minor",
+"sn": "6",
+"loc": "Boiguda Bustop near Bharat Petrol Bunk",
+"circle": "18A"
+},
+{
+"kind": "minor",
+"sn": "7",
+"loc": "Underneath of the Oliphanta Bridge, Sec-bad Railway Station.",
+"circle": "18B"
+},
+{
+"kind": "minor",
+"sn": "8",
+"loc": "Mallanna Temple/Dr. Roy Point, near 31 Bus stop, St.Mary Road, Sec-bad.",
+"circle": "18A"
+},
+{
+"kind": "minor",
+"sn": "9",
+"loc": "Near Chithradharga, R.P. Road.",
+"circle": "18A"
+},
+{
+"kind": "minor",
+"sn": "10",
+"loc": "Underneath of the Bible House Railway Bridge, Bansilalpet, R.P. Road.",
+"circle": "18A"
+},
+{
+"kind": "minor",
+"sn": "11",
+"loc": "Underneath of the Bhoiguda Railway Bridge, Parcel Office Road, Back side Sec-bad Railway Station.",
+"circle": "18A"
+},
+{
+"kind": "minor",
+"sn": "12",
+"loc": "Both the sides in front of Begumpet L&O PS (Opp. Splendid Towers),after passing Foot Over Bridge towards PNT J",
+"circle": "18A"
+},
+{
+"kind": "minor",
+"sn": "13",
+"loc": "Mayuri Marg, Begumpet S.P. Road 18A P.C.V. Krishna Kumar, AE 9701365508",
+"circle": "14"
+},
+{
+"kind": "minor",
+"sn": "15",
+"loc": "Infront of MOCHI Foot Wear, S.P.Road 18A P.C.V. Krishna Kumar, AE 9701365508",
+"circle": "16"
+},
+{
+"kind": "minor",
+"sn": "17",
+"loc": "Rasoolpura Junction, S.P.Road 18A P.C.V. Krishna Kumar, AE 9701365508",
+"circle": "18"
+},
+{
+"kind": "minor",
+"sn": "19",
+"loc": "HDFC Lane towards Fire Station, P.G.Road 18A P.C.V. Krishna Kumar, AE 9701365508",
+"circle": "20"
+},
+{
+"kind": "minor",
+"sn": "21",
+"loc": "Infront of Parsi High School, Park Lane 18A M. Karthik, AE",
+"circle": "22"
+},
+{
+"kind": "minor",
+"sn": "23",
+"loc": "In front of Kims hospital Both Side 18A M. Karthik, AE 9959442010",
+"circle": "24"
+},
+{
+"kind": "minor",
+"sn": "27",
+"loc": "Big Bazar Opposite",
+"circle": "10A"
+},
+{
+"kind": "minor",
+"sn": "29",
+"loc": "Aghra Sweet House 10B Pandavula Vinil Kumar Goud, 7337557261 / D. Ramesh , 8897508163",
+"circle": "30"
+},
+{
+"kind": "minor",
+"sn": "32",
+"loc": "Life Style",
+"circle": "10A"
+},
+{
+"kind": "minor",
+"sn": "33",
+"loc": "Green Lands Starting flyover",
+"circle": "10A"
+},
+{
+"kind": "minor",
+"sn": "34",
+"loc": "Hindu Press",
+"circle": "10A"
+},
+{
+"kind": "minor",
+"sn": "35",
+"loc": "Karmikanagar near chilla 10C Sri Mohd Jameel Pasha AEE, 9100025167",
+"circle": "36"
+},
+{
+"kind": "minor",
+"sn": "37",
+"loc": "Rahmatnagar x road to NIMSME 10C Sri Mohd Jameel Pasha AEE, 9100025167",
+"circle": "38"
+},
+{
+"kind": "minor",
+"sn": "39",
+"loc": "Road no",
+"circle": "36"
+},
+{
+"kind": "minor",
+"sn": "43",
+"loc": "After Bus Stop near Cancer Hospital towards N.T.R.Bhavan Junction, Banjarahills.",
+"circle": "10B"
+},
+{
+"kind": "minor",
+"sn": "44",
+"loc": "In between Cancer Hospital towards N.T.R. Bhavan Opp to B.N.Reddy colony gate no.2.",
+"circle": "10B"
+},
+{
+"kind": "minor",
+"sn": "45",
+"loc": "Part Hyatt Road no.2 banjara Hills towards Sagar society. Opp to DIESEL Show Room.",
+"circle": "10B"
+},
+{
+"kind": "minor",
+"sn": "46",
+"loc": "Kamalapuri Colony Lane beside Indian petrol pump.",
+"circle": "10A"
+},
+{
+"kind": "minor",
+"sn": "47",
+"loc": "Road no 10 Banjara hills near Zaheera Nagar infront of new meena bazaar Shop.",
+"circle": "10B"
+},
+{
+"kind": "minor",
+"sn": "48",
+"loc": "Road no.10 Banjara hills infront of Star Hospital Parking place",
+"circle": "10B"
+},
+{
+"kind": "minor",
+"sn": "49",
+"loc": "Infront of MRO Office, Rd.No.2, B/Hills.",
+"circle": "10B"
+},
+{
+"kind": "minor",
+"sn": "50",
+"loc": "Road.No.1/12 junction (Graveyard) B/Hills",
+"circle": "10B"
+},
+{
+"kind": "minor",
+"sn": "51",
+"loc": "Near Ayurvedic Hospital, Road.No. 1/13 B/Hills",
+"circle": "10B"
+},
+{
+"kind": "minor",
+"sn": "53",
+"loc": "Opp. to Taj Krishna Junction near Ashania Function, Road. No.1,B/Hills",
+"circle": "10B"
+},
+{
+"kind": "minor",
+"sn": "54",
+"loc": "Road No.12 near Green Banjara Colony",
+"circle": "10A"
+},
+{
+"kind": "minor",
+"sn": "11",
+"loc": "Tr.Ps. Chikkadpally S.H.O: Sri N.B.Ratnam Cell No:9490616099 Off:2785 3576",
+"circle": "12"
+},
+{
+"kind": "minor",
+"sn": "13",
+"loc": "Tr.Ps. Falaknuma S.H.O: Sri Narender Cell No:9490616072 Off;2785 4762",
+"circle": "10"
+},
+{
+"kind": "minor",
+"sn": "15",
+"loc": "Tr.Ps. Bahadurpura S.H.O: Sri Srinivas Cell No:9490157547 Off:2785 3566",
+"circle": "16"
+},
+{
+"kind": "minor",
+"sn": "114",
+"loc": "Tarnaka Bus Stop",
+"circle": "18B"
+},
+{
+"kind": "minor",
+"sn": "115",
+"loc": "OU Ladies Hostel Bus Stop",
+"circle": "18B"
+},
+{
+"kind": "minor",
+"sn": "116",
+"loc": "Lalapet Bus Stop",
+"circle": "18B"
+},
+{
+"kind": "minor",
+"sn": "117",
+"loc": "Tarnaka, BSNL Office",
+"circle": "18B"
+},
+{
+"kind": "minor",
+"sn": "20",
+"loc": "Tr.Ps. Goshamahal S.H.O: Sri K.Srinivas Cell No:9490616057 Off:2785 4768",
+"circle": "21"
+},
+{
+"kind": "minor",
+"sn": "18",
+"loc": "Tr.Ps. Kachiguda S.H.O: Sri Chandra Kumar Cell No:9490616084 Off:2785 4772",
+"circle": "19"
+},
+{
+"kind": "minor",
+"sn": "23",
+"loc": "Tr.Ps. Tolichowki S.H.O: Sri.Satish Kumar Cell No:9490616061Off:2785 2539",
+"circle": "22"
+}
+]

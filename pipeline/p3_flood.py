@@ -99,6 +99,8 @@ def main():
             "loeo_auc_mean": mc["loeo_auc_mean"],
             "loeo_auc_by_event": mc["loeo_auc_ensemble"],
             "independent_ghmc_chronic_auc": mc.get("independent_ghmc_chronic_auc"),
+            "loeo_auc_within_size_mean": mc.get("loeo_auc_within_size_mean"),
+            "vulnerable_localities_top_quartile_auc": mc.get("vulnerable_localities_top_quartile_auc"),
             "events_used": mc["events"],
             "flood_fraction": round(n192 / len(S), 3),
         },

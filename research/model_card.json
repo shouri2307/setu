@@ -1,5 +1,7 @@
 {
- "independent_ghmc_chronic_auc": 0.764,
+ "independent_ghmc_chronic_auc": 0.744,
+ "vulnerable_localities_spearman": 0.26,
+ "vulnerable_localities_top_quartile_auc": 0.577,
  "events": {
   "2016-09": 17,
   "2020-10-13": 16,
@@ -11,13 +13,14 @@
   "2026-06-09": 9
  },
  "loeo_auc_ensemble": {
-  "2016-09": 0.795,
-  "2020-10-13": 0.695,
-  "2025-07-18": 0.749,
-  "2025-09-18": 0.699,
-  "2026-06-09": 0.553
+  "2016-09": 0.722,
+  "2020-10-13": 0.701,
+  "2025-07-18": 0.727,
+  "2025-09-18": 0.677,
+  "2026-06-09": 0.542
  },
- "loeo_auc_mean": 0.698,
+ "loeo_auc_mean": 0.674,
+ "loeo_auc_within_size_mean": 0.659,
  "features": [
   "hand_low_frac",
   "twi_mean",
@@ -28,5 +31,6 @@
   "upstream_km2",
   "waterbody_near_frac"
  ],
+ "size_adjusted": true,
  "baseline_old_demo_model_auc_mean": 0.49
 }
