@@ -15,9 +15,12 @@ if not hasattr(np, "in1d"):
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "pipeline"))
 import config
-import p3_flood as p3
+sys.path.insert(0, str(ROOT / "research"))
+import water_utils as p3
 
-DEM = str(config.RAW / "hyderabad_dem.tif")
+import os
+DEM = os.environ.get("DEM_PATH") or str(config.RAW / "hyderabad_dem.tif")
+OUT = os.environ.get("FEATURES_OUT") or str(ROOT / "research" / "features.csv")
 gdf = gpd.read_file(config.DATA / "zones_enriched.geojson")
 gdf = gdf.set_crs("EPSG:4326", allow_override=True)
 ids = gdf.zone_id.astype(int).tolist()
@@ -63,6 +66,8 @@ g2 = gdf.set_index(gdf.zone_id.astype(int))
 f["elev_mean"] = g2.mean_elev; f["elev_min"] = g2.min_elev
 f["slope_pct"] = g2.slope_pct; f["ponding"] = g2.ponding_fraction
 f["area_km2"] = g2.area_m2 / 1e6
+if os.environ.get("DEM_PATH"):
+    me = zstat(dem_a, np.mean); g2["mean_elev"] = pd.Series(me); f["elev_mean"] = g2.mean_elev
 mean_by_id = g2.mean_elev.to_dict()
 def nbr_rel(r):
     nb = [mean_by_id[int(n)] for n in r.neighbors if int(n) in mean_by_id]
@@ -105,5 +110,5 @@ for g in gdf.geometry:
 f["builtup_frac"] = bu
 
 f.index.name = "ward_id"
-f.round(4).to_csv(ROOT / "research" / "features.csv")
+f.round(4).to_csv(OUT)
 print(f.describe().T[["mean", "std", "min", "max"]].round(3))
