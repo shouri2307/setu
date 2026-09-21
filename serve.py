@@ -144,8 +144,9 @@ def main():
         print("AI: OFF (no key — app still works, live Q&A disabled)")
     print(f"Serving {WEB}")
     print(f"\n  Open  http://localhost:{PORT}\n")
-    socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    socketserver.ThreadingTCPServer.allow_reuse_address = True
+    socketserver.ThreadingTCPServer.daemon_threads = True
+    with socketserver.ThreadingTCPServer(("", PORT), Handler) as httpd:
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
