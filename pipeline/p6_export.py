@@ -207,8 +207,9 @@ def main():
         "resolution": "145 GHMC wards (open data; the city's 16 stormwater zones are not public)",
         "limitations": [
             "Modelled at ward resolution, not street level — needs GHMC's private drain network for finer.",
-            f"Which wards flood first is LEARNED from terrain & drainage features using flooded localities from 6 real floods ({ev_txt}).",
-            f"Tested on floods it never saw (leave-one-event-out): AUC {v.get('loeo_auc_mean','?')} (0.5 = coin flip). Useful for ranking, not exact prediction.",
+            f"Which wards flood first is LEARNED from terrain & drainage features using flooded localities from {len(v.get("events_used", {}))} real floods ({ev_txt}).",
+            f"Tested on floods it never saw (leave-one-event-out): AUC {v.get('loeo_auc_mean','?')} (0.5 = coin flip); one event (Jun-2026 junction waterlogging in central wards) scored near chance. Useful for ranking, not exact prediction.",
+            f"Independent check against GHMC's own published chronic-waterlogging lists (never used in training): AUC {v.get('independent_ghmc_chronic_auc','?')}.",
             "The 2020 validation map is NOT independent — 2020 is one of the events the model learned from.",
             "The rainfall scale is anchored to documented extents (~3% of wards at 50 mm, ~20% at 192 mm, ~55% at 300 mm) — an assumption, not learned.",
             "Rain is assumed equal over all wards ('what if X mm fell everywhere'); real storms are uneven (Oct 2020: ~197 mm Begumpet vs ~320 mm Ghatkesar).",
@@ -217,6 +218,12 @@ def main():
             "Intervention 'after' effect is a modelled estimate, not a hydraulic re-simulation.",
             "Water bodies, nalas & roads from OpenStreetMap — some may be unmapped.",
         ],
+    }
+    meta["tests"] = {
+        "by_event": v.get("loeo_auc_by_event", {}),
+        "mean": v.get("loeo_auc_mean"),
+        "independent_ghmc": v.get("independent_ghmc_chronic_auc"),
+        "old_model": 0.49,
     }
     (WEB_DATA / "meta.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
     print(f"[ok] meta.json")

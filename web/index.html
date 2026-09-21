@@ -229,7 +229,7 @@
     <button class="hbtn on" id="fxBtn" title="Toggle rain animation">🌧 Rain FX</button>
     <button class="hbtn" id="hospBtn">🏥 Hospitals</button>
     <button class="hbtn" id="labelBtn">🏷 Ward names</button>
-    <button class="hbtn" id="valBtn">✓ 2020 Validation</button>
+    <button class="hbtn" id="valBtn">📊 2020 reference</button>
     <button class="hbtn" id="limBtn">⚠ Limitations</button>
   </header>
 
@@ -794,6 +794,15 @@ function showLimits(){
   let h=`<span class="close" id="mc2">✕</span><h2>Model Limitations</h2>
     <div style="color:var(--muted);font-size:12.5px;margin-bottom:8px">Stated up front — a feature, not an apology.</div>`;
   m.limitations.forEach(l=>h+=`<div class="limit">${l}</div>`);
+  if(m.tests){
+    const t=m.tests,bar=(n,v)=>`<div class="kv"><span>${n}</span><span class="v" style="color:${v>=.65?'var(--green)':v>=.55?'var(--yellow)':'var(--red)'}">${v.toFixed(2)}</span></div>`;
+    h+=`<h4 style="margin-top:16px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em">How well it ranks flood-prone wards (score 0.5 = coin flip, 1.0 = perfect)</h4>
+      <div class="card" style="margin-top:6px">`;
+    for(const e in t.by_event)h+=bar('Held-out flood '+e,t.by_event[e]);
+    h+=bar('Average of held-out floods',t.mean);
+    if(t.independent_ghmc!=null)h+=bar('GHMC official waterlogging list (independent)',t.independent_ghmc);
+    h+=bar('Previous model (same floods)',t.old_model)+`</div>`;
+  }
   h+=`<h4 style="margin-top:16px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em">Flooded in 2020 but outside our 145 wards</h4>
       <div class="excl" style="margin-top:6px">${S.data.val.outside.join(' · ')}</div>`;
   document.getElementById('modalContent').innerHTML=h;

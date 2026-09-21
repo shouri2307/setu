@@ -9,7 +9,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_auc_score
 F=pd.read_csv(ROOT/'research/features.csv',index_col='ward_id'); L=pd.read_csv(ROOT/'research/labels.csv')
-ids=F.index.tolist(); events=sorted(L.event.unique()); big=['2016-09','2020-10-13','2025-07-18','2025-09-18']
+ids=F.index.tolist(); events=sorted(L.event.unique()); big=['2016-09','2020-10-13','2025-07-18','2025-09-18','2026-06-09']
 pos={e:set(L[L.event==e].ward_id) for e in events}
 COLS=['hand_low_frac','twi_mean','sink_frac','waterway_near_frac','builtup_frac','elev_rel_nbrs','upstream_km2','waterbody_near_frac']
 X0=F[COLS].fillna(F[COLS].median()).values
@@ -37,7 +37,9 @@ nm={w['id']:w['name'].replace('Ward ','') for w in json.load(open(ROOT/'web/data
 top=out.sort_values('S',ascending=False).head(15); print('\nMost flood-prone 15:',[f"{nm[i]}" for i in top.index])
 print('Least flood-prone 10:',[nm[i] for i in out.sort_values('S').head(10).index])
 
-card={'events':{e:int(len(pos[e])) for e in events},'loeo_auc_ensemble':{h:round(float(v[2]),3) for h,v in res.items()},
+Cset=set(pd.read_csv(ROOT/'research/labels_chronic.csv').ward_id)
+ind_auc=round(float(roc_auc_score(np.array([i in Cset for i in ids]),ens)),3)
+card={'independent_ghmc_chronic_auc':ind_auc,'events':{e:int(len(pos[e])) for e in events},'loeo_auc_ensemble':{h:round(float(v[2]),3) for h,v in res.items()},
       'loeo_auc_mean':round(float(np.mean([v[2] for v in res.values()])),3),'features':COLS,
       'baseline_old_demo_model_auc_mean':0.49}
 (ROOT/'research/model_card.json').write_text(json.dumps(card,indent=1))

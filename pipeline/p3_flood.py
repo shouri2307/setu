@@ -89,7 +89,7 @@ def main():
             "depth_per_mm_above_onset": DEPTH_PER_MM,
             "max_depth_m": MAX_DEPTH_M,
             "rain_anchors_share_mm": ANCHORS,
-            "calibrated_against": "6 Hyderabad floods: Sep-2016, Oct-2020, Jul-2023, Jun/Jul/Sep-2025",
+            "calibrated_against": f"{len(mc['events'])} Hyderabad floods: " + ", ".join(sorted(mc["events"])),
             "note": "Ward ranking learned from history (leave-one-event-out AUC "
                     f"{mc['loeo_auc_mean']}); rainfall scale anchored to documented extents.",
         },
@@ -98,6 +98,7 @@ def main():
             "rainfall_mm": 192,
             "loeo_auc_mean": mc["loeo_auc_mean"],
             "loeo_auc_by_event": mc["loeo_auc_ensemble"],
+            "independent_ghmc_chronic_auc": mc.get("independent_ghmc_chronic_auc"),
             "events_used": mc["events"],
             "flood_fraction": round(n192 / len(S), 3),
         },

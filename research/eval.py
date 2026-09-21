@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_auc_score
 
 F=pd.read_csv(ROOT/'research/features.csv',index_col='ward_id'); L=pd.read_csv(ROOT/'research/labels.csv')
-ids=F.index.tolist(); events=sorted(L.event.unique()); big=['2016-09','2020-10-13','2025-07-18','2025-09-18']
+ids=F.index.tolist(); events=sorted(L.event.unique()); big=['2016-09','2020-10-13','2025-07-18','2025-09-18','2026-06-09']
 pos={e:set(L[L.event==e].ward_id) for e in events}
 wm=json.load(open(ROOT/'web/data/model.json')); old192=pd.Series({int(k):v for k,v in wm['depths']['192'].items()}).reindex(ids).fillna(0)
 cur=json.load(open(ROOT/'data/scenarios.json'))['scenarios']['192']; cur192=pd.Series({int(k):v for k,v in cur.items()}).reindex(ids).fillna(0)
