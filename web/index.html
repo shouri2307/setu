@@ -151,6 +151,10 @@
   .iv .why{font-size:12px;line-height:1.5;color:var(--muted);margin-top:6px}
   .iv .why b{color:#cbd6e2}
   .iv .ex{font-size:11px;color:var(--muted);margin-top:6px;font-style:italic}
+  .effect{margin-top:9px;font-size:12px;color:#cbd6e2;padding:7px 10px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.22);border-radius:8px;font-variant-numeric:tabular-nums}
+  .effect b{color:var(--green)}
+  .effect .ok{color:var(--green);font-weight:700}
+  .effect .part{color:var(--yellow);font-weight:700}
   .applybtn{margin-top:9px;width:100%;padding:9px;border:none;border-radius:9px;background:var(--green);color:#04140a;font-weight:700;font-size:12.5px;cursor:pointer;transition:filter .15s}
   .applybtn:hover{filter:brightness(1.08)}
   .applybtn.off{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--glass-line)}
@@ -321,6 +325,67 @@ function runCounts(){
 function decs(v){const s=String(v),i=s.indexOf('.');return i<0?0:Math.min(2,s.length-i-1)}
 
 // Brief shimmer over the side-panel cards while a rainfall change is applied; numbers count up on reveal.
+const redOf=imp=>Math.min(0.7,imp*0.8);
+
+// ---- live hospital road distances after interventions (same rule as p4_network.py) ----
+let RG=null;const netCache=new Map();
+async function loadRoadGraph(){
+  try{
+    const g=await fetch('data/roadgraph.json',{cache:'no-store'}).then(r=>r.json());
+    const n=g.n,m=g.eu.length,off=new Int32Array(n+1);
+    for(let i=0;i<m;i++){off[g.eu[i]+1]++;off[g.ev[i]+1]++}
+    for(let i=0;i<n;i++)off[i+1]+=off[i];
+    const pos=off.slice(0,n),adj=new Int32Array(2*m),wt=new Float32Array(2*m);
+    for(let i=0;i<m;i++){
+      const u=g.eu[i],v=g.ev[i],w=g.ew[i];
+      adj[pos[u]]=v;wt[pos[u]++]=w;adj[pos[v]]=u;wt[pos[v]++]=w;
+    }
+    RG={n,ward:Int32Array.from(g.ward),off,adj,wt,hosp:g.hosp,access:g.access,roadDepth:g.road_flood_depth_m};
+    if(Object.keys(S.applied).length)render();
+  }catch(e){console.warn('roadgraph unavailable — using precomputed distances',e)}
+}
+function reachKm(blockedWards){
+  const {n,ward,off,adj,wt,hosp,access}=RG;
+  const blocked=new Uint8Array(n);
+  for(let i=0;i<n;i++)if(ward[i]>=0&&blockedWards.has(ward[i]))blocked[i]=1;
+  const dist=new Float64Array(n).fill(Infinity);
+  const cap=adj.length+hosp.length+8,hd=new Float64Array(cap),hn=new Int32Array(cap);let hs=0;
+  const push=(d,v)=>{let i=hs++;while(i>0){const p=(i-1)>>1;if(hd[p]<=d)break;hd[i]=hd[p];hn[i]=hn[p];i=p}hd[i]=d;hn[i]=v};
+  const pop=()=>{ // caller reads hd[0]/hn[0] first
+    const d=hd[--hs],v=hn[hs];let i=0;
+    for(;;){let c=2*i+1;if(c>=hs)break;if(c+1<hs&&hd[c+1]<hd[c])c++;if(hd[c]>=d)break;hd[i]=hd[c];hn[i]=hn[c];i=c}
+    hd[i]=d;hn[i]=v};
+  for(const h of hosp)if(!blocked[h]){dist[h]=0;push(0,h)}
+  while(hs){
+    const d=hd[0],u=hn[0];
+    if(hs===1)hs=0;else pop();
+    if(d>dist[u])continue;
+    for(let e=off[u];e<off[u+1];e++){
+      const v=adj[e];if(blocked[v])continue;
+      const nd=d+wt[e];if(nd<dist[v]){dist[v]=nd;push(nd,v)}
+    }
+  }
+  const nearest={},cut=new Set();
+  for(const wid in access){
+    const a=access[wid],d=dist[a];
+    if(blocked[a]||d===Infinity){nearest[wid]=-1;cut.add(+wid)}else nearest[wid]=Math.round(d/10)/100;
+  }
+  return {nearest,cut,live:true};
+}
+function currentNet(mm,depths){
+  if(!Object.keys(S.applied).length||!RG)
+    return {nearest:S.data.model.nearest_km[String(mm)]||{},cut:new Set(S.data.model.cutoffs[String(mm)]||[]),live:false};
+  const key=mm+'|'+JSON.stringify(S.applied);
+  let r=netCache.get(key);
+  if(!r){
+    const blocked=new Set();
+    for(const id in depths)if(depths[id]>=RG.roadDepth)blocked.add(+id);
+    r=reachKm(blocked);netCache.set(key,r);
+    if(netCache.size>60)netCache.delete(netCache.keys().next().value);
+  }
+  return r;
+}
+
 function skeletonPulse(){
   if(S.sel===null||S.playing||REDUCED)return;
   const side=document.getElementById('side');
@@ -384,6 +449,7 @@ async function boot(){
   render();
   document.getElementById('boot').classList.add('hide');
   showIntro(false);
+  loadRoadGraph();
 }
 
 // ---- guided intro ----
@@ -481,7 +547,8 @@ function render(){
   const {mm,depths}=currentDepths();
   S.cur={mm,depths};
   const thr=S.data.model.flood_threshold_m;
-  const cut=new Set(S.data.model.cutoffs[String(mm)]||[]);
+  const net=currentNet(mm,depths);
+  const cut=net.cut;
   const vSet=new Set(S.data.val.flooded_ids), vHi=new Set(S.data.val.high_conf_ids);
   const dmax=scenMax(depths,thr*1.4);
   let nF=0;
@@ -556,7 +623,9 @@ function renderPanel(id){
   const rec=S.data.reco.recommendations[String(id)];
   const prof=rec?rec.profile:{};
   const d=depths[String(id)]||0, flooded=d>=thr;
-  const near=(S.data.model.nearest_km[String(mm)]||{})[String(id)];
+  const net=currentNet(mm,depths);
+  const near=net.nearest[String(id)];
+  const nearPre=(S.data.model.nearest_km[String(mm)]||{})[String(id)];
   const base=S.data.model.baseline_km[String(id)];
   const nh=(S.data.hosp.nearest||{})[String(id)];
   const sev=prof.severity||'none';
@@ -580,6 +649,8 @@ function renderPanel(id){
     h+=`<div class="kv"><span>Road distance now</span><span class="v" data-count="n" data-to="${near}" data-dec="${decs(near)}" data-suf=" km">${near} km</span></div>`;
     if(base!=null&&near>base+0.05)h+=`<div class="kv"><span>Flood detour</span><span class="v" data-count="x" data-to="${near-base}" data-dec="1" data-pre="+" data-suf=" km" style="color:var(--orange)">+${(near-base).toFixed(1)} km</span></div>`;
   }
+  if(net.live&&nearPre!==near&&nearPre!=null)
+    h+=`<div class="kv"><span>Before interventions</span><span class="v" style="color:var(--muted)">${nearPre===-1?'CUT OFF':nearPre+' km'}</span></div>`;
   h+=`</div>`;
 
   if(rec&&rec.ranked.length&&(flooded||ap0)){
@@ -608,6 +679,7 @@ function renderPanel(id){
         <div class="tags"><span class="tag">cost: ${iv.cost_band.replace('_',' ')}</span><span class="tag">build: ${iv.time_to_build}</span><span class="tag">impact: ${iv.impact}</span></div>
         <div class="why"><b>Why here:</b> ${iv.why}</div>
         <div class="ex">Real example: ${iv.example} — ${iv.operator}</div>
+        <div class="effect">📉 Cuts flood depth by <b>${Math.round(redOf(iv.impact)*100)}%</b>${wasFlooded?` · ${baseDepth.toFixed(2)} m → ${(baseDepth*(1-redOf(iv.impact))).toFixed(2)} m · ${baseDepth*(1-redOf(iv.impact))<thr?'<span class="ok">ward goes dry</span>':'<span class="part">partial fix — still floods</span>'}`:''}</div>
         <button class="applybtn ${ap?'':'off'}" data-id="${id}" data-ivid="${iv.id}" data-imp="${iv.impact}">${ap?'✓ Applied — click to undo':'▶ Apply & re-run flood'}</button>
       </div>`;
     });
@@ -647,7 +719,7 @@ function renderPanel(id){
     if(cur&&cur.ivId===ivid){
       delete S.applied[k];
     }else{
-      S.applied[k]={ivId:ivid, reduction:Math.min(0.7,(+b.dataset.imp)*0.8)};
+      S.applied[k]={ivId:ivid, reduction:redOf(+b.dataset.imp)};
     }
     render();
   });
