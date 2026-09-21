@@ -1,0 +1,176 @@
+{
+  "_meta": {
+    "purpose": "Japanese flood-control interventions, each matched to ward attributes by hard constraints so different wards get different recommendations.",
+    "confidence_note": "Effectiveness is given as qualitative bands (high/medium/low), not invented percentages. Every entry names a real place and operator."
+  },
+  "interventions": [
+    {
+      "id": "underground_reservoir",
+      "name_en": "Underground Regulating Reservoir",
+      "name_jp": "地下調節池", "romaji": "chika chosetsuchi",
+      "category": "storage",
+      "real_example": {"name": "Kanda River / Loop Road No. 7 Underground Regulating Reservoir, Tokyo", "operator": "Tokyo Metropolitan Government Bureau of Construction", "source_url": "https://www.kensetsu.metro.tokyo.lg.jp/"},
+      "mechanism": "A large tunnel beneath an arterial road stores stormwater during peak flow and releases it slowly afterwards. No surface land needed.",
+      "requires": {"needs_arterial": true, "max_slope_pct": 2.0, "min_size_class": "medium", "needs_open_land": false},
+      "effect": {"reduces": "peak_volume", "confidence": "high"},
+      "cost_band": "very_high", "time_to_build": "years",
+      "india_relevance": "Fits dense zones on wide arterial corridors where no surface land is available — much of Hyderabad's core."
+    },
+    {
+      "id": "mega_discharge_channel",
+      "name_en": "Metropolitan Outer Underground Discharge Channel",
+      "name_jp": "首都圏外郭放水路", "romaji": "shutoken gaikaku hosuiro",
+      "category": "storage",
+      "real_example": {"name": "G-Cans, Kasukabe, Saitama (world's largest)", "operator": "MLIT Kanto Regional Bureau, Edogawa River Office", "source_url": "https://www.ktr.mlit.go.jp/edogawa/"},
+      "mechanism": "Giant deep tunnels and silos divert overflow from multiple rivers, storing it and pumping it to a large river after the storm. A basin-scale megaproject.",
+      "requires": {"needs_water_adjacent": true, "min_size_class": "large", "min_severity": "severe"},
+      "effect": {"reduces": "river_overflow", "confidence": "high"},
+      "cost_band": "very_high", "time_to_build": "decade",
+      "india_relevance": "A long-term basin-scale option for the worst-hit riverfront zones along the Musi."
+    },
+    {
+      "id": "multipurpose_retention_basin",
+      "name_en": "Multipurpose Retention Basin",
+      "name_jp": "多目的遊水地", "romaji": "tamokuteki yusuichi",
+      "category": "storage",
+      "real_example": {"name": "Tsurumi River Multipurpose Retention Basin, Yokohama (sports fields in dry weather)", "operator": "MLIT Keihin River Office", "source_url": "https://www.ktr.mlit.go.jp/keihin/"},
+      "mechanism": "A large low-lying open area (park, playing fields) deliberately floods during storms to hold water, then drains and returns to public use.",
+      "requires": {"min_size_class": "large", "needs_open_land": true, "max_slope_pct": 3.0},
+      "effect": {"reduces": "peak_volume", "confidence": "high"},
+      "cost_band": "high", "time_to_build": "years",
+      "india_relevance": "Suits large peripheral wards that still have open ground near the river."
+    },
+    {
+      "id": "schoolyard_park_storage",
+      "name_en": "Schoolyard & Park Detention",
+      "name_jp": "校庭貯留", "romaji": "kotei choryu",
+      "category": "storage",
+      "real_example": {"name": "Setagaya & Sumida schoolyard detention, Tokyo", "operator": "Tokyo ward municipalities", "source_url": "https://www.gesui.metro.tokyo.lg.jp/"},
+      "mechanism": "Shallow deliberate ponding on existing public ground (school grounds, small parks) shaves the runoff peak. Cheap, uses land you already have.",
+      "requires": {"max_slope_pct": 2.5},
+      "effect": {"reduces": "peak_volume", "confidence": "medium"},
+      "cost_band": "low", "time_to_build": "months",
+      "india_relevance": "Fast, low-cost option deployable in almost any ward with a school or park."
+    },
+    {
+      "id": "building_rainwater_storage",
+      "name_en": "Mandated Building Rainwater Storage",
+      "name_jp": "雨水貯留槽", "romaji": "usui choryuso",
+      "category": "storage",
+      "real_example": {"name": "Sumida City rainwater storage ordinance, Tokyo", "operator": "Sumida City, Tokyo", "source_url": "https://www.city.sumida.lg.jp/"},
+      "mechanism": "A municipal ordinance requires new buildings to hold rainwater on-site in tanks, releasing it slowly. Distributed storage across a dense area.",
+      "requires": {"min_density_class": "dense"},
+      "effect": {"reduces": "peak_volume", "confidence": "medium"},
+      "cost_band": "low", "time_to_build": "months",
+      "india_relevance": "Policy lever for dense built-up wards where large works are impossible."
+    },
+    {
+      "id": "permeable_pavement",
+      "name_en": "Permeable Pavement",
+      "name_jp": "透水性舗装", "romaji": "tosuisei hoso",
+      "category": "infiltration",
+      "real_example": {"name": "Tokyo road permeable paving programme", "operator": "Tokyo Metropolitan Government", "source_url": "https://www.kensetsu.metro.tokyo.lg.jp/"},
+      "mechanism": "Porous road and footpath surfaces let rain soak into the ground instead of running off, cutting the volume that reaches drains.",
+      "requires": {"max_slope_pct": 1.5, "max_severity": "moderate"},
+      "effect": {"reduces": "runoff_volume", "confidence": "medium"},
+      "cost_band": "medium", "time_to_build": "months",
+      "india_relevance": "Best on flat wards with mild-to-moderate flooding; retrofit during road resurfacing."
+    },
+    {
+      "id": "infiltration_inlets",
+      "name_en": "Infiltration Inlets & Rain Gardens",
+      "name_jp": "浸透桝", "romaji": "shintomasu",
+      "category": "infiltration",
+      "real_example": {"name": "Yokohama infiltration inlet programme", "operator": "City of Yokohama", "source_url": "https://www.city.yokohama.lg.jp/"},
+      "mechanism": "Roadside pits and planted gardens capture runoff and let it percolate into the soil, reducing peak flow into drains.",
+      "requires": {"max_slope_pct": 2.0, "max_severity": "moderate"},
+      "effect": {"reduces": "runoff_volume", "confidence": "low"},
+      "cost_band": "low", "time_to_build": "months",
+      "india_relevance": "Cheap distributed measure for mild-flooding residential wards."
+    },
+    {
+      "id": "super_levee",
+      "name_en": "Super Levee (High-Standard Embankment)",
+      "name_jp": "高規格堤防", "romaji": "kokikaku teibo",
+      "category": "river_works",
+      "real_example": {"name": "Arakawa Super Levee, Tokyo", "operator": "MLIT Kanto Regional Bureau, Arakawa-Karyu River Office", "source_url": "https://www.ktr.mlit.go.jp/arakawa/"},
+      "mechanism": "A very wide, gently sloped embankment that resists overtopping and breach, doubling as developable land on top. Protects riverfront zones.",
+      "requires": {"needs_water_adjacent": true, "min_severity": "moderate"},
+      "effect": {"reduces": "river_overflow", "confidence": "high"},
+      "cost_band": "very_high", "time_to_build": "years",
+      "india_relevance": "For Musi-front wards where breach and overtopping are the flood mechanism."
+    },
+    {
+      "id": "river_widening",
+      "name_en": "River Widening & Channel Improvement",
+      "name_jp": "河道改修", "romaji": "kado kaishu",
+      "category": "river_works",
+      "real_example": {"name": "Tsurumi River channel improvement, Kanagawa", "operator": "MLIT Keihin River Office", "source_url": "https://www.ktr.mlit.go.jp/keihin/"},
+      "mechanism": "Widening and deepening the river channel raises how much flow it can carry before spilling into adjacent land.",
+      "requires": {"needs_water_adjacent": true},
+      "effect": {"reduces": "river_overflow", "confidence": "medium"},
+      "cost_band": "high", "time_to_build": "years",
+      "india_relevance": "Direct fix for Musi-adjacent wards where channel capacity is the bottleneck."
+    },
+    {
+      "id": "sabo_check_dam",
+      "name_en": "Sabo Check Dam",
+      "name_jp": "砂防ダム", "romaji": "sabo damu",
+      "category": "river_works",
+      "real_example": {"name": "Japan nationwide Sabo (erosion-control) works", "operator": "MLIT Sabo Department", "source_url": "https://www.mlit.go.jp/river/sabo/"},
+      "mechanism": "Small barriers on steep upstream channels trap sediment and slow torrent flow, reducing downstream debris flooding. Japan's signature export.",
+      "requires": {"min_slope_pct": 2.0},
+      "effect": {"reduces": "runoff_volume", "confidence": "medium"},
+      "cost_band": "medium", "time_to_build": "years",
+      "india_relevance": "Only for the few steeper, rocky wards on the city's western/northern edge."
+    },
+    {
+      "id": "hazard_maps",
+      "name_en": "Mandatory Flood Hazard Maps",
+      "name_jp": "ハザードマップ", "romaji": "hazado mappu",
+      "category": "systems_policy",
+      "real_example": {"name": "Nationwide municipal hazard maps under the Flood Control Act", "operator": "MLIT & municipalities", "source_url": "https://disaportal.gsi.go.jp/"},
+      "mechanism": "Every municipality must publish flood-risk maps so residents and planners know exposure and evacuation routes. Non-structural, universal.",
+      "requires": {},
+      "effect": {"reduces": "exposure", "confidence": "medium"},
+      "cost_band": "very_low", "time_to_build": "months",
+      "india_relevance": "A no-regret first step deployable in every ward immediately."
+    },
+    {
+      "id": "xrain_radar",
+      "name_en": "XRAIN High-Resolution Rainfall Radar",
+      "name_jp": "XRAIN", "romaji": "ekkusu rein",
+      "category": "systems_policy",
+      "real_example": {"name": "XRAIN nationwide X-band radar network", "operator": "MLIT", "source_url": "https://www.mlit.go.jp/river/"},
+      "mechanism": "A dense radar network delivers minute-scale, street-scale rainfall nowcasts for early warning and drainage operation. Warning, not prevention.",
+      "requires": {},
+      "effect": {"reduces": "exposure", "confidence": "medium"},
+      "cost_band": "medium", "time_to_build": "years",
+      "india_relevance": "City-wide early-warning backbone; pairs with GHMC's emergency response."
+    },
+    {
+      "id": "basin_flood_management",
+      "name_en": "River-Basin Disaster Resilience (Watershed Flood Control)",
+      "name_jp": "流域治水", "romaji": "ryuiki chisui",
+      "category": "systems_policy",
+      "real_example": {"name": "Japan's nationwide Ryuiki Chisui basin flood-control policy (2020-)", "operator": "MLIT", "source_url": "https://www.mlit.go.jp/river/"},
+      "mechanism": "Coordinates every actor across a whole river basin — storage, land use, forecasting — rather than defending each stretch alone. A planning framework.",
+      "requires": {"needs_water_adjacent": true},
+      "effect": {"reduces": "peak_volume", "confidence": "high"},
+      "cost_band": "high", "time_to_build": "years",
+      "india_relevance": "The umbrella framework for whole-of-Musi planning across all riverfront wards."
+    },
+    {
+      "id": "comprehensive_flood_control",
+      "name_en": "Comprehensive Flood Control Planning",
+      "name_jp": "総合治水", "romaji": "sogo chisui",
+      "category": "systems_policy",
+      "real_example": {"name": "Tsurumi River comprehensive flood control, since 1980", "operator": "MLIT Keihin River Office", "source_url": "https://www.ktr.mlit.go.jp/keihin/"},
+      "mechanism": "Combines structural works with land-use control and on-site storage across a fast-urbanising basin — the model JICA used in Chennai.",
+      "requires": {"min_density_class": "dense"},
+      "effect": {"reduces": "peak_volume", "confidence": "high"},
+      "cost_band": "high", "time_to_build": "years",
+      "india_relevance": "Precedented in India via JICA's Chennai master-plan work; fits dense urbanised wards."
+    }
+  ]
+}

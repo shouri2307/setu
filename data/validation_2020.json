@@ -1,0 +1,259 @@
+{
+  "event": "October 2020 Hyderabad floods",
+  "cause": "Deep Depression BOB 02 over Bay of Bengal; extreme rainfall 13-14 Oct and again 17 Oct 2020",
+  "rainfall_reference": {
+    "imd_begumpet_24h_mm": 192,
+    "city_october_avg_cm": 19.2,
+    "note": "Begumpet IMD logged 192 mm on 13 Oct; localized 24h totals exceeded 300 mm. Use ~190-200 mm as the validation scenario rainfall.",
+    "sources": [
+      "grokipedia",
+      "rmsi"
+    ]
+  },
+  "modeled_wards_flooded": [
+    {
+      "zone_id": 0,
+      "ward_name": "Ward 91 Khairatabad",
+      "match_keyword": "Khairatabad",
+      "evidence": "Arterial roads submerged; severe waterlogging.",
+      "confidence": "medium",
+      "sources": [
+        "gulfnews_9killed"
+      ]
+    },
+    {
+      "zone_id": 12,
+      "ward_name": "Ward 10 Uppal",
+      "match_keyword": "Uppal",
+      "evidence": "Arterial roads under water.",
+      "confidence": "medium",
+      "sources": [
+        "gulfnews_9killed"
+      ]
+    },
+    {
+      "zone_id": 34,
+      "ward_name": "Ward 107 Madhapur",
+      "match_keyword": "Madhapur",
+      "evidence": "Listed among heavily flooded colonies.",
+      "confidence": "medium",
+      "sources": [
+        "grokipedia"
+      ]
+    },
+    {
+      "zone_id": 35,
+      "ward_name": "Ward 109 Hafeezpet",
+      "match_keyword": "Hafeezpet",
+      "evidence": "House collapse killed four (mother and three children) during the rain.",
+      "confidence": "high",
+      "sources": [
+        "gulfnews_9killed"
+      ]
+    },
+    {
+      "zone_id": 57,
+      "ward_name": "Ward 43 Chandrayangutta",
+      "match_keyword": "Chandrayangutta",
+      "evidence": "Gurram Cheruvu (Balapur lake) bund breach submerged the belt; wall collapse killed 9. Hafiz Baba Nagar, Omer Colony, Gulshan Iqbal Colony inundated.",
+      "confidence": "high",
+      "sources": [
+        "floodlist",
+        "nationalherald",
+        "gulfnews_3killed"
+      ]
+    },
+    {
+      "zone_id": 58,
+      "ward_name": "Ward 46 Falaknuma",
+      "match_keyword": "Falaknuma",
+      "evidence": "Man washed away near Falaknuma; regular roads became fast-flowing streams.",
+      "confidence": "high",
+      "sources": [
+        "floodlist"
+      ]
+    },
+    {
+      "zone_id": 73,
+      "ward_name": "Ward 70 Mehdipatnam",
+      "match_keyword": "Mehdipatnam",
+      "evidence": "Major roads under several feet of water.",
+      "confidence": "medium",
+      "sources": [
+        "gulfnews_9killed"
+      ]
+    },
+    {
+      "zone_id": 76,
+      "ward_name": "Ward 68 Tolichowki",
+      "match_keyword": "Tolichowki",
+      "evidence": "NDRF evacuated residents of Nadeem Colony, Tolichowki by boat; tank-catchment spillover.",
+      "confidence": "high",
+      "sources": [
+        "floodlist",
+        "indiawaterportal"
+      ]
+    },
+    {
+      "zone_id": 80,
+      "ward_name": "Ward 98 Ameerpet",
+      "match_keyword": "Ameerpet",
+      "evidence": "Arterial roads submerged (Ameerpet/Punjagutta corridor).",
+      "confidence": "medium",
+      "sources": [
+        "gulfnews_9killed",
+        "grokipedia"
+      ]
+    },
+    {
+      "zone_id": 89,
+      "ward_name": "Ward 149 Begumpet",
+      "match_keyword": "Begumpet",
+      "evidence": "IMD Begumpet logged 192 mm on 13 Oct; area flooded.",
+      "confidence": "high",
+      "sources": [
+        "grokipedia"
+      ]
+    },
+    {
+      "zone_id": 94,
+      "ward_name": "Ward 120 Balanagar",
+      "match_keyword": "Balanagar",
+      "evidence": "Factory boundary wall collapse killed five workers.",
+      "confidence": "high",
+      "sources": [
+        "gulfnews_9killed"
+      ]
+    },
+    {
+      "zone_id": 95,
+      "ward_name": "Ward 121 Kukatpally",
+      "match_keyword": "Kukatpally",
+      "evidence": "Listed among heavily flooded colonies.",
+      "confidence": "medium",
+      "sources": [
+        "grokipedia"
+      ]
+    },
+    {
+      "zone_id": 100,
+      "ward_name": "Ward 134 Alwal",
+      "match_keyword": "Alwal",
+      "evidence": "Colonies in Alwal flooded.",
+      "confidence": "medium",
+      "sources": [
+        "gulfnews_9killed"
+      ]
+    },
+    {
+      "zone_id": 109,
+      "ward_name": "Ward 140 Malkajgiri",
+      "match_keyword": "Malkajgiri",
+      "evidence": "Arterial/colony waterlogging reported.",
+      "confidence": "low",
+      "sources": [
+        "gulfnews_9killed"
+      ]
+    },
+    {
+      "zone_id": 112,
+      "ward_name": "Ward 19 Saroornagar",
+      "match_keyword": "Saroornagar",
+      "evidence": "Water gushing from manholes at Kodandaram Nagar, Saroornagar; tank-catchment flooding.",
+      "confidence": "high",
+      "sources": [
+        "gulfnews_photos",
+        "indiawaterportal"
+      ]
+    },
+    {
+      "zone_id": 117,
+      "ward_name": "Ward 24 Saidabad",
+      "match_keyword": "Saidabad",
+      "evidence": "Old City locality inundated during the 13-14 Oct deluge.",
+      "confidence": "medium",
+      "sources": [
+        "gulfnews_photos"
+      ]
+    },
+    {
+      "zone_id": 119,
+      "ward_name": "Ward 26 Old Malakpet",
+      "match_keyword": "Old Malakpet",
+      "evidence": "Malakpet under several feet of water; one person electrocuted.",
+      "confidence": "high",
+      "sources": [
+        "gulfnews_9killed",
+        "gulfnews_3killed"
+      ]
+    },
+    {
+      "zone_id": 143,
+      "ward_name": "Ward 42 Barkas",
+      "match_keyword": "Barkas",
+      "evidence": "Flash flooding near Barkas; documented rescue footage.",
+      "confidence": "high",
+      "sources": [
+        "floodlist"
+      ]
+    }
+  ],
+  "flooded_areas_outside_modeled_wards": [
+    {
+      "area": "Balapur / Gurram Cheruvu",
+      "note": "Lake bund breach — primary flood source; area lies outside the 145 GHMC core wards.",
+      "sources": [
+        "nationalherald",
+        "gulfnews_3killed"
+      ]
+    },
+    {
+      "area": "Osman Nagar / Al Jubail Colony",
+      "note": "Tank-catchment chain flooding on the western outskirts (Rangareddy).",
+      "sources": [
+        "indiawaterportal"
+      ]
+    },
+    {
+      "area": "Jalpally / Palle Cheruvu",
+      "note": "Downstream tank-chain flooding, outside GHMC core.",
+      "sources": [
+        "indiawaterportal"
+      ]
+    },
+    {
+      "area": "Meerpet / Jillelaguda",
+      "note": "Flooded colonies just outside the core ward set.",
+      "sources": [
+        "gulfnews_photos"
+      ]
+    },
+    {
+      "area": "Bandlaguda",
+      "note": "Tank bund breach flooding; separate municipality.",
+      "sources": [
+        "indiawaterportal"
+      ]
+    },
+    {
+      "area": "Manikonda",
+      "note": "Cellars of apartment complexes flooded; outskirts.",
+      "sources": [
+        "gulfnews_9killed"
+      ]
+    }
+  ],
+  "unmatched_keywords": [],
+  "sources": {
+    "floodlist": "FloodList, 'India – Deadly Floods... October 2020', floodlist.com",
+    "wikipedia": "Wikipedia, '2020 Hyderabad floods'",
+    "nationalherald": "National Herald, 'Hyderabad floods: Untold misery to many families', 19 Oct 2020",
+    "indiawaterportal": "India Water Portal, 'The first infrastructure: human networks behind urban flood response in Hyderabad'",
+    "grokipedia": "Grokipedia, '2020 Hyderabad floods' (cites Begumpet 192 mm)",
+    "gulfnews_9killed": "Gulf News, 'Heavy rains leave Hyderabad inundated, nine killed'",
+    "gulfnews_3killed": "Gulf News, 'Three more killed as heavy rain pounds Hyderabad again'",
+    "gulfnews_photos": "Gulf News, 'Photos: Floods hit parts of Hyderabad as rains return'",
+    "rmsi": "RMSI, 'Hyderabad Flash Flood Advisory, October 2020' (19.2 cm Oct avg, worst in 117 yrs)"
+  },
+  "usage": "Run the flood model at ~190 mm and compare which wards it predicts flooded vs. modeled_wards_flooded. Report both hits and misses."
+}

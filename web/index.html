@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SETU — Hyderabad Flood & Japanese Intervention Planner</title>
+<style>
+  :root{
+    --bg:#0b0f16; --panel:#131a24; --panel2:#1a2432; --line:#28323f;
+    --text:#eef4fa; --muted:#8b98a8; --accent:#38bdf8; --jp:#ff6b6b;
+    --green:#22c55e; --yellow:#eab308; --orange:#f97316; --red:#ef4444;
+    --dry:#232e3c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;overflow:hidden}
+  .app{display:grid;grid-template-rows:auto auto 1fr;height:100vh}
+
+  /* Header */
+  header{padding:10px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#141c27,#0f1620);display:flex;align-items:center;gap:14px}
+  header .brand{font-size:19px;font-weight:700;letter-spacing:.5px}
+  header .brand .jp{color:var(--jp);font-weight:600}
+  header .sub{color:var(--muted);font-size:12.5px;line-height:1.3}
+  header .spacer{flex:1}
+  .hbtn{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 13px;font-size:13px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .hbtn:hover{border-color:var(--accent);background:#22303f}
+  .hbtn.on{background:var(--accent);color:#04121b;border-color:var(--accent);font-weight:600}
+
+  /* Control bar (separate row — never overlaps the map) */
+  .ctrlbar{padding:10px 18px;background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .rainbox{display:flex;align-items:center;gap:12px;flex:1;min-width:320px}
+  .rainbox label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+  input[type=range]{flex:1;accent-color:var(--accent);height:6px;min-width:180px}
+  .rainval{font-size:22px;font-weight:800;color:var(--accent);min-width:96px;text-align:right}
+  .playbtn{background:var(--accent);color:#04121b;border:none;border-radius:8px;padding:9px 15px;font-weight:700;font-size:13px;cursor:pointer}
+  .playbtn:hover{filter:brightness(1.1)}
+  .counters{display:flex;gap:10px}
+  .counter{background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:6px 14px;text-align:center;min-width:92px}
+  .counter .n{font-size:21px;font-weight:800;line-height:1.1}
+  .counter .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:1px}
+
+  /* Main split */
+  .main{display:grid;grid-template-columns:1fr 420px;overflow:hidden}
+  .mapwrap{position:relative;overflow:hidden;background:radial-gradient(circle at 50% 40%,#0e1622,#080c12)}
+  svg{width:100%;height:100%;display:block;cursor:grab}
+  svg.grabbing{cursor:grabbing}
+  .ward{stroke:#0b0f16;stroke-width:0.5;transition:fill .3s,stroke .1s}
+  .ward:hover{stroke:#fff;stroke-width:1.5}
+  .ward.sel{stroke:var(--accent);stroke-width:2.4}
+  .ward.valhi{stroke:var(--jp);stroke-width:1.8}
+  .wlabel{fill:#cfe0ee;font-size:6px;pointer-events:none;text-anchor:middle;paint-order:stroke;stroke:#0b0f16;stroke-width:1.4px;font-weight:600;opacity:0}
+  .hosp{fill:#fff;stroke:#e11d48;stroke-width:1.3;cursor:pointer}
+  .hosp-cross{stroke:#e11d48;stroke-width:1.3;pointer-events:none}
+
+  /* Map overlays */
+  .zoomctl{position:absolute;right:14px;top:14px;display:flex;flex-direction:column;gap:5px}
+  .zoomctl button{width:36px;height:36px;font-size:20px;font-weight:700;background:rgba(19,26,36,.95);color:var(--text);border:1px solid var(--line);border-radius:8px;cursor:pointer}
+  .zoomctl button:hover{border-color:var(--accent)}
+  .legend{position:absolute;left:14px;bottom:14px;background:rgba(15,21,30,.94);border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:11.5px;max-width:230px}
+  .legend .t{font-weight:700;margin-bottom:6px;font-size:12px}
+  .legrow{display:flex;align-items:center;gap:7px;margin:3px 0}
+  .sw{width:20px;height:11px;border-radius:2px;flex-shrink:0}
+  .ramp{height:11px;width:150px;border-radius:2px;background:linear-gradient(90deg,var(--green),var(--yellow),var(--orange),var(--red))}
+  .tip{position:absolute;pointer-events:none;background:#04121b;border:1px solid var(--accent);border-radius:6px;padding:5px 9px;font-size:12px;font-weight:600;opacity:0;transition:opacity .1s;white-space:nowrap;z-index:5}
+
+  /* Side panel */
+  .side{background:var(--panel);border-left:1px solid var(--line);overflow-y:auto}
+  .side::-webkit-scrollbar{width:9px}.side::-webkit-scrollbar-thumb{background:#2a3644;border-radius:5px}
+  .placeholder{padding:40px 24px;color:var(--muted);text-align:center;line-height:1.7;font-size:14px}
+  .placeholder .big{font-size:40px;margin-bottom:10px}
+  .phead{padding:16px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#18212e,#131a24);position:sticky;top:0;z-index:2}
+  .phead .nm{font-size:19px;font-weight:800}
+  .phead .meta{color:var(--muted);font-size:12px;margin-top:3px}
+  .sevpill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-top:8px}
+  .pbody{padding:16px 18px}
+  .card{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:13px 14px;margin-bottom:12px}
+  .card h4{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:9px;font-weight:700}
+  .kv{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.04)}
+  .kv:last-child{border-bottom:none}
+  .kv .v{font-weight:700}
+  .hospname{color:var(--accent);font-weight:700}
+  .cutoff{color:var(--red);font-weight:800}
+
+  /* interventions */
+  .ivh{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;margin:6px 0 10px}
+  .prio{display:flex;gap:6px;margin-bottom:12px}
+  .prio button{flex:1;font-size:11.5px;padding:8px 4px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);cursor:pointer}
+  .prio button.on{background:var(--accent);color:#04121b;border-color:var(--accent);font-weight:700}
+  .iv{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:11px}
+  .iv.top{border-color:var(--accent);box-shadow:0 0 0 1px rgba(56,189,248,.25)}
+  .iv .rank{font-size:10px;font-weight:800;color:var(--accent);letter-spacing:.05em}
+  .iv .en{font-weight:700;font-size:15px;margin-top:2px}
+  .iv .jpn{color:var(--jp);font-size:13px;margin-top:1px}
+  .iv .what{font-size:12.5px;line-height:1.55;color:#d3dde8;margin:9px 0;padding:9px 10px;background:rgba(56,189,248,.06);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+  .iv .tags{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+  .tag{font-size:10.5px;padding:3px 8px;border-radius:6px;background:#0f1721;border:1px solid var(--line);color:var(--muted)}
+  .iv .why{font-size:12px;line-height:1.5;color:var(--muted);margin-top:6px}
+  .iv .why b{color:#cbd6e2}
+  .iv .ex{font-size:11px;color:var(--muted);margin-top:6px;font-style:italic}
+  .applybtn{margin-top:9px;width:100%;padding:9px;border:none;border-radius:8px;background:var(--green);color:#04140a;font-weight:700;font-size:12.5px;cursor:pointer}
+  .applybtn.off{background:var(--panel);color:var(--muted);border:1px solid var(--line)}
+  .excl{font-size:12px;color:var(--muted);padding:6px 0;line-height:1.45;border-bottom:1px solid rgba(255,255,255,.04)}
+  .excl b{color:#c2cdd9}
+
+  /* AI box */
+  .ai{background:linear-gradient(180deg,#16212e,#131a24);border:1px solid var(--accent);border-radius:12px;padding:13px;margin-top:4px}
+  .ai h4{color:var(--accent)}
+  .quick{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .quick button{font-size:11px;padding:6px 9px;background:#0f1721;border:1px solid var(--line);border-radius:14px;color:#bcd;cursor:pointer}
+  .quick button:hover{border-color:var(--accent)}
+  .airow{display:flex;gap:7px}
+  .airow input{flex:1;background:#0b1119;border:1px solid var(--line);border-radius:8px;padding:9px 11px;color:var(--text);font-size:13px}
+  .airow input:focus{outline:none;border-color:var(--accent)}
+  .airow button{background:var(--accent);color:#04121b;border:none;border-radius:8px;padding:0 15px;font-weight:700;cursor:pointer}
+  .aians{margin-top:11px;font-size:13px;line-height:1.6;color:#dbe6f0;white-space:pre-wrap;display:none}
+  .aians.show{display:block}
+  .aians.think{color:var(--muted);font-style:italic}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:50}
+  .modal.show{display:flex}
+  .modalbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px;max-width:600px;max-height:82vh;overflow-y:auto}
+  .modalbox h2{margin-bottom:6px;font-size:19px}
+  .modalbox .close{float:right;cursor:pointer;color:var(--muted);font-size:22px;line-height:1}
+  .limit{font-size:13px;color:#c4cfdb;line-height:1.55;margin:9px 0;padding-left:18px;position:relative}
+  .limit:before{content:"▸";position:absolute;left:0;color:var(--yellow)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div>
+      <div class="brand">SETU <span class="jp">設計</span></div>
+      <div class="sub" id="reso">loading…</div>
+    </div>
+    <div class="spacer"></div>
+    <button class="hbtn" id="hospBtn">🏥 Hospitals</button>
+    <button class="hbtn" id="labelBtn">🏷 Ward names</button>
+    <button class="hbtn" id="valBtn">✓ 2020 Validation</button>
+    <button class="hbtn" id="limBtn">⚠ Limitations</button>
+  </header>
+
+  <div class="ctrlbar">
+    <div class="rainbox">
+      <label>Rainfall</label>
+      <input type="range" id="rain" min="0" max="0" value="0" step="1">
+      <span class="rainval" id="rainval">—</span>
+    </div>
+    <button class="playbtn" id="playBtn">▶ Play storm</button>
+    <div class="counters">
+      <div class="counter"><div class="n" id="cFlood" style="color:var(--orange)">0</div><div class="l">Wards flooded</div></div>
+      <div class="counter"><div class="n" id="cCut" style="color:var(--red)">0</div><div class="l">Hospitals cut off</div></div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="mapwrap">
+      <svg id="map" preserveAspectRatio="xMidYMid meet"><g id="vp"></g></svg>
+      <div class="zoomctl">
+        <button id="zin">+</button><button id="zout">−</button><button id="zreset" title="reset" style="font-size:13px">⟲</button>
+      </div>
+      <div class="legend" id="legend"></div>
+      <div class="tip" id="tip"></div>
+    </div>
+    <div class="side" id="side">
+      <div class="placeholder">
+        <div class="big">🗺️</div>
+        <b>Click any ward</b> to see its flood depth, hospital access,<br>
+        and the ranked Japanese interventions that fit it —<br>
+        each explained in plain language, with a live AI advisor.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal"><div class="modalbox">
+  <span class="close" id="modalClose">✕</span>
+  <div id="modalContent"></div>
+</div></div>
+
+<script>
+const S={data:{},scenIdx:0,sel:null,valMode:false,showHosp:false,showLabels:false,
+        applied:{},priority:"impact",playing:false,
+        view:{k:1,x:0,y:0},drag:null};
+
+async function boot(){
+  const f=p=>fetch(p,{cache:'no-store'}).then(r=>r.json());
+  try{
+    const [zones,model,reco,val,meta,hosp]=await Promise.all([
+      f('data/zones.json'),f('data/model.json'),f('data/reco.json'),
+      f('data/validation.json'),f('data/meta.json'),f('data/hospitals.json').catch(()=>({hospitals:[],nearest:{}}))]);
+    S.data={zones,model,reco,val,meta,hosp};
+  }catch(e){document.getElementById('side').innerHTML='<div class="placeholder">Could not load data files. Make sure you ran p6_export and are serving from the project root.</div>';return;}
+  document.getElementById('reso').textContent=S.data.meta.resolution;
+  setupProj();buildMap();buildLegend();
+  const rain=document.getElementById('rain');
+  rain.max=S.data.model.scenarios_mm.length-1;
+  const i192=S.data.model.scenarios_mm.indexOf((S.data.model.validation||{}).rainfall_mm||192);
+  S.scenIdx=i192>=0?i192:Math.floor(S.data.model.scenarios_mm.length/2);
+  rain.value=S.scenIdx;
+  rain.oninput=e=>{S.scenIdx=+e.target.value;render()};
+  document.getElementById('playBtn').onclick=play;
+  document.getElementById('valBtn').onclick=()=>{S.valMode=!S.valMode;flip('valBtn',S.valMode);buildLegend();render()};
+  document.getElementById('hospBtn').onclick=()=>{S.showHosp=!S.showHosp;flip('hospBtn',S.showHosp);drawHosp()};
+  document.getElementById('labelBtn').onclick=()=>{S.showLabels=!S.showLabels;flip('labelBtn',S.showLabels);drawLabels()};
+  document.getElementById('limBtn').onclick=showLimits;
+  document.getElementById('modalClose').onclick=()=>document.getElementById('modal').classList.remove('show');
+  setupZoomPan();
+  render();
+}
+function flip(id,on){document.getElementById(id).classList.toggle('on',on)}
+
+let P;
+function setupProj(){
+  const b=S.data.zones.bounds,W=1000,H=1000*(b[3]-b[1])/(b[2]-b[0]);
+  P={b,W,H,x:l=>(l-b[0])/(b[2]-b[0])*W,y:l=>H-(l-b[1])/(b[3]-b[1])*H};
+  const svg=document.getElementById('map');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+}
+function pathFor(rings){return rings.map(r=>'M'+r.map(p=>P.x(p[0]).toFixed(1)+','+P.y(p[1]).toFixed(1)).join('L')+'Z').join(' ')}
+
+function buildMap(){
+  let h='';
+  for(const w of S.data.zones.wards)
+    h+=`<path class="ward" id="w${w.id}" d="${pathFor(w.rings)}" data-id="${w.id}"></path>`;
+  h+='<g id="labels"></g><g id="hosps"></g>';
+  document.getElementById('vp').innerHTML=h;
+  document.querySelectorAll('.ward').forEach(p=>{
+    p.onclick=()=>selectWard(+p.dataset.id);
+    p.onmousemove=ev=>showTip(ev,S.data.zones.wards.find(x=>x.id==+p.dataset.id).name);
+    p.onmouseleave=hideTip;
+  });
+}
+
+// ---- disaster color scale: green -> yellow -> orange -> red ----
+function lerp(a,b,t){return a.map((v,i)=>Math.round(v+(b[i]-v)*t))}
+function sevColor(t){ // t in 0..1
+  const g=[34,197,94],y=[234,179,8],o=[249,115,22],r=[239,68,68];
+  let c;
+  if(t<.34)c=lerp(g,y,t/.34);
+  else if(t<.67)c=lerp(y,o,(t-.34)/.33);
+  else c=lerp(o,r,(t-.67)/.33);
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+function scenMax(depths,thr){let m=thr;for(const k in depths)if(depths[k]>m)m=depths[k];return m}
+
+// applied[id] is now {ivId, reduction} — the ONE intervention currently applied to that ward
+function currentDepths(){
+  const mm=S.data.model.scenarios_mm[S.scenIdx];
+  const base={...(S.data.model.depths[String(mm)]||{})};
+  for(const id in S.applied) if(base[id]!==undefined) base[id]*=(1-S.applied[id].reduction);
+  return {mm,depths:base};
+}
+
+function render(){
+  const {mm,depths}=currentDepths();
+  const thr=S.data.model.flood_threshold_m;
+  const cut=new Set(S.data.model.cutoffs[String(mm)]||[]);
+  const vSet=new Set(S.data.val.flooded_ids), vHi=new Set(S.data.val.high_conf_ids);
+  const dmax=scenMax(depths,thr*1.4);
+  let nF=0;
+  for(const w of S.data.zones.wards){
+    const el=document.getElementById('w'+w.id);
+    const d=depths[String(w.id)]||0;
+    if(d>=thr)nF++;
+    if(S.valMode){
+      el.style.fill = vSet.has(w.id)?(d>=thr?'#22c55e':'#a16207'):(d>=thr?'#7c3aed':'var(--dry)');
+      el.classList.toggle('valhi',vHi.has(w.id));
+    }else{
+      el.style.fill = d>=thr ? sevColor(Math.min((d-thr)/(dmax-thr),1)) : 'var(--dry)';
+      el.classList.remove('valhi');
+    }
+    el.classList.toggle('sel',S.sel===w.id);
+  }
+  document.getElementById('rainval').textContent=mm+' mm';
+  document.getElementById('rain').value=S.scenIdx;
+  document.getElementById('cFlood').textContent=nF;
+  document.getElementById('cCut').textContent=cut.size;
+  if(S.sel!==null)renderPanel(S.sel);
+}
+
+function drawLabels(){
+  const g=document.getElementById('labels');
+  if(!S.showLabels){g.innerHTML='';return;}
+  let h='';
+  for(const w of S.data.zones.wards){
+    const r=w.rings[0];let cx=0,cy=0;for(const p of r){cx+=p[0];cy+=p[1]}
+    cx/=r.length;cy/=r.length;
+    const nm=w.name.replace(/^Ward \d+ /,'');
+    h+=`<text class="wlabel" style="opacity:.9" x="${P.x(cx).toFixed(1)}" y="${P.y(cy).toFixed(1)}">${nm}</text>`;
+  }
+  g.innerHTML=h;
+}
+
+function drawHosp(){
+  const g=document.getElementById('hosps');
+  if(!S.showHosp){g.innerHTML='';return;}
+  let h='';
+  for(const hp of (S.data.hosp.hospitals||[])){
+    const x=P.x(hp.lng).toFixed(1),y=P.y(hp.lat).toFixed(1);
+    h+=`<g><circle class="hosp" cx="${x}" cy="${y}" r="3"></circle>
+        <path class="hosp-cross" d="M${x-1.6},${y} h3.2 M${x},${y-1.6} v3.2"></path>
+        <title>${hp.name}</title></g>`;
+  }
+  g.innerHTML=h;
+}
+
+function selectWard(id){S.sel=id;render();renderPanel(id)}
+
+const SEVC={severe:'var(--red)',moderate:'var(--orange)',mild:'var(--yellow)',none:'var(--muted)'};
+function renderPanel(id){
+  const {mm,depths}=currentDepths();
+  const thr=S.data.model.flood_threshold_m;
+  const w=S.data.zones.wards.find(x=>x.id===id);
+  const rec=S.data.reco.recommendations[String(id)];
+  const prof=rec?rec.profile:{};
+  const d=depths[String(id)]||0, flooded=d>=thr;
+  const near=(S.data.model.nearest_km[String(mm)]||{})[String(id)];
+  const base=S.data.model.baseline_km[String(id)];
+  const nh=(S.data.hosp.nearest||{})[String(id)];
+  const sev=prof.severity||'none';
+
+  let h=`<div class="phead">
+    <div class="nm">${w.name}</div>
+    <div class="meta">Ward ${id} · ${prof.size_class||'?'} area · ${prof.density_class||''} · slope ${prof.slope_pct||0}%</div>
+    <span class="sevpill" style="background:${SEVC[sev]};color:#08111a">${flooded?sev+' flooding':'not flooded'}</span>
+  </div><div class="pbody">`;
+
+  h+=`<div class="card"><h4>Flood & hospital access @ ${mm} mm</h4>
+    <div class="kv"><span>Flood depth</span><span class="v" style="color:${flooded?SEVC[sev]:'var(--muted)'}">${flooded?d.toFixed(2)+' m':'dry'}</span></div>
+    <div class="kv"><span>Nearest hospital</span><span class="v hospname">${nh?nh.name:'—'}</span></div>`;
+  if(near===-1)
+    h+=`<div class="kv"><span>Road access now</span><span class="v cutoff">⚠ CUT OFF</span></div>`;
+  else if(near!=null){
+    h+=`<div class="kv"><span>Road distance now</span><span class="v">${near} km</span></div>`;
+    if(base!=null&&near>base+0.05)h+=`<div class="kv"><span>Flood detour</span><span class="v" style="color:var(--orange)">+${(near-base).toFixed(1)} km</span></div>`;
+  }
+  h+=`</div>`;
+
+  if(rec&&rec.ranked.length&&flooded){
+    h+=`<div class="ivh">Recommended Japanese interventions</div>
+      <div class="prio">
+        <button class="${S.priority==='impact'?'on':''}" data-p="impact">Most effective</button>
+        <button class="${S.priority==='cost'?'on':''}" data-p="cost">Cheapest</button>
+        <button class="${S.priority==='speed'?'on':''}" data-p="speed">Fastest</button></div>`;
+    const ranked=rankBy(rec.ranked,S.priority);
+    const curApplied=S.applied[String(id)]; // {ivId, reduction} | undefined — applies to EVERY card below, not just top
+    ranked.forEach((iv,i)=>{
+      const ap=curApplied&&curApplied.ivId===iv.id;
+      const whatText = iv.what && iv.what.trim() ? iv.what
+        : '(explanation not available — check intervention_explain.json is in the data/ folder and rerun p6_export.py)';
+      h+=`<div class="iv ${i===0?'top':''}">
+        <div class="rank">${i===0?'★ TOP PICK':'#'+(i+1)}</div>
+        <div class="en">${iv.name_en}</div>
+        <div class="jpn">${iv.name_jp} · ${iv.romaji}</div>
+        <div class="what"><b>What it is:</b> ${whatText}</div>
+        <div class="tags"><span class="tag">cost: ${iv.cost_band.replace('_',' ')}</span><span class="tag">build: ${iv.time_to_build}</span><span class="tag">impact: ${iv.impact}</span></div>
+        <div class="why"><b>Why here:</b> ${iv.why}</div>
+        <div class="ex">Real example: ${iv.example} — ${iv.operator}</div>
+        <button class="applybtn ${ap?'':'off'}" data-id="${id}" data-ivid="${iv.id}" data-imp="${iv.impact}">${ap?'✓ Applied — map shows reduced flood':'▶ Apply & re-run flood'}</button>
+      </div>`;
+    });
+    if(rec.excluded.length){
+      h+=`<div class="card"><h4>Why other methods don't fit here</h4>`;
+      rec.excluded.forEach(e=>h+=`<div class="excl"><b>${e.name_en}</b> — ${e.reason}</div>`);
+      h+=`</div>`;
+    }
+  }else if(!flooded){
+    h+=`<div class="card"><h4>Interventions</h4><div class="excl">This ward stays dry at ${mm} mm — no intervention needed. Raise the rainfall to see when it starts flooding.</div></div>`;
+  }
+
+  // AI advisor
+  h+=`<div class="ai"><h4>💬 Ask the AI advisor</h4>
+    <div class="quick" id="quick"></div>
+    <div class="airow"><input id="aiq" placeholder="e.g. Why this method and not another?"><button id="aisend">Ask</button></div>
+    <div class="aians" id="aians"></div></div>`;
+
+  h+=`</div>`;
+  document.getElementById('side').innerHTML=h;
+
+  document.querySelectorAll('.prio button').forEach(b=>b.onclick=()=>{S.priority=b.dataset.p;renderPanel(id)});
+
+  // Apply/re-run — now wired to EVERY intervention card, not just the top pick.
+  // Clicking a card's button applies THAT intervention (replacing any other applied
+  // to this ward). Clicking the same active one again un-applies it.
+  document.querySelectorAll('.applybtn').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.id, ivid=b.dataset.ivid;
+    const cur=S.applied[k];
+    if(cur&&cur.ivId===ivid){
+      delete S.applied[k];
+    }else{
+      S.applied[k]={ivId:ivid, reduction:Math.min(0.7,(+b.dataset.imp)*0.8)};
+    }
+    render();renderPanel(id);
+  });
+
+  // AI quick questions
+  const topName=(rec&&rec.ranked[0])?rec.ranked[0].name_en:'';
+  const qs=flooded?[`What is ${topName}?`,`Why ${topName} for this ward?`,'Could this work in Hyderabad?','Why were other methods rejected?']:['Why is this ward dry?'];
+  document.getElementById('quick').innerHTML=qs.map(q=>`<button>${q}</button>`).join('');
+  document.querySelectorAll('#quick button').forEach(b=>b.onclick=()=>askAI(id,b.textContent));
+  document.getElementById('aisend').onclick=()=>askAI(id,document.getElementById('aiq').value);
+  document.getElementById('aiq').onkeydown=e=>{if(e.key==='Enter')askAI(id,e.target.value)};
+}
+
+async function askAI(id,q){
+  if(!q||!q.trim())return;
+  const box=document.getElementById('aians');
+  box.classList.add('show','think');box.textContent='Thinking…';
+  const {mm,depths}=currentDepths();
+  const rec=S.data.reco.recommendations[String(id)];
+  const w=S.data.zones.wards.find(x=>x.id===id);
+  const nh=(S.data.hosp.nearest||{})[String(id)];
+  const ctx=JSON.stringify({
+    ward:w.name, rainfall_mm:mm, flood_depth_m:+(depths[String(id)]||0).toFixed(2),
+    profile:rec?rec.profile:{}, nearest_hospital:nh?nh.name:null,
+    recommended:rec?rec.ranked.map(x=>({name:x.name_en,what:x.what,why:x.why,cost:x.cost_band,build:x.time_to_build,impact:x.impact})):[],
+    excluded:rec?rec.excluded:[]
+  });
+  try{
+    const r=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({question:q,context:ctx})});
+    const j=await r.json();
+    box.classList.remove('think');box.textContent=j.answer||'(no answer)';
+  }catch(e){
+    box.classList.remove('think');
+    box.textContent='AI unavailable (run with: python serve.py, and check your connection). The "What it is" and "Why here" text above already explains this recommendation.';
+  }
+}
+
+function rankBy(list,prio){
+  const c={very_low:1,low:.8,medium:.55,high:.3,very_high:.1},s={months:1,years:.4,decade:.1};
+  const a=[...list];
+  if(prio==='impact')a.sort((x,y)=>y.impact-x.impact);
+  else if(prio==='cost')a.sort((x,y)=>c[y.cost_band]-c[x.cost_band]);
+  else a.sort((x,y)=>s[y.time_to_build]-s[x.time_to_build]);
+  return a;
+}
+
+function buildLegend(){
+  const L=document.getElementById('legend');
+  if(S.valMode){
+    L.innerHTML=`<div class="t">2020 validation</div>
+      <div class="legrow"><span class="sw" style="background:#22c55e"></span>known-2020 · model floods ✓</div>
+      <div class="legrow"><span class="sw" style="background:#a16207"></span>known-2020 · model missed</div>
+      <div class="legrow"><span class="sw" style="background:#7c3aed"></span>model floods (not in 2020 list)</div>
+      <div class="legrow"><span class="sw" style="border:1px solid var(--jp)"></span>high-confidence 2020 ward</div>`;
+  }else{
+    L.innerHTML=`<div class="t">Flood severity</div>
+      <div class="ramp"></div>
+      <div class="legrow" style="justify-content:space-between;width:150px;color:var(--muted)"><span>low</span><span>high</span></div>
+      <div class="legrow"><span class="sw" style="background:var(--dry)"></span>dry / not flooded</div>
+      <div class="legrow"><span class="sw" style="background:#fff;border:1px solid #e11d48"></span>🏥 hospital</div>`;
+  }
+}
+
+function showLimits(){
+  const m=S.data.meta;
+  let h=`<span class="close" id="mc2">✕</span><h2>Model Limitations</h2>
+    <div style="color:var(--muted);font-size:12.5px;margin-bottom:8px">Stated up front — a feature, not an apology.</div>`;
+  m.limitations.forEach(l=>h+=`<div class="limit">${l}</div>`);
+  h+=`<h4 style="margin-top:16px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em">Flooded in 2020 but outside our 145 wards</h4>
+      <div class="excl" style="margin-top:6px">${S.data.val.outside.join(' · ')}</div>`;
+  document.getElementById('modalContent').innerHTML=h;
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('mc2').onclick=()=>document.getElementById('modal').classList.remove('show');
+}
+
+function play(){
+  if(S.playing)return;S.playing=true;let i=0;
+  const b=document.getElementById('playBtn');b.textContent='● Playing…';
+  const t=setInterval(()=>{S.scenIdx=i;render();i++;
+    if(i>=S.data.model.scenarios_mm.length){clearInterval(t);S.playing=false;b.textContent='▶ Play storm';}},400);
+}
+
+// ---- tooltip ----
+function showTip(ev,txt){
+  const t=document.getElementById('tip'),wrap=document.querySelector('.mapwrap').getBoundingClientRect();
+  t.textContent=txt;t.style.opacity=1;
+  t.style.left=(ev.clientX-wrap.left+12)+'px';t.style.top=(ev.clientY-wrap.top+12)+'px';
+}
+function hideTip(){document.getElementById('tip').style.opacity=0}
+
+// ---- zoom & pan ----
+function applyView(){document.getElementById('vp').setAttribute('transform',`translate(${S.view.x},${S.view.y}) scale(${S.view.k})`)}
+function setupZoomPan(){
+  const svg=document.getElementById('map');
+  document.getElementById('zin').onclick=()=>{S.view.k=Math.min(8,S.view.k*1.3);applyView()};
+  document.getElementById('zout').onclick=()=>{S.view.k=Math.max(1,S.view.k/1.3);applyView()};
+  document.getElementById('zreset').onclick=()=>{S.view={k:1,x:0,y:0};applyView()};
+  svg.addEventListener('wheel',e=>{e.preventDefault();
+    const f=e.deltaY<0?1.12:1/1.12;S.view.k=Math.max(1,Math.min(8,S.view.k*f));applyView();},{passive:false});
+  svg.addEventListener('mousedown',e=>{S.drag={x:e.clientX,y:e.clientY,vx:S.view.x,vy:S.view.y};svg.classList.add('grabbing')});
+  window.addEventListener('mousemove',e=>{if(!S.drag)return;
+    S.view.x=S.drag.vx+(e.clientX-S.drag.x);S.view.y=S.drag.vy+(e.clientY-S.drag.y);applyView()});
+  window.addEventListener('mouseup',()=>{S.drag=null;svg.classList.remove('grabbing')});
+}
+
+boot();
+</script>
+</body>
+</html>
