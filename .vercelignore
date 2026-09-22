@@ -1,0 +1,11 @@
+# Only web/ (static site) and api/ (the one serverless function) are needed in
+# production — everything else here is the offline model-building pipeline, or
+# local-dev-only, and shipping it to Vercel just slows builds and (as with
+# serve.py) can confuse Python entrypoint auto-detection.
+serve.py
+pipeline/
+research/
+data/
+SETU_demo.pptx
+.venv/
+__pycache__/
