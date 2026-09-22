@@ -140,72 +140,6 @@ def main():
     print(f"[ok] hospitals.json  ({len(hpts)} named hospitals, "
           f"{len(ward_nearest_hosp)} wards with a nearest hospital)")
 
-    # --- illustrative real-world cost & build-time estimates ---
-    # Order-of-magnitude planning figures, NOT a quantity survey. Grounded in comparable Indian
-    # urban stormwater/infrastructure unit-cost ranges (drain/tunnel/basin/RWH-mandate benchmarks).
-    # scale: 'length' -> effective corridor length = sqrt(ward area); 'area' -> ward area directly;
-    # 'household' -> estimated households from ward area x an assumed density band; 'flat' -> fixed,
-    # not ward-scaled (shared/admin infrastructure).
-    COST_MODEL = {
-        "underground_reservoir":     ("length",    120, 220),   # Rs crore per km of tunnel corridor
-        "mega_discharge_channel":    ("length",    280, 450),
-        "multipurpose_retention_basin": ("area_frac", 0.03, 15, 30),  # footprint frac of ward, Rs cr/hectare
-        "schoolyard_park_storage":   ("sites",     1.5, 3.0),   # Rs crore per site, ~1 site per 3km2
-        "building_rainwater_storage": ("household", 18000, 35000),  # Rs per household (India RWH mandate range)
-        "permeable_pavement":        ("length",    2, 4),
-        "infiltration_inlets":       ("length",    0.4, 0.9),
-        "super_levee":               ("length",    70, 130),
-        "river_widening":            ("length",    35, 70),
-        "sabo_check_dam":            ("flat",      2.5, 6),
-        "hazard_maps":               ("flat",      0.08, 0.25),
-        "xrain_radar":               ("flat_shared", 3, 6),
-        "basin_flood_management":    ("area",      4, 9),       # Rs crore per km2 of ward
-        "comprehensive_flood_control": ("area",    6, 12),
-    }
-    DENSITY_PPL_KM2 = {"dense": 25000, "mixed": 12000}   # assumed GHMC ward density band (stated assumption)
-    TIME_RANGES = {
-        ("months", "small"): "8-14 months", ("months", "medium"): "10-16 months", ("months", "large"): "12-20 months",
-        ("years", "small"): "2-3 years", ("years", "medium"): "2.5-4 years", ("years", "large"): "3-5 years",
-        ("decade", "small"): "6-10 years", ("decade", "medium"): "8-11 years", ("decade", "large"): "8-12 years",
-    }
-
-    def cost_time_estimate(iv_id, time_band, area_km2, size_class, density_class):
-        m = COST_MODEL.get(iv_id)
-        time_label = TIME_RANGES.get((time_band, size_class), TIME_RANGES.get((time_band, "medium")))
-        if not m:
-            return None
-        kind = m[0]
-        if kind == "length":
-            length_km = max(0.3, area_km2 ** 0.5)
-            lo, hi = length_km * m[1], length_km * m[2]
-        elif kind == "area_frac":
-            _, frac, cr_lo, cr_hi = m
-            ha = area_km2 * 100 * frac
-            lo, hi = ha * cr_lo, ha * cr_hi
-        elif kind == "sites":
-            n = max(1, round(area_km2 / 3))
-            lo, hi = n * m[1], n * m[2]
-        elif kind == "household":
-            hh = (area_km2 * DENSITY_PPL_KM2.get(density_class, 12000)) / 4.5
-            lo, hi = hh * m[1] / 1e7, hh * m[2] / 1e7   # Rs crore
-        elif kind == "area":
-            lo, hi = area_km2 * m[1], area_km2 * m[2]
-        elif kind in ("flat", "flat_shared"):
-            lo, hi = m[1], m[2]
-        else:
-            return None
-        lo, hi = max(lo, 0.02), max(hi, lo * 1.3)
-        if hi < 1:
-            cost_label = f"Rs {lo*100:.0f}-{hi*100:.0f} lakh"
-        else:
-            cost_label = f"Rs {lo:.1f}-{hi:.1f} crore" if hi < 20 else f"Rs {lo:.0f}-{hi:.0f} crore"
-        if kind == "flat_shared":
-            cost_label += " (shared citywide network, allocated share)"
-        return {"cost_label": cost_label, "time_label": time_label}
-
-    zones_area = {int(f["properties"]["zone_id"]): float(f["properties"]["area_m2"]) / 1e6
-                  for f in json.loads((config.DATA / "zones_enriched.geojson").read_text(encoding="utf-8"))["features"]}
-
     # --- recommendations (trim to essentials) + plain explanations ---
     rec = json.loads((config.DATA / "recommendations.json").read_text(encoding="utf-8"))
     try:
@@ -220,20 +154,16 @@ def main():
     missing_what = 0
     for zid, r in rec["recommendations"].items():
         ranked_out = []
-        area_km2 = zones_area.get(int(zid), 3.0)
-        prof = r["profile"]
         for x in r["ranked"][:5]:
             what = explain.get(x["id"]) or lib.get(x["id"], {}).get("mechanism") or ""
             if not what:
                 missing_what += 1
-            est = cost_time_estimate(x["id"], x["time_to_build"], area_km2,
-                                      prof.get("size_class", "medium"), prof.get("density_class", "mixed"))
             ranked_out.append({"id": x["id"], "name_en": x["name_en"], "name_jp": x["name_jp"],
                         "romaji": x["romaji"], "category": x["category"],
                         "example": x["example"], "operator": x["operator"],
                         "cost_band": x["cost_band"], "time_to_build": x["time_to_build"],
                         "impact": x["impact"], "score": x["score"], "why": x["why"],
-                        "what": what, "est": est,
+                        "what": what,
                         "india": lib.get(x["id"], {}).get("india_relevance", "")})
         slim[zid] = {
             "profile": r["profile"],

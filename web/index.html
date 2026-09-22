@@ -155,8 +155,6 @@
   .effect b{color:var(--green)}
   .effect .ok{color:var(--green);font-weight:700}
   .effect .part{color:var(--yellow);font-weight:700}
-  .costest{margin-top:8px;font-size:12.5px;color:#dbe6f0;padding:7px 10px;background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.18);border-radius:8px;font-variant-numeric:tabular-nums}
-  .costest b{color:var(--accent)}
   .illustrative{font-size:10.5px;color:var(--muted);font-style:italic;margin-top:4px;line-height:1.4}
   .evrow{font-size:12.5px;line-height:1.6;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)}
   .evrow:last-of-type{border-bottom:none}
@@ -722,7 +720,6 @@ function renderPanel(id){
         <div class="jpn">${iv.name_jp} · ${iv.romaji}</div>
         <div class="what"><b>What it is:</b> ${whatText}</div>
         <div class="tags"><span class="tag">cost: ${iv.cost_band.replace('_',' ')}</span><span class="tag">build: ${iv.time_to_build}</span><span class="tag">impact: ${iv.impact}</span></div>
-        ${iv.est?`<div class="costest">💰 <b>${iv.est.cost_label}</b> for this ward · ⏱ <b>${iv.est.time_label}</b> to build<div class="illustrative">Illustrative order-of-magnitude estimate — not a detailed quantity survey.</div></div>`:''}
         <div class="why"><b>Why here:</b> ${iv.why}</div>
         <div class="ex">Real example: ${iv.example} — ${iv.operator}</div>
         <div class="effect">📉 Cuts flood depth by <b>${Math.round(redOf(iv.impact)*100)}%</b>${wasFlooded?` · ${baseDepth.toFixed(2)} m → ${(baseDepth*(1-redOf(iv.impact))).toFixed(2)} m · ${baseDepth*(1-redOf(iv.impact))<thr?'<span class="ok">ward goes dry</span>':'<span class="part">partial fix — still floods</span>'}`:''}</div>
