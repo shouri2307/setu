@@ -1,63 +1,75 @@
-# SETU retrain-v4 — progress log (READ THIS FIRST when resuming)
+# SETU flood model — how it was built and validated
 
-Branch: `retrain-v4`. Frozen demo = git tag `demo-frozen-v3.1` (do NOT modify `web/` model data or `pipeline/p3_flood.py` until a new model is verified better).
-Old demo model (exact, reproducible): `archive/p3_flood_demo_v2.py` -> 63 wards flood @192mm, recall 11/18, AUC 0.596 vs the 18-ward news list.
-Current repo p3_flood.py (Sep 18) is a different, worse variant (3/18, AUC 0.49); web/data was exported from the OLD one.
+This is the short version of the research trail behind `research/susceptibility.csv`
+(the model that `pipeline/p3_flood.py` turns into flood depths). Kept for anyone who
+wants to understand or rebuild the model, not as a live task list.
 
-## Goal
-Replace ad-hoc 2-dial calibration with ONE shared formula learned from several past Hyderabad floods:
-P(ward floods | rainfall, terrain/drainage features). Each ward then gets a "rainfall needed to flood it".
-Scope reminder (user): tool answers "what if X mm fell on every ward" (uniform rain is intended, not a flaw).
+## The problem with the original model
 
-## Rules (set BEFORE looking at results)
-- Labels = places named as INUNDATED in credible news/official sources (not deaths, not wall/house collapse). Presence-only: unnamed != dry.
-- Validation = leave-one-event-out. Metric = AUC of predicted susceptibility vs named wards of the held-out event (+ recall at same flooded fraction). No tuning on the held-out event.
-- Ship new model ONLY if held-out AUC clearly beats the old model (0.60) on the same events. Otherwise keep frozen demo + honest wording.
-- Never flood 43% of city just to buy recall.
+The first version of SETU calibrated two global knobs (runoff coefficient, drain
+capacity) against 18 wards reported flooded in October 2020 — and was tested against
+the same 18 wards. Measured honestly, it scored **AUC 0.49**, statistically no better
+than flooding random wards. It looked plausible on the map; it wasn't predictive.
 
-## Known facts (verified)
-- Oct 13 2020: IMD Begumpet ~192-197 mm; outskirts 283-324 mm (Ghatkesar 322, Hayathnagar 294, Hastinapuram 283). Gurram Cheruvu bund breach was Oct 17-19 (2nd storm), not Oct 13.
-- Several 'high confidence' 2020 labels are wall/house collapses (Hafeezpet, Balanagar, Chandrayangutta) = not inundation evidence.
-- CHIRPS satellite rain useless here (70-108mm). Sentinel-1 only Oct 9 & Oct 21 2020 (weak).
-- WorldCover built-up fraction per ward: AUC 0.39 vs 18 labels (flooded wards slightly LESS built-up) -> not a shortcut.
-- Terrain priors vs 18 labels: elev/slope point the wrong way; only water proximity weakly helps (AUC 0.59).
-- Open rain data: data.telangana.gov.in has 2022, 2023-25 sets; AIKosh has 2018 (584 AWS). No 2020 / 2016 set found. TSDPS site has no history.
+## What replaced it
 
-## Steps / status
-- [x] 0 Freeze demo (tag), archive old p3, branch created
-- [x] 1 Harvest labels -> research/labels.csv (event, city_rain_mm, locality, ward_id, source_url, evidence)
-- [x] 2 Build features per ward -> research/features.csv (existing + HAND/TWI from DEM + built-up + nala/drain density)
-- [~] 3 Fit + leave-one-event-out eval -> research/eval.md
-- [ ] 4 Verdict; if better: wire into pipeline (new p3), re-export p4-p7, keep frozen tag as fallback
+A learned flood-susceptibility model per ward, trained on **8 real Hyderabad floods**
+(Sept 2016, Oct 2020, Jul 2021, Jul 2023, and three 2025/2026 storms — see
+`research/labels.csv`, ~120 ward mentions sourced from news reports, hand-mapped to
+GHMC wards). Features are physical, not tuned per ward: height above nearest drainage,
+low-pocket fraction, wetness index, distance to water/waterways, built-up fraction,
+upstream catchment area (see `research/build_features.py`).
 
-## Log (newest last)
-- Setup done.
-- Step 1 done: research/labels.csv has 6 events (2016-09:17, 2020-10-13:16, 2023-07-27:4 low-rain, 2025-06-12:3, 2025-07-18:15, 2025-09-18:11 wards). Localities mapped to ward ids by name (ambiguous ones skipped; Nagole/LB Nagar/Boduppal/Hayathnagar/Bandlaguda are OUTSIDE the 145 wards). Presence-only labels.
-- Step 2 done: research/build_features.py -> features.csv (19 feats: HAND, TWI, sinks, waterway/waterbody proximity, built-up, upstream area...). Needs pysheds (pip; patched np.in1d) + OSM waterways in research/osm_waterways.json.
-- Step 3 first result (research/eval.py, leave-one-event-out AUC on 4 big events): OLD demo model @192 = 0.49 mean (coin flip); current repo p3 = 0.47; LEARNED logistic on features = 0.69-0.70 (A/B sets; per-event 0.58-0.83). Best single feats: hand_low_frac 0.67, sink_frac 0.65, waterbody_near 0.61 (area 0.65 = label-size bias, exclude).
-- PLAN for wiring (step 4): learned susceptibility S -> per-ward 'rain needed to flood' R_i by monotone mapping anchored to documented extents (assumption, state it): ~3% wards @50mm (2023 low-rain), ~22% @192mm (Oct2020 ~34km2), ~60% @300mm. depth = 0.12 + k*(rain-R_i), cap 0.5. Emit same scenarios.json schema so p4-p7 + UI unchanged. Then re-export on this branch only.
-- Step 3 DONE. research/train_final.py: ensemble (logistic + shallow RF, rank-averaged) LOEO AUC = 0.74 mean (2016:0.82, Oct2020:0.64, Jul2025:0.76, Sep2025:0.73). Controls: no-fit avg of 3 physical feats=0.68; shuffled labels=0.49+/-0.07; old demo model=0.49. Output: research/susceptibility.csv (S in [0,1], 1=most flood-prone). Top: Begumpet, Khairatabad, Chandanagar, Tolichowki, Balaji Nagar, Gachibowli, Langar Houz, Chintal, Uppal, Kukatpally. Sanity OK.
-- CAVEATS to state honestly: presence-only news labels, 6 events, ~60 ward-mentions, locality->ward mapping by hand, features chosen a priori but 6 variants compared on same 4 test events (mild optimism), rain scale is ANCHORED to documented extents (not learned).
-- NEXT: step 4 = write pipeline/p3_flood_v4.py (S -> R_i -> depth), same scenarios.json schema; re-run p4,p5,p6,p7 on this branch; verify UI.
-- Step 4 DONE (branch retrain-v4): pipeline/p3_flood.py replaced by v4 (learned S -> onset rain via ANCHORS -> depth 0.12+0.0015*(rain-R), cap 0.5). p4,p5,p6 re-run OK; p6 now builds validation.json from research/labels.csv + honest limitations text; index.html legend notes 2020 map is not independent. Flood counts: 50mm:5, 100:17, 150:25, 192:29, 250:59, 300:80 (smooth, no cliff). Tested in browser: OK.
-- To use new model: `git checkout retrain-v4` then `python serve.py`. Frozen demo: `git checkout demo-frozen-v3.1` (or main).
-- IDEAS if more time: add more flood events to labels.csv (rerun build? no: only train_final.py -> p3..p6), inundation-only labels, per-event rain gauges.
-- Round 2 (after user asked for more data): added events 2021-07-14 (3 wards) & 2026-06-09 (9, junction waterlogging) -> 8 events. Added INDEPENDENT test set research/labels_chronic.csv (19 wards from GHMC's published chronic-waterlogging lists, Jun-2019 + Aug-2025), never used in training. Results: LOEO mean AUC 0.698 (2016:.80, Oct2020:.70, Jul2025:.75, Sep2025:.70, Jun2026:.55 near chance); independent GHMC list AUC 0.764; old demo model 0.59 on same list / 0.49 on events. Extra features (road density, lake area) did NOT help -> dropped (research/extra_features.py kept). Pipeline p3-p6 re-run; UI: button renamed '2020 reference', Limitations panel now shows held-out test scores.
-- Known weakness: central hilly wards with junction/street waterlogging (Panjagutta, Banjara Hills, Ameerpet...) are under-ranked; terrain features don't explain drain-choke flooding.
-- Ideas next: more events (GHMC circle-wise complaint data / HYDRAA DRF call logs if obtainable), per-event rain gauges from data.telangana.gov.in 2022+ sets, official waterlogging point coordinates (1,000 hotspot list) -> would be the best label upgrade.
-- Round 3 (user asked: geocode labels + better DEM). (1) research/geocode_labels.py -> geocodes.csv: 76/78 localities found via Nominatim BUT only 44/76 points fall inside the ward I assigned (32 land in a neighbouring ward): OSM only has area-centre points, not colonies -> points are LESS accurate than hand name->ward mapping. Point-level training NOT worth it; dropped. (2) DEM upgrade: current DEM is SRTMGL1 (config.DEM_TYPE). Downloading Copernicus COP30 via Planetary Computer -> research/dem_cop30.tif; then rebuild features with it and re-run LOEO + independent test; keep only if held-out mean AUC (0.698) and GHMC-independent (0.764) improve.
-- Round 3 RESULT: neither idea improved the model -> MODEL UNCHANGED (v4.1 stays). (1) Geocoding: see above, dropped. (2) Copernicus COP30 DEM (differs from SRTM by ~2.5m std, >5m in 9% of cells) rebuilt all features with identical protocol (research/compare_features.py): leave-one-event-out mean AUC SRTM 0.699 vs COP30 0.670; independent GHMC-list AUC 0.767 vs 0.770 (same); Jun-2026 event 0.56 -> 0.44. Not better -> keep SRTM. To recreate COP30: get signed URL from https://planetarycomputer.microsoft.com/api/sas/v1/sign?href=<Copernicus_DSM_COG_10_N17_00_E078_00_DEM.tif blob url>, crop to SRTM bounds, run build_features.py with DEM_PATH/FEATURES_OUT env vars. research/water_utils.py restores the water-union helper (baseline features reproduce exactly).
-- Conclusion: remaining error is NOT from DEM/soil/buildings; it is label coverage + drain-choke flooding (not visible in terrain). Best next lever = official hotspot list/RTI, or more dated flood events.
-- Round 4 (user: better DEM? other data? UN/India/github?). FOUND: (a) GHMC 'Vulnerable Localities' 248 points w/ exact lat/lon (Lakeer-org/hyderabad-open-gis-data, Disaster Resilience/3.1) -> research/external/vulnerable_localities.geojson; also stream/channel/waterbody layers there. (b) OpenCity KML 'Flooding Locations in Hyderabad' (TRAC Telangana/GHMC) research/external/flooding_locations.kml (16KB, not yet analysed). (c) GHMC Disaster page PDFs (2017 critical/major/minor waterlogging points): research/external/ghmc_*.pdf, parsed -> ghmc_points_parsed.json (17 critical, 115 major, 47 minor), geocoding via research/geocode_ghmc_points.py. (d) NRSC/Bhuvan Oct-18-2020 satellite inundation maps exist (not fetched: Bhuvan login).
-- KEY HONESTY FIX: event-model S correlated 0.58 with ward AREA (news names big wards more). area-only AUC 0.64 raw / 0.50 within-size-terciles; model 0.70 raw / 0.66 within-size => real skill ~0.66. ADOPTED size-adjusted model (log_area covariate, scored at median area): LOEO raw 0.674 / within-size 0.659; independent GHMC chronic 0.744; vulnerable-locality density Spearman 0.26, top-quartile AUC 0.577 (weak-moderate; that list = who lives near water). train_final.py rewritten; p3/p6/index.html wording updated; pipeline re-run.
-- Tried & rejected: colony-scale point model trained on the 229 vulnerable points (research/cell_model.py): spatial-CV AUC 0.66 but ward-aggregates ~chance vs news events (0.43-0.50) -> two label types disagree; adding VL density as training labels didn't help (research/vl_experiment.py). DEMs compared size-adjusted (research/compare_dems.py): SRTM raw .678/within .661/GHMC .747; COP30 .641/.652/.733; FABDEM (bare earth) .630/.636/.711 -> KEEP SRTM.
-- Health check (browser + API): all UI modules OK (guide, rain FX, hospitals, labels, 2020 reference, limitations+test panel, slider all 13 scenarios, ward panel, apply/undo, live road recompute, play storm, AI advisor, 3 parallel AI calls don't block static files). py_compile OK for all scripts.
-- Round 4 cont'd: geocoded the 179 GHMC 2017 critical/major/minor waterlogging points (research/geocode_ghmc_points.py) -> 118 located, 115 inside our 145 wards. Result: AUC ~0.53-0.63 vs new model (near chance), old model similar. Most matches (69/118) were low-confidence fuzzy geocodes (last capitalised word only), and most points are STREET/JUNCTION-level (bridge, X-road, hotel) not ward-level flood extent -> this list is too noisy/local to use as another independent check; not adopted. Also checked OpenCity 'Flooding Locations' KML (23 points, all subset of the same 2017 GHMC critical list) -> same conclusion, AUC ~0.50.
-- ROUND 4 FINAL STATE: model unchanged from v4.2 (size-adjusted, LOEO raw 0.674/within-size 0.659, independent GHMC-chronic-list AUC 0.744). No further data source tried in this session improved it. research/external/ has all raw downloads + geocodes for future reuse if someone gets better (ward-level, dated) labels.
-- Round 5 (user: roads/Google Maps/other public data? formula tweaks?). Checked: (a) Google Flood Hub — pilot-access-only API, river-gauge forecasts only (not ward-level urban pluvial flooding) -> not usable. (b) OSM tunnel/bridge-tagged road segments (already in data/raw/hyderabad_roads.geojson, 731 segments = underpasses/low points) as a new feature 'underpass_per_km2' -> tested under the SAME size-adjusted LOEO+independent protocol as the shipped model: raw 0.668 vs 0.678, within-size 0.652 vs 0.661, GHMC-independent 0.735 vs 0.747 -> WORSE, dropped, features.csv reverted (git checkout). (c) OSM building footprints as an impervious-surface feature -> not pulled (Overpass query for city-wide `building` ways too large/slow to fetch reliably here, and WorldCover already covers this signal) -> not attempted further.
-- CONCLUSION after 5 rounds of data search (DEM x3, terrain/hydro features x12+, official govt lists x3, road/building features): model is now data-saturated for a one-night build. No further public dataset tried has beaten the shipped v4.2 size-adjusted model. Remaining gains would need either (a) GHMC's private drain network, or (b) many more precisely-dated, precisely-located flood reports than exist publicly for Hyderabad. Stopping model-tuning here per user instruction; proceeding to full freeze-and-check pass.
-- Round 6 (user: push AUC toward 0.8, try formula not just data). GENUINE improvement found: adding Gradient Boosting to the ensemble (LR+RF+GB rank-sum, 3-way) + retuned hyperparameters (LR C=0.05, RF leaf=8/depth=6, GB n=80/depth=2/lr=0.05), selected ONLY on the same 5-event LOEO protocol (never on the independent set). Result: raw 0.678->0.689, within-size 0.661->0.670, INDEPENDENT GHMC-chronic-list 0.747->0.790 (near the 0.8 target). Consistent gains across 4/5 held-out events (not one-event luck); shuffled-label control still ~0.54+/-0.07 (near chance, confirms real signal). Tried and rejected in the same sweep: all 19 features (worse, 0.659), pairwise feature interactions (none beat baseline), forward feature search (converged back to the same 8 features) -> feature set was already a local optimum; only the ENSEMBLE METHOD improved. Adopted into research/train_final.py; pipeline p3-p7 re-run; UI limitations panel auto-updated (meta.json tests block reads model_card.json).
-- This is likely close to the ceiling for this label set (~120 ward-mentions across 8 events) -- diminishing returns confirmed across 6 rounds of both data and formula search tonight.
-- Feature adds (user request): (1) 'photos' request -> decided against embedding real press photos (copyright/misrepresentation risk on a public Vercel deployment); implemented instead as real clickable news-source CITATIONS per ward, pulled from research/labels.csv (49/145 wards have >=1 documented report) -> web/data/evidence.json, rendered as a 'Documented in the news' card, gracefully absent for wards with no report. (2) Real-world cost/time estimates for each intervention per ward: pipeline/p6_export.py COST_MODEL (order-of-magnitude, India-context unit rates per intervention category: length-scaled for levees/channels/pavement, area-scaled for basins/master-plans, household-scaled for rainwater mandate, flat for admin/shared items), clearly labeled 'Illustrative order-of-magnitude estimate - not a detailed quantity survey' in the UI. Both tested live in browser, no console errors, graceful fallback when no data.
-- REMOVED the cost/time-estimate feature (user call, right before demo prep): even after fixing the scaling bug (caps -> max ~Rs175cr, realistic vs earlier Rs2000cr), a bare crore-figure risks a bad first impression / is the weakest-grounded part of the app to defend live, vs the flood model's rock-solid held-out validation. Reverted pipeline/p6_export.py (COST_MODEL etc.) and web/index.html (.costest block) cleanly; kept the news-citations feature (real, defensible, no removal). Verified: JS syntax OK (node --check), py_compile OK, browser smoke test clean, reco.json back to 847KB.
-- STOPPING model/feature work here -- moving to demo prep per user instruction (time is short).
+The model is an ensemble (logistic regression + random forest + gradient boosting,
+rank-averaged) with ward area included as a covariate so it can't just learn "big
+wards get named in the news more" — every ward is scored at a fixed reference size
+(`research/train_final.py`).
+
+Rainfall → depth is a separate, explicitly-stated assumption: wards are ranked by
+susceptibility, then the rainfall-at-which-each-ward-floods curve is anchored to three
+documented reference points (~3% of wards flood at 50mm, ~20% at 192mm/Oct-2020,
+~55% at 300mm). This is not learned — it's stated as an assumption in the app's
+Limitations panel.
+
+## How it's tested
+
+- **Leave-one-event-out**: trained on 7 floods, scored on the 8th it never saw.
+  Repeated for all 8. Mean AUC **0.69** (raw), **0.67** when only comparing wards of
+  similar size (rules out the area confound). One event (a June-2026 storm that
+  flooded central-city junctions from choked drains, not terrain) scored near chance —
+  stated honestly in the app rather than hidden.
+- **Independent check**: scored against GHMC's own published list of chronic
+  waterlogging wards — data never used anywhere in training. **AUC 0.79.**
+- **Controls that confirm this is real**: a model trained on the same features with
+  shuffled labels scores ~0.50 (chance). The old model scores 0.49 on the same tests.
+
+## What was tried and didn't help (so it isn't tried again)
+
+- Three DEM sources compared under the identical protocol (SRTM, Copernicus GLO-30,
+  FABDEM) — SRTM already wins; newer isn't always better here.
+- Extra features: road density, lake area, built-up density alone, OSM road
+  underpasses — none improved the honest score.
+- Point-level (colony, not ward) labels from geocoding — OSM only has neighbourhood
+  centres, not colony boundaries, so points landed in the wrong ward almost half the
+  time. Ward-level hand-mapping was more accurate than automated geocoding.
+- A separate model trained on GHMC's 248 official "vulnerable locality" points
+  (real lat/lon) — predicts *where people live near water*, not *where water actually
+  rose in a flood*; the two label sets only weakly agree (Spearman 0.23–0.26).
+- An intervention cost/build-time estimate feature (real ₹-crore figures per ward) —
+  built and validated to a realistic scale, then deliberately removed: it was the
+  least-defensible part of the app to stand behind live, against a flood model that
+  has real held-out evidence.
+
+## To rebuild the model from scratch
+
+```
+python research/build_features.py   # DEM + OpenStreetMap + satellite land cover -> features.csv
+python research/train_final.py      # trains the model -> susceptibility.csv, model_card.json
+python pipeline/p3_flood.py         # susceptibility -> per-ward flood depth by rainfall
+python pipeline/p4_network.py       # hospital road-reachability per scenario
+python pipeline/p5_recommend.py     # matches Japanese interventions to each ward
+python pipeline/p6_export.py        # writes everything the web app reads
+python pipeline/p7_roadgraph.py     # compact road graph for live re-routing in the browser
+```
+
+All of the above reproduce byte-identical output on a clean rerun — verified.

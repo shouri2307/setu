@@ -9,3 +9,5 @@ rasterstats
 pyproj
 networkx
 groq
+scikit-learn
+pysheds
