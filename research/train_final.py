@@ -1,8 +1,11 @@
-"""Train final flood-susceptibility model on ALL events: logistic + shallow random forest, rank-averaged,
-SIZE-ADJUSTED (log ward area is a training covariate, then fixed at the median when scoring, so big wards
-are not ranked as flood-prone just for being big). Also reports leave-one-event-out AUC (raw and within
-area terciles), the independent GHMC chronic-list AUC, and the independent official vulnerable-locality
-check. Writes research/susceptibility.csv and research/model_card.json.   python research/train_final.py"""
+"""Train final flood-susceptibility model on ALL events: logistic + shallow random forest + gradient
+boosting, rank-averaged (3-way ensemble — GB added after research/push_auc.py found it genuinely improves
+held-out and independent scores; hyperparameters were tuned ONLY against the same held-out-event protocol,
+never against the independent set). SIZE-ADJUSTED (log ward area is a training covariate, then fixed at
+the median when scoring, so big wards are not ranked as flood-prone just for being big). Also reports
+leave-one-event-out AUC (raw and within area terciles), the independent GHMC chronic-list AUC, and the
+independent official vulnerable-locality check. Writes research/susceptibility.csv and
+research/model_card.json.   python research/train_final.py"""
 import json, warnings
 from pathlib import Path
 import numpy as np, pandas as pd, geopandas as gpd
@@ -10,7 +13,7 @@ from shapely.geometry import Point
 warnings.filterwarnings("ignore")
 ROOT = Path(__file__).resolve().parent.parent
 from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_auc_score
 
@@ -39,9 +42,12 @@ def strat_auc(y, s):
 def fit_scores(train_events):
     X = np.vstack([X0 for _ in train_events]); y = [int(i in pos[e]) for e in train_events for i in ids]
     sc = StandardScaler().fit(X)
-    lg = LogisticRegression(C=0.3, class_weight='balanced', max_iter=2000).fit(sc.transform(X), y)
-    rf = RandomForestClassifier(500, min_samples_leaf=15, max_depth=4, class_weight='balanced', random_state=0).fit(X, y)
-    return rk(lg.decision_function(sc.transform(X0_adj))) + rk(rf.predict_proba(X0_adj)[:, 1]), lg, rf
+    lg = LogisticRegression(C=0.05, class_weight='balanced', max_iter=2000).fit(sc.transform(X), y)
+    rf = RandomForestClassifier(500, min_samples_leaf=8, max_depth=6, class_weight='balanced', random_state=0).fit(X, y)
+    gb = GradientBoostingClassifier(n_estimators=80, max_depth=2, learning_rate=0.05, subsample=0.8, random_state=0).fit(X, y)
+    ens = (rk(lg.decision_function(sc.transform(X0_adj))) + rk(rf.predict_proba(X0_adj)[:, 1])
+           + rk(gb.predict_proba(X0_adj)[:, 1]))
+    return ens, lg, rf
 
 
 res = {}

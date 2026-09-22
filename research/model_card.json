@@ -1,7 +1,7 @@
 {
- "independent_ghmc_chronic_auc": 0.744,
- "vulnerable_localities_spearman": 0.26,
- "vulnerable_localities_top_quartile_auc": 0.577,
+ "independent_ghmc_chronic_auc": 0.79,
+ "vulnerable_localities_spearman": 0.231,
+ "vulnerable_localities_top_quartile_auc": 0.54,
  "events": {
   "2016-09": 17,
   "2020-10-13": 16,
@@ -13,14 +13,14 @@
   "2026-06-09": 9
  },
  "loeo_auc_ensemble": {
-  "2016-09": 0.722,
-  "2020-10-13": 0.701,
-  "2025-07-18": 0.727,
-  "2025-09-18": 0.677,
-  "2026-06-09": 0.542
+  "2016-09": 0.731,
+  "2020-10-13": 0.728,
+  "2025-07-18": 0.741,
+  "2025-09-18": 0.702,
+  "2026-06-09": 0.543
  },
- "loeo_auc_mean": 0.674,
- "loeo_auc_within_size_mean": 0.659,
+ "loeo_auc_mean": 0.689,
+ "loeo_auc_within_size_mean": 0.67,
  "features": [
   "hand_low_frac",
   "twi_mean",
