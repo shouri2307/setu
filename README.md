@@ -151,10 +151,13 @@ reopening a road can help wards other than the one you fixed.
 
 ```
 README.md              this file
-requirements.txt       Python dependencies
+requirements.txt       Python dependencies (offline pipeline + local dev server)
 config.py              paths + the DEM source used by p1_fetch.py
-serve.py               serves web/ and proxies AI questions to Groq (key stays server-side)
+serve.py               local dev server: serves web/ and proxies AI questions to Groq
 .env.example            copy to .env and fill in GROQ_API_KEY / OPENTOPOGRAPHY_API_KEY
+vercel.json             Vercel deploy config — serves web/ as static, api/ as a function
+api/ask.py              Vercel serverless function — same Groq proxy as serve.py, for production
+api/requirements.txt    scopes the function to stdlib only (overrides the root requirements.txt)
 
 pipeline/                        the production data pipeline, run in order
   p1_fetch.py                    downloads raw DEM + roads + hospitals + water bodies
@@ -204,6 +207,23 @@ python serve.py
 ```
 
 Open `http://localhost:8000`.
+
+### Deploying (Vercel)
+
+The deployed site is just the static `web/` folder plus one serverless function for
+the AI proxy — none of the Python pipeline runs on the server at request time; all
+the flood/intervention data is precomputed into `web/data/*.json` ahead of time.
+
+- `vercel.json` points Vercel's static output at the `web/` folder.
+- `api/ask.py` is the same Groq proxy as `serve.py`, in Vercel's serverless-function
+  format — auto-exposed at `/api/ask`.
+- `api/requirements.txt` intentionally overrides the repo-root one, so Vercel never
+  tries to build the offline pipeline's heavy geospatial dependencies
+  (geopandas/rasterio/pysheds) into the function.
+
+To deploy: import this repo at [vercel.com/new](https://vercel.com/new), then in the
+project's **Settings → Environment Variables**, add `GROQ_API_KEY` (same value as in
+your local `.env`) before the first deploy. Everything else needs no configuration.
 
 ### Rebuilding the model and every data file from scratch
 

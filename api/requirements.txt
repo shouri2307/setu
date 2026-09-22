@@ -1,0 +1,4 @@
+# api/ask.py only uses the Python standard library (os, json, http.server, urllib).
+# This file intentionally overrides the repo-root requirements.txt (which is for the
+# offline model-building pipeline — pandas/geopandas/rasterio/pysheds — none of that
+# is needed by, or safe to build inside, this serverless function).
