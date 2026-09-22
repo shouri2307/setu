@@ -155,6 +155,15 @@
   .effect b{color:var(--green)}
   .effect .ok{color:var(--green);font-weight:700}
   .effect .part{color:var(--yellow);font-weight:700}
+  .costest{margin-top:8px;font-size:12.5px;color:#dbe6f0;padding:7px 10px;background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.18);border-radius:8px;font-variant-numeric:tabular-nums}
+  .costest b{color:var(--accent)}
+  .illustrative{font-size:10.5px;color:var(--muted);font-style:italic;margin-top:4px;line-height:1.4}
+  .evrow{font-size:12.5px;line-height:1.6;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+  .evrow:last-of-type{border-bottom:none}
+  .evrow b{color:var(--accent)}
+  .evlinks{font-size:11px;margin-top:1px}
+  .evlinks a{color:var(--accent);text-decoration:none}
+  .evlinks a:hover{text-decoration:underline}
   .applybtn{margin-top:9px;width:100%;padding:9px;border:none;border-radius:9px;background:var(--green);color:#04140a;font-weight:700;font-size:12.5px;cursor:pointer;transition:filter .15s}
   .applybtn:hover{filter:brightness(1.08)}
   .applybtn.off{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--glass-line)}
@@ -347,6 +356,7 @@ function runCounts(){
   });
 }
 function decs(v){const s=String(v),i=s.indexOf('.');return i<0?0:Math.min(2,s.length-i-1)}
+function escAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
 
 // Brief shimmer over the side-panel cards while a rainfall change is applied; numbers count up on reveal.
 const redOf=imp=>Math.min(0.7,imp*0.8);
@@ -439,10 +449,11 @@ document.addEventListener('pointerdown',e=>{
 async function boot(){
   const f=p=>fetch(p,{cache:'no-store'}).then(r=>r.json());
   try{
-    const [zones,model,reco,val,meta,hosp]=await Promise.all([
+    const [zones,model,reco,val,meta,hosp,evidence]=await Promise.all([
       f('data/zones.json'),f('data/model.json'),f('data/reco.json'),
-      f('data/validation.json'),f('data/meta.json'),f('data/hospitals.json').catch(()=>({hospitals:[],nearest:{}}))]);
-    S.data={zones,model,reco,val,meta,hosp};
+      f('data/validation.json'),f('data/meta.json'),f('data/hospitals.json').catch(()=>({hospitals:[],nearest:{}})),
+      f('data/evidence.json').catch(()=>({}))]);
+    S.data={zones,model,reco,val,meta,hosp,evidence};
   }catch(e){document.getElementById('boot').classList.add('hide');document.getElementById('side').innerHTML='<div class="placeholder">Could not load data files. Make sure you ran p6_export and are serving from the project root.</div>';return;}
   document.getElementById('reso').textContent=S.data.meta.resolution;
   setupProj();buildMap();buildLegend();
@@ -677,6 +688,16 @@ function renderPanel(id){
     h+=`<div class="kv"><span>Before interventions</span><span class="v" style="color:var(--muted)">${nearPre===-1?'CUT OFF':nearPre+' km'}</span></div>`;
   h+=`</div>`;
 
+  const evid=S.data.evidence[String(id)];
+  if(evid&&evid.length){
+    h+=`<div class="card"><h4>📰 Documented in the news</h4>`;
+    evid.forEach(e=>{
+      h+=`<div class="evrow"><b>${e.event}</b> — ${e.locality}
+        <div class="evlinks">${e.sources.map((u,i)=>`<a href="${escAttr(u)}" target="_blank" rel="noopener noreferrer">source ${i+1} ↗</a>`).join(' · ')}</div></div>`;
+    });
+    h+=`<div class="illustrative" style="margin-top:2px">Real news reports naming this ward. Not every flooded ward has a documented report, and this is not exhaustive.</div></div>`;
+  }
+
   if(rec&&rec.ranked.length&&(flooded||ap0)){
     if(ap0){
       const aiv=rec.ranked.find(x=>x.id===ap0.ivId);
@@ -701,6 +722,7 @@ function renderPanel(id){
         <div class="jpn">${iv.name_jp} · ${iv.romaji}</div>
         <div class="what"><b>What it is:</b> ${whatText}</div>
         <div class="tags"><span class="tag">cost: ${iv.cost_band.replace('_',' ')}</span><span class="tag">build: ${iv.time_to_build}</span><span class="tag">impact: ${iv.impact}</span></div>
+        ${iv.est?`<div class="costest">💰 <b>${iv.est.cost_label}</b> for this ward · ⏱ <b>${iv.est.time_label}</b> to build<div class="illustrative">Illustrative order-of-magnitude estimate — not a detailed quantity survey.</div></div>`:''}
         <div class="why"><b>Why here:</b> ${iv.why}</div>
         <div class="ex">Real example: ${iv.example} — ${iv.operator}</div>
         <div class="effect">📉 Cuts flood depth by <b>${Math.round(redOf(iv.impact)*100)}%</b>${wasFlooded?` · ${baseDepth.toFixed(2)} m → ${(baseDepth*(1-redOf(iv.impact))).toFixed(2)} m · ${baseDepth*(1-redOf(iv.impact))<thr?'<span class="ok">ward goes dry</span>':'<span class="part">partial fix — still floods</span>'}`:''}</div>
