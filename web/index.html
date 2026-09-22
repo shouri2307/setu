@@ -210,6 +210,30 @@
   .bskip:hover{color:var(--text)}
   .bnext{background:var(--accent);color:#04121b;border:none;border-radius:9px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer}
 
+  /* Phone / narrow-tablet layout — additive only, desktop rules above are untouched */
+  @media (max-width: 860px){
+    html,body{height:auto;overflow:visible}
+    .app{height:auto;min-height:100vh;overflow:visible;grid-template-rows:auto auto auto}
+    header{padding:8px 12px}
+    header .brand{font-size:17px}
+    header .sub{font-size:11px}
+    .hbtn{padding:7px 10px;font-size:12px}
+    .ctrlbar{padding:8px 12px;gap:10px}
+    .rainbox{min-width:0;width:100%;flex-basis:100%}
+    .playbtn{flex:1;min-width:0}
+    .counters{width:100%;flex-basis:100%}
+    .counter{flex:1;min-width:0;padding:6px 8px}
+    .main{grid-template-columns:1fr;grid-template-rows:56vh auto;overflow:visible}
+    .mapwrap{min-height:340px}
+    .side{border-left:none;border-top:1px solid var(--glass-line);overflow-y:visible;box-shadow:0 -12px 32px rgba(0,0,0,.28)}
+    .legend{max-width:150px;font-size:10.5px;padding:9px 10px;left:8px;bottom:8px}
+    .zoomctl{right:8px;top:8px}
+    .zoomctl button{width:32px;height:32px;font-size:17px}
+    .modalbox{max-width:calc(100vw - 24px);padding:20px;max-height:78vh}
+    .bubble{width:min(330px,calc(100vw - 24px))}
+    .placeholder{padding:28px 18px}
+  }
+
   @media (prefers-reduced-motion: reduce){
     .fx i,.water::before,.water::after,.sel-hl,.spot::after,.aians.think,.bootfx::before,.side.loading .card::before,.side.loading .iv::before{animation:none!important}
     .pbody.enter>*,.modalbox{animation:none!important}
