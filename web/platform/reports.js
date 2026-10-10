@@ -79,13 +79,6 @@ const Reports = (() => {
       <div class="lead">${lead || `${P.items.length} pillars — flood safety is just one. Higher is better in every row.`}<br><b style="color:var(--text)">Strongest:</b> ${esc(nm(P.best))}. <b style="color:var(--text)">Weakest:</b> ${esc(nm(P.worst))}.</div>${rows}
       <div class="legend-note">Score = weighted average of the pillars above. Facility pillars come from ${r.source === 'google' ? 'Google Places' : 'OpenStreetMap + Overture Maps open data (can lag recent openings/closures)'}; air quality is a live reading. It describes the surroundings — it is not a valuation.</div></div>`;
   }
-  function aiCard(S, sugs) {
-    return `<div class="ai"><h3>💬 Ask SETHU about this report</h3><div class="lead" style="margin-bottom:0;color:var(--text2)">Answers come only from the numbers in this report. Nothing is invented.</div>
-      <div class="quick">${sugs.map(q => `<button data-act="ask" data-q="${esc(q)}">${esc(q)}</button>`).join('')}
-        <button data-act="ask" data-q="Explain this whole report in simple Telugu">తెలుగులో</button><button data-act="ask" data-q="Explain this whole report in simple Hindi">हिन्दी में</button></div>
-      <div class="airow"><input class="in" id="aiq" placeholder="Ask anything about this location…" value="${esc(S.ai.q)}"><button class="btn" data-act="askbox">Ask</button></div>
-      <div class="aians${S.ai.a ? ' show' : ''}${S.ai.think ? ' think' : ''}" id="aians">${esc(S.ai.a)}</div></div>`;
-  }
   function footnote(r) {
     return `<div class="footnote"><b>How to read this.</b> SETHU is a decision aid built on public data and map services. The ward-level flood ranking was tested on 8 real floods (mean AUC 0.69; 0.79 against GHMC's own waterlogging list). Lake distance, terrain pocket and facilities are <i>indicators</i>, not validated predictions. Lake outlines are not legal FTL/buffer boundaries — verify with HMDA / the Irrigation Dept. Rain-to-depth is a stated assumption. Not legal, valuation or insurance advice.<br>
       Data: SRTM terrain · Telangana State GIS (GHMC nalas &amp; inundation list) · OpenStreetMap · ESA WorldCover · Open-Meteo · ${r.source === 'google' ? 'Google Places' : 'Overture Maps places (Meta · Microsoft · Foursquare)'} · GHMC public data. Generated ${new Date().toLocaleString('en-IN')}.</div>`;
@@ -93,7 +86,6 @@ const Reports = (() => {
 
   /* ---------- compact-report helpers ---------- */
   // collapsible detail section; open/closed state lives in S.open so re-renders (terrain, forecast, air arriving) do not close it
-  const more = (S, id, title, html, sub) => `<details class="more" data-id="${id}"${S.open && S.open[id] ? ' open' : ''}><summary><b>${title}</b>${sub ? `<span>${sub}</span>` : ''}</summary><div class="mbody">${html}</div></details>`;
   function nearbyCard(r, title, lead) {
     const f = r.fac, H = r.hubs || {}, mall = H.nearestMall;
     const rows = [
@@ -101,8 +93,7 @@ const Reports = (() => {
       ['🚇', 'Metro / transit stop', f.metro.nearest, `${f.metro.n2km}${f.metro.capped ? '+' : ''} within 2 km`],
       ['🏬', 'Mall', mall, `${H.mall3 || 0} within 3 km`],
       ['🏫', 'School', f.school.nearest, `${f.school.n2km}${f.school.capped ? '+' : ''} within 2 km`],
-      ['🛒', 'Market', f.market.nearest, `${f.market.n2km}${f.market.capped ? '+' : ''} within 2 km`],
-      ['🌳', 'Park', f.park.nearest, `${f.park.n2km}${f.park.capped ? '+' : ''} within 2 km`]
+      ['🛒', 'Market', f.market.nearest, `${f.market.n2km}${f.market.capped ? '+' : ''} within 2 km`]
     ];
     const body = rows.map(([ic, lab, n, sub]) => {
       const d = n ? n.d : null, w = d == null ? 0 : Math.max(7, Math.round(100 - Math.min(d, 5000) / 50)), col = d == null ? 'var(--line2)' : d < 1000 ? 'var(--a)' : d < 2500 ? 'var(--c)' : 'var(--d)';
@@ -112,21 +103,43 @@ const Reports = (() => {
     return `<div class="card"><h3>${title || 'Hospitals, malls, stations &amp; schools nearby'}</h3><div class="lead">${lead || 'Nearest one of each, from this address. Longer bar = closer.'}</div>${body}
       <div class="legend-note">${r.source === 'google' ? 'Google Places' : 'OpenStreetMap + Overture Maps'} · straight-line distances</div></div>`;
   }
-  const miniDetails = (title, html) => `<details class="mini"><summary>${title}</summary>${html}</details>`;
-  const printBtn = label => `<div style="margin-top:18px"><button class="btn ghost" data-act="print">🖨 ${label}</button></div>`;
-  function shortFoot(S, r) {
-    return more(S, 'foot', 'How to read this · data &amp; limits', footnote(r).replace('<div class="footnote">', '<div class="footnote" style="margin-top:0;border-top:none;padding-top:0">'));
+  function nearStrip(r, keys, wide) {
+    const f = r.fac, H = r.hubs || {};
+    const pick = { hospital: ['🏥', 'Hospital', f.hospital.nearest], metro: ['🚇', 'Metro / transit', f.metro.nearest], mall: ['🏬', 'Mall', H.nearestMall], school: ['🏫', 'School', f.school.nearest],
+      market: ['🛒', 'Market', f.market.nearest], fire: ['🚒', 'Fire station', f.fire.nearest], police: ['👮', 'Police station', f.police.nearest], park: ['🌳', 'Park', f.park.nearest] };
+    return `<div class="ns${wide ? ' wide' : ''}">${keys.map(k => { const [ic, lab, n] = pick[k], d = n ? n.d : null, col = d == null ? 'var(--muted)' : d < 1000 ? 'var(--a)' : d < 2500 ? 'var(--c)' : 'var(--d)';
+      return `<div><span class="ic">${ic}</span><b class="tnum" style="color:${col}">${d == null ? '—' : fmtKm(d)}</b><span class="l">${lab}</span><small>${esc(n && n.name ? n.name : 'none found')}</small></div>`; }).join('')}</div>`;
   }
+  const miniDetails = (title, html) => `<details class="mini"><summary>${title}</summary>${html}</details>`;
+
+  // "why this score": the pillars as compact bars, so the number is never unexplained
+  function whyScore(r) {
+    const P = r.pillars, nm = a => a.map(x => x.label.toLowerCase()).join(', ');
+    const rows = P.items.filter(it => it.v != null).map(it => {
+      const pct = Math.round(it.v * 100), col = it.v >= .75 ? 'var(--a)' : it.v >= .5 ? 'var(--c)' : 'var(--e)';
+      return `<div class="wy"><span class="n">${esc(it.label)}</span><div class="bar2"><i style="width:${pct}%;background:${col}"></i></div><b class="tnum" style="color:${col}">${pct}</b></div>`;
+    }).join('');
+    return `<div class="card"><h3>Why the score is ${P.score}/100</h3><div class="lead">What we measured around this address. Higher is better.</div>${rows}
+      <div class="legend-note">Strongest: ${esc(nm(P.best))}. Weakest: ${esc(nm(P.worst))}.</div></div>`;
+  }
+  // the summary page ends here; the detailed report is a PDF download (or an on-screen preview)
+  const dlBar = (S, includes) => `<div class="dl"><div><b>Detailed report</b><span>${includes}</span></div>
+    <div class="btns"><button class="btn" data-act="print">⬇ Download full report (PDF)</button><button class="btn ghost" data-act="toggle-detail">${S.open && S.open.detail ? 'Hide' : 'Preview'} full report</button></div></div>`;
+  const detailWrap = (S, inner) => `<div class="detail${S.open && S.open.detail ? ' show' : ''}">${inner}</div>`;
+  const endNote = '<div class="endnote">Ward-level flood ranking tested on 8 real floods; every other figure is an indicator from open map data. Asking prices are not deal prices. Limits are listed in the full report.</div>';
 
   /* ============================== CUSTOMER ============================== */
   function customer(S) {
     const r = S.r, w = r.tiers.water, v = r.buyer, thr = SETUE.D.thr, lb = SETUE.lakeBand(r.water);
     const d192 = r.outside ? null : r.setu.depth[192], fcMax = S.fc ? Math.max(...S.fc.map(x => x.mm)) : 0;
-    const summary = r.outside ? 'This address lies beyond the 145 GHMC wards the validated flood model covers, so no flood verdict is given. Judge it on the surroundings below and ask locally about waterlogging.' : v.worst === 'red' ? 'Serious water-related concerns turned up. Read the flags below before you pay any advance.'
+    const summary = r.outside ? 'This address lies beyond the 145 GHMC wards the validated flood model covers, so no flood verdict is given. Judge it on the surroundings below and ask locally about waterlogging.' : v.worst === 'red' ? 'Serious water-related concerns turned up. Read the full report before paying any advance.'
       : v.worst === 'amber' ? 'Some water-related concerns turned up. They may be manageable — verify them before you commit.'
         : 'No major water red flags in the map data. Still verify documents and visit in the rain.';
-    const hero = `<div class="hero"><div class="verdict ${v.worst}"><div class="k">Verdict for buyers</div><h2>${v.headline}</h2><p>${summary} <b>Location score ${r.pillars.score}/100 (${r.pillars.label}).</b></p>
-      <div class="pillrow" style="margin-top:16px"><span class="tag">${esc(r.ward.name)}</span>${srcBadge(r)}</div></div>
+    const hero = `<div class="hero"><div class="verdict ${v.worst}"><div class="k">Verdict for buyers</div><h2>${v.headline}</h2><p>${summary}</p>
+      <div class="vstats">${r.outside ? '' : `<div><b style="color:${d192 >= .5 ? 'var(--e)' : d192 >= thr ? 'var(--c)' : 'var(--a)'}">${d192 >= thr ? d192.toFixed(2) + ' m' : 'Dry'}</b><span>water in a 2020-size storm</span></div>`}
+        <div><b style="color:${['inside', 'very close'].includes(lb.band) ? 'var(--e)' : lb.band === 'near' ? 'var(--c)' : 'var(--a)'}">${r.water.lake ? (r.water.lake.inside ? 'Inside' : fmtKm(r.water.lake.d)) : 'None'}</b><span>nearest lake / tank</span></div>
+        <div><b>${S.air ? S.air.aqi : '—'}</b><span>air quality (AQI)</span></div></div>
+      <div class="pillrow" style="margin-top:14px"><span class="tag">${esc(r.ward.name)}</span></div></div>
       <div class="card gaugebox chartwrap">${Charts.scoreDial(r.pillars.score, r.pillars.label + ' location', 'Location score / 100')}<div class="cap">Across ${r.pillars.items.length} pillars. Strongest: ${esc(r.pillars.best.map(x => x.label.toLowerCase()).join(', '))}.<br>Weakest: ${esc(r.pillars.worst.map(x => x.label.toLowerCase()).join(', '))}.</div></div></div>`;
     const aq = S.air ? `${S.air.aqi}` : '—';
     const kpis = `<div class="kpis">
@@ -186,20 +199,14 @@ const Reports = (() => {
     qs.push('Visit once during heavy rain and see where the road and nearby nala overflow', 'Get a home-insurance quote before paying an advance');
     const chk = `<div class="card"><h3>Before you pay: checklist</h3><div class="lead">Tailored to what this report found.</div><ul class="list">${qs.map(q => `<li>${esc(q)}</li>`).join('')}</ul></div>`;
 
+    const detail = `<div class="grid2">${chart}<div class="card"><h3>All flags</h3><div class="lead">Everything a careful buyer should know.</div>${flagList(v.flags)}</div></div>
+      <div class="grid2">${cost}${chk}</div><div class="grid2">${lake}${ins}</div>${govCard(r)}<div class="grid2">${routesCard(r)}${fac}</div>
+      ${pillarCard(r, 'Location profile', `Every pillar with its weight. Flood safety is one of ${r.pillars.items.length}.`)}${footnote(r)}`;
     return `<div class="printonly"><b>SETHU — Customer report</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>
-      ${hero}${kpis}
-      <div class="grid2">${nearbyCard(r)}${chart}</div>
-      <div class="grid2">${free}${cost}</div>
-      <div class="sec-t">More detail — tap to open</div>
-      ${more(S, 'c-chk', 'Before-you-pay checklist', chk)}
-      ${more(S, 'c-gov', 'Official drainage, tank &amp; lake records', govCard(r), 'Telangana State GIS · HYDRAA · HMDA')}
-      ${more(S, 'c-lake', 'Lakes, terrain &amp; access', lake)}
-      ${more(S, 'c-fac', 'Every facility nearby', fac)}
-      ${more(S, 'c-ins', 'What this means for your insurance', ins)}
-      ${more(S, 'c-routes', 'Trade routes &amp; demand drivers', routesCard(r))}
-      ${more(S, 'c-pil', 'Full location-score breakdown', pillarCard(r, 'Your location profile', `What the surroundings offer — and where they fall short. Flood safety is one of ${r.pillars.items.length} pillars.`))}
-      ${moreFlags ? more(S, 'c-flags', 'More flags', moreFlags) : ''}
-      ${aiCard(S, ['Is it safe to buy here?', 'What should I ask the seller?', 'Why this risk tier?'])}${printBtn('Print / save as PDF')}${shortFoot(S, r)}`;
+      ${hero}
+      <div class="grid2">${whyScore(r)}${nearbyCard(r, 'Hospitals, malls, stations &amp; schools', 'Nearest one of each. Longer bar = closer.')}</div>
+      ${dlBar(S, 'Rain-versus-water curve · all flags · true cost of buying · checklist · official drainage and tank records · insurance angle')}${endNote}
+      ${detailWrap(S, detail)}`;
   }
 
   /* ============================== REAL ESTATE AGENT ============================== */
@@ -248,17 +255,14 @@ const Reports = (() => {
         <div class="kv"><span class="k">Ground vs surroundings</span><span class="v">${r.terrain ? (r.terrain.relief >= 0 ? '+' : '') + r.terrain.relief.toFixed(1) + ' m' : '…'}</span></div><div class="kv"><span class="k">Parks within 1 km</span><span class="v">${r.fac.park.n1km}${r.fac.park.capped ? '+' : ''}</span></div>
         <div class="kv"><span class="k">Industrial land</span><span class="v">${r.industry ? fmtKm(r.industry.d) + ' away' : 'none mapped nearby'}</span></div><div class="kv"><span class="k">Air quality now</span><span class="v">${S.air ? S.air.aqi + ' · ' + esc(S.air.band) : '…'}</span></div></div>`;
     const waterBreak = `<div class="card"><h3>Water-risk breakdown <span style="color:var(--muted);font-weight:600">· ${w.score}/100</span></h3><div class="lead">Every factor with its weight, so you can explain it to a client.</div>${factorRows(r.scores.water.parts)}</div>`;
+    const detail = `<div class="grid2">${price}${commission}</div>${waterBreak}
+      ${pillarCard(r, 'Location profile for your client', 'Where this address shines and where a buyer will push back.')}${govCard(r)}
+      <div class="grid2">${routesCard(r)}<div class="card"><h3>Neighbourhood &amp; connectivity</h3><div class="lead">${srcBadge(r)}</div>${facList(r)}</div></div>${land}${footnote(r)}`;
     return `<div class="printonly"><b>SETHU — Listing brief</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>${hero}
+      <div class="card" style="margin-bottom:22px"><h3>What a buyer will ask about</h3><div class="lead">Nearest hospital, station, mall and school.</div>${nearStrip(r, ['hospital', 'metro', 'mall', 'school'], true)}</div>
       <div class="grid2">${posCard}${negCard}</div>
-      <div class="grid2">${nearbyCard(r, 'Hospitals, malls, stations &amp; schools nearby', 'What a buyer will ask about. Longer bar = closer.')}${price}</div>
-      <div class="sec-t">More detail — tap to open</div>
-      ${more(S, 'a-com', 'Commission &amp; deal economics', commission)}
-      ${more(S, 'a-pil', 'Location profile for your client', pillarCard(r, 'Location profile for your client', 'Where this address shines and where a buyer will push back.'))}
-      ${more(S, 'a-gov', 'Official drainage, tank &amp; lake records', govCard(r), 'Telangana State GIS · HYDRAA · HMDA')}
-      ${more(S, 'a-routes', 'Trade routes &amp; demand drivers', routesCard(r))}
-      ${more(S, 'a-fac', 'Every facility nearby &amp; land character', `<div class="grid2" style="margin-bottom:0"><div class="card"><h3>Neighbourhood &amp; connectivity</h3><div class="lead">${srcBadge(r)}</div>${facList(r)}</div>${land}</div>`)}
-      ${more(S, 'a-water', 'Water-risk breakdown', waterBreak)}
-      ${aiCard(S, ['How do I justify a lower price?', "What are this plot's selling points?", 'Is the lake a problem here?'])}${printBtn('Print client report')}${shortFoot(S, r)}`;
+      ${dlBar(S, 'Price check against the market · commission and deal economics · location profile · official drainage and tank records · trade routes · every facility · water-risk breakdown')}${endNote}
+      ${detailWrap(S, detail)}`;
   }
 
   /* ============================== INSURER ============================== */
@@ -270,6 +274,7 @@ const Reports = (() => {
       <div class="tiersrow" style="margin:0;grid-template-columns:repeat(3,1fr)">${tierCard('Motor', T.motor, 'motor', SETUE.LOADING[T.motor.letter])}${tierCard('Property', T.prop, 'prop', SETUE.LOADING[T.prop.letter])}${tierCard('Health access', T.health, 'health', TNAME[T.health.letter])}</div>
       <div class="legend-note">Loadings are illustrative — a starting point to calibrate on your own claims, not an actuarial rate.</div></div>
       <div class="card gaugebox chartwrap">${Charts.gauge(sc.score, CUTS[lineKey], t.letter, names[line] + ' exposure')}<div class="cap">${names[line]} exposure, scored 0–100</div>
+        <div class="drivers"><b>Biggest drivers</b>${[...sc.parts].filter(p => p.v != null).sort((x, y) => y.pts - x.pts).slice(0, 3).map(p => `<div><span>${esc(p.label)}</span><span class="tnum">${p.pts.toFixed(0)} pts</span></div>`).join('')}</div>
         <div class="seg" style="margin:12px 0 0">${['motor', 'prop', 'health'].map(k => `<button data-act="line" data-line="${k}" class="${line === k ? 'on' : ''}">${names[k]}</button>`).join('')}</div></div></div>`;
     const factors = `<div class="card"><h3>${names[line]} — underwriting factors</h3><div class="lead">${line === 'health' ? 'How easily this location can reach care — useful for network adequacy and day-one claim severity.' : line === 'motor' ? 'What makes vehicles here more likely to be flooded or stranded.' : 'What drives flood, lake, fire-reach and density exposure for a building here.'}</div>${factorRows(sc.parts, false)}</div>`;
     const per = PER[cl.peril];
@@ -305,17 +310,12 @@ const Reports = (() => {
       <div><span class="st validated">validated</span><p style="margin-top:10px;color:var(--text2)">Ward flood-susceptibility rank: mean AUC <b>0.69</b> on 8 held-out floods, <b>0.79</b> against GHMC's own list. Our first version scored 0.49 — a coin flip.</p></div>
       <div><span class="st modelled">modelled</span><p style="margin-top:10px;color:var(--text2)">Depth at a given rainfall and hospital-road cut-off. A stated assumption anchored to documented flood extents.</p></div>
       <div><span class="st indicative">indicative</span><p style="margin-top:10px;color:var(--text2)">Lake distance, terrain pocket, facilities, fire reach. Useful signals — calibrate on your own claims before relying on them for pricing.</p></div></div></div>`;
+    const detail = `${factors}${api}${pillarCard(r, 'Environment & resource profile', 'Context beyond flood: access to care, services, connectivity and air quality around the insured location.')}${govCard(r)}${prov}${footnote(r)}`;
     return `<div class="printonly"><b>SETHU — Underwriting &amp; claims evidence pack</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>
       ${hero}${claim}
-      <div class="grid2">${outlook}${nearbyCard(r, 'Care &amp; access nearby', 'Hospitals, stations and malls around the insured location. Longer bar = closer.')}</div>
-      <div class="sec-t">More detail — tap to open</div>
-      ${more(S, 'i-fac', names[line] + ' — underwriting factors', factors, 'switch Motor / Property / Health above')}
-      ${more(S, 'i-api', 'API-ready JSON output', api, 'for underwriting and claims systems')}
-      ${more(S, 'i-pil', 'Environment &amp; resource profile', pillarCard(r, 'Environment & resource profile', 'Context beyond flood: access to care, services, connectivity and air quality around the insured location.'))}
-      ${more(S, 'i-gov', 'Official drainage, tank &amp; lake records', govCard(r), 'Telangana State GIS · HYDRAA · HMDA')}
-      ${more(S, 'i-prov', "What's validated, and what isn't", prov)}
-      ${aiCard(S, ['Why this tier?', 'What should I verify in a claim here?', 'How would you calibrate this on our claims?'])}
-      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn ghost" data-act="print">🖨 Print evidence pack</button><span class="price-pill" style="align-self:center">Pricing (proposed): platform fee + per-query API · pilot in shadow mode on your closed claims</span></div>${shortFoot(S, r)}`;
+      <div class="grid2">${outlook}<div class="card"><h3>Care &amp; access nearby</h3><div class="lead">Response and care reach around the insured location.</div>${nearStrip(r, ['hospital', 'fire', 'police', 'metro'])}</div></div>
+      ${dlBar(S, 'All underwriting factors with weights · API-ready JSON · environment profile · official drainage records · what is validated')}${endNote}
+      ${detailWrap(S, detail)}`;
   }
 
   return { render: (lens, S) => lens === 'customer' ? customer(S) : lens === 'agent' ? agent(S) : insurer(S), inr };

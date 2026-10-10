@@ -5,16 +5,16 @@ paste a Google Maps link or click the map, and open one of three separate full-p
 
 | Report | For | What it gives |
 |---|---|---|
-| 🏠 **Customer** — ₹299 | families buying or renting | plain-language verdict, rain-vs-water curve, neighbourhood and facilities, lakes and terrain, official drainage records, true cost of buying (duties + brokerage) with a price sanity check |
-| 🏷 **Agent** — ₹499 per client report | real-estate professionals | sourced market band, price check against the user's own comparables, commission and deal economics, negotiation evidence, a printable listing brief |
-| 🛡 **Insurer** — enterprise / API | underwriters and claims analysts | Motor / Property / Health-access exposure tiers (A–E) with factor weights, illustrative loadings, a claim **evidence check** (rain on the claim date, terrain, official inundation list) and API-ready JSON |
+| 🏠 **Customer** | families buying or renting | plain-language verdict, rain-vs-water curve, neighbourhood and facilities, lakes and terrain, official drainage records, true cost of buying (duties + brokerage) with a price sanity check |
+| 🏷 **Real estate agent** | real-estate professionals | sourced market band, price check against the user's own comparables, commission and deal economics, negotiation evidence, a printable listing brief |
+| 🛡 **Insurer** | underwriters and claims analysts | Motor / Property / Health-access exposure tiers (A–E) with factor weights, illustrative loadings, a claim **evidence check** (rain on the claim date, terrain, official inundation list) and API-ready JSON |
 
 Every report opens with a **Location Score** (0–100) from eight pillars: water and flood safety · health-care access ·
 schools and daily needs · transit and main roads · parks and lakes · air quality (live) · fire and police reach · jobs and
 lifestyle hubs. Flood safety is one pillar, not the whole product.
 
-Prices are the proposed model; the demo has no paywall and takes no payment. The AI box ("Ask SETHU") answers only from the numbers in the
-report in front of the user.
+Prices are the proposed model; the demo has no paywall and takes no payment. Each report is a one-page summary — verdict, why the score is what it is, nearest hospital / mall / metro / school — with the
+detailed report one click away as a PDF download.
 
 > The original government **Flood Planner** (ward flood model + Japanese flood-control methods) is kept at
 > `web/planner.html` and linked from the header. §4–§7 below describe it.

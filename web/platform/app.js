@@ -12,18 +12,16 @@ const PLACES = [
   ['Tolichowki', 17.4015, 78.4100], ['Jubilee Hills', 17.4325, 78.4071], ['Gachibowli', 17.4401, 78.3489], ['Hitec City', 17.4435, 78.3772],
   ['Kukatpally', 17.4948, 78.3996], ['LB Nagar', 17.3457, 78.5522], ['Secunderabad', 17.4399, 78.4983], ['Charminar', 17.3616, 78.4747], ['Hussain Sagar', 17.4235, 78.4745]
 ];
-const LENS_PRICE = { customer: '₹299', agent: '₹499', insurer: 'API' };
 const LENS_NAME = { customer: 'Customer report', agent: 'Real estate agent report', insurer: 'Insurer report' };
 const LENS_ICON = { customer: '🏠', agent: '🏷️', insurer: '🛡️' };
 const LENS_SUB = { customer: 'Safe to buy? What it really costs.', agent: 'Price with evidence. Answer the flood question.', insurer: 'Risk tiers and a rain-evidence claim check.' };
 // shown in the ⓘ hover cards: what the report shows, and why it is useful to that person
 const LENS_INFO = {
-  customer: { t: 'Customer report', p: '₹299 per report', w: 'A one-page check on a home you are thinking of buying or renting: how the area copes with heavy rain, how far the nearest hospital, mall, metro and school are, and the true cost with duties.', u: 'Helps a family spot a flooding or lake problem, or an overpriced quote, before paying an advance.' },
-  agent: { t: 'Real estate agent report', p: '₹499 per client report', w: 'A client-ready brief for a listing: the market price band from property portals, a price check against your own comparables, selling points, and what buyers will push back on.', u: 'Helps an agent price with evidence and answer the flood and lake question before the buyer asks it.' },
-  insurer: { t: 'Insurer report', p: 'Enterprise / API', w: 'The underwriting view of an address: motor, property and health-access risk tiers, plus a check of whether the rain on a claim date supports a water-damage claim.', u: 'Helps an insurer price risk by location and fast-track genuine claims, sending only doubtful ones for review.' }
+  customer: { t: 'Customer report', w: 'A one-page check on a home you are thinking of buying or renting: how the area copes with heavy rain, how far the nearest hospital, mall, metro and school are, and the true cost with duties.', u: 'Helps a family spot a flooding or lake problem, or an overpriced quote, before paying an advance.' },
+  agent: { t: 'Real estate agent report', w: 'A client-ready brief for a listing: the market price band from property portals, a price check against your own comparables, selling points, and what buyers will push back on.', u: 'Helps an agent price with evidence and answer the flood and lake question before the buyer asks it.' },
+  insurer: { t: 'Insurer report', w: 'The underwriting view of an address: motor, property and health-access risk tiers, plus a check of whether the rain on a claim date supports a water-damage claim.', u: 'Helps an insurer price risk by location and fast-track genuine claims, sending only doubtful ones for review.' }
 };
 const infoIcon = lens => `<span class="info" tabindex="0" role="button" aria-label="What is the ${LENS_NAME[lens]}?" data-lens="${lens}">i</span>`;
-const AI_LENS = { customer: 'buyer', agent: 'agent', insurer: 'insurer' };
 const S = {
   r: null, label: '', address: '', gp: null, fc: null, air: null, terrain: null, lens: 'customer', line: 'motor', view: 'explore',
   unlocked: { customer: true, agent: true, insurer: true }, open: {},
@@ -211,9 +209,8 @@ document.addEventListener('click', e => {
   else if (a === 'tab') { S.lens = t.dataset.lens; S.ai = { q: '', a: '', think: false }; renderReport(); $('report').scrollTop = 0; syncHash(); }
   else if (a === 'clear') { S.r = null; MapKit.clearPin(); renderDock(); history.replaceState(null, '', '#/'); }
   else if (a === 'print') window.print();
+  else if (a === 'toggle-detail') { S.open.detail = !S.open.detail; renderReport(); }
   else if (a === 'share') { navigator.clipboard && navigator.clipboard.writeText(location.href).then(() => toast('Link copied')).catch(() => toast('Copy the address bar link to share')); }
-  else if (a === 'ask') askAI(t.dataset.q);
-  else if (a === 'askbox') askAI($('aiq').value);
   else if (a === 'line') { S.line = t.dataset.line; renderReport(); }
   else if (a === 'cust-calc' || a === 'agent-calc') renderReport();
   else if (a === 'cust-example') { S.cust = { price: '9000000', area: '1200', brokerage: '1' }; renderReport(); }
@@ -230,7 +227,6 @@ document.addEventListener('change', e => {
   const [grp, key] = b.dataset.bind.split('.'); S[grp][key] = b.value;
   if (b.dataset.bind === 'claim.peril') { S.claim.out = null; if (PERILS[b.value].line) S.line = PERILS[b.value].line; renderReport(); }
 });
-document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id === 'aiq') askAI(e.target.value); });
 
 async function runClaim() {
   const r = S.r, cl = S.claim; if (!cl.date) return toast('Pick the date of loss first');
@@ -252,7 +248,7 @@ function showTip(el, pin) {
   let tip = $('tip'); if (!tip) { tip = document.createElement('div'); tip.id = 'tip'; document.body.appendChild(tip); }
   if (pin && tip.classList.contains('show') && tip._for === el) { hideTip(); return; }
   tip._for = el;
-  tip.innerHTML = `<b>${i.t}</b><span class="tp">${i.p}</span><p><em>Shows</em> ${i.w}</p><p><em>Useful because</em> ${i.u}</p>`;
+  tip.innerHTML = `<b>${i.t}</b><p><em>Shows</em> ${i.w}</p><p><em>Useful because</em> ${i.u}</p>`;
   tip.classList.add('show');
   const b = el.getBoundingClientRect(), w = Math.min(330, innerWidth - 20);
   tip.style.width = w + 'px';
@@ -267,38 +263,6 @@ document.addEventListener('focusout', e => { if (e.target.closest && e.target.cl
 // keep collapsible sections open across re-renders, and open them all when printing
 document.addEventListener('toggle', e => { const d = e.target; if (d.matches && d.matches('details.more') && d.dataset.id) S.open[d.dataset.id] = d.open; }, true);
 window.addEventListener('beforeprint', () => document.querySelectorAll('details.more,details.mini').forEach(d => { d.open = true; }));
-
-/* ------------------------------ grounded AI ------------------------------ */
-function aiContext() {
-  const r = S.r, L = S.lens, parts = ps => ps.filter(p => p.v != null).map(p => ({ factor: p.label, status: p.status, weight_pct: Math.round(p.wn * 100), points: +p.pts.toFixed(1), note: p.note }));
-  const m = SETUE.market(r.lat, r.lon, r.wid);
-  return JSON.stringify({
-    report: LENS_NAME[L], place: S.label || r.ward.name, ward: r.ward.name, lat: +r.lat.toFixed(4), lon: +r.lon.toFixed(4), facilities_source: r.source === 'google' ? 'Google Places' : 'OpenStreetMap + Overture Maps open data',
-    location_score: { score: r.pillars.score, label: r.pillars.label, pillars: r.pillars.items.filter(i => i.v != null).map(i => ({ pillar: i.label, score: Math.round(i.v * 100), weight_pct: Math.round(i.wn * 100), note: i.note })) },
-    water_tier: r.tiers.water, motor_tier: r.tiers.motor, property_tier: r.tiers.prop, health_access_tier: r.tiers.health,
-    illustrative_loading: { motor: SETUE.LOADING[r.tiers.motor.letter], property: SETUE.LOADING[r.tiers.prop.letter] },
-    flood_model: r.outside ? 'not available — this address is outside the 145 GHMC wards the model covers' : { susceptibility_percentile: Math.round(r.setu.pct * 100), depth_m_at_100mm: +r.setu.depth[100].toFixed(2), depth_m_at_192mm: +r.setu.depth[192].toFixed(2), depth_m_at_300mm: +r.setu.depth[300].toFixed(2), starts_flooding_at_mm: r.setu.floodsAtMm, hospital_road_cut_at_192mm: r.setu.cut192 },
-    lake: SETUE.lakeBand(r.water).text, ponds_within_500m: r.water.pondsNear, terrain_relief_m: r.terrain ? +r.terrain.relief.toFixed(1) : 'unavailable',
-    air_quality: S.air ? { us_aqi: S.air.aqi, band: S.air.band } : 'unavailable', facilities_score: r.scores.dev.score,
-    nearest: Object.fromEntries(SETUE.FAC.map(([k, l]) => [l, r.fac[k].nearest ? `${r.fac[k].nearest.name || 'unnamed'} ${fmtKm(r.fac[k].nearest.d)}` : 'none found'])),
-    water_factors: parts(r.scores.water.parts), motor_factors: L === 'insurer' ? parts(r.scores.motor.parts) : undefined, property_factors: L === 'insurer' ? parts(r.scores.prop.parts) : undefined, health_factors: L === 'insurer' ? parts(r.scores.health.parts) : undefined,
-    flags: r.buyer.flags.map(f => ({ level: f.lvl, title: f.t, detail: f.d })),
-    market_band_per_sqft_asking: m ? { locality: m.loc.name, low: m.loc.low, high: m.loc.high, typical: m.loc.typical, note: 'portal asking prices, not deal prices' } : 'none within 4 km',
-    claim_check: S.claim.out && S.claim.out.checks ? { verdict: S.claim.out.verdict, checks: S.claim.out.checks.map(c => c.k + ': ' + c.v) } : undefined,
-    validation: 'Ward flood ranking: mean AUC 0.69 on held-out floods, 0.79 against GHMC chronic waterlogging list. Point-level indicators (lake distance, terrain pocket, facilities, fire reach) are not validated. Market bands are asking prices.'
-  });
-}
-async function askAI(q) {
-  if (!q || !q.trim()) return;
-  S.ai = { q, a: 'Thinking…', think: true };
-  const set = () => { const a = $('aians'); if (a) { a.className = 'aians show' + (S.ai.think ? ' think' : ''); a.textContent = S.ai.a; } };
-  set();
-  try {
-    const res = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: q, context: aiContext(), lens: AI_LENS[S.lens] }) });
-    const j = await res.json(); if (!j.answer) throw new Error('no answer'); S.ai = { q, a: j.answer, think: false };
-  } catch (e) { S.ai = { q, a: SETUE.narrate(S.r, AI_LENS[S.lens]) + '\n\n(Live AI is offline — this summary is generated directly from the report data.)', think: false }; }
-  set();
-}
 
 /* ------------------------------ modals ------------------------------ */
 async function showEngine() {
@@ -323,7 +287,7 @@ async function showEngine() {
     const h = await api('/api/health', 12000), row = (ok, label, extra) => `<div class="kv"><span class="k">${label}</span><span class="v" style="color:${ok ? 'var(--a)' : 'var(--e)'}">${ok ? '● ready' : '● ' + (extra || 'not configured')}</span></div>`;
     $('health').innerHTML = row(h.browser_key_present, 'Google Maps key', 'missing — OpenStreetMap map is used') + row(h.server_key_present, 'Google Places key', 'not used — open facility data is in use')
       + (h.server_key_present ? row(h.places_nearby && h.places_nearby.ok, 'Places · nearby search', h.places_nearby && h.places_nearby.error) + row(h.places_autocomplete && h.places_autocomplete.ok, 'Places · address search', h.places_autocomplete && h.places_autocomplete.error) : '')
-      + (h.tomtom_key_present ? row(h.tomtom_search && h.tomtom_search.ok, 'TomTom address search', h.tomtom_search && h.tomtom_search.error) : '') + row(h.groq, 'AI explanations (Groq)', 'missing — offline summaries') + `<div class="kv"><span class="k">Map engine in use</span><span class="v">${MapKit.engine}</span></div>`;
+      + (h.tomtom_key_present ? row(h.tomtom_search && h.tomtom_search.ok, 'TomTom address search', h.tomtom_search && h.tomtom_search.error) : '') + `<div class="kv"><span class="k">Map engine in use</span><span class="v">${MapKit.engine}</span></div>`;
   } catch (e) { $('health').textContent = 'Status endpoint unreachable (static hosting?) — the app still works with its built-in backup data.'; }
 }
 function showQR() {

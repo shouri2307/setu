@@ -10,8 +10,8 @@ Buyers, agents and insurers use the same engine through three different views.
 "October 2020. 192 mm of rain in one night. Cars floating on Tolichowki Road. Families who had just bought plots found out what land they had really bought."
 
 **0:10 — One address, three reports (40 s).** Ask a judge for an address (or use their college) → search → location card appears.
-1. **Customer report (₹299):** "Verdict in plain words, the water rising with rain, lakes near the plot, and the *true cost* — duties plus brokerage." → click *Try an example*.
-2. **Real estate agent report (₹499 per client):** "The same facts as negotiation evidence, and a market band from portals — we show asking prices and say so."
+1. **Customer report:** "Verdict in plain words, the water rising with rain, lakes near the plot, and the *true cost* — duties plus brokerage." → click *Try an example*.
+2. **Real estate agent report:** "The same facts as negotiation evidence, and a market band from portals — we show asking prices and say so."
 3. **Insurer report:** "Motor, Property and Health-access tiers with illustrative loadings — and a claim evidence check." → run the two demo buttons (Tolichowki 13 Oct 2020 = consistent; Banjara Hills 2 Mar 2020 = not supported by weather evidence). "Same engine, returned as JSON for their systems."
 
 **0:50 — The reveal (10 s)**
