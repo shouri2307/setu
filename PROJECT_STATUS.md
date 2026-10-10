@@ -1,6 +1,6 @@
-# SETU — Project status (aim · what was needed · what's done · what's pending)
+# SETHU (formerly SETU) — Project status (aim · what was needed · what's done · what's pending)
 
-_Last updated: 2026-10-10 (night before the final)._ Companion files: `PITCH.md` (script + Q&A), `docs/STATUS.md` (bug log).
+_Last updated: 2026-10-10 (night before the final). Deployed to Vercel from `main` (repo `shouri2307/setu`, project `setu-void-6f76`)._ Companion files: `PITCH.md` (script + Q&A), `docs/STATUS.md` (bug log).
 
 ## 1. The aim
 Turn SETU from a hackathon flood planner into a **real, sellable product**: a location-intelligence
@@ -30,7 +30,7 @@ Built only on public/commercial-API data (no GHMC drain maps), honest about what
 * **Phase 0** — test harness (`node tests/engine.test.js`: 1,530 checks incl. every ward × every report variant rendered with no `undefined`/`NaN`), golden locations, tier calibration, bug log (`docs/STATUS.md`).
 * **Phase 2** — new UI: Explore screen (full-bleed map + location card) and full-page Report screen; design system (Inter, 16px base, big numbers), SVG charts (risk gauge, depth-vs-rain curve, price band, rain timeline, forecast bars), mobile layout, print stylesheet, sticky tabs, shareable links.
 * **Phase 3** — three separate reports: Customer (verdict, flags, rain curve, neighbourhood, lakes/terrain, true cost calculator, insurance angle, tailored checklist, AI in English/Telugu/Hindi), Agent (market band, price check vs comps, commission/deal economics, negotiation evidence, selling points, land character), Insurer (Motor / Property / Health-access tiers, factor tables, claim evidence check with rain chart, rain outlook, API-ready JSON, validation panel). Demo paywall (₹299 / ₹499 / enterprise).
-* **Phase 4** — market-rate module: `web/data/rates.json` (18 localities, every band sourced with URL; asking prices, not transactions), total-cost calculator (≈6% Telangana duties, editable), Agent price check.
+* **Phase 4** — market-rate module: `web/data/rates.json` (77 priced localities after the ChatGPT import; every band sourced with URL; asking prices, not transactions), total-cost calculator (≈6% Telangana duties, editable), Agent price check.
 * **Phase 1 code** — `api/_google.py` + `/api/{config,health,places,suggest,place}`, `MapKit` (Google Maps with automatic Leaflet/OSM fallback, also on auth failure), facility merge (Google first, OSM backup, source badge on every report), address autocomplete. **Dormant until keys exist — untested against live Google.**
 * **Location Score** (7 pillars: water & flood safety, health access, schools & daily needs, transit, parks & lakes, live air quality, fire & police reach) in all three reports; map can be coloured by flood rank or location score. SETU is positioned as a location-intelligence engine, not a flood model.
 * **Rates for every place:** `docs/CHATGPT_RATES_PROMPTS.md` (master prompt + 6 ward batches + 59 extra localities) and `pipeline/p10_rates_import.py` (validates, flags outliers, matches by locality and ward, labels rows "AI-compiled estimate"). **Imported 10 Oct 2026:** `pipeline/p10a_clean_paste.py` repairs the pasted batches (escaped URLs, one-line records, missing/extra columns) → `data/rates_input.csv`; the importer then merged hand-curated and ChatGPT rows (18 places priced by both become one outer-limits band, flagged as disagreeing). Result: 77 priced localities; 48 of 145 wards have their own band, 119 wards sit within 2.5 km of a priced place and 140 within 4 km (5 outer wards get none). ChatGPT left ~104 rows empty on purpose (sparse portal data) — most of the old city and east wards. Guidance-value-only rows are kept but inert.
@@ -46,8 +46,8 @@ Built only on public/commercial-API data (no GHMC drain maps), honest about what
 | Item | Who | State |
 |---|---|---|
 | Run the ChatGPT rates prompts, put the CSV at `data/rates_input.csv`, run `p10_rates_import.py`, spot-check 3 areas | **user** | done 10 Oct — spot-check still open |
-| Say "commit and deploy" → I commit, push, set Vercel env (`GROQ_API_KEY` only is required), check the live URL + QR | user OK needed | waiting |
-| Optional: free TomTom key (no card) for better street-address search -> `TOMTOM_API_KEY` in `.env` / Vercel | user | optional |
+| Commit + push to `main` (done: `fe23c9e`, `2e53db0`, `a7a6bd3`); Vercel builds succeeded | done | **open:** turn off Vercel *Deployment Protection* (live site shows a login wall), add `GROQ_API_KEY` + `TOMTOM_API_KEY` in Vercel env, redeploy, then test the live URL + QR |
+| TomTom key | done locally (`.env`, verified HTTP 200); add to Vercel env | pending on Vercel |
 | Optional: Razorpay test-mode checkout instead of the labelled demo button | needs test keys | optional |
 | Final rehearsal of the 90-second pitch on the deployed site | both | last |
 
@@ -61,6 +61,6 @@ Built only on public/commercial-API data (no GHMC drain maps), honest about what
 * The 85% target is defined as: ≥85% of facility facts match Google in a 40-point audit; 100% of UI flows pass; price ranges cross-checked on ≥2 portals. It is **not** a claim about flood-prediction accuracy.
 
 ## 6. What the user must do
-1. Create two Google API keys and put them in `.env` (`GOOGLE_MAPS_BROWSER_KEY`, `GOOGLE_PLACES_SERVER_KEY`).
+1. (Dropped) Google keys — Google required a ₹3,000 prepayment; the app runs on free data instead. The Google adapter stays dormant.
 2. Provide any local rates they trust (ChatGPT-sourced rates will be cross-checked before use).
-3. Add the same env vars in Vercel before deploying.
+3. In Vercel: Settings → Deployment Protection → disable Vercel Authentication; add `GROQ_API_KEY` and `TOMTOM_API_KEY`; redeploy.

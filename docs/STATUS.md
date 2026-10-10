@@ -1,4 +1,6 @@
-# SETU platform — build status & bug log
+# SETHU platform — build status & bug log
+
+> Phase table below is the original plan. Current state (10 Oct 2026): phases 0, 2, 3, 4 done; phase 1 (Google) replaced by free OSM + Overture + Telangana GIS data; phase 5 partly done (3,001 automated checks, print verified); phase 6 deployed to Vercel, live-site check pending Deployment Protection being switched off. See PROJECT_STATUS.md.
 
 ## Phases
 | # | Phase | State |

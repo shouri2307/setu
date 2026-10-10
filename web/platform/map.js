@@ -6,7 +6,7 @@ const MapKit = (() => {
   const st = { pin: null, layers: { wards: true, lakes: true }, poi: {}, sat: false, mode: 'flood', gov: {} };
   const POI_COL = { hospital: '#ef4444', school: '#eab308', metro: '#a78bfa', fire: '#f97316', market: '#22c55e', park: '#10b981', bank: '#60a5fa', police: '#38bdf8' };
   const riskColor = t => {
-    const g = [34, 197, 94], y = [234, 179, 8], o = [249, 115, 22], r = [239, 68, 68], L = (a, b, k) => a.map((v, i) => Math.round(v + (b[i] - v) * k));
+    const g = [45, 212, 191], y = [250, 204, 21], o = [251, 146, 60], r = [244, 63, 94], L = (a, b, k) => a.map((v, i) => Math.round(v + (b[i] - v) * k));
     return `rgb(${(t < .34 ? L(g, y, t / .34) : t < .67 ? L(y, o, (t - .34) / .33) : L(o, r, (t - .67) / .33))})`;
   };
 
@@ -15,30 +15,41 @@ const MapKit = (() => {
   const wardFill = (w, mode) => mode === 'loc' ? riskColor(1 - Math.max(0, Math.min(1, ((w.loc == null ? 70 : w.loc) - 45) / 50))) : riskColor(w.pct);
   const wardLabel = (w, mode) => w.name.replace(/^Ward \d+ /, '') + (mode === 'loc' ? ' · location score ' + Math.round(w.loc) + '/100' : ' · flood rank ' + Math.round(w.pct * 100) + '/100');
 
-  const HYD_BOX = [[17.15, 78.15], [17.72, 78.75]];   // south-west, north-east: Hyderabad metro region
+  // on wide screens the side panel covers the left 440 px of the map; on phones the panel sits below the map
+  const padL = () => innerWidth > 1000 ? 440 : 20;
+  const HYD_BOX = [[17.20, 78.18], [17.66, 78.70]];   // south-west, north-east: Hyderabad metro region
 
   /* ---------------- Leaflet ---------------- */
   function leaflet() {
     const b = cfg.bounds, map = L.map(el, { preferCanvas: true, zoomControl: false, minZoom: 9, maxZoom: 19 });
     L.control.zoom({ position: 'bottomright' }).addTo(map);
-    map.fitBounds([[b[1], b[0]], [b[3], b[2]]], { paddingTopLeft: [440, 20] });
+    map.fitBounds([[b[1], b[0]], [b[3], b[2]]], { paddingTopLeft: [padL(), 20] });
     // Hyderabad only: the 145 wards plus the ORR / HMDA fringe; no panning or zooming out to the rest of the world
     const HYD = L.latLngBounds(HYD_BOX);
     map.setMaxBounds(HYD); map.options.maxBoundsViscosity = 1;
-    const lockZoom = () => map.setMinZoom(Math.max(9, map.getBoundsZoom(HYD, true)));
+    const lockZoom = () => { const s = map.getSize(); if (!s.x || !s.y) return; const z = map.getBoundsZoom(HYD, true); if (isFinite(z)) map.setMinZoom(Math.min(12, Math.max(9, z))); };
     lockZoom(); map.on('resize', lockZoom);
-    const osm =L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
+    // OpenStreetMap, colour-graded for the dark theme through CSS (.inv on the tile pane)
+    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
+    map.getPane('tilePane').classList.add('inv');
+    const base = osm;
     const esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Imagery © Esri' });
-    const wards = L.layerGroup(), lakes = L.layerGroup(), selStyle = { weight: 2.6, color: '#38bdf8' }, baseStyle = { weight: .6, color: '#0a0f1a' };
+    const wards = L.layerGroup(), lakes = L.layerGroup(), ponds = L.layerGroup(), selStyle = { weight: 2.8, color: '#ffffff', opacity: .95 }, baseStyle = { weight: .7, color: '#cbd5e1', opacity: .28 };
     const wardLayers = new Map();
     for (const w of cfg.wards) {
-      const p = L.polygon(w.rings.map(r => r.map(q => [q[1], q[0]])), { ...baseStyle, fillColor: riskColor(w.pct), fillOpacity: .22 })
+      const p = L.polygon(w.rings.map(r => r.map(q => [q[1], q[0]])), { ...baseStyle, fillColor: riskColor(w.pct), fillOpacity: .34 })
         .bindTooltip(w.name.replace(/^Ward \d+ /, '') + ' · flood rank ' + Math.round(w.pct * 100) + '/100', { sticky: true });
       p._w = w; p.on('click', e => cfg.onPick(e.latlng.lat, e.latlng.lng)); p.addTo(wards); wardLayers.set(w.id, p);
     }
     for (const wb of cfg.water) if (wb.cls !== 'tiny') for (const r of wb.rings)
-      L.polygon(r.map(q => [q[1], q[0]]), { color: '#38bdf8', weight: 1, fillColor: '#38bdf8', fillOpacity: wb.cls === 'lake' ? .55 : .4, interactive: !!wb.name }).bindTooltip(wb.name || 'water body').addTo(lakes);
+      L.polygon(r.map(q => [q[1], q[0]]), { color: '#7dd3fc', weight: 1, fillColor: '#38bdf8', fillOpacity: wb.cls === 'lake' ? .5 : .4, interactive: !!wb.name }).bindTooltip(wb.name || 'water body').addTo(wb.cls === 'lake' && wb.area >= 250000 ? lakes : ponds);   // only the ~46 big lakes show in the city view
     wards.addTo(map); lakes.addTo(map);
+    // hundreds of small ponds make the city view unreadable, so they only appear once you zoom in
+    const syncPonds = () => { const want = st.layers.lakes && map.getZoom() >= 13; if (want && !map.hasLayer(ponds)) ponds.addTo(map); if (!want && map.hasLayer(ponds)) map.removeLayer(ponds); };
+    map.on('zoomend', syncPonds);
+    // the ward tint is strong in the city view and fades as you zoom in, so streets stay readable
+    const fadeWards = () => { const z = map.getZoom(), o = z <= 12 ? .34 : z >= 15 ? .06 : .34 - (z - 12) * (.28 / 3); wardLayers.forEach(p => p.setStyle({ fillOpacity: o })); };
+    map.on('zoomend', fadeWards);
     map.on('click', e => cfg.onPick(e.latlng.lat, e.latlng.lng));
     let pin = null, ring = null, sel = null; const poi = {}, govL = {};
     return {
@@ -51,7 +62,7 @@ const MapKit = (() => {
         if (fly) map.flyTo([lat, lon], Math.max(map.getZoom(), 15), { duration: .8 });
       },
       clearPin() { if (pin) map.removeLayer(pin); if (ring) map.removeLayer(ring); pin = ring = null; },
-      setLayer(n, on) { const g = n === 'wards' ? wards : lakes; on ? g.addTo(map) : map.removeLayer(g); },
+      setLayer(n, on) { st.layers[n] = on; const g = n === 'wards' ? wards : lakes; on ? g.addTo(map) : map.removeLayer(g); if (n === 'lakes') syncPonds(); },
       setColorMode(mode) { wardLayers.forEach(p => { p.setStyle({ fillColor: wardFill(p._w, mode) }); p.setTooltipContent(wardLabel(p._w, mode)); }); },
       showPoi(cat, rows, on) {
         if (poi[cat]) { map.removeLayer(poi[cat]); poi[cat] = null; }
@@ -69,8 +80,8 @@ const MapKit = (() => {
         if (kind === 'spots') for (const q of G.inundation) L.circleMarker([q[0], q[1]], { radius: 8, color: '#fff', weight: 2, fillColor: '#f97316', fillOpacity: 1 }).bindTooltip('Listed inundation area: ' + q[2]).addTo(g);
         g.addTo(map); govL[kind] = g;
       },
-      setSatellite(on) { if (on) { esri.addTo(map); map.removeLayer(osm); map.getPane('tilePane').classList.add('sat'); } else { osm.addTo(map); map.removeLayer(esri); map.getPane('tilePane').classList.remove('sat'); } },
-      fitCity() { const bb = cfg.bounds; map.fitBounds([[bb[1], bb[0]], [bb[3], bb[2]]], { paddingTopLeft: [440, 20] }); },
+      setSatellite(on) { st.sat = on; const tp = map.getPane('tilePane'); if (on) { esri.addTo(map); map.removeLayer(base); tp.classList.add('sat'); tp.classList.remove('inv'); } else { base.addTo(map); map.removeLayer(esri); tp.classList.remove('sat'); if (base === osm) tp.classList.add('inv'); } },
+      fitCity() { const bb = cfg.bounds; map.fitBounds([[bb[1], bb[0]], [bb[3], bb[2]]], { paddingTopLeft: [padL(), 20] }); },
       resize() { map.invalidateSize(); }, destroy() { map.remove(); }
     };
   }
@@ -97,7 +108,7 @@ const MapKit = (() => {
   function google() {
     const gm = google_maps(), b = cfg.bounds;
     const map = new gm.Map(el, { center: { lat: 17.40, lng: 78.45 }, zoom: 11, disableDefaultUI: true, zoomControl: true, zoomControlOptions: { position: gm.ControlPosition.RIGHT_BOTTOM }, gestureHandling: 'greedy', styles: DARK, clickableIcons: false, backgroundColor: '#0a0f1a' });
-    map.fitBounds({ south: b[1], west: b[0], north: b[3], east: b[2] }, { left: 440, top: 20, right: 20, bottom: 20 });
+    map.fitBounds({ south: b[1], west: b[0], north: b[3], east: b[2] }, { left: padL(), top: 20, right: 20, bottom: 20 });
     map.setOptions({ restriction: { latLngBounds: { south: HYD_BOX[0][0], west: HYD_BOX[0][1], north: HYD_BOX[1][0], east: HYD_BOX[1][1] }, strictBounds: true }, minZoom: 10 });
     const tip = document.createElement('div'); tip.className = 'gtip'; el.parentElement.appendChild(tip);
     el.addEventListener('mousemove', e => { const r = el.getBoundingClientRect(); tip.style.left = (e.clientX - r.left + 14) + 'px'; tip.style.top = (e.clientY - r.top + 14) + 'px'; });
@@ -148,7 +159,7 @@ const MapKit = (() => {
         govG[kind] = list;
       },
       setSatellite(on) { map.setMapTypeId(on ? 'hybrid' : 'roadmap'); },
-      fitCity() { map.fitBounds({ south: b[1], west: b[0], north: b[3], east: b[2] }, { left: 440, top: 20, right: 20, bottom: 20 }); },
+      fitCity() { map.fitBounds({ south: b[1], west: b[0], north: b[3], east: b[2] }, { left: padL(), top: 20, right: 20, bottom: 20 }); },
       resize() { gm.event.trigger(map, 'resize'); }, destroy() { el.innerHTML = ''; tip.remove(); }
     };
   }

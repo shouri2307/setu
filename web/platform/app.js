@@ -1,4 +1,4 @@
-/* Sethu Map platform shell: search → pin → explore card → full-page report (Customer / Agent / Insurer). */
+/* SETHU platform shell: search → pin → explore card → full-page report (Customer / Agent / Insurer). */
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const PERILS = {
@@ -12,12 +12,21 @@ const PLACES = [
   ['Tolichowki', 17.4015, 78.4100], ['Jubilee Hills', 17.4325, 78.4071], ['Gachibowli', 17.4401, 78.3489], ['Hitec City', 17.4435, 78.3772],
   ['Kukatpally', 17.4948, 78.3996], ['LB Nagar', 17.3457, 78.5522], ['Secunderabad', 17.4399, 78.4983], ['Charminar', 17.3616, 78.4747], ['Hussain Sagar', 17.4235, 78.4745]
 ];
-const LENS_PRICE = { customer: '₹299', agent: '₹499', insurer: 'Enterprise' };
-const LENS_NAME = { customer: 'Customer report', agent: 'Agent report', insurer: 'Insurer report' };
+const LENS_PRICE = { customer: '₹299', agent: '₹499', insurer: 'API' };
+const LENS_NAME = { customer: 'Customer report', agent: 'Real estate agent report', insurer: 'Insurer report' };
+const LENS_ICON = { customer: '🏠', agent: '🏷️', insurer: '🛡️' };
+const LENS_SUB = { customer: 'Safe to buy? What it really costs.', agent: 'Price with evidence. Answer the flood question.', insurer: 'Risk tiers and a rain-evidence claim check.' };
+// shown in the ⓘ hover cards: what the report shows, and why it is useful to that person
+const LENS_INFO = {
+  customer: { t: 'Customer report', p: '₹299 per report', w: 'A one-page check on a home you are thinking of buying or renting: how the area copes with heavy rain, how far the nearest hospital, mall, metro and school are, and the true cost with duties.', u: 'Helps a family spot a flooding or lake problem, or an overpriced quote, before paying an advance.' },
+  agent: { t: 'Real estate agent report', p: '₹499 per client report', w: 'A client-ready brief for a listing: the market price band from property portals, a price check against your own comparables, selling points, and what buyers will push back on.', u: 'Helps an agent price with evidence and answer the flood and lake question before the buyer asks it.' },
+  insurer: { t: 'Insurer report', p: 'Enterprise / API', w: 'The underwriting view of an address: motor, property and health-access risk tiers, plus a check of whether the rain on a claim date supports a water-damage claim.', u: 'Helps an insurer price risk by location and fast-track genuine claims, sending only doubtful ones for review.' }
+};
+const infoIcon = lens => `<span class="info" tabindex="0" role="button" aria-label="What is the ${LENS_NAME[lens]}?" data-lens="${lens}">i</span>`;
 const AI_LENS = { customer: 'buyer', agent: 'agent', insurer: 'insurer' };
 const S = {
   r: null, label: '', address: '', gp: null, fc: null, air: null, terrain: null, lens: 'customer', line: 'motor', view: 'explore',
-  unlocked: { customer: false, agent: false, insurer: true },
+  unlocked: { customer: true, agent: true, insurer: true }, open: {},
   cust: { price: '', area: '', brokerage: '' }, agent: { ask: '', area: '', comps: '', guide: '', fee: '' },
   claim: { peril: 'rain_vehicle', date: '', amount: '', out: null, busy: false },
   ai: { q: '', a: '', think: false }, PERILS, cfg: { places: false, mapsKey: '' }, seq: 0, token: Math.random().toString(36).slice(2), busy: false
@@ -146,29 +155,25 @@ function syncHash() {
 function renderDock() {
   const d = $('dock'), r = S.r;
   if (!r) {
-    d.innerHTML = `<div class="panel scroll intro"><h1>Know the <em>land</em> before you buy it, insure it, or price it.</h1>
-      <p>One engine turns any Hyderabad address into an explainable report — flood and lake exposure, facilities, main roads and job hubs, local price bands and claim evidence — in three versions built for different people.</p>
-      <div class="chips">${PLACES.map((p, i) => `<button class="chip" data-act="place" data-i="${i}">${esc(p[0])}</button>`).join('')}</div>
-      <div class="who"><div><span class="e">🏠</span><span><b>Customer report</b><span>Is it safe to buy here, and what will it really cost?</span></span></div>
-        <div><span class="e">🏷️</span><span><b>Agent report</b><span>Market band, negotiation evidence, a client-ready brief.</span></span></div>
-        <div><span class="e">🛡️</span><span><b>Insurer report</b><span>Motor, property and health exposure tiers, claim evidence check, API-ready JSON.</span></span></div></div>
-      <div class="src-note">Search above, click the map, or tap a place. Built on public data — no government drain maps needed.</div></div>`;
+    const poi = (SETUE.D.geo && SETUE.D.geo.poi) || {}, n = k => (poi[k] || []).length;
+    const stat = (v, l) => `<div><b>${v}</b><span>${l}</span></div>`;
+    d.innerHTML = `<div class="panel scroll intro"><h1>Check any Hyderabad address <em>before</em> you buy, sell or insure it.</h1>
+      <p>Search a place or tap the map, then pick the report that fits you.</p>
+      <div class="who">${['customer', 'agent', 'insurer'].map(l => `<div class="wrow"><span class="e">${LENS_ICON[l]}</span><span><b>${LENS_NAME[l]}</b><span>${LENS_SUB[l]}</span></span>${infoIcon(l)}</div>`).join('')}</div>
+      <div class="proof">${stat('145', 'wards')}${stat(Math.floor(n('hospital') / 100) * 100 + '+', 'hospitals')}${stat(Math.floor(n('school') / 100) * 100 + '+', 'schools')}${stat('8', 'real floods tested')}</div>
+      <div class="chips">${PLACES.slice(0, 6).map((p, i) => `<button class="chip" data-act="place" data-i="${i}">${esc(p[0])}</button>`).join('')}</div></div>`;
     return;
   }
-  if (!r.ok) { d.innerHTML = `<div class="panel intro"><h1>Outside our <em>coverage</em></h1><p>Sethu Map covers the 145 GHMC wards. Pick a point inside the shaded area, or search a Hyderabad locality.</p><button class="btn" data-act="clear">Back</button></div>`; return; }
-  const w = r.tiers.water, d192 = r.setu.depth[192], thr = SETUE.D.thr, top = r.buyer.flags[0], out = r.outside;
+  if (!r.ok) { d.innerHTML = `<div class="panel intro"><h1>Outside our <em>coverage</em></h1><p>SETHU covers Hyderabad. Pick a point on the map, or search a Hyderabad locality.</p><button class="btn" data-act="clear">Back</button></div>`; return; }
+  const d192 = r.outside ? null : r.setu.depth[192], thr = SETUE.D.thr, top = r.buyer.flags[0], out = r.outside;
   const title = S.label && !['Coordinates', 'My location'].includes(S.label) ? S.label : r.ward.name;
   d.innerHTML = `<div class="panel scroll lc"><div class="eyebrow">Location</div><h2>${esc(title)}</h2>
     <div class="sub">${esc(r.ward.name)}${S.address ? ' · ' + esc(S.address) : ''}</div>
     <div class="row"><div class="kpi"><div class="l">Location score</div><div class="v">${r.pillars.score}</div><div class="t">${r.pillars.label}</div></div>
       <div class="kpi"><div class="l">${out ? 'Flood model' : '2020 storm'}</div><div class="v sm" style="color:${out ? 'var(--muted)' : d192 >= .5 ? 'var(--e)' : d192 >= thr ? 'var(--c)' : 'var(--a)'}">${out ? 'n/a' : d192 >= thr ? d192.toFixed(2) + ' m' : 'Dry'}</div><div class="t">${out ? 'outside wards' : 'modelled depth'}</div></div>
       <div class="kpi"><div class="l">Facilities</div><div class="v">${r.scores.dev.score}</div><div class="t">out of 100</div></div></div>
-    <div class="callout" style="margin-bottom:18px"><b>${esc(top.t)}.</b> ${esc(top.d.length > 150 ? top.d.slice(0, 147) + '…' : top.d)}</div>
-    <div class="reports">
-      <button class="rbtn" data-act="open" data-lens="customer"><span class="e">🏠</span><span><b>Customer report</b><span>Safe to buy? True cost.</span></span><span class="p">${LENS_PRICE.customer}</span></button>
-      <button class="rbtn" data-act="open" data-lens="agent"><span class="e">🏷️</span><span><b>Agent report</b><span>Market band &amp; negotiation.</span></span><span class="p">${LENS_PRICE.agent}</span></button>
-      <button class="rbtn" data-act="open" data-lens="insurer"><span class="e">🛡️</span><span><b>Insurer report</b><span>Tiers, claim evidence, API.</span></span><span class="p">${LENS_PRICE.insurer}</span></button></div>
-    <div class="src-note"><span class="dot" style="background:${r.source === 'google' ? 'var(--a)' : 'var(--c)'}"></span>${r.source === 'google' ? 'Facilities from Google Places' : S.cfg.places ? 'Loading Google Places… (open data shown meanwhile)' : 'Facilities: OpenStreetMap + Overture Maps (open data)'}</div></div>`;
+    <div class="callout" style="margin-bottom:18px"><b>${esc(top.t)}.</b> ${esc(top.d.length > 120 ? top.d.slice(0, 117) + '…' : top.d)}</div>
+    <div class="reports">${['customer', 'agent', 'insurer'].map(l => `<button class="rbtn" data-act="open" data-lens="${l}"><span class="e">${LENS_ICON[l]}</span><span><b>${LENS_NAME[l]}</b><span>${LENS_SUB[l]}</span></span>${infoIcon(l)}</button>`).join('')}</div></div>`;
 }
 function renderReport() {
   const v = $('report'), r = S.r; if (!r || !r.ok) return;
@@ -176,8 +181,8 @@ function renderReport() {
   const title = S.label && !['Coordinates', 'My location'].includes(S.label) ? S.label : r.ward.name;
   v.innerHTML = `<div class="rhead"><div class="rin"><button class="btn ghost sm back" data-act="back">← Map</button>
     <div><h1>${esc(title)}</h1><div class="loc">${esc(r.ward.name)} · ${r.lat.toFixed(4)}, ${r.lon.toFixed(4)}</div></div>
-    <div class="tabs">${['customer', 'agent', 'insurer'].map(l => `<button data-act="tab" data-lens="${l}" class="${S.lens === l ? 'on' : ''}">${l === 'customer' ? '🏠 Customer' : l === 'agent' ? '🏷️ Agent' : '🛡️ Insurer'}</button>`).join('')}</div>
-    <button class="btn ghost sm noprint" data-act="share">🔗 Share</button></div></div>
+    <div class="tabs">${['customer', 'agent', 'insurer'].map(l => `<button data-act="tab" data-lens="${l}" class="${S.lens === l ? 'on' : ''}">${LENS_ICON[l]} ${l === 'customer' ? 'Customer' : l === 'agent' ? '<span class="lg">Real estate agent</span><span class="sm">Real estate</span>' : 'Insurer'}${infoIcon(l)}</button>`).join('')}</div>
+    <button class="btn ghost sm noprint" data-act="print">🖨 PDF</button><button class="btn ghost sm noprint" data-act="share">🔗 Share</button></div></div>
     <div class="rbody">${Reports.render(S.lens, S)}</div>`;
   v.scrollTop = sc;
 }
@@ -196,6 +201,8 @@ function closeReport(silent) { S.view = 'explore'; $('report').classList.add('hi
 
 /* ------------------------------ actions ------------------------------ */
 document.addEventListener('click', e => {
+  const inf = e.target.closest('.info'); if (inf) { e.preventDefault(); e.stopPropagation(); showTip(inf, true); return; }
+  if (!e.target.closest('#tip')) hideTip();
   const t = e.target.closest('[data-act]'); if (!t) return;
   const a = t.dataset.act;
   if (a === 'place') { const p = PLACES[+t.dataset.i]; $('q').value = p[0]; S.address = ''; setPin(p[1], p[2], p[0]); }
@@ -203,7 +210,6 @@ document.addEventListener('click', e => {
   else if (a === 'back') closeReport();
   else if (a === 'tab') { S.lens = t.dataset.lens; S.ai = { q: '', a: '', think: false }; renderReport(); $('report').scrollTop = 0; syncHash(); }
   else if (a === 'clear') { S.r = null; MapKit.clearPin(); renderDock(); history.replaceState(null, '', '#/'); }
-  else if (a === 'unlock') checkout(t.dataset.lens);
   else if (a === 'print') window.print();
   else if (a === 'share') { navigator.clipboard && navigator.clipboard.writeText(location.href).then(() => toast('Link copied')).catch(() => toast('Copy the address bar link to share')); }
   else if (a === 'ask') askAI(t.dataset.q);
@@ -211,6 +217,7 @@ document.addEventListener('click', e => {
   else if (a === 'line') { S.line = t.dataset.line; renderReport(); }
   else if (a === 'cust-calc' || a === 'agent-calc') renderReport();
   else if (a === 'cust-example') { S.cust = { price: '9000000', area: '1200', brokerage: '1' }; renderReport(); }
+  else if (a === 'agent-example') { S.agent = { ask: '9500', area: '1200', comps: '8800, 9200, 9600', guide: '', fee: '1' }; renderReport(); }
   else if (a === 'claim-run') runClaim();
   else if (a === 'claim-demo') demoClaim(+t.dataset.d);
 });
@@ -239,15 +246,27 @@ async function demoClaim(n) {
   S.view = 'report'; S.claim = { peril: 'rain_vehicle', date: d[3], amount: '', out: null, busy: false }; S.line = 'motor'; S.lens = 'insurer';
   $('report').classList.remove('hide'); renderReport(); runClaim();
 }
-function checkout(lens) {
-  const name = LENS_NAME[lens], price = LENS_PRICE[lens];
-  $('mc').innerHTML = `<button class="x" data-close>×</button><h2>Unlock the ${name.toLowerCase()} — ${price}</h2>
-    <p><b>Demo checkout — no real payment is taken.</b> In production this opens Razorpay (UPI, cards, netbanking).</p>
-    <p>You unlock every section of the report, plain-language AI answers in English, Telugu and Hindi, and a print-ready PDF.</p>
-    <button class="btn pay block" id="payNow" style="margin-top:14px">Pay ${price} (demo)</button>`;
-  $('modal').classList.add('show');
-  $('payNow').onclick = () => { S.unlocked[lens] = true; $('modal').classList.remove('show'); renderReport(); toast('Report unlocked (demo)'); };
+/* ------------------------------ ⓘ hover cards ------------------------------ */
+function showTip(el, pin) {
+  const i = LENS_INFO[el.dataset.lens]; if (!i) return;
+  let tip = $('tip'); if (!tip) { tip = document.createElement('div'); tip.id = 'tip'; document.body.appendChild(tip); }
+  if (pin && tip.classList.contains('show') && tip._for === el) { hideTip(); return; }
+  tip._for = el;
+  tip.innerHTML = `<b>${i.t}</b><span class="tp">${i.p}</span><p><em>Shows</em> ${i.w}</p><p><em>Useful because</em> ${i.u}</p>`;
+  tip.classList.add('show');
+  const b = el.getBoundingClientRect(), w = Math.min(330, innerWidth - 20);
+  tip.style.width = w + 'px';
+  tip.style.left = Math.max(10, Math.min(b.left + b.width / 2 - w / 2, innerWidth - w - 10)) + 'px';
+  const h = tip.offsetHeight; tip.style.top = (b.bottom + 10 + h > innerHeight ? Math.max(10, b.top - h - 10) : b.bottom + 10) + 'px';
 }
+function hideTip() { const t = $('tip'); if (t) { t.classList.remove('show'); t._for = null; } }
+document.addEventListener('mouseover', e => { const i = e.target.closest('.info'); if (i) showTip(i); });
+document.addEventListener('mouseout', e => { if (e.target.closest('.info') && !(e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('#tip'))) hideTip(); });
+document.addEventListener('focusin', e => { const i = e.target.closest && e.target.closest('.info'); if (i) showTip(i); });
+document.addEventListener('focusout', e => { if (e.target.closest && e.target.closest('.info')) hideTip(); });
+// keep collapsible sections open across re-renders, and open them all when printing
+document.addEventListener('toggle', e => { const d = e.target; if (d.matches && d.matches('details.more') && d.dataset.id) S.open[d.dataset.id] = d.open; }, true);
+window.addEventListener('beforeprint', () => document.querySelectorAll('details.more,details.mini').forEach(d => { d.open = true; }));
 
 /* ------------------------------ grounded AI ------------------------------ */
 function aiContext() {
@@ -284,8 +303,8 @@ async function askAI(q) {
 /* ------------------------------ modals ------------------------------ */
 async function showEngine() {
   const D = SETUE.D, p = D.geo.poi, t = (D.meta || {}).tests || {}, n = k => (p[k] || []).length.toLocaleString('en-IN');
-  $('mc').innerHTML = `<button class="x" data-close>×</button><h2>The Sethu Map engine</h2>
-    <p>The three reports are use-cases. Sethu Map is the layer underneath: <b>a location-intelligence engine for Indian cities, built on open and commercial map data.</b></p>
+  $('mc').innerHTML = `<button class="x" data-close>×</button><h2>The SETHU engine</h2>
+    <p>The three reports are use-cases. SETHU is the layer underneath: <b>a location-intelligence engine for Indian cities, built on open and commercial map data.</b></p>
     <h4>What it knows about any point</h4><ul>
     <li>Flood susceptibility of its ward — learned from 8 real Hyderabad floods and tested on floods it never saw</li>
     <li>Modelled water depth at any rainfall, and whether the road to a hospital gets cut</li>
@@ -327,7 +346,7 @@ async function route() {
 }
 function applyMapEngine(engine, why) { if (why) toast(why + ' — using the OpenStreetMap map instead', 4500); }
 async function boot() {
-  $('dock').innerHTML = '<div class="panel intro"><p><span class="spin"></span> &nbsp;Loading the Sethu Map engine…</p></div>';
+  $('dock').innerHTML = '<div class="panel intro"><p><span class="spin"></span> &nbsp;Loading the SETHU engine…</p></div>';
   try { await SETUE.load(); } catch (e) { $('dock').innerHTML = '<div class="panel intro"><p>Could not load data files. Serve the site from the <code>web/</code> folder.</p></div>'; return; }
   try { S.cfg = await api('/api/config', 4000); } catch (e) { S.cfg = { places: false, suggest: false, mapsKey: '' }; }
   const D = SETUE.D;
@@ -339,7 +358,9 @@ async function boot() {
     poiRows: c => (S.gp && S.gp.cats && S.gp.cats[c] && S.gp.cats[c].length) ? S.gp.cats[c] : (D.geo.poi[c] || []), onEngine: applyMapEngine
   });
   $('maptools').onclick = e => {
-    const c = e.target.closest('.chip'); if (!c) return; const t = c.dataset.t, on = !c.classList.contains('on'); c.classList.toggle('on', on);
+    const c = e.target.closest('.chip'); if (!c) return; const t = c.dataset.t;
+    if (t === 'more') { const mb = $('morebox'), open = !mb.classList.contains('show'); mb.classList.toggle('show', open); c.classList.toggle('on', open); return; }
+    const on = !c.classList.contains('on'); c.classList.toggle('on', on);
     if (t === 'wards' || t === 'lakes') { MapKit.setLayer(t, on); if (t === 'wards') $('maplegend').style.display = on ? '' : 'none'; }
     else if (t === 'sat') MapKit.setSatellite(on);
     else if (t === 'nalas' || t === 'spots' || t === 'drains' || t === 'tanks') MapKit.showGov(t, on);
@@ -347,7 +368,7 @@ async function boot() {
       const loc = c.dataset.mode !== 'loc'; c.dataset.mode = loc ? 'loc' : 'flood'; c.classList.remove('on');
       c.textContent = loc ? 'Colour: location score' : 'Colour: flood rank';
       MapKit.setColorMode(c.dataset.mode);
-      $('maplegend').innerHTML = loc ? '<b>Location score (ward average)</b><div class="ramp" style="background:linear-gradient(90deg,#ef4444,#eab308,#22c55e)"></div><div class="rr"><span>weaker</span><span>stronger</span></div>' : '<b>Flood-susceptibility rank</b><div class="ramp"></div><div class="rr"><span>lower</span><span>higher</span></div>';
+      $('maplegend').innerHTML = loc ? '<b>Location score (ward average)</b><div class="ramp" style="background:linear-gradient(90deg,#f43f5e,#facc15,#2dd4bf)"></div><div class="rr"><span>weaker</span><span>stronger</span></div>' : '<b>Flood-susceptibility rank</b><div class="ramp"></div><div class="rr"><span>lower</span><span>higher</span></div>';
     }
     else MapKit.showPoi(t, on);
   };

@@ -1,7 +1,7 @@
-# Sethu Map — final-round pitch kit
+# SETHU — final-round pitch kit
 
 ## The one-line version
-**Sethu Map is a location-intelligence engine for Indian cities, built only on open data.**
+**SETHU is a location-intelligence engine for Indian cities, built only on open data.**
 Buyers, agents and insurers use the same engine through three different views.
 
 ## 90-second script (say it, then demo)
@@ -11,11 +11,11 @@ Buyers, agents and insurers use the same engine through three different views.
 
 **0:10 — One address, three reports (40 s).** Ask a judge for an address (or use their college) → search → location card appears.
 1. **Customer report (₹299):** "Verdict in plain words, the water rising with rain, lakes near the plot, and the *true cost* — duties plus brokerage." → click *Try an example*.
-2. **Agent report (₹499 per client):** "The same facts as negotiation evidence, and a market band from portals — we show asking prices and say so."
+2. **Real estate agent report (₹499 per client):** "The same facts as negotiation evidence, and a market band from portals — we show asking prices and say so."
 3. **Insurer report:** "Motor, Property and Health-access tiers with illustrative loadings — and a claim evidence check." → run the two demo buttons (Tolichowki 13 Oct 2020 = consistent; Banjara Hills 2 Mar 2020 = not supported by weather evidence). "Same engine, returned as JSON for their systems."
 
 **0:50 — The reveal (10 s)**
-"These are three *uses*. The product is Sethu Map — the engine underneath." → click **⚙ Engine**.
+"These are three *uses*. The product is SETHU — the engine underneath." → click **⚙ Engine**.
 
 **1:00 — Proof (15 s)**
 "Tested on floods it never saw: AUC 0.69 on held-out floods, 0.79 against GHMC's own waterlogging list. Our first version scored 0.49 — a coin flip. We show those numbers inside the app."
@@ -25,7 +25,7 @@ Buyers, agents and insurers use the same engine through three different views.
 
 ## Expo stall
 * QR code (header button) → the live site. Let visitors check **their own home** — the 📍 button uses their phone's location.
-* Printed report: unlock the Customer report (demo checkout) → Print / save as PDF for a judge's locality.
+* Printed report: open the Customer report → PDF button, for a judge's locality.
 * Have the two claim-demo buttons ready; they work offline of any typing.
 
 ## Say this / never say this
@@ -41,7 +41,7 @@ Buyers, agents and insurers use the same engine through three different views.
 ## Jury objections — answers
 1. **"Routine hackathon flood project."** The flood model is one input. The product is the report people and insurers act on, and the validation is shown, not claimed.
 2. **"No USP."** Open-data only (works in any city in days), honest validation inside the app, and one engine serving three customers.
-3. **"Needs GHMC drain maps / government approval."** No RTI needed. GHMC's own nala network, drain and canal lines, tank outlines and a list of 23 official inundation areas are served publicly by the Telangana State GIS — Sethu Map already uses them (96 nalas, 1,162 segments with existing vs proposed widths, 3,960 drains). We state the limits: the records have no stated date, and their encroachment fields are blank. The ward flood model still runs on terrain, satellite and open maps.
+3. **"Needs GHMC drain maps / government approval."** No RTI needed. GHMC's own nala network, drain and canal lines, tank outlines and a list of 23 official inundation areas are served publicly by the Telangana State GIS — SETHU already uses them (96 nalas, 1,162 segments with existing vs proposed widths, 3,960 drains). We state the limits: the records have no stated date, and their encroachment fields are blank. The ward flood model still runs on terrain, satellite and open maps.
 4. **"Not relevant to Hyderabad."** Lake-buffer and waterlogging risk is *the* Hyderabad property question — and 2020 is in everyone's memory.
 5. **"Is it only about the past?"** No — live 7-day rain forecast feeds the ward model; claims are checked against the rain on the claim date.
 6. **"Why would insurers share data?"** They don't have to. Day one runs without their data. Pilot = deploy inside their environment, shadow mode on closed claims, only metrics leave (DPDP-friendly). Roadmap: federated learning across insurers.
@@ -51,7 +51,7 @@ Buyers, agents and insurers use the same engine through three different views.
 10. **"Business model / funding?"** Per-report (₹299 customer, ₹499 per agent client report — proposed), insurer/bank API + platform fee. Funding goes to data, compute, and an insurer pilot — not hardware.
 
 ## The lake-buffer answer (the Hyderabad hook)
-For any address Sethu Map shows the nearest tank, HYDRAA/TGRAC's satellite status for it (Live / Partially / Totally Encroached, 2014 vs 2023), the HMDA notification record and a link to HMDA's official FTL map PDF. We say plainly: it is a satellite classification and a lookup aid, not a legal buffer check.
+For any address SETHU shows the nearest tank, HYDRAA/TGRAC's satellite status for it (Live / Partially / Totally Encroached, 2014 vs 2023), the HMDA notification record and a link to HMDA's official FTL map PDF. We say plainly: it is a satellite classification and a lookup aid, not a legal buffer check.
 
 ## One more honest number
 Against the 23 official inundation spots, 43% fall in our top-quartile wards (25% by chance), 57% in the top 40%. Many spots are underpasses and junctions that a ward-level terrain model cannot see — which is exactly why the official spot list is scored alongside the model.
