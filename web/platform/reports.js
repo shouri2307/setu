@@ -166,7 +166,7 @@ const Reports = (() => {
         <div class="legend-note">Lake outlines come from open maps and are <b>not</b> the legal FTL / buffer boundary. Ground difference uses a 90 m elevation grid.</div></div>`;
 
     const cs = S.cust, m = SETUE.market(r.lat, r.lon, r.wid), price = +cs.price, area = +cs.area;
-    let costHtml = '<div class="callout">Enter a quoted price to see the duties and the total.</div>';
+    let costHtml = '<div class="callout">Enter a quoted price to see the duties and the total.</div>', bandHtml = '';
     if (price > 0) {
       const t = SETUE.totalCost({ price, brokeragePct: +cs.brokerage || 0 });
       costHtml = `<table class="cost"><tr><td>Quoted price</td><td class="tnum">${inrFull(t.price)}</td></tr>
@@ -175,16 +175,17 @@ const Reports = (() => {
         <tr class="total"><td>Total cost to you</td><td class="tnum">${inrFull(t.total)}</td></tr></table>`;
       if (area > 0 && m) {
         const ppsf = price / area, pos = ppsf < m.loc.low ? 'below' : ppsf > m.loc.high ? 'above' : 'within';
-        costHtml += `<div class="result ${pos === 'within' ? 'green' : pos === 'below' ? 'amber' : 'red'}" style="margin-top:12px;padding:12px 16px"><h4 style="font-size:16px;margin-bottom:2px">${inrFull(ppsf)} / sq ft — ${pos === 'within' ? 'inside' : pos} the ${esc(m.loc.name)} asking band</h4>
+        bandHtml += `<div class="result ${pos === 'within' ? 'green' : pos === 'below' ? 'amber' : 'red'}" style="margin-top:12px;padding:12px 16px"><h4 style="font-size:16px;margin-bottom:2px">${inrFull(ppsf)} / sq ft — ${pos === 'within' ? 'inside' : pos} the ${esc(m.loc.name)} asking band</h4>
+          <div class="chartwrap">${Charts.band(m.loc.low, m.loc.high, m.loc.typical, ppsf, v => '₹' + Math.round(v).toLocaleString('en-IN'))}</div>
           <div class="legend-note" style="margin-top:2px">${pos === 'above' ? 'Above what portals ask for this area — a point to negotiate.' : pos === 'below' ? 'Below the usual ask: a bargain or a warning — check title, access and water history.' : 'Within the usual asking range.'} Asking prices, not deal prices${m.loc.origin === 'llm-compiled' ? ' (AI-compiled estimate — verify)' : ''}.</div></div>`;
-      } else if (area > 0) costHtml += `<div class="callout warn" style="margin-top:12px">No market band within 4 km of this location, so the price check can't run.</div>`;
+      } else if (area > 0) bandHtml += `<div class="callout warn" style="margin-top:12px">No market band within 4 km of this location, so the price check can't run.</div>`;
     }
     const cost = `<div class="card"><h3>True cost of buying &amp; price check</h3><div class="lead" style="margin-bottom:12px">Example numbers are filled in — change them to your quote.</div>
       <div class="calcgrid"><div><div class="row3"><div><label class="f">Quoted price (₹)</label><input class="in" type="number" data-bind="cust.price" value="${esc(cs.price)}" placeholder="9000000"></div>
         <div><label class="f">Area (sq ft)</label><input class="in" type="number" data-bind="cust.area" value="${esc(cs.area)}" placeholder="1200"></div>
         <div><label class="f">Brokerage (%)</label><input class="in" type="number" step="0.1" data-bind="cust.brokerage" value="${esc(cs.brokerage)}" placeholder="0"></div></div>
         <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap"><button class="btn" data-act="cust-calc">Calculate</button><button class="btn ghost" data-act="cust-example">Reset example</button></div>
-        <div class="legend-note">About 4% stamp + 1.5% transfer + 0.5% registration — confirm with the Sub-Registrar.</div></div>
+        <div class="legend-note">About 4% stamp + 1.5% transfer + 0.5% registration — confirm with the Sub-Registrar.</div>${bandHtml}</div>
         <div>${costHtml}</div></div></div>`;
     const ins = `<div class="card"><h3>What this means for your insurance</h3><div class="lead">How an insurer's location score could look here. Loadings are illustrative, not a quote.</div>
       <div class="kv"><span class="k">Home insurance exposure</span><span class="v t${r.tiers.prop.letter}">Tier ${r.tiers.prop.letter} · ${SETUE.LOADING[r.tiers.prop.letter]}</span></div>

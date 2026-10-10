@@ -411,3 +411,4 @@ details.mini>summary{cursor:pointer;color:var(--accent);font-size:14px;font-weig
   .tier{padding:14px}.tier .big{font-size:50px}
   .ns>div{padding:9px 12px}
 }
+.calcgrid .chartwrap svg{max-height:135px}
