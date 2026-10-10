@@ -97,6 +97,8 @@ const SETUE = (() => {
     D.thr = D.model.flood_threshold_m;
     // searchable names (offline geosearch)
     D.index = [];
+    // featured landmark: the event venue, so it is always one search away
+    D.index.push({ name: 'Cyber Gardens Convention Centre', kind: 'Landmark · HITEC City', lat: 17.4547214, lon: 78.3779507 });
     for (const w of D.wards) D.index.push({ name: w.name.replace(/^Ward \d+ /, ''), kind: 'Ward', lat: w.c[1], lon: w.c[0], ward: w.id });
     const searchCats = ['hospital', 'college', 'school', 'metro', 'market', 'park'];
     for (const c of searchCats) for (const p of (D.geo.poi[c] || [])) if (p[2]) D.index.push({ name: p[2], kind: c, lat: p[0], lon: p[1] });

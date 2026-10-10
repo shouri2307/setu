@@ -9,7 +9,7 @@ const PERILS = {
   fire: { label: 'Fire', rain: false }
 };
 const PLACES = [
-  ['Tolichowki', 17.4015, 78.4100], ['Jubilee Hills', 17.4325, 78.4071], ['Gachibowli', 17.4401, 78.3489], ['Hitec City', 17.4435, 78.3772],
+  ['Cyber Gardens', 17.4547214, 78.3779507], ['Tolichowki', 17.4015, 78.4100], ['Jubilee Hills', 17.4325, 78.4071], ['Gachibowli', 17.4401, 78.3489], ['Hitec City', 17.4435, 78.3772],
   ['Kukatpally', 17.4948, 78.3996], ['LB Nagar', 17.3457, 78.5522], ['Secunderabad', 17.4399, 78.4983], ['Charminar', 17.3616, 78.4747], ['Hussain Sagar', 17.4235, 78.4745]
 ];
 const LENS_NAME = { customer: 'Customer report', agent: 'Real estate agent report', insurer: 'Insurer report' };
@@ -39,7 +39,7 @@ let sugItems = [], sugTimer = null;
 function localSearch(q) {
   q = q.trim().toLowerCase(); if (q.length < 2) return [];
   const out = [];
-  for (const x of SETUE.D.index) { const n = x.name.toLowerCase(), i = n.indexOf(q); if (i >= 0) out.push({ main: x.name, sub: x.kind, lat: x.lat, lon: x.lon, s: i === 0 ? 0 : 1 }); }
+  for (const x of SETUE.D.index) { const n = x.name.toLowerCase(), i = n.indexOf(q); if (i >= 0) out.push({ main: x.name, sub: x.kind, lat: x.lat, lon: x.lon, s: i === 0 ? 0 : 1, feat: /^Landmark/.test(x.kind) }); }
   out.sort((a, b) => a.s - b.s || a.main.length - b.main.length); return out.slice(0, 5);
 }
 async function photonSearch(q, limit = 5) {
@@ -71,7 +71,7 @@ async function updateSuggestions(q) {
   const toks = q.toLowerCase().split(/[^a-z0-9]+/).filter(t => t.length >= 2 && !STOP.has(t));
   const hits = x => { const ws = (x.main + ' ' + (x.sub || '')).toLowerCase().split(/[^a-z0-9]+/); return toks.filter(t => ws.some(w => w.startsWith(t))).length; };
   const paint = () => {
-    items.sort((p, r) => hits(r) - hits(p));
+    items.sort((p, r) => hits(r) - hits(p) || (r.feat ? 1 : 0) - (p.feat ? 1 : 0));   // featured landmarks win ties
     sugItems = items.slice(0, 8);
     if ($('q').value !== q) return;
     const exact = sugItems.length && toks.length && hits(sugItems[0]) >= toks.length;
