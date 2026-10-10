@@ -168,7 +168,7 @@ web/
   platform/
     engine.js            scoring, tiers, claim check, market lookup, live APIs
     reports.js           the Customer / Agent / Insurer pages
-    app.js               router, search, AI box, checkout demo, print and QR
+    app.js               router, search, report tabs, info cards, print and QR
     map.js               Leaflet map (Google adapter dormant), Hyderabad-only bounds, overlays
     charts.js, styles.css
   data/                  everything the browser reads: zones, wardfeat, wardloc, geo, gov, hmda_lakes,
