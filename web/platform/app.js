@@ -25,7 +25,7 @@ const infoIcon = lens => `<span class="info" tabindex="0" role="button" aria-lab
 const S = {
   r: null, label: '', address: '', gp: null, fc: null, air: null, terrain: null, lens: 'customer', line: 'motor', view: 'explore',
   unlocked: { customer: true, agent: true, insurer: true }, open: {},
-  cust: { price: '', area: '', brokerage: '' }, agent: { ask: '', area: '', comps: '', guide: '', fee: '' },
+  cust: { price: '9000000', area: '1200', brokerage: '1' }, agent: { ask: '9500', area: '1200', comps: '8800, 9200, 9600', guide: '', fee: '1' },
   claim: { peril: 'rain_vehicle', date: '', amount: '', out: null, busy: false },
   ai: { q: '', a: '', think: false }, PERILS, cfg: { places: false, mapsKey: '' }, seq: 0, token: Math.random().toString(36).slice(2), busy: false
 };

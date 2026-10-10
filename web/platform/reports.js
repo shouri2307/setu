@@ -100,8 +100,8 @@ const Reports = (() => {
       return `<div class="nb"><span class="ic">${ic}</span><div class="m"><div class="top"><b>${esc(n && n.name ? n.name : lab)}</b><span class="d tnum">${d == null ? 'none found' : fmtKm(d)}</span></div>
         <div class="bar2"><i style="width:${w}%;background:${col}"></i></div><small>${lab} · ${sub}</small></div></div>`;
     }).join('');
-    return `<div class="card"><h3>${title || 'Hospitals, malls, stations &amp; schools nearby'}</h3><div class="lead">${lead || 'Nearest one of each, from this address. Longer bar = closer.'}</div>${body}
-      <div class="legend-note">${r.source === 'google' ? 'Google Places' : 'OpenStreetMap + Overture Maps'} · straight-line distances</div></div>`;
+    return `<div class="card"><h3>${title || 'Hospitals, malls, stations &amp; schools nearby'}</h3>${lead === false ? '' : `<div class="lead">${lead || 'Nearest one of each, from this address. Longer bar = closer.'}</div>`}${body}
+      <div class="legend-note" style="margin-top:6px">Longer bar = closer · ${r.source === 'google' ? 'Google Places' : 'OpenStreetMap + Overture Maps'}, straight-line</div></div>`;
   }
   function nearStrip(r, keys, wide) {
     const f = r.fac, H = r.hubs || {};
@@ -119,8 +119,8 @@ const Reports = (() => {
       const pct = Math.round(it.v * 100), col = it.v >= .75 ? 'var(--a)' : it.v >= .5 ? 'var(--c)' : 'var(--e)';
       return `<div class="wy"><span class="n">${esc(it.label)}</span><div class="bar2"><i style="width:${pct}%;background:${col}"></i></div><b class="tnum" style="color:${col}">${pct}</b></div>`;
     }).join('');
-    return `<div class="card"><h3>Why the score is ${P.score}/100</h3><div class="lead">What we measured around this address. Higher is better.</div>${rows}
-      <div class="legend-note">Strongest: ${esc(nm(P.best))}. Weakest: ${esc(nm(P.worst))}.</div></div>`;
+    return `<div class="card"><h3>Why the score is ${P.score}/100</h3>${rows}
+      <div class="legend-note" style="margin-top:8px">Higher is better. Weakest: ${esc(nm(P.worst))}.</div></div>`;
   }
   // the summary page ends here; the detailed report is a PDF download (or an on-screen preview)
   const dlBar = (S, includes) => `<div class="dl"><div><b>Detailed report</b><span>${includes}</span></div>
@@ -166,28 +166,26 @@ const Reports = (() => {
         <div class="legend-note">Lake outlines come from open maps and are <b>not</b> the legal FTL / buffer boundary. Ground difference uses a 90 m elevation grid.</div></div>`;
 
     const cs = S.cust, m = SETUE.market(r.lat, r.lon, r.wid), price = +cs.price, area = +cs.area;
-    let costHtml = '';
+    let costHtml = '<div class="callout">Enter a quoted price to see the duties and the total.</div>';
     if (price > 0) {
       const t = SETUE.totalCost({ price, brokeragePct: +cs.brokerage || 0 });
-      costHtml = `<table class="cost"><tr><td>Agreed price</td><td class="tnum">${inrFull(t.price)}</td></tr>
-        <tr><td>Stamp duty (4%)</td><td class="tnum">${inrFull(t.stamp)}</td></tr><tr><td>Transfer duty (1.5%)</td><td class="tnum">${inrFull(t.transfer)}</td></tr>
-        <tr><td>Registration (0.5%)</td><td class="tnum">${inrFull(t.reg)}</td></tr>
-        ${t.brokerage ? `<tr><td>Brokerage (${cs.brokerage}%)</td><td class="tnum">${inrFull(t.brokerage)}</td></tr>` : ''}
-        <tr class="total"><td>Total cost to you</td><td class="tnum">${inrFull(t.total)}</td></tr></table>
-        <div class="legend-note">Commonly quoted urban duties (about 6% in total). Confirm at the Sub-Registrar / IGRS Telangana.</div>`;
+      costHtml = `<table class="cost"><tr><td>Quoted price</td><td class="tnum">${inrFull(t.price)}</td></tr>
+        <tr><td>Stamp, transfer &amp; registration (6%)</td><td class="tnum">${inrFull(t.govt)}</td></tr>
+        ${t.brokerage ? `<tr><td>Brokerage (${esc(cs.brokerage)}%)</td><td class="tnum">${inrFull(t.brokerage)}</td></tr>` : ''}
+        <tr class="total"><td>Total cost to you</td><td class="tnum">${inrFull(t.total)}</td></tr></table>`;
       if (area > 0 && m) {
         const ppsf = price / area, pos = ppsf < m.loc.low ? 'below' : ppsf > m.loc.high ? 'above' : 'within';
-        costHtml += `<div class="result ${pos === 'within' ? 'green' : pos === 'below' ? 'amber' : 'red'}"><h4>${inrFull(ppsf)} / sq ft — ${pos === 'within' ? 'inside' : pos} the ${esc(m.loc.name)} band</h4>
-          <div class="chartwrap">${Charts.band(m.loc.low, m.loc.high, m.loc.typical, ppsf, v => '₹' + Math.round(v).toLocaleString('en-IN'))}</div>
-          <p style="color:var(--text2);font-size:15px">${pos === 'above' ? 'Above the portal asking band for this area — use the flags to negotiate.' : pos === 'below' ? 'Below the usual asking band: a bargain or a warning — check title, access and water history.' : 'Within the usual asking band for the area.'} Asking prices, not deal prices${m.loc.origin === 'llm-compiled' ? ' (AI-compiled estimate — verify)' : ''}.</p></div>`;
-      } else if (area > 0) costHtml += `<div class="callout warn" style="margin-top:16px">No market band within 4 km of this location, so the price check can't run. The cost breakdown above still applies.</div>`;
+        costHtml += `<div class="result ${pos === 'within' ? 'green' : pos === 'below' ? 'amber' : 'red'}" style="margin-top:12px;padding:12px 16px"><h4 style="font-size:16px;margin-bottom:2px">${inrFull(ppsf)} / sq ft — ${pos === 'within' ? 'inside' : pos} the ${esc(m.loc.name)} asking band</h4>
+          <div class="legend-note" style="margin-top:2px">${pos === 'above' ? 'Above what portals ask for this area — a point to negotiate.' : pos === 'below' ? 'Below the usual ask: a bargain or a warning — check title, access and water history.' : 'Within the usual asking range.'} Asking prices, not deal prices${m.loc.origin === 'llm-compiled' ? ' (AI-compiled estimate — verify)' : ''}.</div></div>`;
+      } else if (area > 0) costHtml += `<div class="callout warn" style="margin-top:12px">No market band within 4 km of this location, so the price check can't run.</div>`;
     }
-    const cost = `<div class="card"><h3>True cost of buying</h3><div class="lead">Enter a quote to see duties and brokerage${m ? ` and how it compares with ${esc(m.loc.name)} asking prices` : ''}.</div>
-      <div class="row3"><div><label class="f">Quoted price (₹)</label><input class="in" type="number" data-bind="cust.price" value="${esc(cs.price)}" placeholder="9000000"></div>
+    const cost = `<div class="card"><h3>True cost of buying &amp; price check</h3><div class="lead" style="margin-bottom:12px">Example numbers are filled in — change them to your quote.</div>
+      <div class="calcgrid"><div><div class="row3"><div><label class="f">Quoted price (₹)</label><input class="in" type="number" data-bind="cust.price" value="${esc(cs.price)}" placeholder="9000000"></div>
         <div><label class="f">Area (sq ft)</label><input class="in" type="number" data-bind="cust.area" value="${esc(cs.area)}" placeholder="1200"></div>
         <div><label class="f">Brokerage (%)</label><input class="in" type="number" step="0.1" data-bind="cust.brokerage" value="${esc(cs.brokerage)}" placeholder="0"></div></div>
-      <div style="display:flex;gap:10px;margin:14px 0 0;flex-wrap:wrap"><button class="btn" data-act="cust-calc">Calculate</button><button class="btn ghost" data-act="cust-example">Try an example</button></div>${costHtml}</div>`;
-
+        <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap"><button class="btn" data-act="cust-calc">Calculate</button><button class="btn ghost" data-act="cust-example">Reset example</button></div>
+        <div class="legend-note">About 4% stamp + 1.5% transfer + 0.5% registration — confirm with the Sub-Registrar.</div></div>
+        <div>${costHtml}</div></div></div>`;
     const ins = `<div class="card"><h3>What this means for your insurance</h3><div class="lead">How an insurer's location score could look here. Loadings are illustrative, not a quote.</div>
       <div class="kv"><span class="k">Home insurance exposure</span><span class="v t${r.tiers.prop.letter}">Tier ${r.tiers.prop.letter} · ${SETUE.LOADING[r.tiers.prop.letter]}</span></div>
       <div class="kv"><span class="k">Vehicle insurance exposure</span><span class="v t${r.tiers.motor.letter}">Tier ${r.tiers.motor.letter} · ${SETUE.LOADING[r.tiers.motor.letter]}</span></div>
@@ -200,12 +198,13 @@ const Reports = (() => {
     const chk = `<div class="card"><h3>Before you pay: checklist</h3><div class="lead">Tailored to what this report found.</div><ul class="list">${qs.map(q => `<li>${esc(q)}</li>`).join('')}</ul></div>`;
 
     const detail = `<div class="grid2">${chart}<div class="card"><h3>All flags</h3><div class="lead">Everything a careful buyer should know.</div>${flagList(v.flags)}</div></div>
-      <div class="grid2">${cost}${chk}</div><div class="grid2">${lake}${ins}</div>${govCard(r)}<div class="grid2">${routesCard(r)}${fac}</div>
+      <div class="grid2">${chk}${lake}</div>${ins}${govCard(r)}<div class="grid2">${routesCard(r)}${fac}</div>
       ${pillarCard(r, 'Location profile', `Every pillar with its weight. Flood safety is one of ${r.pillars.items.length}.`)}${footnote(r)}`;
     return `<div class="printonly"><b>SETHU — Customer report</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>
       ${hero}
-      <div class="grid2">${whyScore(r)}${nearbyCard(r, 'Hospitals, malls, stations &amp; schools', 'Nearest one of each. Longer bar = closer.')}</div>
-      ${dlBar(S, 'Rain-versus-water curve · all flags · true cost of buying · checklist · official drainage and tank records · insurance angle')}${endNote}
+      <div class="grid2">${whyScore(r)}${nearbyCard(r, 'Hospitals, malls, stations &amp; schools', false)}</div>
+      ${cost}
+      ${dlBar(S, 'Rain-versus-water curve · all flags · checklist · official drainage and tank records · insurance angle')}${endNote}
       ${detailWrap(S, detail)}`;
   }
 
@@ -229,7 +228,7 @@ const Reports = (() => {
     const srcList = m ? `${m.loc.note ? `<p class="legend-note">${esc(m.loc.note)}</p>` : ''}<ul class="list tick" style="margin-top:8px">${m.loc.sources.map(s => `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>` : esc(s.name)}</li>`).join('')}</ul>${plotHtml}<div class="callout warn" style="margin-top:12px"><b>Asking prices, not deal prices.</b> ${esc(SETUE.D.rates.caution || '')}</div>` : '';
     const bandHtml = m ? `<div class="chartwrap">${Charts.band(m.loc.low, m.loc.high, m.loc.typical, ppsfAsk || null, v => '₹' + Math.round(v).toLocaleString('en-IN'))}</div>
       <div class="pillrow"><span class="tag">Rate point: ${esc(m.loc.name)} (${fmtKm(m.d)} away)</span><span class="tag">confidence: ${esc(m.loc.conf)}</span><span class="tag">₹ per sq ft · apartments · asking</span>${m.loc.origin === 'llm-compiled' ? '<span class="tag" style="border-color:var(--c);color:var(--c)">AI-compiled estimate — verify</span>' : ''}</div>
-      ${miniDetails('Sources &amp; notes', srcList)}`
+      `
       : `<div class="callout warn">No market band within 4 km of this location yet. Use your own comparables below — the tool works without a band.</div>`;
     const fee = +a.fee || 0, feeAmt = total * fee / 100;
     const hero = `<div class="hero"><div class="verdict ${w.letter <= 'B' ? 'green' : w.letter === 'C' ? 'amber' : 'red'}"><div class="k">Listing brief</div><h2>${esc(S.label && S.label !== 'My location' ? S.label : r.ward.name)}</h2>
@@ -237,31 +236,31 @@ const Reports = (() => {
       <div class="pillrow" style="margin:16px 0 18px"><span class="tag">Water tier ${w.letter}</span><span class="tag">Facilities ${dev.score}/100</span><span class="tag">Location score ${r.pillars.score}/100</span></div>
       <div class="kv"><span class="k">Lakes / tanks</span><span class="v">${esc(lb.band)}</span></div><div class="kv"><span class="k">Depth in a 192 mm storm</span><span class="v">${r.outside ? 'not modelled here' : r.setu.depth[192] >= SETUE.D.thr ? r.setu.depth[192].toFixed(2) + ' m' : 'dry'}</span></div></div>
       <div class="card"><h3>Market band${m ? ' · ' + esc(m.loc.name) : ''}</h3><div class="lead">Typical portal asking prices per sq ft.</div>${bandHtml}</div></div>`;
-    const price = `<div class="card"><h3>Price check against the market</h3><div class="lead">Enter the asking rate and, optionally, comparables you trust.</div>
+    const price = `<div class="card"><h3>Price check against the market</h3><div class="lead">Example numbers are filled in — enter your listing's.</div>
       <div class="row2"><div><label class="f">Asking rate (₹ / sq ft)</label><input class="in" type="number" data-bind="agent.ask" value="${esc(a.ask)}" placeholder="9500"></div><div><label class="f">Area (sq ft)</label><input class="in" type="number" data-bind="agent.area" value="${esc(a.area)}" placeholder="1200"></div></div>
       <label class="f">Comparable deals (₹ / sq ft, comma-separated)</label><input class="in" data-bind="agent.comps" value="${esc(a.comps)}" placeholder="8800, 9200, 9600">
-      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-act="agent-calc">Compare</button><button class="btn ghost" data-act="agent-example">Try an example</button></div>${res}</div>`;
-    const commission = `<div class="card"><h3>Commission &amp; deal economics</h3><div class="lead">Agent commissions are not published anywhere — enter what you charge.</div>
-      <label class="f">Official guidance value (₹ / sq yd) — optional, from the registration portal</label><input class="in" type="number" data-bind="agent.guide" value="${esc(a.guide)}">
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-act="agent-calc">Compare</button><button class="btn ghost" data-act="agent-example">Reset example</button></div>${res}</div>`;
+    const commission = `<div class="card"><h3>Commission &amp; deal economics</h3><div class="lead">Commissions aren't published — enter your fee.</div>
       <label class="f">Your fee (% of price)</label><input class="in" type="number" step="0.1" data-bind="agent.fee" value="${esc(a.fee)}" placeholder="1">
       ${total > 0 ? `<table class="cost" style="margin-top:12px"><tr><td>Deal value (${inr(ppsfAsk)}/sq ft × ${area.toLocaleString('en-IN')} sq ft)</td><td class="tnum">${inr(total)}</td></tr>${fee ? `<tr><td>Your fee at ${fee}%</td><td class="tnum">${inr(feeAmt)}</td></tr>` : ''}
         <tr><td>Govt. duties payable by buyer (~6%)</td><td class="tnum">${inr(total * .06)}</td></tr><tr class="total"><td>Buyer's all-in cost</td><td class="tnum">${inr(total * 1.06 + feeAmt)}</td></tr></table>` : '<div class="callout" style="margin-top:14px">Enter the asking rate and area in the price check to see the deal economics.</div>'}</div>`;
     const neg = r.buyer.flags.filter(f => f.lvl !== 'green'), pos = dev.parts.filter(p => p.v >= .7).map(p => `${p.label}: ${p.note.split(' · ').slice(0, 2).join(' · ')}`);
     if (w.letter <= 'B') pos.unshift('Low modelled water risk (flood-susceptibility tier ' + w.letter + ')');
-    const negCard = `<div class="card"><h3>What buyers will push back on</h3><div class="lead">Facts a buyer will cite. We don't turn them into a made-up discount.</div>${neg.length ? flagList(neg.slice(0, 3)) : '<div class="callout">No water red flags in the open data — price on facilities and demand.</div>'}</div>`;
-    const posCard = `<div class="card"><h3>Selling points</h3><div class="lead">Strengths you can lead with.</div>${pos.length ? `<ul class="list tick">${pos.slice(0, 5).map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : '<div class="callout">No standout facilities in the data.</div>'}</div>`;
+    const negCard = `<div class="card"><h3>What buyers will push back on</h3>${neg.length ? neg.slice(0, 3).map(f => `<div class="flagline"><span>${f.lvl === 'red' ? '⛔' : '⚠️'}</span><b>${esc(f.t)}</b></div>`).join('') + '<div class="legend-note" style="margin-top:8px">Facts a buyer will cite — not a made-up discount.</div>' : '<div class="callout">No water red flags in the open data — price on facilities and demand.</div>'}</div>`;
+    const posCard = `<div class="card"><h3>Selling points</h3>${pos.length ? `<ul class="list tick">${pos.slice(0, 3).map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : '<div class="callout">No standout facilities in the data.</div>'}</div>`;
     const land = `<div class="card"><h3>Land character</h3><div class="kv"><span class="k">Ward</span><span class="v">${esc(r.ward.name)}</span></div><div class="kv"><span class="k">Built-up share of ward</span><span class="v">${r.setu.builtup != null ? Math.round(r.setu.builtup * 100) + '%' : '—'}</span></div>
         <div class="kv"><span class="k">Density · size</span><span class="v">${esc(r.prof.density_class || '—')} · ${esc(r.prof.size_class || '—')}</span></div><div class="kv"><span class="k">Lakes / tanks</span><span class="v">${esc(lb.band)} — ${esc(lb.text)}</span></div>
         <div class="kv"><span class="k">Ground vs surroundings</span><span class="v">${r.terrain ? (r.terrain.relief >= 0 ? '+' : '') + r.terrain.relief.toFixed(1) + ' m' : '…'}</span></div><div class="kv"><span class="k">Parks within 1 km</span><span class="v">${r.fac.park.n1km}${r.fac.park.capped ? '+' : ''}</span></div>
         <div class="kv"><span class="k">Industrial land</span><span class="v">${r.industry ? fmtKm(r.industry.d) + ' away' : 'none mapped nearby'}</span></div><div class="kv"><span class="k">Air quality now</span><span class="v">${S.air ? S.air.aqi + ' · ' + esc(S.air.band) : '…'}</span></div></div>`;
     const waterBreak = `<div class="card"><h3>Water-risk breakdown <span style="color:var(--muted);font-weight:600">· ${w.score}/100</span></h3><div class="lead">Every factor with its weight, so you can explain it to a client.</div>${factorRows(r.scores.water.parts)}</div>`;
-    const detail = `<div class="grid2">${price}${commission}</div>${waterBreak}
+    const detail = `${m ? `<div class="card"><h3>Market band — sources &amp; notes</h3>${srcList}</div>` : ''}${waterBreak}
       ${pillarCard(r, 'Location profile for your client', 'Where this address shines and where a buyer will push back.')}${govCard(r)}
       <div class="grid2">${routesCard(r)}<div class="card"><h3>Neighbourhood &amp; connectivity</h3><div class="lead">${srcBadge(r)}</div>${facList(r)}</div></div>${land}${footnote(r)}`;
     return `<div class="printonly"><b>SETHU — Listing brief</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>${hero}
-      <div class="card" style="margin-bottom:22px"><h3>What a buyer will ask about</h3><div class="lead">Nearest hospital, station, mall and school.</div>${nearStrip(r, ['hospital', 'metro', 'mall', 'school'], true)}</div>
+      <div class="sec-t" style="margin:2px 0 10px">What a buyer will ask about</div>${nearStrip(r, ['hospital', 'metro', 'mall', 'school'], true)}
       <div class="grid2">${posCard}${negCard}</div>
-      ${dlBar(S, 'Price check against the market · commission and deal economics · location profile · official drainage and tank records · trade routes · every facility · water-risk breakdown')}${endNote}
+      <div class="grid2">${price}${commission}</div>
+      ${dlBar(S, 'Water-risk breakdown · location profile · official drainage and tank records · trade routes · every facility · water-risk breakdown')}${endNote}
       ${detailWrap(S, detail)}`;
   }
 

@@ -385,3 +385,29 @@ details.mini>summary{cursor:pointer;color:var(--accent);font-size:14px;font-weig
   .st{border-color:#888!important}
   .grid2{grid-template-columns:1fr 1fr}
 }
+
+.calcgrid{display:grid;grid-template-columns:1fr 1.05fr;gap:30px;align-items:start}
+.calcgrid .cost{margin-top:0}
+.calcgrid .chartwrap svg{max-height:120px}
+@media (max-width:1000px){.calcgrid{grid-template-columns:1fr;gap:18px}}
+
+.flagline{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+.flagline:last-of-type{border-bottom:none}
+@media (min-width:1001px){
+  .rbody{padding:22px 28px 70px}
+  .rbody .card{padding:18px 22px}
+  .rbody .hero,.rbody .grid2{gap:18px;margin-bottom:18px}
+  .rbody .card h3{font-size:18px}
+  .rbody .card .lead{margin-bottom:12px}
+  .verdict{padding:20px 24px}
+  .verdict h2{margin:4px 0 8px}
+  .vstats{margin-top:12px}
+  .dl{padding:16px 22px}
+  .nb{padding:5px 0}.nb .bar2{margin:4px 0 3px}
+  .wy{padding:4px 0}
+  .rbody .list li{padding:7px 0}
+  .rbody .row2,.rbody .row3{gap:10px}.rbody label.f{margin:8px 0 4px}.rbody .in{height:40px}
+  .rbody .result{margin-top:12px;padding:14px 18px}
+  .tier{padding:14px}.tier .big{font-size:50px}
+  .ns>div{padding:9px 12px}
+}
