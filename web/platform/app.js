@@ -36,10 +36,13 @@ const api = async (path, ms = 7000) => { const c = new AbortController(), t = se
 
 /* ------------------------------ search ------------------------------ */
 let sugItems = [], sugTimer = null;
+// search never returns a place outside the Hyderabad region (those would only lead to an "outside coverage" page)
+const inRegion = (lat, lon) => lat >= 17.0 && lat <= 18.0 && lon >= 77.9 && lon <= 79.0;
+const FEATURED = [{ re: /cyber\s*-?\s*gardens?/i, main: 'Cyber Gardens Convention Centre', sub: 'Landmark · HITEC City', lat: 17.4547214, lon: 78.3779507 }];   // the event venue, found by any phrasing
 function localSearch(q) {
   q = q.trim().toLowerCase(); if (q.length < 2) return [];
-  const out = [];
-  for (const x of SETUE.D.index) { const n = x.name.toLowerCase(), i = n.indexOf(q); if (i >= 0) out.push({ main: x.name, sub: x.kind, lat: x.lat, lon: x.lon, s: i === 0 ? 0 : 1, feat: /^Landmark/.test(x.kind) }); }
+  const out = FEATURED.filter(f => f.re.test(q)).map(f => ({ main: f.main, sub: f.sub, lat: f.lat, lon: f.lon, s: -1, feat: true }));
+  for (const x of SETUE.D.index) { const n = x.name.toLowerCase(), i = n.indexOf(q); if (i >= 0) if (!out.some(o => o.main === x.name)) out.push({ main: x.name, sub: x.kind, lat: x.lat, lon: x.lon, s: i === 0 ? 0 : 1, feat: /^Landmark/.test(x.kind) }); }
   out.sort((a, b) => a.s - b.s || a.main.length - b.main.length); return out.slice(0, 5);
 }
 async function photonSearch(q, limit = 5) {
@@ -49,7 +52,7 @@ async function photonSearch(q, limit = 5) {
     return (j.features || []).filter(f => (f.properties.countrycode || '') === 'IN' && /telangana|andhra/i.test(f.properties.state || 'telangana')).map(f => {
       const p = f.properties, sub = [p.street, p.district || p.locality, p.city || p.county].filter(Boolean).slice(0, 3).join(', ');
       return { main: p.name || sub || q, sub, lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0] };
-    }).filter(x => x.main);
+    }).filter(x => x.main && inRegion(x.lat, x.lon));
   } catch (e) { return []; }
 }
 async function onlineSearch(q) {
@@ -58,14 +61,14 @@ async function onlineSearch(q) {
     const u = `https://nominatim.openstreetmap.org/search?format=json&limit=3&countrycodes=in&viewbox=78.20,17.66,78.72,17.18&q=${encodeURIComponent(/hyderabad/i.test(q) ? q : q + ', Hyderabad')}`;
     const c = new AbortController(), t = setTimeout(() => c.abort(), 4500);
     const j = await fetch(u, { signal: c.signal }).then(r => r.json()); clearTimeout(t);
-    return j.map(x => ({ main: x.display_name.split(',').slice(0, 2).join(','), sub: x.display_name.split(',').slice(2, 4).join(','), lat: +x.lat, lon: +x.lon }));
+    return j.map(x => ({ main: x.display_name.split(',').slice(0, 2).join(','), sub: x.display_name.split(',').slice(2, 4).join(','), lat: +x.lat, lon: +x.lon })).filter(x => inRegion(x.lat, x.lon));
   } catch (e) { return []; }
 }
 async function updateSuggestions(q) {
   const el = $('sug');
   if (!q.trim() || q.trim().length < 2) { el.classList.remove('show'); sugItems = []; return; }
   let items = [];
-  if (S.cfg.suggest) { try { const j = await api(`/api/suggest?q=${encodeURIComponent(q)}&token=${S.token}`, 4000); items = (j.items || []).map(x => ({ id: x.id, main: x.main, sub: x.sub })); } catch (e) { } }
+  if (S.cfg.suggest) { try { const j = await api(`/api/suggest?q=${encodeURIComponent(q)}&token=${S.token}`, 4000); items = (j.items || []).filter(x => { const m = /^ll:(-?[\d.]+),(-?[\d.]+)/.exec(x.id || ''); return !m || inRegion(+m[1], +m[2]); }).map(x => ({ id: x.id, main: x.main, sub: x.sub })); } catch (e) { } }
   const loc = localSearch(q); items = items.concat(loc.filter(l => !items.some(i => i.main.toLowerCase() === l.main.toLowerCase())));
   const STOP = new Set(['the', 'of', 'in', 'at', 'and', 'near', 'hyderabad']);
   const toks = q.toLowerCase().split(/[^a-z0-9]+/).filter(t => t.length >= 2 && !STOP.has(t));
