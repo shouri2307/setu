@@ -13,7 +13,45 @@ rebuild the project from scratch.
 
 ---
 
-## 1. What the app actually does
+## 0. The platform (current front door)
+
+`web/index.html` is **SETU Platform** — a location-intelligence engine for Hyderabad. Search any address (or click the
+map) and open one of three separate, full-page reports built from the same explainable engine:
+
+| Report | For | What it shows |
+|---|---|---|
+| 🏠 **Customer** (₹299, demo paywall) | families buying | plain-language verdict, rain-vs-water curve, neighbourhood, lakes/terrain, official drainage records, true cost of buying (duties + brokerage) with a price sanity check, tailored document checklist, AI answers in English / Telugu / Hindi |
+| 🏷 **Agent** (₹499 per client report) | real-estate professionals | market band (portal asking prices, sourced), price check against the user's own comparables, commission & deal economics, negotiation evidence, selling points, land character |
+| 🛡 **Insurer** | underwriters & claims analysts | Motor / Property / Health-access exposure tiers with factor weights and illustrative loadings, claim **evidence check** (rain on the claim date + terrain + official inundation list), 7-day rain outlook, API-ready JSON |
+
+Every report leads with a **Location Score** (0–100) built from 8 pillars — flood safety is one of them: water & flood
+safety · health-care access · schools & daily needs · transit & main roads · parks & lakes · air quality (live) ·
+fire & police reach · jobs & lifestyle hubs.
+
+**Data (all free, no payment, no key needed):**
+* Ward flood model — learned from 8 real floods (§3); held-out AUC 0.69, independent GHMC list 0.79
+* **Official GHMC drainage records** from the Telangana State GIS public service — 96 nalas, 1,162 segments (existing vs proposed width), 3,960 drain/canal lines, 847 tank outlines, 23 official inundation areas (`pipeline/p14_telangana_gis.py`)
+* HMDA notified-lake list, 2,980 lakes (`pipeline/p15_hmda_lakes.py`) — status shown only on unambiguous name matches; FTL/buffer maps are on lakes.hmda.gov.in
+* Facilities & places — OpenStreetMap merged with the Overture Maps open places dataset (`p8`, `p11`, `p12`); roads and job hubs (`p13`)
+* Live: Open-Meteo rain forecast / past rain / air quality; Photon (OSM) address search
+* Local asking-price bands per locality with sources (`web/data/rates.json`; bulk import from a CSV via `p10_rates_import.py`; bands from AI-compiled CSVs are labelled "AI-compiled estimate")
+
+**Optional keys** (`.env`; the app runs fine without any): `GROQ_API_KEY` (AI explanations), `TOMTOM_API_KEY` (free address search, no card),
+`GOOGLE_MAPS_BROWSER_KEY` + `GOOGLE_PLACES_SERVER_KEY` (Google map + live nearby places; code is in place but dormant).
+
+**Honest limits** (also shown in the app): the flood ranking is ward-level and the only validated part; lake distance, terrain pocket,
+facilities, fire reach and road/hub counts are indicators; rates are asking prices, not deal prices; government records carry no stated date;
+HMDA/GHMC FTL and buffer status must be verified with the authorities. St Peter's-type peripheral addresses just outside the 145 wards get a
+report without the flood model (clearly marked).
+
+**Tests:** `node tests/engine.test.js` (≈3,000 checks: data integrity, scoring invariants, every ward × every report variant renders cleanly, golden locations).
+`python tests/audit_facilities.py` audits facilities against Google once a Google key exists. Ward Location Scores for the map colouring are precomputed with `node pipeline/p16_wardloc.js`.
+
+The government Flood Planner of §1–§5 lives on at `web/planner.html`.
+
+---
+
+## 1. What the app actually does (government Flood Planner, `web/planner.html`)
 
 Open it and you get a live map of Hyderabad's 145 wards over a rainfall slider (25mm
 to 300mm, plus the exact October 2020 storm at 192mm). Everything below updates as
@@ -167,6 +205,15 @@ pipeline/                        the production data pipeline, run in order
   p5_recommend.py                matches Japanese interventions to each ward (§4)
   p6_export.py                   packages everything into the small JSON files the app reads
   p7_roadgraph.py                exports the compact road graph for live browser re-routing
+  p8_geo.py                      OpenStreetMap POIs + lakes/ponds -> web/data/geo.json (platform)
+  p9_wardfeat.py                 per-ward features + susceptibility -> web/data/wardfeat.json
+  p10_rates_import.py            ChatGPT-compiled rates CSV -> web/data/rates.json (validated, labelled)
+  p11_overture_places.py         Overture Maps places for Hyderabad (free)
+  p12_merge_places.py            OSM + Overture (+ roads, hubs) -> web/data/geo.json
+  p13_roads_hubs.py              Overture main roads + IT/mall/cinema hubs
+  p14_telangana_gis.py           GHMC nalas / drains / tanks / inundation list -> web/data/gov.json
+  p15_hmda_lakes.py              HMDA notified-lake list -> web/data/hmda_lakes.json
+  p16_wardloc.js                 ward-level Location Score for the map colouring -> web/data/wardloc.json
 
 research/                        how the flood model itself was built and validated
   build_features.py              DEM + OpenStreetMap + satellite land cover -> features.csv
@@ -192,7 +239,11 @@ data/                             intermediate pipeline outputs (regenerated by 
   raw/                            downloaded source data (DEM, OSM extracts) — gitignored, regenerable
 
 web/
-  index.html                     the entire frontend — map, panel, AI advisor, everything in §1
+  index.html                     SETU Platform shell (§0): search, map, Buyer/Agent/Insurer panel
+  platform/engine.js             location-intelligence engine: report, scoring, claim check, live APIs
+  platform/app.js, app.css       the UI for the three lenses, grounded AI box, paywall demo, print/QR
+  planner.html                   the government Flood Planner — everything in §1
+  vendor/                        Leaflet + a QR library, vendored so the demo has no CDN dependency
   data/                          the small JSON files p6_export.py / p7_roadgraph.py produce
                                   (this is ALL the browser ever reads — no server-side logic
                                   except the AI proxy)

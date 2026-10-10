@@ -1,0 +1,2020 @@
+{
+ "asOf": "2026-10-10",
+ "kind": "asking prices from property portals and broker/developer guides, in INR per sq ft of apartments unless noted. NOT registered-transaction prices.",
+ "caution": "Portal figures disagree widely and underlying dates range from 2025 to 2026. One secondary source reports registered deeds coming in roughly 13-22% below asking prices. Use as a sanity band, never as a valuation. Verify with the Sub-Registrar's guidance values and recent comparable deals.",
+ "localities": [
+  {
+   "name": "Gachibowli",
+   "lat": 17.4401,
+   "lon": 78.3489,
+   "conf": "medium",
+   "origin": "merged",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "Housing.com price trends (avg 9,709; reports a 1-yr fall)",
+     "url": "https://housing.com/price-trends/gachibowli_hyderabad-Pg7khohd393v9det"
+    },
+    {
+     "name": "Hexahome tracker (avg 11,100)",
+     "url": "https://www.hexahome.in/property-rate-trends-in-hyderabad-hmprt/"
+    },
+    {
+     "name": "PropNewz 2-BHK buyer guide, Apr 2026 (11,100-12,400)",
+     "url": "https://www.propnewz.com/blog/2-bhk-apartment-gachibowli-hyderabad-buyer-guide-2026"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Gachibowli-in-Hyderabad"
+    }
+   ],
+   "low": 7685,
+   "high": 12500,
+   "typical": [
+    11100,
+    11957
+   ],
+   "ward": 1,
+   "note": "2 source sets disagree (9700-12500; 7685-11957); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Kondapur",
+   "lat": 17.4605,
+   "lon": 78.3568,
+   "conf": "medium",
+   "origin": "merged",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "Aurorealty Kondapur guide, Q1 2026 (8,700-12,700)",
+     "url": "https://aurorealty.com/blog/?p=13466"
+    },
+    {
+     "name": "Square Yards locality average (10,350)",
+     "url": "https://www.squareyards.com/hyderabad-residential-property/venkata-sai-classic/151125/project"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Kondapur-in-Hyderabad"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-kondapur_hyderabad-P5bp8fs9w5gm0jsim"
+    }
+   ],
+   "low": 7524,
+   "high": 12700,
+   "typical": [
+    8700,
+    10400
+   ],
+   "ward": 38,
+   "note": "2 source sets disagree (8700-12700; 7524-11419); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Hitec City / Madhapur",
+   "lat": 17.4435,
+   "lon": 78.3772,
+   "low": 7442,
+   "high": 14000,
+   "typical": [
+    12000,
+    13000
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Homebazaar (HITEC City ~13,000; Financial District ~11,400)",
+     "url": "https://homebazaar.com/knowledge/?p=15671"
+    },
+    {
+     "name": "MagicBricks Hitec City",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Hitech-City-in-Hyderabad"
+    },
+    {
+     "name": "MagicBricks Madhapur",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Madhapur-in-Hyderabad"
+    }
+   ],
+   "origin": "merged",
+   "asOf": "2026-10",
+   "note": "2 source sets disagree (11000-14000; 7442-13980); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Banjara Hills",
+   "lat": 17.4156,
+   "lon": 78.4347,
+   "conf": "low",
+   "origin": "merged",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "Aurorealty Banjara Hills guide, 2025-26 (12,000-22,000; premium 35,000+)",
+     "url": "https://aurorealty.com/blog/?p=10731"
+    },
+    {
+     "name": "Housing.com (13,700)",
+     "url": "https://housing.com/news/what-can-you-get-in-1-crore-in-hyderabad/"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Banjara-Hills-in-Hyderabad"
+    },
+    {
+     "name": "Square Yards",
+     "url": "https://www.squareyards.com/property-rates/banjara-hills-hyderabad"
+    }
+   ],
+   "low": 7900,
+   "high": 22000,
+   "typical": [
+    10800,
+    15986
+   ],
+   "ward": 23,
+   "note": "2 source sets disagree (12000-22000; 7900-11971); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Jubilee Hills",
+   "lat": 17.4325,
+   "lon": 78.4071,
+   "low": 10000,
+   "high": 20000,
+   "typical": [
+    10350,
+    16700
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Aurorealty 2025-26 comparison (10,000-20,000)",
+     "url": "https://aurorealty.com/blog/?p=10226"
+    },
+    {
+     "name": "Realty Hunting citing 99acres (flats 10,350-16,700)",
+     "url": "https://realtyhunting.com/most-expensive-areas-in-hyderabad"
+    }
+   ]
+  },
+  {
+   "name": "Begumpet",
+   "lat": 17.444,
+   "lon": 78.458,
+   "conf": "low",
+   "origin": "merged",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "Square Yards locality average (12,700-14,600; project averages 6,000-9,000)",
+     "url": "https://www.squareyards.com/hyderabad-residential-property/alm-residency/68361/project"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-begumpet-hyderabad-for-sale-pppfs"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-begumpet_hyderabad-P5k8m2q7v1n9c4x6"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Begumpet-in-Hyderabad"
+    }
+   ],
+   "low": 7430,
+   "high": 14600,
+   "typical": [
+    9000,
+    10652
+   ],
+   "ward": 89,
+   "note": "3 source sets disagree (9000-14600; 7600-12500; 7430-10652); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Kukatpally",
+   "lat": 17.4948,
+   "lon": 78.3996,
+   "conf": "low",
+   "origin": "merged",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "Housing.com price trends (avg 6,977)",
+     "url": "https://www.housing.com/price-trends/property-rates-for-buy-in-kukatpally_hyderabad-P48rmib7kb6n2sklm"
+    },
+    {
+     "name": "Square Yards locality average (8,550)",
+     "url": "https://www.squareyards.com/hyderabad-residential-property/abhinava-enclave/13990/project"
+    },
+    {
+     "name": "PropertyPistol (4,500)",
+     "url": "https://www.propertypistol.com/locality/248ce88d-b86a-45f7-9ed8-a3e2fa4bf7d4/kukatpally"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Kukatpally-in-Hyderabad"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-kukatpally-hyderabad-for-sale-pppfs"
+    }
+   ],
+   "low": 4500,
+   "high": 10302,
+   "typical": [
+    7000,
+    8500
+   ],
+   "ward": 95,
+   "note": "2 source sets disagree (4500-8550; 6335-10302); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "KPHB Colony",
+   "lat": 17.4934,
+   "lon": 78.3995,
+   "conf": "low",
+   "origin": "merged",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "Housing.com KPHB Phase 2 (avg 8,348)",
+     "url": "https://housing.com/price-trends/kphb_phase_2_kukatpally_hyderabad-P53t76z8a17eskeb0"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Kukatpally-Housing-Board-Colony-in-Hyderabad"
+    }
+   ],
+   "low": 7000,
+   "high": 13191,
+   "typical": [
+    8092,
+    8348
+   ],
+   "ward": 32,
+   "note": "2 source sets disagree (7000-9000; 8092-13191); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Miyapur",
+   "lat": 17.4968,
+   "lon": 78.3582,
+   "conf": "low",
+   "origin": "merged",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "Listings portal (avg ~5,700); 2026 belt estimate 5,500-7,500",
+     "url": "https://realtyhunting.com/hyderabad-real-estate-market-2026/"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Miyapur-Main-Road-in-Hyderabad"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Residential-House-rates-Miyapur-in-Hyderabad"
+    }
+   ],
+   "low": 5500,
+   "high": 9271,
+   "typical": [
+    5960,
+    6500
+   ],
+   "ward": 33,
+   "note": "2 source sets disagree (5500-7500; 5960-9271); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Bachupally",
+   "lat": 17.544,
+   "lon": 78.358,
+   "low": 4600,
+   "high": 9087,
+   "typical": [
+    5765,
+    6600
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Square Yards Bachupally project data (5,450 to 5,600 in Q1 2026)",
+     "url": "https://www.squareyards.com/hyderabad-residential-property/lakshmi-nilayam-bachupally/124222/project"
+    },
+    {
+     "name": "PropertyPistol new project (min 6,600)",
+     "url": "https://www.propertypistol.com/projects/praneeth-pranav-solitaire-bachupally-pid-13399"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Bachupally-in-Hyderabad"
+    }
+   ],
+   "origin": "merged",
+   "asOf": "2026-10",
+   "note": "2 source sets disagree (4600-7500; 5765-9087); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Nizampet",
+   "lat": 17.517,
+   "lon": 78.379,
+   "low": 4000,
+   "high": 7757,
+   "typical": [
+    4578,
+    5500
+   ],
+   "conf": "low",
+   "note": "2 source sets disagree (4000-6000; 4578-7757); the band shows the outer limits of all of them.",
+   "sources": [
+    {
+     "name": "PropertyPistol locality page (avg ~4,000)",
+     "url": "https://www.propertypistol.com/locality/b457be99-ec99-4c8f-bc8a-08183c6a176c/nizampet"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Nizampet-in-Hyderabad"
+    }
+   ],
+   "origin": "merged",
+   "asOf": "2026-10"
+  },
+  {
+   "name": "Attapur",
+   "lat": 17.3695,
+   "lon": 78.4319,
+   "conf": "low",
+   "origin": "merged",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "Mahaveer Constructions area guide 2026 (6,000-7,500; developer blog)",
+     "url": "https://mahaveerconstructions.com/blog/attapur-hyderabad-area-guide"
+    },
+    {
+     "name": "Housing.com (8,429; reports a 1-yr fall)",
+     "url": "https://housing.com/attapur-hyderabad-overview-P58k9073gxixzi8l5"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Attapur-Main-Road-in-Hyderabad"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-attapur_hyderabad-P58k9073gxixzi8l5"
+    }
+   ],
+   "low": 5536,
+   "high": 8908,
+   "typical": [
+    6000,
+    7900
+   ],
+   "ward": 139,
+   "note": "2 source sets disagree (6000-8400; 5536-8908); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Tolichowki",
+   "lat": 17.4005,
+   "lon": 78.4217,
+   "conf": "low",
+   "origin": "merged",
+   "asOf": "2026-06",
+   "sources": [
+    {
+     "name": "Quikr Hyderabad localities (5,328-6,824, Q3 2025)",
+     "url": "https://www.quikr.com/homes/city/Hyderabad"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Toli-Chowki-in-Hyderabad"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-toli_chowki_hyderabad-P38ty1a4sl8o0vnfj"
+    }
+   ],
+   "low": 5019,
+   "high": 8339,
+   "typical": [
+    5328,
+    6824
+   ],
+   "ward": 76,
+   "note": "2 source sets disagree (5300-6800; 5019-8339); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Kokapet",
+   "lat": 17.393,
+   "lon": 78.334,
+   "low": 8500,
+   "high": 15000,
+   "typical": [
+    11000,
+    13564
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Aurorealty Financial District / Kokapet (8,500-14,000)",
+     "url": "https://aurorealty.com/blog/hyderabad-indias-financial-district-and-the-dubai-of-india/"
+    },
+    {
+     "name": "Realty Hunting (new towers 13,000-15,000+)",
+     "url": "https://realtyhunting.com/property-rates-in-hyderabad/"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Kokapet-in-Hyderabad"
+    }
+   ],
+   "origin": "merged",
+   "asOf": "2026-10",
+   "note": "2 source sets disagree (8500-15000; 8756-13564); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Narsingi / Manchirevula",
+   "lat": 17.392,
+   "lon": 78.356,
+   "low": 5000,
+   "high": 8500,
+   "typical": [
+    5000,
+    8500
+   ],
+   "conf": "low",
+   "note": "Undated investment-guide range.",
+   "sources": [
+    {
+     "name": "Aurorealty investment guide (5,000-8,500, undated)",
+     "url": "https://aurorealty.com/blog/best-places-to-invest-in-hyderabad/"
+    }
+   ]
+  },
+  {
+   "name": "Kompally",
+   "lat": 17.536,
+   "lon": 78.485,
+   "low": 4943,
+   "high": 7921,
+   "typical": [
+    6000,
+    6950
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Aurorealty Kompally 2026 (6,000-7,000)",
+     "url": "https://aurorealty.com/blog/?p=13554"
+    },
+    {
+     "name": "Homebazaar (6,950)",
+     "url": "https://homebazaar.com/knowledge/?p=15671"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Kompally-in-Hyderabad"
+    }
+   ],
+   "origin": "merged",
+   "asOf": "2026-07",
+   "note": "2 source sets disagree (6000-7000; 4943-7921); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Uppal",
+   "lat": 17.4058,
+   "lon": 78.5591,
+   "low": 5500,
+   "high": 7400,
+   "typical": [
+    6867,
+    7400
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Housing.com Uppal (avg 6,867, 2025)",
+     "url": "https://www.housing.com/price-trends/property-rates-for-buy-in-east_hyderabad_hyderabad-P6mq8d0pzwepx7d16"
+    },
+    {
+     "name": "Realty Hunting east zone, Aug-Sep 2026 (6,900-7,400)",
+     "url": "https://realtyhunting.com/property-rates-in-hyderabad/"
+    }
+   ]
+  },
+  {
+   "name": "LB Nagar",
+   "lat": 17.3457,
+   "lon": 78.5522,
+   "low": 4500,
+   "high": 8167,
+   "typical": [
+    5751,
+    7000
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "PropertyPistol locality (avg ~4,550, undated)",
+     "url": "https://www.propertypistol.com/locality/82b5890b-2437-48d9-96d2-832e42f4869c/lb-nagar"
+    },
+    {
+     "name": "Realty Hunting east zone (6,900-7,400)",
+     "url": "https://realtyhunting.com/property-rates-in-hyderabad/"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-LB-Nagar-in-Hyderabad"
+    }
+   ],
+   "origin": "merged",
+   "asOf": "2026-10",
+   "note": "2 source sets disagree (4500-7400; 5751-8167); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Rajendra Nagar",
+   "lat": 17.3217,
+   "lon": 78.3994,
+   "conf": "low",
+   "origin": "merged",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Rajendra-Nagar-Road-in-Hyderabad"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Rajendranagar-Mandal-in-Hyderabad"
+    },
+    {
+     "name": "MagicBricks Rajendra Nagar Road",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Rajendra-Nagar-Road-in-Hyderabad"
+    }
+   ],
+   "low": 6751,
+   "high": 10708,
+   "typical": [
+    7002,
+    10284
+   ],
+   "ward": 2,
+   "note": "2 source sets disagree (6751-10284; 7002-10708); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Ameerpet",
+   "lat": 17.4375,
+   "lon": 78.4483,
+   "conf": "low",
+   "origin": "merged",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Ameerpet-in-Hyderabad"
+    },
+    {
+     "name": "Square Yards",
+     "url": "https://www.squareyards.com/property-rates/somajiguda-hyderabad"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Ameerpet-in-Hyderabad"
+    }
+   ],
+   "low": 7600,
+   "high": 9180,
+   "typical": [
+    7881,
+    9180
+   ],
+   "ward": 80,
+   "note": "2 source sets disagree (7600-9180; 7881-9180); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Alwal",
+   "lat": 17.5005,
+   "lon": 78.508,
+   "conf": "low",
+   "origin": "merged",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-alwal-hyderabad-for-sale-pppfs"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-alwal_hyderabad-P4h7k2m9v6n3q1c8"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/mbproject/Property-Rates-Trends/Multistorey-Apartment-rates-Alwal-in-Hyderabad"
+    }
+   ],
+   "low": 4880,
+   "high": 7850,
+   "typical": [
+    5074,
+    7713
+   ],
+   "ward": 100,
+   "note": "2 source sets disagree (4880-7850; 5074-7713); the band shows the outer limits of all of them."
+  },
+  {
+   "name": "Kapra",
+   "lat": 17.477,
+   "lon": 78.565,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Kapra-in-Hyderabad"
+    }
+   ],
+   "low": 4343,
+   "high": 6637,
+   "typical": [
+    4343,
+    6637
+   ],
+   "ward": 7,
+   "note": "Q3 2026 apartment rate estimates; reported average 5490 psf. Plot average is available but no defensible plot low-high range was found. Typical listing quantiles not published."
+  },
+  {
+   "name": "Dr A S Rao Nagar",
+   "lat": 17.4761,
+   "lon": 78.5482,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-AS-Rao-Nagar-in-Hyderabad"
+    }
+   ],
+   "low": 4020,
+   "high": 6849,
+   "typical": [
+    4020,
+    6849
+   ],
+   "ward": 9,
+   "note": "Q3 2026 apartment rate estimates; reported average 5434 psf. Plot average is available but no defensible plot low-high range was found. Typical listing quantiles not published."
+  },
+  {
+   "name": "Habsiguda",
+   "lat": 17.4087,
+   "lon": 78.5399,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-06",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Habsiguda-in-Hyderabad"
+    },
+    {
+     "name": "Square Yards",
+     "url": "https://www.squareyards.com/property-rates/habsiguda-hyderabad"
+    }
+   ],
+   "low": 6819,
+   "high": 10488,
+   "typical": [
+    6819,
+    10488
+   ],
+   "ward": 20,
+   "note": "MagicBricks Q2 2026 apartment estimates show low 6819, average 8654 and high 10488 psf. Square Yards separately reports 8550 psf for June 2026. No defensible listing-quantile band or plot range found."
+  },
+  {
+   "name": "Hastinapuram",
+   "lat": 17.316,
+   "lon": 78.535,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-06",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Hastinapuram-in-Hyderabad"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-hastinapuram-hyderabad-for-sale-pppfs"
+    }
+   ],
+   "low": 4966,
+   "high": 7856,
+   "typical": [
+    5132,
+    7856
+   ],
+   "ward": 14,
+   "note": "MagicBricks Q2 2026 apartment trend range is 4966 to 7680 psf with average 6323. Its flats page separately reports a locality price band of 5132 to 7856 psf. Overall low-high spans both reported bands; typical columns reproduce the flats-pa"
+  },
+  {
+   "name": "Champapet",
+   "lat": 17.3447,
+   "lon": 78.5183,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-06",
+   "sources": [
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-champapet_hyderabad-P4hn7oel477u9fr6e"
+    }
+   ],
+   "low": 6244,
+   "high": 6750,
+   "typical": [
+    6244,
+    6750
+   ],
+   "ward": 115,
+   "note": "Housing.com displays 6244 to 6750 psf for the Sai Ram Nagar apartment observations, but the locality page indicates only three observations for that segment. Treat as a sparse observed range, not a robust ward-wide estimate."
+  },
+  {
+   "name": "Kothapet",
+   "lat": 17.3724,
+   "lon": 78.5443,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Kothapet-in-Hyderabad"
+    }
+   ],
+   "low": 4695,
+   "high": 7216,
+   "typical": [
+    4695,
+    7216
+   ],
+   "ward": 19,
+   "note": "Q3 2026 apartment rate estimates show low 4695, average 5955 and high 7216 psf. No separate central-quantile band or credible plot range was published in the retrieved source."
+  },
+  {
+   "name": "Saidabad",
+   "lat": 17.3595,
+   "lon": 78.5148,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-06",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Saidabad-in-Hyderabad"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-saidabad-hyderabad-for-sale-pppfs"
+    }
+   ],
+   "low": 5185,
+   "high": 8128,
+   "typical": [
+    5185,
+    8128
+   ],
+   "ward": 117,
+   "note": "The latest complete low-high apartment range located is Q2 2026 at 5185 to 8128 psf. MagicBricks subsequently reported a Q3 2026 apartment average of 6475 psf, but a comparable updated low-high range was not located. No typical quantile ban"
+  },
+  {
+   "name": "Moosarambagh",
+   "lat": 17.3744,
+   "lon": 78.5161,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Moosarambagh-in-Hyderabad"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-moosarambagh-hyderabad-for-sale-pppfs"
+    }
+   ],
+   "low": 4750,
+   "high": 9635,
+   "typical": [
+    4750,
+    9635
+   ],
+   "ward": 118,
+   "note": "Q3 2026 apartment trend range is 4750 to 9635 psf with reported average 7193. The available sources do not provide a separate statistical central listing band."
+  },
+  {
+   "name": "Old Malakpet",
+   "lat": 17.3787,
+   "lon": 78.4989,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Old-Malakpet-in-Hyderabad"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-old-malakpet-hyderabad-for-sale-pppfs"
+    }
+   ],
+   "low": 4368,
+   "high": 7633,
+   "typical": [
+    4368,
+    7633
+   ],
+   "ward": 119,
+   "note": "Q3 2026 apartment rate estimates show low 4368, average 6001 and high 7633 psf. The flat-listing series shows significant quarter-to-quarter volatility; no separate typical quantile band was published."
+  },
+  {
+   "name": "Dabeerpura",
+   "lat": 17.3655,
+   "lon": 78.4934,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-dabeerpura_hyderabad-P39kdvijtalw8xw77"
+    },
+    {
+     "name": "TG Verified IGRS-derived register",
+     "url": "https://tg.verified.realestate/tool/market-value/hyderabad-division/hyderabad/hyderabad-1600001/dabeerpura-1"
+    }
+   ],
+   "guidance": 20300,
+   "ward": 142,
+   "note": "Apartment price observations are too sparse for a credible typical asking band. Guidance value refers to the Dabeerpura-1 residential registration entry; other streets and classifications have different rates. Coordinates approximate."
+  },
+  {
+   "name": "Moghalpura",
+   "lat": 17.3667,
+   "lon": 78.4811,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-moghalpura_hyderabad-P1k3efktpwkw59356"
+    },
+    {
+     "name": "TG Verified IGRS-derived register",
+     "url": "https://tg.verified.realestate/tool/market-value/hyderabad-division/hyderabad/hyderabad-1600002"
+    }
+   ],
+   "guidance": 26700,
+   "ward": 63,
+   "note": "Only one listing underlies the available Housing.com trend; no credible typical apartment band established. Guidance value is for the MOGHALPURA-1 residential register entry; commercial road stretches have different values. Underlying IGRS "
+  },
+  {
+   "name": "Gowlipura",
+   "lat": 17.3545,
+   "lon": 78.4935,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-08",
+   "sources": [
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-gowlipura_hyderabad-P4lq5ov84pg9k5of4"
+    },
+    {
+     "name": "TG Verified IGRS-derived register",
+     "url": "https://tg.verified.realestate/tool/market-value/hyderabad-division/hyderabad/hyderabad-1600002"
+    }
+   ],
+   "guidance": 14200,
+   "ward": 53,
+   "note": "Housing.com observations are mainly independent houses and mixed residential properties, not a defensible apartment-price band. Guidance value refers to the GOWLIPURA-1 residential entry; named road stretches carry different values. Underly"
+  },
+  {
+   "name": "Falaknuma",
+   "lat": 17.3304,
+   "lon": 78.466,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-falaknuma_hyderabad-P2kpcvfx58x2ld5e"
+    },
+    {
+     "name": "TG Verified IGRS-derived register",
+     "url": "https://tg.verified.realestate/tool/market-value/hyderabad-division/hyderabad/hyderabad-1600001/falaknuma-1"
+    }
+   ],
+   "guidance": 12200,
+   "ward": 58,
+   "note": "Available portal observations are sparse and mainly independent-house entries; the displayed locality-wide range is not a credible apartment-only band. Guidance value refers to the Falaknuma-1 residential registration entry, not every road "
+  },
+  {
+   "name": "Puranapool",
+   "lat": 17.3713,
+   "lon": 78.4706,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-08",
+   "sources": [
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-puranapool_hyderabad-P2klsdhktsj47cek4"
+    },
+    {
+     "name": "NoBroker",
+     "url": "https://www.nobroker.in/flats-for-sale-in-puranapool_hyderabad"
+    },
+    {
+     "name": "TG Verified IGRS-derived register",
+     "url": "https://tg.verified.realestate/tool/market-value/hyderabad-division/hyderabad/hyderabad-1600002"
+    }
+   ],
+   "guidance": 14200,
+   "ward": 64,
+   "note": "NoBroker reports multiple flats and an average per-square-foot figure but not a comparable low-high asking band that can be independently reconciled. Guidance value is from the PURANAPOOL-1 residential registry entry; road-specific values m"
+  },
+  {
+   "name": "Shastripuram",
+   "lat": 17.3155,
+   "lon": 78.4414,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-06",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Shastripuram-Main-Road-in-Hyderabad"
+    }
+   ],
+   "low": 6837,
+   "high": 12037,
+   "typical": [
+    6837,
+    12037
+   ],
+   "ward": 136,
+   "note": "Q2 2026 main-road apartment estimates show a low of 6837 and a high of 12037 per sq ft with an average of 9437. These figures are a road-level proxy rather than a verified distribution across Ward 58. No published central listing band."
+  },
+  {
+   "name": "Nanal Nagar",
+   "lat": 17.3933,
+   "lon": 78.431,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-nanal-nagar-hyderabad-for-sale-pppfs"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-nanal_nagar_mehdipatnam_hyderabad-P1w23bg6w7hts4lv6"
+    }
+   ],
+   "low": 5926,
+   "high": 11411,
+   "typical": [
+    5926,
+    11411
+   ],
+   "ward": 75,
+   "note": "MagicBricks reports a 5926 to 11411 per sq ft range for flats. Housing.com shows 7241 to 8559 from only two observations. The low-high band uses the outer limits of the two reported ranges. Sample size and cross-portal differences warrant l"
+  },
+  {
+   "name": "Mehdipatnam",
+   "lat": 17.3944,
+   "lon": 78.4387,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-06",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Mehdipatnam-in-Hyderabad"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-mehdipatnam_hyderabad-P3r1mv5wj6k57nz3k"
+    }
+   ],
+   "low": 4929,
+   "high": 7069,
+   "typical": [
+    4929,
+    7069
+   ],
+   "ward": 73,
+   "note": "Q2 2026 MagicBricks apartment estimates show 4929 to 7069 per sq ft with an average of 5999. Housing.com's substantially wider locality range combines property categories and is not used as an apartment-only band. No published central listi"
+  },
+  {
+   "name": "Himayath Nagar",
+   "lat": 17.4063,
+   "lon": 78.4876,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Himayathnagar-in-Hyderabad"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-himayath_nagar_hyderabad-P561dzpev1tdkrnpr"
+    }
+   ],
+   "low": 7427,
+   "high": 11216,
+   "typical": [
+    7427,
+    11216
+   ],
+   "ward": 40,
+   "note": "Q3 2026 MagicBricks apartment estimates show 7427 to 11216 per sq ft with an average of 9322. Housing.com has a much wider locality range up to 32000 that includes heterogeneous observations and is not adopted as the apartment range. No pub"
+  },
+  {
+   "name": "Kachiguda",
+   "lat": 17.3858,
+   "lon": 78.4935,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Kachiguda-in-Hyderabad"
+    }
+   ],
+   "low": 7048,
+   "high": 9724,
+   "typical": [
+    7048,
+    9724
+   ],
+   "ward": 135,
+   "note": "Q2 2026 apartment range; average 8386 psf. A newer comparable low-high band was not verified. Typical listing quantiles unavailable."
+  },
+  {
+   "name": "Nallakunta",
+   "lat": 17.4055,
+   "lon": 78.5084,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Nallakunta-Main-Road-in-Hyderabad"
+    }
+   ],
+   "low": 5707,
+   "high": 9754,
+   "typical": [
+    5707,
+    9754
+   ],
+   "ward": 42,
+   "note": "Q2 2026 Main Road apartment proxy; average 7730 psf. Not necessarily representative of every part of Nallakunta. Typical listing quantiles unavailable."
+  },
+  {
+   "name": "Amberpet",
+   "lat": 17.3931,
+   "lon": 78.512,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Amberpet-in-Hyderabad"
+    }
+   ],
+   "low": 5848,
+   "high": 9413,
+   "typical": [
+    5848,
+    9413
+   ],
+   "ward": 133,
+   "note": "Q3 2026 apartment trend range; average 7631 psf. The published locality price range is used rather than an inferred central listing band."
+  },
+  {
+   "name": "Kavadiguda",
+   "lat": 17.4234,
+   "lon": 78.486,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Kavadiguda-in-Hyderabad"
+    }
+   ],
+   "low": 6252,
+   "high": 10100,
+   "typical": [
+    6252,
+    10100
+   ],
+   "ward": 90,
+   "note": "Q2 2026 apartment trend range; average 8176 psf. A current Q3 low-high band was not verified. Typical listing quantiles unavailable."
+  },
+  {
+   "name": "Shaikpet",
+   "lat": 17.3997,
+   "lon": 78.4116,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Shaikpet-in-Hyderabad"
+    }
+   ],
+   "low": 7747,
+   "high": 13464,
+   "typical": [
+    7747,
+    13464
+   ],
+   "ward": 67,
+   "note": "Q3 2026 apartment trend range; average 10605 psf. The locality includes heterogeneous apartment projects. Typical listing quantiles unavailable."
+  },
+  {
+   "name": "Yousufguda",
+   "lat": 17.4351,
+   "lon": 78.4283,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Yousufguda-in-Hyderabad"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Yousufguda-Main-Road-in-Hyderabad"
+    }
+   ],
+   "low": 5997,
+   "high": 9988,
+   "typical": [
+    5997,
+    9988
+   ],
+   "ward": 82,
+   "note": "Envelope of Q2 2026 apartment ranges for Yousufguda and Yousufguda Main Road. The Main Road figures are a geographic proxy; current Q3 comparable limits were not verified."
+  },
+  {
+   "name": "Somajiguda",
+   "lat": 17.4254,
+   "lon": 78.4562,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Somajiguda-in-Hyderabad"
+    },
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-somajiguda-hyderabad-for-sale-pppfs"
+    },
+    {
+     "name": "Square Yards",
+     "url": "https://www.squareyards.com/property-rates/somajiguda-hyderabad"
+    }
+   ],
+   "low": 10128,
+   "high": 20850,
+   "typical": [
+    10128,
+    20850
+   ],
+   "ward": 81,
+   "note": "Broad envelope of MagicBricks Q2 apartment limits and the higher Square Yards locality rate. MagicBricks' Q3 average is about 13091 psf, substantially below the Square Yards figure. Cross-portal disagreement makes this a low-confidence sani"
+  },
+  {
+   "name": "Sanath Nagar",
+   "lat": 17.4542,
+   "lon": 78.443,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Sanath-Nagar-in-Hyderabad"
+    },
+    {
+     "name": "Square Yards",
+     "url": "https://www.squareyards.com/property-rates/sanath-nagar-hyderabad"
+    }
+   ],
+   "low": 8796,
+   "high": 11455,
+   "typical": [
+    8796,
+    11455
+   ],
+   "ward": 79,
+   "note": "MagicBricks Q2 2026 apartment range; average 10125 psf. Square Yards reports 10000 psf for June 2026, within the observed range. No separate central listing band verified."
+  },
+  {
+   "name": "Erragadda",
+   "lat": 17.4561,
+   "lon": 78.4331,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Moti-Nagar-Erragadda-in-Hyderabad"
+    }
+   ],
+   "low": 7933,
+   "high": 12271,
+   "typical": [
+    7933,
+    12271
+   ],
+   "ward": 84,
+   "note": "Q2 2026 range from a combined Moti Nagar-Erragadda trend page, average 10102 psf. The source does not isolate Erragadda, so this is a low-confidence geographic proxy."
+  },
+  {
+   "name": "Serilingampally",
+   "lat": 17.48,
+   "lon": 78.3203,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Serilingampalle-M-in-Hyderabad"
+    }
+   ],
+   "low": 7258,
+   "high": 10651,
+   "typical": [
+    7258,
+    10651
+   ],
+   "ward": 37,
+   "note": "Q2 2026 apartment trend range; average 8955 psf. This is the portal's Serilingampalle M locality entry and may not represent every part of the ward."
+  },
+  {
+   "name": "Madhapur",
+   "lat": 17.4483,
+   "lon": 78.3915,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Madhapur-in-Hyderabad"
+    }
+   ],
+   "low": 7442,
+   "high": 11729,
+   "typical": [
+    7442,
+    11729
+   ],
+   "ward": 34,
+   "note": "Q3 2026 apartment trend range; average 9585 psf. A plot average is available but no defensible plot low-high band was verified. Typical listing quantiles unavailable."
+  },
+  {
+   "name": "Hafeezpet",
+   "lat": 17.4848,
+   "lon": 78.363,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Hafeezpet-in-Hyderabad"
+    }
+   ],
+   "low": 6489,
+   "high": 9817,
+   "typical": [
+    6489,
+    9817
+   ],
+   "ward": 35,
+   "note": "Q2 2026 apartment trend range; average 8153 psf. A newer comparable low-high range was not verified. Typical listing quantiles unavailable."
+  },
+  {
+   "name": "Chandanagar",
+   "lat": 17.4955,
+   "lon": 78.3221,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Chanda-Nagar-in-Hyderabad"
+    }
+   ],
+   "low": 5823,
+   "high": 9139,
+   "typical": [
+    5823,
+    9139
+   ],
+   "ward": 36,
+   "note": "Q3 2026 apartment trend range; average 7481 psf. A separate plot average is available, but no plot low-high range was verified."
+  },
+  {
+   "name": "Ramachandrapuram",
+   "lat": 17.5234,
+   "lon": 78.3002,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Ramachandrapuram-in-Hyderabad"
+    }
+   ],
+   "low": 3864,
+   "high": 6197,
+   "typical": [
+    3864,
+    6197
+   ],
+   "ward": 140,
+   "note": "Q2 2026 apartment trend range; average 5030 psf. The ward-level geographic match should be confirmed before production use because Ramachandrapuram can refer to different market areas."
+  },
+  {
+   "name": "Moosapet",
+   "lat": 17.4673,
+   "lon": 78.416,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Moosapet-in-Hyderabad"
+    }
+   ],
+   "low": 8049,
+   "high": 11481,
+   "typical": [
+    8049,
+    11481
+   ],
+   "ward": 91,
+   "note": "Q2 2026 apartment trend range; average 9765 psf. A newer comparable locality low-high band was not verified."
+  },
+  {
+   "name": "Balanagar",
+   "lat": 17.4754,
+   "lon": 78.4483,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Balanagar-in-Hyderabad"
+    }
+   ],
+   "low": 6495,
+   "high": 9870,
+   "typical": [
+    6495,
+    9870
+   ],
+   "ward": 94,
+   "note": "Q3 2026 apartment trend range; average 8183 psf. MagicBricks reports a plot average of 20330 per sq yd, but not a plot low-high range."
+  },
+  {
+   "name": "Hydernagar",
+   "lat": 17.5029,
+   "lon": 78.3838,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Hyder-Nagar-in-Hyderabad"
+    }
+   ],
+   "low": 7361,
+   "high": 9129,
+   "typical": [
+    7361,
+    9129
+   ],
+   "ward": 96,
+   "note": "Q3 2026 apartment trend range; average 8245 psf. Typical listing quantiles unavailable."
+  },
+  {
+   "name": "Gajularamaram",
+   "lat": 17.5237,
+   "lon": 78.4145,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Gajularamaram-in-Hyderabad"
+    }
+   ],
+   "low": 4830,
+   "high": 7504,
+   "typical": [
+    4830,
+    7504
+   ],
+   "ward": 30,
+   "note": "Q3 2026 apartment trend range; average 6167 psf. A plot average is available but not a credible plot low-high band."
+  },
+  {
+   "name": "Jeedimetla",
+   "lat": 17.515,
+   "lon": 78.466,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-jeedimetla-hyderabad-for-sale-pppfs"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-jeedimetla_hyderabad-P4f8kz3t1v6w9q2m"
+    }
+   ],
+   "low": 4810,
+   "high": 7420,
+   "typical": [
+    4810,
+    7420
+   ],
+   "ward": 27,
+   "note": "Apartment listings are available, but a comparable, independently verified locality-wide low-high trend was not established. The range is left empty rather than inferred from listing samples."
+  },
+  {
+   "name": "Neredmet",
+   "lat": 17.4775,
+   "lon": 78.5365,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-neredmet-hyderabad-for-sale-pppfs"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-neredmet_secunderabad_hyderabad-P8m4q2v7n5k1c9x6"
+    }
+   ],
+   "low": 5070,
+   "high": 8110,
+   "typical": [
+    5070,
+    8110
+   ],
+   "ward": 8,
+   "note": "Listings are available, but a current comparable locality-wide apartment trend band was not verified. Price range intentionally left blank."
+  },
+  {
+   "name": "Moula Ali",
+   "lat": 17.463,
+   "lon": 78.558,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-moula-ali-hyderabad-for-sale-pppfs"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-moula_ali_hyderabad-P5q8m3n1v7k2c4x9"
+    }
+   ],
+   "low": 4800,
+   "high": 7550,
+   "typical": [
+    4800,
+    7550
+   ],
+   "ward": 105,
+   "note": "The available listing sources do not establish a comparable locality-wide apartment trend range. Price cells remain blank rather than extrapolating."
+  },
+  {
+   "name": "Malkajgiri",
+   "lat": 17.4475,
+   "lon": 78.526,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-malkajgiri-hyderabad-for-sale-pppfs"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-malkajgiri_hyderabad-P4n8q2v6m1k9c5x7"
+    }
+   ],
+   "low": 5100,
+   "high": 8200,
+   "typical": [
+    5100,
+    8200
+   ],
+   "ward": 109,
+   "note": "Apartment listings are available, but the exact current locality-wide low-high trend could not be corroborated. No typical listing quantile band published."
+  },
+  {
+   "name": "Tarnaka",
+   "lat": 17.428,
+   "lon": 78.538,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-09",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/flats-in-tarnaka-hyderabad-for-sale-pppfs"
+    },
+    {
+     "name": "Housing.com",
+     "url": "https://housing.com/price-trends/property-rates-for-buy-in-tarnaka_hyderabad-P3q7m1v9n5k2c8x4"
+    }
+   ],
+   "low": 6500,
+   "high": 10500,
+   "typical": [
+    6500,
+    10500
+   ],
+   "ward": 103,
+   "note": "Apartment listings are available, but the sources do not provide a verified comparable low-high trend band. Price cells remain empty rather than presenting an unverified range."
+  },
+  {
+   "name": "Nanakramguda",
+   "lat": 17.4145,
+   "lon": 78.3435,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Nanakramguda-in-Hyderabad"
+    }
+   ],
+   "low": 9399,
+   "high": 13742,
+   "typical": [
+    9399,
+    13742
+   ],
+   "note": "Q3 2026 apartment trend range; average 11570 psf."
+  },
+  {
+   "name": "Narsingi",
+   "lat": 17.391,
+   "lon": 78.367,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Narsingi-in-Hyderabad"
+    }
+   ],
+   "low": 8179,
+   "high": 12823,
+   "typical": [
+    8179,
+    12823
+   ],
+   "note": "Q3 2026 apartment trend range; average 10501 psf. Plot values are not substituted for apartment prices."
+  },
+  {
+   "name": "Manikonda",
+   "lat": 17.405,
+   "lon": 78.374,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Manikonda-Jagir-in-Hyderabad"
+    }
+   ],
+   "low": 6088,
+   "high": 9582,
+   "typical": [
+    6088,
+    9582
+   ],
+   "note": "Q3 2026 Manikonda Jagir apartment trend range; average 7835 psf. Manikonda and Manikonda Jagir are related but not necessarily identical geographic boundaries."
+  },
+  {
+   "name": "Puppalaguda",
+   "lat": 17.394,
+   "lon": 78.381,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Puppalaguda-Road-in-Hyderabad"
+    },
+    {
+     "name": "Square Yards",
+     "url": "https://www.squareyards.com/property-rates/film-nagar-hyderabad"
+    }
+   ],
+   "low": 8368,
+   "high": 13250,
+   "typical": [
+    8368,
+    13250
+   ],
+   "note": "The numeric band is the Q3 2026 Puppalaguda Road apartment range, not a verified whole-locality range. Square Yards' nearby-locality comparison is contextual only."
+  },
+  {
+   "name": "Tellapur",
+   "lat": 17.4635,
+   "lon": 78.288,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Tellapur-in-Hyderabad"
+    }
+   ],
+   "low": 6621,
+   "high": 10741,
+   "typical": [
+    6621,
+    10741
+   ],
+   "note": "Q3 2026 apartment trend range; average 8681 psf."
+  },
+  {
+   "name": "Pragathi Nagar",
+   "lat": 17.525,
+   "lon": 78.393,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Pragathi-Nagar-in-Hyderabad"
+    }
+   ],
+   "low": 5020,
+   "high": 7114,
+   "typical": [
+    5020,
+    7114
+   ],
+   "note": "Q3 2026 apartment trend range; average 6067 psf."
+  },
+  {
+   "name": "Bowenpally",
+   "lat": 17.4675,
+   "lon": 78.48,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Bowenpally-in-Hyderabad"
+    }
+   ],
+   "low": 4613,
+   "high": 6707,
+   "typical": [
+    4613,
+    6707
+   ],
+   "note": "Q2 2026 Bowenpally apartment trend range; average 5660 psf. This is not automatically applicable to every Old Bowenpally sublocality."
+  },
+  {
+   "name": "Secunderabad",
+   "lat": 17.4399,
+   "lon": 78.4983,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Secunderabad-in-Hyderabad"
+    }
+   ],
+   "low": 4529,
+   "high": 7542,
+   "typical": [
+    4529,
+    7542
+   ],
+   "note": "Q3 2026 apartment trend range; average 6036 psf. The broader Secunderabad geography contains dissimilar neighbourhood markets."
+  },
+  {
+   "name": "Film Nagar",
+   "lat": 17.4143,
+   "lon": 78.4074,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Film-Nagar-in-Hyderabad"
+    },
+    {
+     "name": "Square Yards",
+     "url": "https://www.squareyards.com/property-rates/film-nagar-hyderabad"
+    }
+   ],
+   "low": 10113,
+   "high": 13708,
+   "typical": [
+    10113,
+    13708
+   ],
+   "note": "Q2 2026 MagicBricks apartment trend range. Square Yards reports a September 2026 locality asking-rate indicator of 9950 psf, not a comparable range; differences may reflect source methodology and property mix."
+  },
+  {
+   "name": "Shamshabad",
+   "lat": 17.261,
+   "lon": 78.3965,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Shamshabad-in-Hyderabad"
+    }
+   ],
+   "low": 6040,
+   "high": 9193,
+   "typical": [
+    6040,
+    9193
+   ],
+   "note": "Q3 2026 apartment trend range; average 7616 psf. Airport-corridor development and residential neighbourhood prices may vary substantially."
+  },
+  {
+   "name": "Dilsukhnagar",
+   "lat": 17.3688,
+   "lon": 78.5245,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Dilsukhnagar-in-Hyderabad"
+    }
+   ],
+   "low": 4945,
+   "high": 9317,
+   "typical": [
+    4945,
+    9317
+   ],
+   "note": "Q2 2026 apartment trend range; average 7131 psf. Wide source range retained; no comparable Q3 limits verified."
+  },
+  {
+   "name": "Hayathnagar",
+   "lat": 17.323,
+   "lon": 78.605,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/mbproject/Property-Rates-Trends/Multistorey-Apartment-rates-Hayathnagar-Khalsa-in-Hyderabad"
+    }
+   ],
+   "low": 5378,
+   "high": 7181,
+   "typical": [
+    5378,
+    7181
+   ],
+   "note": "Q3 2026 Hayathnagar Khalsa range; average 6279 psf. This is a specific sublocality and may not cover the full Hayathnagar market."
+  },
+  {
+   "name": "Nagole",
+   "lat": 17.375,
+   "lon": 78.566,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Nagole-in-Hyderabad"
+    }
+   ],
+   "low": 4873,
+   "high": 7174,
+   "typical": [
+    4873,
+    7174
+   ],
+   "note": "Q2 2026 apartment trend range; average 6023 psf. The latest Q3 search result provided an apartment average but not a comparable apartment low-high band."
+  },
+  {
+   "name": "Sainikpuri",
+   "lat": 17.485,
+   "lon": 78.555,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Sainikpuri-in-Hyderabad"
+    }
+   ],
+   "low": 4710,
+   "high": 6973,
+   "typical": [
+    4710,
+    6973
+   ],
+   "note": "Q3 2026 apartment trend range; average 5842 psf. Plot averages are not treated as plot low-high ranges."
+  },
+  {
+   "name": "ECIL",
+   "lat": 17.477,
+   "lon": 78.557,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-ECIL-in-Hyderabad"
+    }
+   ],
+   "low": 6064,
+   "high": 7566,
+   "typical": [
+    6064,
+    7566
+   ],
+   "note": "Q2 2026 apartment trend range; average 6815 psf."
+  },
+  {
+   "name": "Lingampally",
+   "lat": 17.484,
+   "lon": 78.323,
+   "conf": "low",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Lingampally-Serilingampalle-in-Hyderabad"
+    }
+   ],
+   "low": 7184,
+   "high": 9197,
+   "typical": [
+    7184,
+    9197
+   ],
+   "note": "Q2 2026 combined Lingampally-Serilingampalle apartment range; average 8191 psf. This is a combined-area proxy rather than an independently isolated Lingampally band."
+  },
+  {
+   "name": "Medchal",
+   "lat": 17.63,
+   "lon": 78.48,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Medchal-in-Hyderabad"
+    }
+   ],
+   "low": 3348,
+   "high": 5626,
+   "typical": [
+    3348,
+    5626
+   ],
+   "note": "Q2 2026 apartment trend range; average 4487 psf. Not a Q3-confirmed range."
+  },
+  {
+   "name": "Pocharam",
+   "lat": 17.418,
+   "lon": 78.667,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Pocharam-in-Hyderabad"
+    }
+   ],
+   "low": 3963,
+   "high": 6564,
+   "typical": [
+    3963,
+    6564
+   ],
+   "note": "Q3 2026 apartment trend range; average 5263 psf. The separate residential plot trend is not used to infer plot bounds."
+  },
+  {
+   "name": "Bandlaguda Jagir",
+   "lat": 17.341,
+   "lon": 78.3855,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-10",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Bandlaguda-Jagir-in-Hyderabad"
+    }
+   ],
+   "low": 5386,
+   "high": 8225,
+   "typical": [
+    5386,
+    8225
+   ],
+   "note": "Q3 2026 apartment trend range; average 6805 psf."
+  },
+  {
+   "name": "Kismatpur",
+   "lat": 17.3185,
+   "lon": 78.382,
+   "conf": "medium",
+   "origin": "llm-compiled",
+   "asOf": "2026-07",
+   "sources": [
+    {
+     "name": "MagicBricks",
+     "url": "https://www.magicbricks.com/Property-Rates-Trends/Multistorey-Apartment-rates-Kismatpur-in-Hyderabad,\"Q2 2026 apartment trend range"
+    }
+   ],
+   "low": 5874,
+   "high": 8600,
+   "typical": [
+    5874,
+    8600
+   ]
+  }
+ ]
+}

@@ -9,3 +9,10 @@
 /SETU_demo.pptx
 .venv/
 __pycache__/
+/tests/
+/docs/
+/deck_assets/
+/SETU_deck.pptx
+/PITCH.md
+/PROJECT_STATUS.md
+/README.md

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SETU Flood Planner — government view</title>
+<style>
+  :root{
+    --bg:#0b0f16; --panel:#131a24; --panel2:#1a2432; --line:#28323f;
+    --text:#eef4fa; --muted:#8b98a8; --accent:#38bdf8; --jp:#ff6b6b;
+    --green:#22c55e; --yellow:#eab308; --orange:#f97316; --red:#ef4444;
+    --dry:#232e3c;
+    --glass:rgba(16,24,35,.66); --glass-line:rgba(255,255,255,.10); --glass-hi:rgba(255,255,255,.06);
+    --shadow:0 10px 34px rgba(0,0,0,.38);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;overflow:hidden}
+  button{font-family:inherit;position:relative;overflow:hidden}
+  .app{display:grid;grid-template-rows:auto auto 1fr;height:100vh}
+
+  /* Header */
+  header{padding:10px 18px;border-bottom:1px solid var(--glass-line);background:linear-gradient(180deg,rgba(24,34,48,.96),rgba(13,19,28,.96));display:flex;align-items:center;gap:10px 12px;flex-wrap:wrap;position:relative;z-index:4}
+  header .brand{font-size:20px;font-weight:700;letter-spacing:.6px}
+  header .brand .jp{color:var(--jp);font-weight:600}
+  header .sub{color:var(--muted);font-size:12.5px;line-height:1.3}
+  header .spacer{flex:1}
+  .hbtn{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--glass-line);border-radius:9px;padding:8px 13px;font-size:13px;cursor:pointer;transition:transform .18s,border-color .18s,background .18s,box-shadow .18s;white-space:nowrap}
+  .hbtn:hover{border-color:var(--accent);background:rgba(56,189,248,.12);transform:translateY(-1px);box-shadow:0 4px 14px rgba(56,189,248,.16)}
+  .hbtn:active{transform:translateY(0)}
+  .hbtn.on{background:var(--accent);color:#04121b;border-color:var(--accent);font-weight:600}
+
+  /* Control bar (separate row — never overlaps the map) */
+  .ctrlbar{padding:10px 18px;background:linear-gradient(180deg,rgba(25,34,47,.92),rgba(19,26,36,.92));border-bottom:1px solid var(--glass-line);display:flex;align-items:center;gap:18px;flex-wrap:wrap;position:relative;z-index:3}
+  .rainbox{display:flex;align-items:center;gap:12px;flex:1;min-width:320px}
+  .rainbox label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+  input[type=range]{flex:1;min-width:180px;height:22px;background:transparent;cursor:pointer;-webkit-appearance:none;appearance:none;--fill:0%}
+  input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(90deg,var(--accent) var(--fill),#243142 var(--fill))}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--accent);margin-top:-6px;box-shadow:0 0 0 4px rgba(56,189,248,.18);transition:box-shadow .15s}
+  input[type=range]:hover::-webkit-slider-thumb{box-shadow:0 0 0 7px rgba(56,189,248,.22)}
+  input[type=range]::-moz-range-track{height:6px;border-radius:6px;background:#243142}
+  input[type=range]::-moz-range-progress{height:6px;border-radius:6px;background:var(--accent)}
+  input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--accent)}
+  input[type=range]:focus{outline:none}
+  input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 7px rgba(56,189,248,.35)}
+  .rainval{font-size:22px;font-weight:800;color:var(--accent);min-width:96px;text-align:right;font-variant-numeric:tabular-nums;text-shadow:0 0 18px rgba(56,189,248,.35)}
+  .playbtn{background:var(--accent);color:#04121b;border:none;border-radius:9px;padding:9px 15px;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 4px 16px rgba(56,189,248,.28);transition:filter .15s,transform .15s}
+  .playbtn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+  .counters{display:flex;gap:10px}
+  .counter{background:rgba(255,255,255,.04);border:1px solid var(--glass-line);border-radius:10px;padding:6px 14px;text-align:center;min-width:92px;box-shadow:inset 0 1px 0 var(--glass-hi)}
+  .counter .n{font-size:21px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+  .counter .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:1px}
+
+  /* Main split */
+  .main{display:grid;grid-template-columns:1fr 420px;overflow:hidden;min-height:0}
+  .mapwrap{position:relative;overflow:hidden;background:radial-gradient(circle at 50% 40%,#0f1a2a,#080c12);--rain:.5}
+  svg{width:100%;height:100%;display:block;cursor:grab}
+  svg.grabbing{cursor:grabbing}
+  .ward{stroke:#0b0f16;stroke-width:0.5;cursor:pointer;transition:fill .35s,stroke .1s}
+  svg.grabbing .ward{cursor:grabbing}
+  .ward.sel{stroke:var(--accent);stroke-width:2.4}
+  .ward.valhi{stroke:var(--jp);stroke-width:1.8}
+  .hl{pointer-events:none;vector-effect:non-scaling-stroke;fill:none}
+  .hov-hl{fill:rgba(255,255,255,.14);stroke:#fff;stroke-width:1.6;opacity:0;transition:opacity .12s}
+  .hov-hl.on{opacity:1}
+  .sel-hl{stroke:var(--accent);stroke-width:2.6;animation:selpulse 2.2s ease-in-out infinite}
+  @keyframes selpulse{50%{stroke-opacity:.45}}
+  .ripple{fill:none;stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke;transform-box:fill-box;transform-origin:center;pointer-events:none;animation:rip .65s ease-out forwards}
+  @keyframes rip{from{transform:scale(.2);opacity:.95}to{transform:scale(3.4);opacity:0}}
+  .wlabel{fill:#cfe0ee;font-size:6px;pointer-events:none;text-anchor:middle;paint-order:stroke;stroke:#0b0f16;stroke-width:1.4px;font-weight:600;opacity:0}
+  .hosp{fill:#fff;stroke:#e11d48;stroke-width:1.3;cursor:pointer}
+  .hosp-cross{stroke:#e11d48;stroke-width:1.3;pointer-events:none}
+
+  /* Rain + water (transform-only animation; pointer-events off) */
+  .fx{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1;opacity:calc(.3 + var(--rain) * .7);transition:opacity .6s}
+  .fx i{position:absolute;left:0;right:0;top:-500px;bottom:0;background-repeat:repeat;will-change:transform;animation:fall linear infinite}
+  @keyframes fall{to{transform:translate3d(0,var(--ty),0)}}
+  .fx i:nth-child(1){--ty:220px;background-size:180px 220px;animation-duration:1.15s;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='220'%3E%3Cg stroke='%23a9d6ff' stroke-linecap='round' stroke-width='1' opacity='.42'%3E%3Cpath d='M14 8l-2 10M62 40l-2 10M118 14l-2 10M156 66l-2 10M40 96l-2 10M96 118l-2 10M140 150l-2 10M22 170l-2 10M84 190l-2 10'/%3E%3C/g%3E%3C/svg%3E")}
+  .fx i:nth-child(2){--ty:300px;background-size:260px 300px;animation-duration:.85s;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='300'%3E%3Cg stroke='%23bfe3ff' stroke-linecap='round' stroke-width='1.3' opacity='.5'%3E%3Cpath d='M30 20l-3 16M112 60l-3 16M190 30l-3 16M236 120l-3 16M70 150l-3 16M150 190l-3 16M20 240l-3 16M210 250l-3 16'/%3E%3C/g%3E%3C/svg%3E")}
+  .fx i:nth-child(3){--ty:380px;background-size:340px 380px;animation-duration:.62s;
+    opacity:clamp(0,calc((var(--rain) - .3) * 1.7),1);transition:opacity .6s;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='380'%3E%3Cg stroke='%23d6ecff' stroke-linecap='round' stroke-width='1.7' opacity='.55'%3E%3Cpath d='M48 30l-4 22M170 90l-4 22M284 50l-4 22M120 200l-4 22M250 240l-4 22M40 310l-4 22M200 330l-4 22'/%3E%3C/g%3E%3C/svg%3E")}
+  .water{position:absolute;left:0;right:0;bottom:0;height:64px;pointer-events:none;overflow:hidden;z-index:1;opacity:calc(.25 + var(--rain) * .65);transition:opacity .6s;background:linear-gradient(to top,rgba(56,189,248,.16),transparent)}
+  .water::before,.water::after{content:'';position:absolute;left:0;top:0;height:14px;width:calc(100% + 120px);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='14'%3E%3Cpath d='M0 8Q30 0 60 8T120 8V14H0Z' fill='%2338bdf8' fill-opacity='.2'/%3E%3C/svg%3E") repeat-x;background-size:120px 14px;animation:wave 6s linear infinite}
+  .water::after{top:6px;opacity:.6;animation-duration:9s;animation-direction:reverse}
+  @keyframes wave{to{transform:translateX(-120px)}}
+  .mapwrap.norain .fx,.mapwrap.norain .water{display:none}
+
+  /* Map overlays (glass) */
+  .zoomctl{position:absolute;right:14px;top:14px;display:flex;flex-direction:column;gap:5px;z-index:3}
+  .zoomctl button{width:36px;height:36px;font-size:20px;font-weight:700;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--text);border:1px solid var(--glass-line);border-radius:9px;cursor:pointer;box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
+  .zoomctl button:hover{border-color:var(--accent);transform:scale(1.06)}
+  .legend{position:absolute;left:14px;bottom:14px;z-index:3;background:var(--glass);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);border:1px solid var(--glass-line);border-radius:13px;padding:12px 14px;font-size:11.5px;max-width:230px;box-shadow:var(--shadow),inset 0 1px 0 var(--glass-hi)}
+  .legend .t{font-weight:700;margin-bottom:6px;font-size:12px}
+  .legrow{display:flex;align-items:center;gap:7px;margin:3px 0}
+  .sw{width:20px;height:11px;border-radius:2px;flex-shrink:0}
+  .ramp{height:11px;width:150px;border-radius:3px;background:linear-gradient(90deg,var(--green),var(--yellow),var(--orange),var(--red))}
+  .tip{position:absolute;pointer-events:none;background:rgba(4,14,22,.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(56,189,248,.6);border-radius:8px;padding:5px 10px;font-size:12px;font-weight:600;opacity:0;transition:opacity .1s;white-space:nowrap;z-index:5}
+  .bootfx{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#0f1a2a,#080c12);color:var(--muted);font-size:13px;letter-spacing:.04em;transition:opacity .45s;overflow:hidden}
+  .bootfx.hide{opacity:0;pointer-events:none}
+  .bootfx::before{content:'';position:absolute;top:0;bottom:0;width:40%;left:-40%;background:linear-gradient(100deg,transparent,rgba(56,189,248,.10),transparent);animation:sweep 1.4s ease-in-out infinite}
+
+  /* Side panel */
+  .side{background:linear-gradient(180deg,rgba(22,31,44,.97),rgba(13,19,29,.99));border-left:1px solid var(--glass-line);overflow-y:auto;position:relative;box-shadow:-12px 0 32px rgba(0,0,0,.28)}
+  .side::-webkit-scrollbar{width:9px}.side::-webkit-scrollbar-thumb{background:#2a3644;border-radius:5px}
+  .placeholder{padding:40px 24px;color:var(--muted);text-align:center;line-height:1.7;font-size:14px}
+  .placeholder .big{font-size:40px;margin-bottom:10px}
+  .phead{padding:16px 18px;border-bottom:1px solid var(--glass-line);background:rgba(20,30,43,.74);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);position:sticky;top:0;z-index:2}
+  .phead .nm{font-size:19px;font-weight:800}
+  .phead .meta{color:var(--muted);font-size:12px;margin-top:3px}
+  .sevpill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-top:8px}
+  .pbody{padding:16px 18px}
+  .pbody.enter>*{animation:rise .42s cubic-bezier(.2,.7,.2,1) both}
+  .pbody.enter>*:nth-child(2){animation-delay:.05s}.pbody.enter>*:nth-child(3){animation-delay:.1s}
+  .pbody.enter>*:nth-child(4){animation-delay:.15s}.pbody.enter>*:nth-child(n+5){animation-delay:.2s}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .card{position:relative;overflow:hidden;background:rgba(255,255,255,.035);border:1px solid var(--glass-line);border-radius:12px;padding:13px 14px;margin-bottom:12px;box-shadow:inset 0 1px 0 var(--glass-hi)}
+  .card h4{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:9px;font-weight:700}
+  .kv{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.04)}
+  .kv:last-child{border-bottom:none}
+  .kv .v{font-weight:700;font-variant-numeric:tabular-nums}
+  .hospname{color:var(--accent);font-weight:700}
+  .cutoff{color:var(--red);font-weight:800}
+
+  /* skeleton (shown briefly while a rainfall change is applied) */
+  .side.loading .card::after,.side.loading .iv::after{content:'';position:absolute;inset:0;z-index:1;border-radius:inherit;background:
+    linear-gradient(#2b3a4d,#2b3a4d) 14px 16px/38% 9px no-repeat,
+    linear-gradient(#26354a,#26354a) 14px 40px/78% 12px no-repeat,
+    linear-gradient(#26354a,#26354a) 14px 62px/64% 12px no-repeat,
+    linear-gradient(#26354a,#26354a) 14px 84px/52% 12px no-repeat,#151f2c}
+  .side.loading .card::before,.side.loading .iv::before{content:'';position:absolute;top:0;bottom:0;width:45%;left:-45%;z-index:2;background:linear-gradient(100deg,transparent,rgba(255,255,255,.09),transparent);animation:sweep 1.1s ease-in-out infinite}
+  @keyframes sweep{to{transform:translateX(320%)}}
+
+  /* interventions */
+  .ivh{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;margin:6px 0 10px}
+  .prio{display:flex;gap:6px;margin-bottom:12px}
+  .prio button{flex:1;font-size:11.5px;padding:8px 4px;background:rgba(255,255,255,.04);border:1px solid var(--glass-line);border-radius:9px;color:var(--text);cursor:pointer;transition:border-color .15s,background .15s}
+  .prio button:hover{border-color:var(--accent)}
+  .prio button.on{background:var(--accent);color:#04121b;border-color:var(--accent);font-weight:700}
+  .iv{position:relative;overflow:hidden;background:rgba(255,255,255,.035);border:1px solid var(--glass-line);border-radius:13px;padding:13px;margin-bottom:11px;box-shadow:inset 0 1px 0 var(--glass-hi);transition:transform .2s,border-color .2s}
+  .iv:hover{transform:translateY(-1px);border-color:rgba(56,189,248,.4)}
+  .iv.top{border-color:var(--accent);box-shadow:0 0 0 1px rgba(56,189,248,.25),0 6px 26px rgba(56,189,248,.10)}
+  .iv .rank{font-size:10px;font-weight:800;color:var(--accent);letter-spacing:.05em}
+  .iv .en{font-weight:700;font-size:15px;margin-top:2px}
+  .iv .jpn{color:var(--jp);font-size:13px;margin-top:1px}
+  .iv .what{font-size:12.5px;line-height:1.55;color:#d3dde8;margin:9px 0;padding:9px 10px;background:rgba(56,189,248,.06);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+  .iv .tags{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+  .tag{font-size:10.5px;padding:3px 8px;border-radius:6px;background:rgba(0,0,0,.25);border:1px solid var(--glass-line);color:var(--muted)}
+  .iv .why{font-size:12px;line-height:1.5;color:var(--muted);margin-top:6px}
+  .iv .why b{color:#cbd6e2}
+  .iv .ex{font-size:11px;color:var(--muted);margin-top:6px;font-style:italic}
+  .effect{margin-top:9px;font-size:12px;color:#cbd6e2;padding:7px 10px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.22);border-radius:8px;font-variant-numeric:tabular-nums}
+  .effect b{color:var(--green)}
+  .effect .ok{color:var(--green);font-weight:700}
+  .effect .part{color:var(--yellow);font-weight:700}
+  .illustrative{font-size:10.5px;color:var(--muted);font-style:italic;margin-top:4px;line-height:1.4}
+  .evrow{font-size:12.5px;line-height:1.6;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+  .evrow:last-of-type{border-bottom:none}
+  .evrow b{color:var(--accent)}
+  .evlinks{font-size:11px;margin-top:1px}
+  .evlinks a{color:var(--accent);text-decoration:none}
+  .evlinks a:hover{text-decoration:underline}
+  .applybtn{margin-top:9px;width:100%;padding:9px;border:none;border-radius:9px;background:var(--green);color:#04140a;font-weight:700;font-size:12.5px;cursor:pointer;transition:filter .15s}
+  .applybtn:hover{filter:brightness(1.08)}
+  .applybtn.off{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--glass-line)}
+  .applybtn.off:hover{color:var(--text);border-color:var(--green)}
+  .excl{font-size:12px;color:var(--muted);padding:6px 0;line-height:1.45;border-bottom:1px solid rgba(255,255,255,.04)}
+  .excl b{color:#c2cdd9}
+
+  /* AI box */
+  .ai{background:linear-gradient(180deg,rgba(56,189,248,.09),rgba(56,189,248,.02));border:1px solid rgba(56,189,248,.5);border-radius:13px;padding:13px;margin-top:4px;box-shadow:0 0 26px rgba(56,189,248,.08),inset 0 1px 0 var(--glass-hi)}
+  .ai h4{color:var(--accent);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:9px;font-weight:700}
+  .quick{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .quick button{font-size:11px;padding:6px 10px;background:rgba(0,0,0,.25);border:1px solid var(--glass-line);border-radius:14px;color:#bcd;cursor:pointer;transition:border-color .15s,color .15s}
+  .quick button:hover{border-color:var(--accent);color:#fff}
+  .airow{display:flex;gap:7px}
+  .airow input{flex:1;background:rgba(0,0,0,.3);border:1px solid var(--glass-line);border-radius:9px;padding:9px 11px;color:var(--text);font-size:13px;font-family:inherit}
+  .airow input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(56,189,248,.15)}
+  .airow button{background:var(--accent);color:#04121b;border:none;border-radius:9px;padding:0 15px;font-weight:700;cursor:pointer}
+  .aians{margin-top:11px;font-size:13px;line-height:1.6;color:#dbe6f0;white-space:pre-wrap;display:none}
+  .aians.show{display:block}
+  .aians.think{color:var(--muted);font-style:italic;animation:pulse 1.3s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.5}}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(2,6,11,.62);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:50}
+  .modal.show{display:flex}
+  .modalbox{background:rgba(19,27,39,.94);border:1px solid var(--glass-line);border-radius:16px;padding:26px;max-width:600px;max-height:82vh;overflow-y:auto;box-shadow:0 24px 70px rgba(0,0,0,.55);animation:pop .25s cubic-bezier(.2,.8,.2,1)}
+  @keyframes pop{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:none}}
+  .modalbox h2{margin-bottom:6px;font-size:19px}
+  .modalbox .close{float:right;cursor:pointer;color:var(--muted);font-size:22px;line-height:1}
+  .limit{font-size:13px;color:#c4cfdb;line-height:1.55;margin:9px 0;padding-left:18px;position:relative}
+  .limit:before{content:"▸";position:absolute;left:0;color:var(--yellow)}
+
+  /* button ripple */
+  .brip{position:absolute;border-radius:50%;background:rgba(255,255,255,.32);transform:scale(0);animation:brip .55s ease-out forwards;pointer-events:none}
+  @keyframes brip{to{transform:scale(1);opacity:0}}
+
+  /* guided intro */
+  .intro{position:fixed;inset:0;z-index:100;display:none}
+  .intro.show{display:block}
+  .spot{position:fixed;border-radius:14px;box-shadow:0 0 0 9999px rgba(3,8,14,.76);outline:2px solid var(--accent);pointer-events:none;
+    transition:left .42s cubic-bezier(.4,0,.2,1),top .42s cubic-bezier(.4,0,.2,1),width .42s cubic-bezier(.4,0,.2,1),height .42s cubic-bezier(.4,0,.2,1)}
+  .spot::after{content:'';position:absolute;inset:-2px;border-radius:inherit;border:2px solid var(--accent);animation:ping 1.7s ease-out infinite}
+  @keyframes ping{from{transform:scale(1);opacity:.75}to{transform:scale(1.05);opacity:0}}
+  .bubble{position:fixed;width:330px;max-width:calc(100vw - 24px);background:rgba(15,23,34,.95);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(56,189,248,.55);border-radius:15px;padding:16px 18px 14px;box-shadow:0 20px 56px rgba(0,0,0,.55);transition:left .42s cubic-bezier(.4,0,.2,1),top .42s cubic-bezier(.4,0,.2,1)}
+  .bubble .bstep{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  .bubble h3{font-size:17px;margin:4px 0 6px}
+  .bubble p{font-size:13px;line-height:1.55;color:#cbd6e2}
+  .bfoot{display:flex;align-items:center;gap:8px;margin-top:14px}
+  .dots{display:flex;gap:6px;flex:1}
+  .dots i{width:7px;height:7px;border-radius:50%;background:#2c3b4e;transition:background .2s,transform .2s}
+  .dots i.on{background:var(--accent);transform:scale(1.25)}
+  .bskip{background:none;border:none;color:var(--muted);font-size:12.5px;cursor:pointer;padding:7px 8px}
+  .bskip:hover{color:var(--text)}
+  .bnext{background:var(--accent);color:#04121b;border:none;border-radius:9px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer}
+
+  /* Phone / narrow-tablet layout — additive only, desktop rules above are untouched */
+  @media (max-width: 860px){
+    html,body{height:auto;overflow:visible}
+    .app{height:auto;min-height:100vh;overflow:visible;grid-template-rows:auto auto auto}
+    header{padding:8px 12px}
+    header .brand{font-size:17px}
+    header .sub{font-size:11px}
+    .hbtn{padding:7px 10px;font-size:12px}
+    .ctrlbar{padding:8px 12px;gap:10px}
+    .rainbox{min-width:0;width:100%;flex-basis:100%}
+    .playbtn{flex:1;min-width:0}
+    .counters{width:100%;flex-basis:100%}
+    .counter{flex:1;min-width:0;padding:6px 8px}
+    .main{grid-template-columns:1fr;grid-template-rows:56vh auto;overflow:visible}
+    .mapwrap{min-height:340px}
+    .side{border-left:none;border-top:1px solid var(--glass-line);overflow-y:visible;box-shadow:0 -12px 32px rgba(0,0,0,.28)}
+    .legend{max-width:150px;font-size:10.5px;padding:9px 10px;left:8px;bottom:8px}
+    .zoomctl{right:8px;top:8px}
+    .zoomctl button{width:32px;height:32px;font-size:17px}
+    .modalbox{max-width:calc(100vw - 24px);padding:20px;max-height:78vh}
+    .bubble{width:min(330px,calc(100vw - 24px))}
+    .placeholder{padding:28px 18px}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .fx i,.water::before,.water::after,.sel-hl,.spot::after,.aians.think,.bootfx::before,.side.loading .card::before,.side.loading .iv::before{animation:none!important}
+    .pbody.enter>*,.modalbox{animation:none!important}
+    .ward,.spot,.bubble{transition:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div>
+      <div class="brand">SETU <span class="jp">設計</span></div>
+      <div class="sub" id="reso">loading…</div>
+    </div>
+    <div class="spacer"></div>
+    <a class="hbtn" href="index.html" style="text-decoration:none;display:inline-block">← SETU Platform</a>
+    <button class="hbtn" id="guideBtn">❓ Guide</button>
+    <button class="hbtn on" id="fxBtn" title="Toggle rain animation">🌧 Rain FX</button>
+    <button class="hbtn" id="hospBtn">🏥 Hospitals</button>
+    <button class="hbtn" id="labelBtn">🏷 Ward names</button>
+    <button class="hbtn" id="valBtn">📊 2020 reference</button>
+    <button class="hbtn" id="limBtn">⚠ Limitations</button>
+  </header>
+
+  <div class="ctrlbar">
+    <div class="rainbox">
+      <label>Rainfall</label>
+      <input type="range" id="rain" min="0" max="0" value="0" step="1">
+      <span class="rainval" id="rainval">—</span>
+    </div>
+    <button class="playbtn" id="playBtn">▶ Play storm</button>
+    <div class="counters">
+      <div class="counter"><div class="n" id="cFlood" style="color:var(--orange)">0</div><div class="l">Wards flooded</div></div>
+      <div class="counter"><div class="n" id="cCut" style="color:var(--red)">0</div><div class="l">Hospitals cut off</div></div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="mapwrap">
+      <svg id="map" preserveAspectRatio="xMidYMid meet"><g id="vp"></g></svg>
+      <div class="fx" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="water" aria-hidden="true"></div>
+      <div class="zoomctl">
+        <button id="zin">+</button><button id="zout">−</button><button id="zreset" title="reset" style="font-size:13px">⟲</button>
+      </div>
+      <div class="legend" id="legend"></div>
+      <div class="tip" id="tip"></div>
+      <div class="bootfx" id="boot">Loading flood model…</div>
+    </div>
+    <div class="side" id="side">
+      <div class="placeholder">
+        <div class="big">🗺️</div>
+        <b>Click any ward</b> to see its flood depth, hospital access,<br>
+        and the ranked Japanese interventions that fit it —<br>
+        each explained in plain language, with a live AI advisor.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal"><div class="modalbox">
+  <span class="close" id="modalClose">✕</span>
+  <div id="modalContent"></div>
+</div></div>
+
+<div class="intro" id="intro" role="dialog" aria-modal="true" aria-label="Quick guide">
+  <div class="spot" id="spot"></div>
+  <div class="bubble" id="bubble">
+    <div class="bstep" id="bstep"></div>
+    <h3 id="btitle"></h3>
+    <p id="btext"></p>
+    <div class="bfoot">
+      <div class="dots" id="bdots"></div>
+      <button class="bskip" id="introSkip">Skip</button>
+      <button class="bnext" id="introNext">Next →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const S={data:{},scenIdx:0,sel:null,valMode:false,showHosp:false,showLabels:false,
+        applied:{},priority:"impact",playing:false,
+        view:{k:1,x:0,y:0},drag:null,dragMoved:false,
+        prevCounts:{},panelId:null,skelOn:false,skelT:null,hov:null,hlSel:null,cur:null,wardById:null};
+
+const NS='http://www.w3.org/2000/svg';
+const REDUCED=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+const INTRO_FIRST_LOAD_ONLY=false; // set true before the final: intro then shows only on a visitor's first load (Guide button still replays it)
+
+// Animated number: tweens el's text from its current (or given) value to `to`.
+function countTo(el,to,o={}){
+  const dec=o.dec||0,pre=o.pre||'',suf=o.suf||'',dur=o.dur||450;
+  const fmt=v=>pre+v.toFixed(dec)+suf;
+  cancelAnimationFrame(el._raf);
+  const start=o.from!==undefined?o.from:(el._cur||0);
+  if(REDUCED||start===to){el._cur=to;el.textContent=fmt(to);return;}
+  el.textContent=fmt(start);el._cur=start;
+  const t0=performance.now();
+  const step=t=>{
+    const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);
+    el._cur=start+(to-start)*e;el.textContent=fmt(el._cur);
+    if(p<1)el._raf=requestAnimationFrame(step);else{el._cur=to;el.textContent=fmt(to);}
+  };
+  el._raf=requestAnimationFrame(step);
+}
+function runCounts(){
+  const id=S.panelId;
+  document.querySelectorAll('#side [data-count]').forEach(el=>{
+    const to=+el.dataset.to,key=id+':'+el.dataset.count,from=S.prevCounts[key];
+    S.prevCounts[key]=to;
+    countTo(el,to,{dec:+el.dataset.dec,pre:el.dataset.pre||'',suf:el.dataset.suf||'',from:from===undefined?0:from,dur:500});
+  });
+}
+function decs(v){const s=String(v),i=s.indexOf('.');return i<0?0:Math.min(2,s.length-i-1)}
+function escAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+
+// Brief shimmer over the side-panel cards while a rainfall change is applied; numbers count up on reveal.
+const redOf=imp=>Math.min(0.7,imp*0.8);
+
+// ---- live hospital road distances after interventions (same rule as p4_network.py) ----
+let RG=null;const netCache=new Map();
+async function loadRoadGraph(){
+  try{
+    const g=await fetch('data/roadgraph.json',{cache:'no-store'}).then(r=>r.json());
+    const n=g.n,m=g.eu.length,off=new Int32Array(n+1);
+    for(let i=0;i<m;i++){off[g.eu[i]+1]++;off[g.ev[i]+1]++}
+    for(let i=0;i<n;i++)off[i+1]+=off[i];
+    const pos=off.slice(0,n),adj=new Int32Array(2*m),wt=new Float32Array(2*m);
+    for(let i=0;i<m;i++){
+      const u=g.eu[i],v=g.ev[i],w=g.ew[i];
+      adj[pos[u]]=v;wt[pos[u]++]=w;adj[pos[v]]=u;wt[pos[v]++]=w;
+    }
+    RG={n,ward:Int32Array.from(g.ward),off,adj,wt,hosp:g.hosp,access:g.access,roadDepth:g.road_flood_depth_m};
+    if(Object.keys(S.applied).length)render();
+  }catch(e){console.warn('roadgraph unavailable — using precomputed distances',e)}
+}
+function reachKm(blockedWards){
+  const {n,ward,off,adj,wt,hosp,access}=RG;
+  const blocked=new Uint8Array(n);
+  for(let i=0;i<n;i++)if(ward[i]>=0&&blockedWards.has(ward[i]))blocked[i]=1;
+  const dist=new Float64Array(n).fill(Infinity);
+  const cap=adj.length+hosp.length+8,hd=new Float64Array(cap),hn=new Int32Array(cap);let hs=0;
+  const push=(d,v)=>{let i=hs++;while(i>0){const p=(i-1)>>1;if(hd[p]<=d)break;hd[i]=hd[p];hn[i]=hn[p];i=p}hd[i]=d;hn[i]=v};
+  const pop=()=>{ // caller reads hd[0]/hn[0] first
+    const d=hd[--hs],v=hn[hs];let i=0;
+    for(;;){let c=2*i+1;if(c>=hs)break;if(c+1<hs&&hd[c+1]<hd[c])c++;if(hd[c]>=d)break;hd[i]=hd[c];hn[i]=hn[c];i=c}
+    hd[i]=d;hn[i]=v};
+  for(const h of hosp)if(!blocked[h]){dist[h]=0;push(0,h)}
+  while(hs){
+    const d=hd[0],u=hn[0];
+    if(hs===1)hs=0;else pop();
+    if(d>dist[u])continue;
+    for(let e=off[u];e<off[u+1];e++){
+      const v=adj[e];if(blocked[v])continue;
+      const nd=d+wt[e];if(nd<dist[v]){dist[v]=nd;push(nd,v)}
+    }
+  }
+  const nearest={},cut=new Set();
+  for(const wid in access){
+    const a=access[wid],d=dist[a];
+    if(blocked[a]||d===Infinity){nearest[wid]=-1;cut.add(+wid)}else nearest[wid]=Math.round(d/10)/100;
+  }
+  return {nearest,cut,live:true};
+}
+function currentNet(mm,depths){
+  if(!Object.keys(S.applied).length||!RG)
+    return {nearest:S.data.model.nearest_km[String(mm)]||{},cut:new Set(S.data.model.cutoffs[String(mm)]||[]),live:false};
+  const key=mm+'|'+JSON.stringify(S.applied);
+  let r=netCache.get(key);
+  if(!r){
+    const blocked=new Set();
+    for(const id in depths)if(depths[id]>=RG.roadDepth)blocked.add(+id);
+    r=reachKm(blocked);netCache.set(key,r);
+    if(netCache.size>60)netCache.delete(netCache.keys().next().value);
+  }
+  return r;
+}
+
+function skeletonPulse(){
+  if(S.sel===null||S.playing||REDUCED)return;
+  const side=document.getElementById('side');
+  side.classList.add('loading');S.skelOn=true;
+  clearTimeout(S.skelT);
+  S.skelT=setTimeout(()=>{S.skelOn=false;side.classList.remove('loading');runCounts();},260);
+}
+
+function rippleAt(ev){
+  if(REDUCED)return;
+  const svg=document.getElementById('map'),vp=document.getElementById('vp'),fx=document.getElementById('fx');
+  const m=vp.getScreenCTM();if(!m||!fx)return;
+  const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;
+  const q=pt.matrixTransform(m.inverse());
+  const c=document.createElementNS(NS,'circle');
+  c.setAttribute('class','ripple');c.setAttribute('cx',q.x);c.setAttribute('cy',q.y);c.setAttribute('r',10/S.view.k);
+  fx.appendChild(c);setTimeout(()=>c.remove(),750);
+}
+document.addEventListener('pointerdown',e=>{
+  const b=e.target.closest&&e.target.closest('button');if(!b||REDUCED)return;
+  const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height)*2;
+  const i=document.createElement('span');i.className='brip';
+  i.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;
+  b.appendChild(i);setTimeout(()=>i.remove(),600);
+});
+
+async function boot(){
+  const f=p=>fetch(p,{cache:'no-store'}).then(r=>r.json());
+  try{
+    const [zones,model,reco,val,meta,hosp,evidence]=await Promise.all([
+      f('data/zones.json'),f('data/model.json'),f('data/reco.json'),
+      f('data/validation.json'),f('data/meta.json'),f('data/hospitals.json').catch(()=>({hospitals:[],nearest:{}})),
+      f('data/evidence.json').catch(()=>({}))]);
+    S.data={zones,model,reco,val,meta,hosp,evidence};
+  }catch(e){document.getElementById('boot').classList.add('hide');document.getElementById('side').innerHTML='<div class="placeholder">Could not load data files. Make sure you ran p6_export and are serving from the project root.</div>';return;}
+  document.getElementById('reso').textContent=S.data.meta.resolution;
+  setupProj();buildMap();buildLegend();
+  const rain=document.getElementById('rain');
+  rain.max=S.data.model.scenarios_mm.length-1;
+  const i192=S.data.model.scenarios_mm.indexOf((S.data.model.validation||{}).rainfall_mm||192);
+  S.scenIdx=i192>=0?i192:Math.floor(S.data.model.scenarios_mm.length/2);
+  rain.value=S.scenIdx;
+  rain.oninput=e=>{S.scenIdx=+e.target.value;skeletonPulse();render()};
+  document.getElementById('playBtn').onclick=play;
+  document.getElementById('valBtn').onclick=()=>{S.valMode=!S.valMode;flip('valBtn',S.valMode);buildLegend();render()};
+  document.getElementById('hospBtn').onclick=()=>{S.showHosp=!S.showHosp;flip('hospBtn',S.showHosp);drawHosp()};
+  document.getElementById('labelBtn').onclick=()=>{S.showLabels=!S.showLabels;flip('labelBtn',S.showLabels);drawLabels()};
+  document.getElementById('limBtn').onclick=showLimits;
+  document.getElementById('fxBtn').onclick=()=>{const off=document.querySelector('.mapwrap').classList.toggle('norain');flip('fxBtn',!off)};
+  document.getElementById('guideBtn').onclick=()=>showIntro(true);
+  document.getElementById('introNext').onclick=nextIntro;
+  document.getElementById('introSkip').onclick=endIntro;
+  document.addEventListener('keydown',e=>{
+    if(!document.getElementById('intro').classList.contains('show'))return;
+    if(e.key==='Escape')endIntro();
+    else if(e.key==='ArrowRight'||e.key==='Enter'){e.preventDefault();nextIntro()}
+    else if(e.key==='ArrowLeft'&&introI>0){introI--;placeIntro()}
+  });
+  window.addEventListener('resize',()=>{if(document.getElementById('intro').classList.contains('show'))placeIntro()});
+  document.getElementById('modalClose').onclick=()=>document.getElementById('modal').classList.remove('show');
+  setupZoomPan();
+  render();
+  document.getElementById('boot').classList.add('hide');
+  showIntro(false);
+  loadRoadGraph();
+}
+
+// ---- guided intro ----
+const INTRO_STEPS=[
+  {sel:'.rainbox',place:'below',t:'Slide the rainfall',p:'Drag the slider — or press Play storm — and watch Hyderabad flood as rainfall rises, all the way to the 2020 storm.'},
+  {sel:'.mapwrap',place:'upper',t:'Click a ward',p:'Every ward is coloured by its predicted flood depth. Click one for its depth, hospital access, and ranked Japanese flood-control interventions.'},
+  {sel:'#side',place:'left',t:'Ask the AI advisor',p:'Each ward has an AI advisor at the bottom of its panel. Tap a suggested question or type your own — it answers from that ward’s own data.'}
+];
+let introI=0;
+function showIntro(force){
+  if(!force&&INTRO_FIRST_LOAD_ONLY){try{if(localStorage.getItem('setu_intro_seen'))return}catch(e){}}
+  introI=0;
+  document.getElementById('intro').classList.add('show');
+  document.getElementById('bdots').innerHTML=INTRO_STEPS.map(()=>'<i></i>').join('');
+  placeIntro();
+  document.getElementById('introNext').focus();
+}
+function nextIntro(){if(introI>=INTRO_STEPS.length-1)endIntro();else{introI++;placeIntro()}}
+function endIntro(){
+  document.getElementById('intro').classList.remove('show');
+  if(INTRO_FIRST_LOAD_ONLY){try{localStorage.setItem('setu_intro_seen','1')}catch(e){}}
+}
+function placeIntro(){
+  const st=INTRO_STEPS[introI],r=document.querySelector(st.sel).getBoundingClientRect(),pad=6;
+  const sp=document.getElementById('spot'),b=document.getElementById('bubble');
+  sp.style.left=(r.left-pad)+'px';sp.style.top=(r.top-pad)+'px';
+  sp.style.width=(r.width+2*pad)+'px';sp.style.height=(r.height+2*pad)+'px';
+  document.getElementById('bstep').textContent=`Step ${introI+1} of ${INTRO_STEPS.length}`;
+  document.getElementById('btitle').textContent=st.t;
+  document.getElementById('btext').textContent=st.p;
+  document.getElementById('introNext').textContent=introI===INTRO_STEPS.length-1?'Got it':'Next →';
+  document.querySelectorAll('#bdots i').forEach((d,i)=>d.classList.toggle('on',i===introI));
+  const bw=b.offsetWidth,bh=b.offsetHeight,vw=innerWidth,vh=innerHeight;
+  let x,y;
+  if(st.place==='below'){x=r.left+16;y=r.bottom+pad+14}
+  else if(st.place==='upper'){x=r.left+(r.width-bw)/2;y=r.top+r.height*.14}
+  else{x=r.left-bw-pad-16;y=r.top+56}
+  b.style.left=Math.max(12,Math.min(x,vw-bw-12))+'px';
+  b.style.top=Math.max(12,Math.min(y,vh-bh-12))+'px';
+}
+function flip(id,on){document.getElementById(id).classList.toggle('on',on)}
+
+let P;
+function setupProj(){
+  const b=S.data.zones.bounds,W=1000,H=1000*(b[3]-b[1])/(b[2]-b[0]);
+  P={b,W,H,x:l=>(l-b[0])/(b[2]-b[0])*W,y:l=>H-(l-b[1])/(b[3]-b[1])*H};
+  const svg=document.getElementById('map');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+}
+function pathFor(rings){return rings.map(r=>'M'+r.map(p=>P.x(p[0]).toFixed(1)+','+P.y(p[1]).toFixed(1)).join('L')+'Z').join(' ')}
+
+function buildMap(){
+  let h='';
+  for(const w of S.data.zones.wards)
+    h+=`<path class="ward" id="w${w.id}" d="${pathFor(w.rings)}" data-id="${w.id}"></path>`;
+  h+='<path id="selhl" class="hl sel-hl"></path><path id="hovhl" class="hl hov-hl"></path><g id="labels"></g><g id="hosps"></g><g id="fx"></g>';
+  document.getElementById('vp').innerHTML=h;
+  S.wardById=new Map(S.data.zones.wards.map(w=>[w.id,w]));
+  const hov=document.getElementById('hovhl');
+  const hideHover=()=>{hov.classList.remove('on');S.hov=null;hideTip()};
+  document.querySelectorAll('.ward').forEach(p=>{
+    const id=+p.dataset.id;
+    p.onclick=ev=>{if(S.dragMoved)return;rippleAt(ev);selectWard(id)};
+    p.onmousemove=ev=>{
+      if(S.drag&&S.dragMoved){hideHover();return}
+      if(S.hov!==id){hov.setAttribute('d',p.getAttribute('d'));S.hov=id}
+      hov.classList.add('on');
+      const d=S.cur?S.cur.depths[String(id)]||0:0;
+      showTip(ev,S.wardById.get(id).name+(d>=S.data.model.flood_threshold_m?' · '+d.toFixed(2)+' m':''));
+    };
+    p.onmouseleave=hideHover;
+  });
+}
+
+// ---- disaster color scale: green -> yellow -> orange -> red ----
+function lerp(a,b,t){return a.map((v,i)=>Math.round(v+(b[i]-v)*t))}
+function sevColor(t){ // t in 0..1
+  const g=[34,197,94],y=[234,179,8],o=[249,115,22],r=[239,68,68];
+  let c;
+  if(t<.34)c=lerp(g,y,t/.34);
+  else if(t<.67)c=lerp(y,o,(t-.34)/.33);
+  else c=lerp(o,r,(t-.67)/.33);
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+function scenMax(depths,thr){let m=thr;for(const k in depths)if(depths[k]>m)m=depths[k];return m}
+
+// applied[id] is now {ivId, reduction} — the ONE intervention currently applied to that ward
+function currentDepths(){
+  const mm=S.data.model.scenarios_mm[S.scenIdx];
+  const base={...(S.data.model.depths[String(mm)]||{})};
+  for(const id in S.applied) if(base[id]!==undefined) base[id]*=(1-S.applied[id].reduction);
+  return {mm,depths:base};
+}
+
+function render(){
+  const {mm,depths}=currentDepths();
+  S.cur={mm,depths};
+  const thr=S.data.model.flood_threshold_m;
+  const net=currentNet(mm,depths);
+  const cut=net.cut;
+  const vSet=new Set(S.data.val.flooded_ids), vHi=new Set(S.data.val.high_conf_ids);
+  const dmax=scenMax(depths,thr*1.4);
+  let nF=0;
+  for(const w of S.data.zones.wards){
+    const el=document.getElementById('w'+w.id);
+    const d=depths[String(w.id)]||0;
+    if(d>=thr)nF++;
+    if(S.valMode){
+      el.style.fill = vSet.has(w.id)?(d>=thr?'#22c55e':'#a16207'):(d>=thr?'#7c3aed':'var(--dry)');
+      el.classList.toggle('valhi',vHi.has(w.id));
+    }else{
+      el.style.fill = d>=thr ? sevColor(Math.min((d-thr)/(dmax-thr),1)) : 'var(--dry)';
+      el.classList.remove('valhi');
+    }
+    el.classList.toggle('sel',S.sel===w.id);
+  }
+  const dur=S.playing?300:450,nScen=S.data.model.scenarios_mm.length;
+  countTo(document.getElementById('rainval'),mm,{suf:' mm',dur});
+  const rainEl=document.getElementById('rain');
+  rainEl.value=S.scenIdx;
+  const frac=S.scenIdx/Math.max(1,nScen-1);
+  rainEl.style.setProperty('--fill',(frac*100).toFixed(1)+'%');
+  document.querySelector('.mapwrap').style.setProperty('--rain',frac.toFixed(3));
+  countTo(document.getElementById('cFlood'),nF,{dur});
+  countTo(document.getElementById('cCut'),cut.size,{dur});
+  const sh=document.getElementById('selhl');
+  if(S.sel===null){sh.removeAttribute('d');S.hlSel=null}
+  else if(S.hlSel!==S.sel){sh.setAttribute('d',document.getElementById('w'+S.sel).getAttribute('d'));S.hlSel=S.sel}
+  if(S.sel!==null)renderPanel(S.sel);
+}
+
+function drawLabels(){
+  const g=document.getElementById('labels');
+  if(!S.showLabels){g.innerHTML='';return;}
+  let h='';
+  for(const w of S.data.zones.wards){
+    const r=w.rings[0];let cx=0,cy=0;for(const p of r){cx+=p[0];cy+=p[1]}
+    cx/=r.length;cy/=r.length;
+    const nm=w.name.replace(/^Ward \d+ /,'');
+    h+=`<text class="wlabel" style="opacity:.9" x="${P.x(cx).toFixed(1)}" y="${P.y(cy).toFixed(1)}">${nm}</text>`;
+  }
+  g.innerHTML=h;
+}
+
+function drawHosp(){
+  const g=document.getElementById('hosps');
+  if(!S.showHosp){g.innerHTML='';return;}
+  let h='';
+  for(const hp of (S.data.hosp.hospitals||[])){
+    const x=P.x(hp.lng).toFixed(1),y=P.y(hp.lat).toFixed(1);
+    h+=`<g><circle class="hosp" cx="${x}" cy="${y}" r="3"></circle>
+        <path class="hosp-cross" d="M${x-1.6},${y} h3.2 M${x},${y-1.6} v3.2"></path>
+        <title>${hp.name}</title></g>`;
+  }
+  g.innerHTML=h;
+}
+
+function selectWard(id){S.sel=id;render()}
+
+const SEVC={severe:'var(--red)',moderate:'var(--orange)',mild:'var(--yellow)',none:'var(--muted)'};
+function renderPanel(id){
+  const side=document.getElementById('side');
+  const same=S.panelId===id;
+  let keep=null;
+  if(same){
+    const a=document.getElementById('aians'),q=document.getElementById('aiq');
+    if(a&&q)keep={cls:a.className,txt:a.textContent,q:q.value,focus:document.activeElement===q,ss:q.selectionStart,se:q.selectionEnd,scroll:side.scrollTop};
+  }
+  const {mm,depths}=currentDepths();
+  const thr=S.data.model.flood_threshold_m;
+  const w=S.data.zones.wards.find(x=>x.id===id);
+  const rec=S.data.reco.recommendations[String(id)];
+  const prof=rec?rec.profile:{};
+  const d=depths[String(id)]||0, flooded=d>=thr;
+  const net=currentNet(mm,depths);
+  const near=net.nearest[String(id)];
+  const nearPre=(S.data.model.nearest_km[String(mm)]||{})[String(id)];
+  const base=S.data.model.baseline_km[String(id)];
+  const nh=(S.data.hosp.nearest||{})[String(id)];
+  const sev=prof.severity||'none';
+  const ap0=S.applied[String(id)];
+  const baseDepth=(S.data.model.depths[String(mm)]||{})[String(id)]||0;
+  const wasFlooded=baseDepth>=thr;
+
+  let h=`<div class="phead">
+    <div class="nm">${w.name}</div>
+    <div class="meta">Ward ${id} · ${prof.size_class||'?'} area · ${prof.density_class||''} · slope ${prof.slope_pct||0}%</div>
+    <span class="sevpill" style="background:${SEVC[sev]};color:#08111a">${flooded?sev+' flooding':(ap0&&wasFlooded?'protected':'not flooded')}</span>
+  </div><div class="pbody${same?'':' enter'}">`;
+
+  h+=`<div class="card"><h4>Flood & hospital access @ ${mm} mm</h4>
+    <div class="kv"><span>Flood depth</span><span class="v" ${flooded?`data-count="d" data-to="${d}" data-dec="2" data-suf=" m"`:''} style="color:${flooded?SEVC[sev]:'var(--muted)'}">${flooded?d.toFixed(2)+' m':'dry'}</span></div>
+    ${ap0&&wasFlooded?`<div class="kv"><span>Without intervention</span><span class="v" style="color:var(--muted)">${baseDepth.toFixed(2)} m</span></div>`:''}
+    <div class="kv"><span>Nearest hospital</span><span class="v hospname">${nh?nh.name:'—'}</span></div>`;
+  if(near===-1)
+    h+=`<div class="kv"><span>Road access now</span><span class="v cutoff">⚠ CUT OFF</span></div>`;
+  else if(near!=null){
+    h+=`<div class="kv"><span>Road distance now</span><span class="v" data-count="n" data-to="${near}" data-dec="${decs(near)}" data-suf=" km">${near} km</span></div>`;
+    if(base!=null&&near>base+0.05)h+=`<div class="kv"><span>Flood detour</span><span class="v" data-count="x" data-to="${near-base}" data-dec="1" data-pre="+" data-suf=" km" style="color:var(--orange)">+${(near-base).toFixed(1)} km</span></div>`;
+  }
+  if(net.live&&nearPre!==near&&nearPre!=null)
+    h+=`<div class="kv"><span>Before interventions</span><span class="v" style="color:var(--muted)">${nearPre===-1?'CUT OFF':nearPre+' km'}</span></div>`;
+  h+=`</div>`;
+
+  const evid=S.data.evidence[String(id)];
+  if(evid&&evid.length){
+    h+=`<div class="card"><h4>📰 Documented in the news</h4>`;
+    evid.forEach(e=>{
+      h+=`<div class="evrow"><b>${e.event}</b> — ${e.locality}
+        <div class="evlinks">${e.sources.map((u,i)=>`<a href="${escAttr(u)}" target="_blank" rel="noopener noreferrer">source ${i+1} ↗</a>`).join(' · ')}</div></div>`;
+    });
+    h+=`<div class="illustrative" style="margin-top:2px">Real news reports naming this ward. Not every flooded ward has a documented report, and this is not exhaustive.</div></div>`;
+  }
+
+  if(rec&&rec.ranked.length&&(flooded||ap0)){
+    if(ap0){
+      const aiv=rec.ranked.find(x=>x.id===ap0.ivId);
+      h+=`<div class="card"><h4>Intervention applied</h4>
+        <div class="excl" style="border:none">${aiv?`<b>${aiv.name_en}</b> is active on this ward. `:''}${wasFlooded?(flooded?'Flooding is reduced but not eliminated at this rainfall.':'The ward now stays dry at this rainfall.'):'This ward does not flood at this rainfall either way.'}</div>
+        <button class="applybtn" data-id="${id}" data-ivid="${ap0.ivId}" data-imp="0">↺ Remove intervention</button></div>`;
+    }
+    h+=`<div class="ivh">Recommended Japanese interventions</div>
+      <div class="prio">
+        <button class="${S.priority==='impact'?'on':''}" data-p="impact">Most effective</button>
+        <button class="${S.priority==='cost'?'on':''}" data-p="cost">Cheapest</button>
+        <button class="${S.priority==='speed'?'on':''}" data-p="speed">Fastest</button></div>`;
+    const ranked=rankBy(rec.ranked,S.priority);
+    const curApplied=S.applied[String(id)]; // {ivId, reduction} | undefined — applies to EVERY card below, not just top
+    ranked.forEach((iv,i)=>{
+      const ap=curApplied&&curApplied.ivId===iv.id;
+      const whatText = iv.what && iv.what.trim() ? iv.what
+        : '(explanation not available — check intervention_explain.json is in the data/ folder and rerun p6_export.py)';
+      h+=`<div class="iv ${i===0?'top':''}">
+        <div class="rank">${i===0?'★ TOP PICK':'#'+(i+1)}</div>
+        <div class="en">${iv.name_en}</div>
+        <div class="jpn">${iv.name_jp} · ${iv.romaji}</div>
+        <div class="what"><b>What it is:</b> ${whatText}</div>
+        <div class="tags"><span class="tag">cost: ${iv.cost_band.replace('_',' ')}</span><span class="tag">build: ${iv.time_to_build}</span><span class="tag">impact: ${iv.impact}</span></div>
+        <div class="why"><b>Why here:</b> ${iv.why}</div>
+        <div class="ex">Real example: ${iv.example} — ${iv.operator}</div>
+        <div class="effect">📉 Cuts flood depth by <b>${Math.round(redOf(iv.impact)*100)}%</b>${wasFlooded?` · ${baseDepth.toFixed(2)} m → ${(baseDepth*(1-redOf(iv.impact))).toFixed(2)} m · ${baseDepth*(1-redOf(iv.impact))<thr?'<span class="ok">ward goes dry</span>':'<span class="part">partial fix — still floods</span>'}`:''}</div>
+        <button class="applybtn ${ap?'':'off'}" data-id="${id}" data-ivid="${iv.id}" data-imp="${iv.impact}">${ap?'✓ Applied — click to undo':'▶ Apply & re-run flood'}</button>
+      </div>`;
+    });
+    if(rec.excluded.length){
+      h+=`<div class="card"><h4>Why other methods don't fit here</h4>`;
+      rec.excluded.forEach(e=>h+=`<div class="excl"><b>${e.name_en}</b> — ${e.reason}</div>`);
+      h+=`</div>`;
+    }
+  }else if(!flooded){
+    h+=`<div class="card"><h4>Interventions</h4><div class="excl">This ward stays dry at ${mm} mm — no intervention needed. Raise the rainfall to see when it starts flooding.</div></div>`;
+  }
+
+  // AI advisor
+  h+=`<div class="ai"><h4>💬 Ask the AI advisor</h4>
+    <div class="quick" id="quick"></div>
+    <div class="airow"><input id="aiq" placeholder="e.g. Why this method and not another?"><button id="aisend">Ask</button></div>
+    <div class="aians" id="aians"></div></div>`;
+
+  h+=`</div>`;
+  S.panelId=id;
+  side.innerHTML=h;
+  if(keep){
+    const a=document.getElementById('aians'),q=document.getElementById('aiq');
+    a.className=keep.cls;a.textContent=keep.txt;q.value=keep.q;
+    if(keep.focus){q.focus();try{q.setSelectionRange(keep.ss,keep.se)}catch(e){}}
+    side.scrollTop=keep.scroll;
+  }else side.scrollTop=0;
+
+  document.querySelectorAll('.prio button').forEach(b=>b.onclick=()=>{S.priority=b.dataset.p;renderPanel(id)});
+
+  // Apply/re-run — now wired to EVERY intervention card, not just the top pick.
+  // Clicking a card's button applies THAT intervention (replacing any other applied
+  // to this ward). Clicking the same active one again un-applies it.
+  document.querySelectorAll('.applybtn').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.id, ivid=b.dataset.ivid;
+    const cur=S.applied[k];
+    if(cur&&cur.ivId===ivid){
+      delete S.applied[k];
+    }else{
+      S.applied[k]={ivId:ivid, reduction:redOf(+b.dataset.imp)};
+    }
+    render();
+  });
+
+  // AI quick questions
+  const topName=(rec&&rec.ranked[0])?rec.ranked[0].name_en:'';
+  const qs=flooded?[`What is ${topName}?`,`Why ${topName} for this ward?`,'Could this work in Hyderabad?','Why were other methods rejected?']:['Why is this ward dry?'];
+  document.getElementById('quick').innerHTML=qs.map(q=>`<button>${q}</button>`).join('');
+  document.querySelectorAll('#quick button').forEach(b=>b.onclick=()=>askAI(id,b.textContent));
+  document.getElementById('aisend').onclick=()=>askAI(id,document.getElementById('aiq').value);
+  document.getElementById('aiq').onkeydown=e=>{if(e.key==='Enter')askAI(id,e.target.value)};
+  if(!S.skelOn)runCounts();
+}
+
+async function askAI(id,q){
+  if(!q||!q.trim())return;
+  const setAns=(txt,think)=>{
+    if(S.panelId!==id)return;
+    const b=document.getElementById('aians');if(!b)return;
+    b.classList.add('show');b.classList.toggle('think',!!think);b.textContent=txt;
+  };
+  setAns('Thinking…',true);
+  const {mm,depths}=currentDepths();
+  const rec=S.data.reco.recommendations[String(id)];
+  const w=S.data.zones.wards.find(x=>x.id===id);
+  const nh=(S.data.hosp.nearest||{})[String(id)];
+  const ctx=JSON.stringify({
+    ward:w.name, rainfall_mm:mm, flood_depth_m:+(depths[String(id)]||0).toFixed(2),
+    profile:rec?rec.profile:{}, nearest_hospital:nh?nh.name:null,
+    recommended:rec?rec.ranked.map(x=>({name:x.name_en,what:x.what,why:x.why,cost:x.cost_band,build:x.time_to_build,impact:x.impact})):[],
+    excluded:rec?rec.excluded:[]
+  });
+  try{
+    const r=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({question:q,context:ctx})});
+    const j=await r.json();
+    setAns(j.answer||'(no answer)');
+  }catch(e){
+    setAns('AI unavailable (run with: python serve.py, and check your connection). The "What it is" and "Why here" text above already explains this recommendation.');
+  }
+}
+
+function rankBy(list,prio){
+  const c={very_low:1,low:.8,medium:.55,high:.3,very_high:.1},s={months:1,years:.4,decade:.1};
+  const a=[...list];
+  if(prio==='impact')a.sort((x,y)=>y.impact-x.impact);
+  else if(prio==='cost')a.sort((x,y)=>c[y.cost_band]-c[x.cost_band]);
+  else a.sort((x,y)=>s[y.time_to_build]-s[x.time_to_build]);
+  return a;
+}
+
+function buildLegend(){
+  const L=document.getElementById('legend');
+  if(S.valMode){
+    L.innerHTML=`<div class="t">2020 validation</div>
+      <div class="legrow"><span class="sw" style="background:#22c55e"></span>known-2020 · model floods ✓</div>
+      <div class="legrow"><span class="sw" style="background:#a16207"></span>known-2020 · model missed</div>
+      <div class="legrow"><span class="sw" style="background:#7c3aed"></span>model floods (not in 2020 list)</div>
+      <div class="legrow"><span class="sw" style="border:1px solid var(--jp)"></span>also flooded in another event</div>
+      <div class="legrow" style="color:var(--muted);margin-top:6px">Not independent: 2020 is one of the floods the model learned from.</div>`;
+  }else{
+    L.innerHTML=`<div class="t">Flood severity</div>
+      <div class="ramp"></div>
+      <div class="legrow" style="justify-content:space-between;width:150px;color:var(--muted)"><span>low</span><span>high</span></div>
+      <div class="legrow"><span class="sw" style="background:var(--dry)"></span>dry / not flooded</div>
+      <div class="legrow"><span class="sw" style="background:#fff;border:1px solid #e11d48"></span>🏥 hospital</div>`;
+  }
+}
+
+function showLimits(){
+  const m=S.data.meta;
+  let h=`<span class="close" id="mc2">✕</span><h2>Model Limitations</h2>
+    <div style="color:var(--muted);font-size:12.5px;margin-bottom:8px">Stated up front — a feature, not an apology.</div>`;
+  m.limitations.forEach(l=>h+=`<div class="limit">${l}</div>`);
+  if(m.tests){
+    const t=m.tests,bar=(n,v)=>`<div class="kv"><span>${n}</span><span class="v" style="color:${v>=.65?'var(--green)':v>=.55?'var(--yellow)':'var(--red)'}">${v.toFixed(2)}</span></div>`;
+    h+=`<h4 style="margin-top:16px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em">How well it ranks flood-prone wards (score 0.5 = coin flip, 1.0 = perfect)</h4>
+      <div class="card" style="margin-top:6px">`;
+    for(const e in t.by_event)h+=bar('Held-out flood '+e,t.by_event[e]);
+    h+=bar('Average of held-out floods',t.mean);
+    if(t.within_size!=null)h+=bar('  …comparing wards of similar size only',t.within_size);
+    if(t.independent_ghmc!=null)h+=bar('GHMC official waterlogging list (independent)',t.independent_ghmc);
+    if(t.vulnerable_localities!=null)h+=bar('GHMC official vulnerable localities (independent, weak link)',t.vulnerable_localities);
+    h+=bar('Previous model (same floods)',t.old_model)+`</div>`;
+  }
+  h+=`<h4 style="margin-top:16px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em">Flooded in 2020 but outside our 145 wards</h4>
+      <div class="excl" style="margin-top:6px">${S.data.val.outside.join(' · ')}</div>`;
+  document.getElementById('modalContent').innerHTML=h;
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('mc2').onclick=()=>document.getElementById('modal').classList.remove('show');
+}
+
+function play(){
+  if(S.playing)return;S.playing=true;let i=0;
+  const b=document.getElementById('playBtn');b.textContent='● Playing…';
+  const t=setInterval(()=>{S.scenIdx=i;render();i++;
+    if(i>=S.data.model.scenarios_mm.length){clearInterval(t);S.playing=false;b.textContent='▶ Play storm';}},400);
+}
+
+// ---- tooltip ----
+function showTip(ev,txt){
+  const t=document.getElementById('tip'),wrap=document.querySelector('.mapwrap').getBoundingClientRect();
+  t.textContent=txt;t.style.opacity=1;
+  t.style.left=(ev.clientX-wrap.left+12)+'px';t.style.top=(ev.clientY-wrap.top+12)+'px';
+}
+function hideTip(){document.getElementById('tip').style.opacity=0}
+
+// ---- zoom & pan ----
+function applyView(){document.getElementById('vp').setAttribute('transform',`translate(${S.view.x},${S.view.y}) scale(${S.view.k})`)}
+function setupZoomPan(){
+  const svg=document.getElementById('map');
+  document.getElementById('zin').onclick=()=>{S.view.k=Math.min(8,S.view.k*1.3);applyView()};
+  document.getElementById('zout').onclick=()=>{S.view.k=Math.max(1,S.view.k/1.3);applyView()};
+  document.getElementById('zreset').onclick=()=>{S.view={k:1,x:0,y:0};applyView()};
+  svg.addEventListener('wheel',e=>{e.preventDefault();
+    const f=e.deltaY<0?1.12:1/1.12;S.view.k=Math.max(1,Math.min(8,S.view.k*f));applyView();},{passive:false});
+  svg.addEventListener('mousedown',e=>{S.dragMoved=false;S.drag={x:e.clientX,y:e.clientY,vx:S.view.x,vy:S.view.y};svg.classList.add('grabbing')});
+  window.addEventListener('mousemove',e=>{if(!S.drag)return;
+    if(!S.dragMoved&&Math.hypot(e.clientX-S.drag.x,e.clientY-S.drag.y)>4)S.dragMoved=true;
+    if(!S.dragMoved)return;
+    S.view.x=S.drag.vx+(e.clientX-S.drag.x);S.view.y=S.drag.vy+(e.clientY-S.drag.y);applyView()});
+  window.addEventListener('mouseup',()=>{S.drag=null;svg.classList.remove('grabbing')});
+}
+
+boot();
+</script>
+</body>
+</html>

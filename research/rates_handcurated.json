@@ -1,0 +1,385 @@
+{
+ "note": "Hand-curated rate rows (kept separate so p10_rates_import.py can merge them with imported rows without losing them)",
+ "localities": [
+  {
+   "name": "Gachibowli",
+   "lat": 17.4401,
+   "lon": 78.3489,
+   "low": 9700,
+   "high": 12500,
+   "typical": [
+    11100,
+    12400
+   ],
+   "conf": "medium",
+   "sources": [
+    {
+     "name": "Housing.com price trends (avg 9,709; reports a 1-yr fall)",
+     "url": "https://housing.com/price-trends/gachibowli_hyderabad-Pg7khohd393v9det"
+    },
+    {
+     "name": "Hexahome tracker (avg 11,100)",
+     "url": "https://www.hexahome.in/property-rate-trends-in-hyderabad-hmprt/"
+    },
+    {
+     "name": "PropNewz 2-BHK buyer guide, Apr 2026 (11,100-12,400)",
+     "url": "https://www.propnewz.com/blog/2-bhk-apartment-gachibowli-hyderabad-buyer-guide-2026"
+    }
+   ]
+  },
+  {
+   "name": "Kondapur",
+   "lat": 17.46,
+   "lon": 78.364,
+   "low": 8700,
+   "high": 12700,
+   "typical": [
+    8700,
+    10400
+   ],
+   "conf": "medium",
+   "sources": [
+    {
+     "name": "Aurorealty Kondapur guide, Q1 2026 (8,700-12,700)",
+     "url": "https://aurorealty.com/blog/?p=13466"
+    },
+    {
+     "name": "Square Yards locality average (10,350)",
+     "url": "https://www.squareyards.com/hyderabad-residential-property/venkata-sai-classic/151125/project"
+    }
+   ]
+  },
+  {
+   "name": "Hitec City / Madhapur",
+   "lat": 17.4435,
+   "lon": 78.3772,
+   "low": 11000,
+   "high": 14000,
+   "typical": [
+    12000,
+    13000
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Homebazaar (HITEC City ~13,000; Financial District ~11,400)",
+     "url": "https://homebazaar.com/knowledge/?p=15671"
+    }
+   ]
+  },
+  {
+   "name": "Banjara Hills",
+   "lat": 17.4126,
+   "lon": 78.4482,
+   "low": 12000,
+   "high": 22000,
+   "typical": [
+    13700,
+    20000
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Aurorealty Banjara Hills guide, 2025-26 (12,000-22,000; premium 35,000+)",
+     "url": "https://aurorealty.com/blog/?p=10731"
+    },
+    {
+     "name": "Housing.com (13,700)",
+     "url": "https://housing.com/news/what-can-you-get-in-1-crore-in-hyderabad/"
+    }
+   ]
+  },
+  {
+   "name": "Jubilee Hills",
+   "lat": 17.4325,
+   "lon": 78.4071,
+   "low": 10000,
+   "high": 20000,
+   "typical": [
+    10350,
+    16700
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Aurorealty 2025-26 comparison (10,000-20,000)",
+     "url": "https://aurorealty.com/blog/?p=10226"
+    },
+    {
+     "name": "Realty Hunting citing 99acres (flats 10,350-16,700)",
+     "url": "https://realtyhunting.com/most-expensive-areas-in-hyderabad"
+    }
+   ]
+  },
+  {
+   "name": "Begumpet",
+   "lat": 17.444,
+   "lon": 78.467,
+   "low": 9000,
+   "high": 14600,
+   "typical": [
+    9000,
+    12700
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Square Yards locality average (12,700-14,600; project averages 6,000-9,000)",
+     "url": "https://www.squareyards.com/hyderabad-residential-property/alm-residency/68361/project"
+    }
+   ]
+  },
+  {
+   "name": "Kukatpally",
+   "lat": 17.4948,
+   "lon": 78.3996,
+   "low": 4500,
+   "high": 8550,
+   "typical": [
+    7000,
+    8500
+   ],
+   "conf": "medium",
+   "note": "2-BHK project listings seen around Rs 50 lakh to Rs 1.13 crore.",
+   "sources": [
+    {
+     "name": "Housing.com price trends (avg 6,977)",
+     "url": "https://www.housing.com/price-trends/property-rates-for-buy-in-kukatpally_hyderabad-P48rmib7kb6n2sklm"
+    },
+    {
+     "name": "Square Yards locality average (8,550)",
+     "url": "https://www.squareyards.com/hyderabad-residential-property/abhinava-enclave/13990/project"
+    },
+    {
+     "name": "PropertyPistol (4,500)",
+     "url": "https://www.propertypistol.com/locality/248ce88d-b86a-45f7-9ed8-a3e2fa4bf7d4/kukatpally"
+    }
+   ]
+  },
+  {
+   "name": "KPHB Colony",
+   "lat": 17.485,
+   "lon": 78.412,
+   "low": 7000,
+   "high": 9000,
+   "typical": [
+    7500,
+    8348
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Housing.com KPHB Phase 2 (avg 8,348)",
+     "url": "https://housing.com/price-trends/kphb_phase_2_kukatpally_hyderabad-P53t76z8a17eskeb0"
+    }
+   ]
+  },
+  {
+   "name": "Miyapur",
+   "lat": 17.4969,
+   "lon": 78.3548,
+   "low": 5500,
+   "high": 7500,
+   "typical": [
+    5700,
+    6500
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Listings portal (avg ~5,700); 2026 belt estimate 5,500-7,500",
+     "url": "https://realtyhunting.com/hyderabad-real-estate-market-2026/"
+    }
+   ]
+  },
+  {
+   "name": "Bachupally",
+   "lat": 17.544,
+   "lon": 78.358,
+   "low": 4600,
+   "high": 7500,
+   "typical": [
+    5600,
+    6600
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Square Yards Bachupally project data (5,450 to 5,600 in Q1 2026)",
+     "url": "https://www.squareyards.com/hyderabad-residential-property/lakshmi-nilayam-bachupally/124222/project"
+    },
+    {
+     "name": "PropertyPistol new project (min 6,600)",
+     "url": "https://www.propertypistol.com/projects/praneeth-pranav-solitaire-bachupally-pid-13399"
+    }
+   ]
+  },
+  {
+   "name": "Nizampet",
+   "lat": 17.517,
+   "lon": 78.379,
+   "low": 4000,
+   "high": 6000,
+   "typical": [
+    4000,
+    5500
+   ],
+   "conf": "low",
+   "note": "Single-source average; band widened for uncertainty.",
+   "sources": [
+    {
+     "name": "PropertyPistol locality page (avg ~4,000)",
+     "url": "https://www.propertypistol.com/locality/b457be99-ec99-4c8f-bc8a-08183c6a176c/nizampet"
+    }
+   ]
+  },
+  {
+   "name": "Attapur",
+   "lat": 17.368,
+   "lon": 78.426,
+   "low": 6000,
+   "high": 8400,
+   "typical": [
+    6000,
+    7900
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Mahaveer Constructions area guide 2026 (6,000-7,500; developer blog)",
+     "url": "https://mahaveerconstructions.com/blog/attapur-hyderabad-area-guide"
+    },
+    {
+     "name": "Housing.com (8,429; reports a 1-yr fall)",
+     "url": "https://housing.com/attapur-hyderabad-overview-P58k9073gxixzi8l5"
+    }
+   ]
+  },
+  {
+   "name": "Tolichowki",
+   "lat": 17.4015,
+   "lon": 78.41,
+   "low": 5300,
+   "high": 6800,
+   "typical": [
+    5328,
+    6824
+   ],
+   "conf": "low",
+   "note": "Quikr table from Q3 2025.",
+   "sources": [
+    {
+     "name": "Quikr Hyderabad localities (5,328-6,824, Q3 2025)",
+     "url": "https://www.quikr.com/homes/city/Hyderabad"
+    }
+   ]
+  },
+  {
+   "name": "Kokapet",
+   "lat": 17.393,
+   "lon": 78.334,
+   "low": 8500,
+   "high": 15000,
+   "typical": [
+    11000,
+    14000
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Aurorealty Financial District / Kokapet (8,500-14,000)",
+     "url": "https://aurorealty.com/blog/hyderabad-indias-financial-district-and-the-dubai-of-india/"
+    },
+    {
+     "name": "Realty Hunting (new towers 13,000-15,000+)",
+     "url": "https://realtyhunting.com/property-rates-in-hyderabad/"
+    }
+   ]
+  },
+  {
+   "name": "Narsingi / Manchirevula",
+   "lat": 17.392,
+   "lon": 78.356,
+   "low": 5000,
+   "high": 8500,
+   "typical": [
+    5000,
+    8500
+   ],
+   "conf": "low",
+   "note": "Undated investment-guide range.",
+   "sources": [
+    {
+     "name": "Aurorealty investment guide (5,000-8,500, undated)",
+     "url": "https://aurorealty.com/blog/best-places-to-invest-in-hyderabad/"
+    }
+   ]
+  },
+  {
+   "name": "Kompally",
+   "lat": 17.536,
+   "lon": 78.485,
+   "low": 6000,
+   "high": 7000,
+   "typical": [
+    6000,
+    6950
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Aurorealty Kompally 2026 (6,000-7,000)",
+     "url": "https://aurorealty.com/blog/?p=13554"
+    },
+    {
+     "name": "Homebazaar (6,950)",
+     "url": "https://homebazaar.com/knowledge/?p=15671"
+    }
+   ]
+  },
+  {
+   "name": "Uppal",
+   "lat": 17.4058,
+   "lon": 78.5591,
+   "low": 5500,
+   "high": 7400,
+   "typical": [
+    6867,
+    7400
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "Housing.com Uppal (avg 6,867, 2025)",
+     "url": "https://www.housing.com/price-trends/property-rates-for-buy-in-east_hyderabad_hyderabad-P6mq8d0pzwepx7d16"
+    },
+    {
+     "name": "Realty Hunting east zone, Aug-Sep 2026 (6,900-7,400)",
+     "url": "https://realtyhunting.com/property-rates-in-hyderabad/"
+    }
+   ]
+  },
+  {
+   "name": "LB Nagar",
+   "lat": 17.3457,
+   "lon": 78.5522,
+   "low": 4500,
+   "high": 7400,
+   "typical": [
+    4550,
+    7000
+   ],
+   "conf": "low",
+   "sources": [
+    {
+     "name": "PropertyPistol locality (avg ~4,550, undated)",
+     "url": "https://www.propertypistol.com/locality/82b5890b-2437-48d9-96d2-832e42f4869c/lb-nagar"
+    },
+    {
+     "name": "Realty Hunting east zone (6,900-7,400)",
+     "url": "https://realtyhunting.com/property-rates-in-hyderabad/"
+    }
+   ]
+  }
+ ]
+}

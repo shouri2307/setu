@@ -36,18 +36,33 @@ SYSTEM = (
     "'excluded' reasons in the data. Never claim precision the data doesn't have."
 )
 
+BASE_RULES = (
+    "Answer ONLY from the REPORT DATA in the user's message. Never invent numbers, prices, "
+    "legal status or facts that are not in the data; if something is not in the data, say so. "
+    "Name the factors you rely on. Point-level indicators (lake distance, terrain pocket, facilities) "
+    "are indicative, not validated; the ward flood ranking is validated (held-out floods). A lake distance "
+    "from open maps is NOT the legal lake boundary (FTL/buffer) - say it must be verified with the "
+    "authorities. This is not legal, valuation or insurance advice. Be concrete, 4-6 short sentences, "
+    "plain language, no markdown tables."
+)
+LENS_SYSTEM = {
+    "buyer": "You are SETU, explaining a property location report to a family thinking of buying here. " + BASE_RULES,
+    "agent": "You are SETU, helping a real-estate professional. Give evidence they can cite when pricing or negotiating (facts from the report), and honest selling points. Do not invent a discount or a price. " + BASE_RULES,
+    "insurer": "You are SETU, assisting an insurance underwriter or claims analyst. Explain tiers using the factor weights, treat loadings as illustrative, and for claims describe what evidence supports or does not support the claim - triage, never an accusation. " + BASE_RULES,
+}
 
-def call_groq_model(model, question, context):
+
+def call_groq_model(model, question, context, system=None, label="WARD DATA"):
     """Try a single model. Returns (answer_text, None) on success,
     or (None, (kind, detail)) on failure so the caller can decide whether
     to retry the next model or give up."""
     body = json.dumps({
         "model": model,
         "messages": [
-            {"role": "system", "content": SYSTEM},
+            {"role": "system", "content": system or SYSTEM},
             {"role": "user", "content": f"WARD DATA:\n{context}\n\nQUESTION: {question}"},
         ],
-        "temperature": 0.3, "max_tokens": 400,
+        "temperature": 0.3, "max_tokens": 700,
     }).encode()
 
     req = Request(GROQ_URL, data=body, headers={
@@ -79,13 +94,13 @@ def call_groq_model(model, question, context):
         return None, ("other", str(e))
 
 
-def ask_groq(question, context):
+def ask_groq(question, context, lens=None):
     if not GROQ_KEY:
         return {"error": "no_key", "answer": "Live AI is off (no GROQ_API_KEY set in the Vercel project). The precomputed explanation above still applies."}
 
     last_err = None
     for model in GROQ_MODELS:
-        answer, err = call_groq_model(model, question, context)
+        answer, err = call_groq_model(model, question, context, LENS_SYSTEM.get(lens), "REPORT DATA" if lens in LENS_SYSTEM else "WARD DATA")
         if answer is not None:
             return {"answer": answer, "model_used": model}
         last_err = err
@@ -102,7 +117,7 @@ class handler(BaseHTTPRequestHandler):
         try:
             n = int(self.headers.get("Content-Length", 0))
             payload = json.loads(self.rfile.read(n)) if n else {}
-            result = ask_groq(payload.get("question", ""), payload.get("context", ""))
+            result = ask_groq(payload.get("question", ""), payload.get("context", ""), payload.get("lens"))
         except Exception as e:
             result = {"error": "bad_request", "answer": f"Request error: {e}"}
         out = json.dumps(result).encode()

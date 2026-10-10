@@ -5,3 +5,13 @@ __pycache__/
 *.pyc
 ~$*.pptx
 *.pptx.lock
+research/osm_cache/
+research/gov_cache/
+research/overture_*.json
+research/geo_osm_only.json
+data/rates_input.csv
+serve.log
+tests/_*.pdf
+data/_raw_paste.txt
+SETU_demo.pptx
+research/rates_before_import.json

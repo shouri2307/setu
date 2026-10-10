@@ -1,0 +1,94 @@
+[
+ {
+  "name": "Hussain Sagar (lake centre)",
+  "lat": 17.4235,
+  "lon": 78.4745,
+  "lakeBand": [
+   "inside",
+   "very close"
+  ]
+ },
+ {
+  "name": "Durgam Cheruvu (lake centre)",
+  "lat": 17.4302,
+  "lon": 78.3903,
+  "lakeBand": [
+   "inside",
+   "very close",
+   "near"
+  ]
+ },
+ {
+  "name": "Tolichowki (flood-prone, 2020)",
+  "lat": 17.4015,
+  "lon": 78.41,
+  "minPct": 0.6
+ },
+ {
+  "name": "Gachibowli",
+  "lat": 17.4401,
+  "lon": 78.3489,
+  "nearHospitalM": 3000
+ },
+ {
+  "name": "Kukatpally",
+  "lat": 17.4948,
+  "lon": 78.3996,
+  "nearHospitalM": 2500
+ },
+ {
+  "name": "Secunderabad",
+  "lat": 17.4399,
+  "lon": 78.4983,
+  "nearHospitalM": 1500
+ },
+ {
+  "name": "Charminar",
+  "lat": 17.3616,
+  "lon": 78.4747,
+  "nearHospitalM": 1500
+ },
+ {
+  "name": "Warangal (outside coverage)",
+  "lat": 17.9689,
+  "lon": 79.5941,
+  "outside": true
+ },
+ {
+  "name": "Vijayawada (outside coverage)",
+  "lat": 16.5062,
+  "lon": 80.648,
+  "outside": true
+ },
+ {
+  "name": "St Peter's Engineering College (just outside the 145 wards)",
+  "lat": 17.5656,
+  "lon": 78.4514,
+  "extended": true,
+  "nearHospitalM": 6000
+ },
+ {
+  "name": "Shamshabad airport area (peripheral)",
+  "lat": 17.2403,
+  "lon": 78.4294,
+  "extended": true
+ },
+ {
+  "name": "Tolichowki: official inundation spot nearby",
+  "lat": 17.4015,
+  "lon": 78.41,
+  "inundWithinM": 400
+ },
+ {
+  "name": "Lakdikapul: official inundation spot",
+  "lat": 17.4041,
+  "lon": 78.4646,
+  "inundWithinM": 150
+ },
+ {
+  "name": "Shaikpet nala",
+  "lat": 17.40672,
+  "lon": 78.40284,
+  "nalaWithinM": 150
+ }
+]
