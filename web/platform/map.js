@@ -15,12 +15,19 @@ const MapKit = (() => {
   const wardFill = (w, mode) => mode === 'loc' ? riskColor(1 - Math.max(0, Math.min(1, ((w.loc == null ? 70 : w.loc) - 45) / 50))) : riskColor(w.pct);
   const wardLabel = (w, mode) => w.name.replace(/^Ward \d+ /, '') + (mode === 'loc' ? ' · location score ' + Math.round(w.loc) + '/100' : ' · flood rank ' + Math.round(w.pct * 100) + '/100');
 
+  const HYD_BOX = [[17.15, 78.15], [17.72, 78.75]];   // south-west, north-east: Hyderabad metro region
+
   /* ---------------- Leaflet ---------------- */
   function leaflet() {
     const b = cfg.bounds, map = L.map(el, { preferCanvas: true, zoomControl: false, minZoom: 9, maxZoom: 19 });
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     map.fitBounds([[b[1], b[0]], [b[3], b[2]]], { paddingTopLeft: [440, 20] });
-    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
+    // Hyderabad only: the 145 wards plus the ORR / HMDA fringe; no panning or zooming out to the rest of the world
+    const HYD = L.latLngBounds(HYD_BOX);
+    map.setMaxBounds(HYD); map.options.maxBoundsViscosity = 1;
+    const lockZoom = () => map.setMinZoom(Math.max(9, map.getBoundsZoom(HYD, true)));
+    lockZoom(); map.on('resize', lockZoom);
+    const osm =L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
     const esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Imagery © Esri' });
     const wards = L.layerGroup(), lakes = L.layerGroup(), selStyle = { weight: 2.6, color: '#38bdf8' }, baseStyle = { weight: .6, color: '#0a0f1a' };
     const wardLayers = new Map();
@@ -91,6 +98,7 @@ const MapKit = (() => {
     const gm = google_maps(), b = cfg.bounds;
     const map = new gm.Map(el, { center: { lat: 17.40, lng: 78.45 }, zoom: 11, disableDefaultUI: true, zoomControl: true, zoomControlOptions: { position: gm.ControlPosition.RIGHT_BOTTOM }, gestureHandling: 'greedy', styles: DARK, clickableIcons: false, backgroundColor: '#0a0f1a' });
     map.fitBounds({ south: b[1], west: b[0], north: b[3], east: b[2] }, { left: 440, top: 20, right: 20, bottom: 20 });
+    map.setOptions({ restriction: { latLngBounds: { south: HYD_BOX[0][0], west: HYD_BOX[0][1], north: HYD_BOX[1][0], east: HYD_BOX[1][1] }, strictBounds: true }, minZoom: 10 });
     const tip = document.createElement('div'); tip.className = 'gtip'; el.parentElement.appendChild(tip);
     el.addEventListener('mousemove', e => { const r = el.getBoundingClientRect(); tip.style.left = (e.clientX - r.left + 14) + 'px'; tip.style.top = (e.clientY - r.top + 14) + 'px'; });
     const wardPolys = new Map(), lakePolys = [];

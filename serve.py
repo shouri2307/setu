@@ -1,5 +1,5 @@
 """
-serve.py — Serve the SETU web demo AND proxy AI questions to Groq.
+serve.py — Serve the Sethu Map web demo AND proxy AI questions to Groq.
 
 Run from project root:  python serve.py
 Then open http://localhost:8000
@@ -40,7 +40,7 @@ GROQ_MODELS = [
 ]
 
 SYSTEM = (
-    "You are SETU's flood-planning advisor, explaining to a judge or a city "
+    "You are Sethu Map's flood-planning advisor, explaining to a judge or a city "
     "official with no engineering background. Answer ONLY from the ward data "
     "provided in the user's message — do not invent numbers. Be concrete and "
     "brief (3-5 sentences). Explain flood-control ideas in plain language. If "
@@ -58,9 +58,9 @@ BASE_RULES = (
     "plain language, no markdown tables."
 )
 LENS_SYSTEM = {
-    "buyer": "You are SETU, explaining a property location report to a family thinking of buying here. " + BASE_RULES,
-    "agent": "You are SETU, helping a real-estate professional. Give evidence they can cite when pricing or negotiating (facts from the report), and honest selling points. Do not invent a discount or a price. " + BASE_RULES,
-    "insurer": "You are SETU, assisting an insurance underwriter or claims analyst. Explain tiers using the factor weights, treat loadings as illustrative, and for claims describe what evidence supports or does not support the claim - triage, never an accusation. " + BASE_RULES,
+    "buyer": "You are Sethu Map, explaining a property location report to a family thinking of buying here. " + BASE_RULES,
+    "agent": "You are Sethu Map, helping a real-estate professional. Give evidence they can cite when pricing or negotiating (facts from the report), and honest selling points. Do not invent a discount or a price. " + BASE_RULES,
+    "insurer": "You are Sethu Map, assisting an insurance underwriter or claims analyst. Explain tiers using the factor weights, treat loadings as illustrative, and for claims describe what evidence supports or does not support the claim - triage, never an accusation. " + BASE_RULES,
 }
 
 
@@ -170,7 +170,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
 def main():
-    print("=== SETU server ===")
+    print("=== Sethu Map server ===")
     if GROQ_KEY:
         masked = GROQ_KEY[:8] + "..." + GROQ_KEY[-4:] if len(GROQ_KEY) > 12 else "(short?)"
         print(f"AI: ON (Groq key found: {masked}, length={len(GROQ_KEY)})")

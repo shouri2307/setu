@@ -1,4 +1,4 @@
-/* SETU platform shell: search → pin → explore card → full-page report (Customer / Agent / Insurer). */
+/* Sethu Map platform shell: search → pin → explore card → full-page report (Customer / Agent / Insurer). */
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const PERILS = {
@@ -155,7 +155,7 @@ function renderDock() {
       <div class="src-note">Search above, click the map, or tap a place. Built on public data — no government drain maps needed.</div></div>`;
     return;
   }
-  if (!r.ok) { d.innerHTML = `<div class="panel intro"><h1>Outside our <em>coverage</em></h1><p>SETU covers the 145 GHMC wards. Pick a point inside the shaded area, or search a Hyderabad locality.</p><button class="btn" data-act="clear">Back</button></div>`; return; }
+  if (!r.ok) { d.innerHTML = `<div class="panel intro"><h1>Outside our <em>coverage</em></h1><p>Sethu Map covers the 145 GHMC wards. Pick a point inside the shaded area, or search a Hyderabad locality.</p><button class="btn" data-act="clear">Back</button></div>`; return; }
   const w = r.tiers.water, d192 = r.setu.depth[192], thr = SETUE.D.thr, top = r.buyer.flags[0], out = r.outside;
   const title = S.label && !['Coordinates', 'My location'].includes(S.label) ? S.label : r.ward.name;
   d.innerHTML = `<div class="panel scroll lc"><div class="eyebrow">Location</div><h2>${esc(title)}</h2>
@@ -284,8 +284,8 @@ async function askAI(q) {
 /* ------------------------------ modals ------------------------------ */
 async function showEngine() {
   const D = SETUE.D, p = D.geo.poi, t = (D.meta || {}).tests || {}, n = k => (p[k] || []).length.toLocaleString('en-IN');
-  $('mc').innerHTML = `<button class="x" data-close>×</button><h2>The SETU engine</h2>
-    <p>The three reports are use-cases. SETU is the layer underneath: <b>a location-intelligence engine for Indian cities, built on open and commercial map data.</b></p>
+  $('mc').innerHTML = `<button class="x" data-close>×</button><h2>The Sethu Map engine</h2>
+    <p>The three reports are use-cases. Sethu Map is the layer underneath: <b>a location-intelligence engine for Indian cities, built on open and commercial map data.</b></p>
     <h4>What it knows about any point</h4><ul>
     <li>Flood susceptibility of its ward — learned from 8 real Hyderabad floods and tested on floods it never saw</li>
     <li>Modelled water depth at any rainfall, and whether the road to a hospital gets cut</li>
@@ -327,7 +327,7 @@ async function route() {
 }
 function applyMapEngine(engine, why) { if (why) toast(why + ' — using the OpenStreetMap map instead', 4500); }
 async function boot() {
-  $('dock').innerHTML = '<div class="panel intro"><p><span class="spin"></span> &nbsp;Loading the SETU engine…</p></div>';
+  $('dock').innerHTML = '<div class="panel intro"><p><span class="spin"></span> &nbsp;Loading the Sethu Map engine…</p></div>';
   try { await SETUE.load(); } catch (e) { $('dock').innerHTML = '<div class="panel intro"><p>Could not load data files. Serve the site from the <code>web/</code> folder.</p></div>'; return; }
   try { S.cfg = await api('/api/config', 4000); } catch (e) { S.cfg = { places: false, suggest: false, mapsKey: '' }; }
   const D = SETUE.D;

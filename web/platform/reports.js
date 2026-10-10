@@ -54,7 +54,7 @@ const Reports = (() => {
       <div class="kv"><span class="k">Nearest listed inundation area</span><span class="v">${G.inund ? esc(G.inund.name.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())) + ' · ' + d(G.inund.d) : 'none within 3 km'}</span></div>
       <div class="kv"><span class="k">Listed inundation areas within 1 km</span><span class="v tnum">${G.inund1k}</span></div>
       <div class="kv"><span class="k">HMDA lake notification</span><span class="v" style="max-width:62%">${r.hmda ? esc(SETUE.hmdaText(r.hmda).replace(/^HMDA's lake portal lists /, '')) + (SETUE.hmdaLink(r.hmda) ? ` · <a href="${esc(SETUE.hmdaLink(r.hmda))}" target="_blank" rel="noopener">official FTL map (PDF)</a>` : '') : (r.water.lake && r.water.lake.name ? 'no unambiguous match for ' + esc(r.water.lake.name) + ' — check the portal' : 'no named lake nearby')}</span></div>
-      <div class="legend-note">Tank status is HYDRAA / TGRAC's satellite classification (2014 vs 2023), not a legal notification. Other records are public GIS layers with no stated date, so confirm with GHMC. A proposed width is a plan, not a notice. Nala-level encroachment fields in this service are blank, so SETU does not show them. HMDA status is matched by lake name only when the name is unambiguous; FTL and buffer maps are on <a href="https://lakes.hmda.gov.in/" target="_blank" rel="noopener">lakes.hmda.gov.in</a>. This is not a legal buffer or approval check.</div></div>`;
+      <div class="legend-note">Tank status is HYDRAA / TGRAC's satellite classification (2014 vs 2023), not a legal notification. Other records are public GIS layers with no stated date, so confirm with GHMC. A proposed width is a plan, not a notice. Nala-level encroachment fields in this service are blank, so Sethu Map does not show them. HMDA status is matched by lake name only when the name is unambiguous; FTL and buffer maps are on <a href="https://lakes.hmda.gov.in/" target="_blank" rel="noopener">lakes.hmda.gov.in</a>. This is not a legal buffer or approval check.</div></div>`;
   }
   function routesCard(r) {
     const N = r.roadNear, H = r.hubs, d = m => m == null ? 'not found nearby' : fmtKm(m);
@@ -85,14 +85,14 @@ const Reports = (() => {
       <button class="btn pay" data-act="unlock" data-lens="${lens}">Unlock full report · ${price}</button><div class="price-pill">demo checkout — no real payment is taken</div></div></div>`;
   }
   function aiCard(S, sugs) {
-    return `<div class="ai"><h3>💬 Ask SETU about this report</h3><div class="lead" style="margin-bottom:0;color:var(--text2)">Answers come only from the numbers in this report. Nothing is invented.</div>
+    return `<div class="ai"><h3>💬 Ask Sethu Map about this report</h3><div class="lead" style="margin-bottom:0;color:var(--text2)">Answers come only from the numbers in this report. Nothing is invented.</div>
       <div class="quick">${sugs.map(q => `<button data-act="ask" data-q="${esc(q)}">${esc(q)}</button>`).join('')}
         <button data-act="ask" data-q="Explain this whole report in simple Telugu">తెలుగులో</button><button data-act="ask" data-q="Explain this whole report in simple Hindi">हिन्दी में</button></div>
       <div class="airow"><input class="in" id="aiq" placeholder="Ask anything about this location…" value="${esc(S.ai.q)}"><button class="btn" data-act="askbox">Ask</button></div>
       <div class="aians${S.ai.a ? ' show' : ''}${S.ai.think ? ' think' : ''}" id="aians">${esc(S.ai.a)}</div></div>`;
   }
   function footnote(r) {
-    return `<div class="footnote"><b>How to read this.</b> SETU is a decision aid built on public data and map services. The ward-level flood ranking was tested on 8 real floods (mean AUC 0.69; 0.79 against GHMC's own waterlogging list). Lake distance, terrain pocket and facilities are <i>indicators</i>, not validated predictions. Lake outlines are not legal FTL/buffer boundaries — verify with HMDA / the Irrigation Dept. Rain-to-depth is a stated assumption. Not legal, valuation or insurance advice.<br>
+    return `<div class="footnote"><b>How to read this.</b> Sethu Map is a decision aid built on public data and map services. The ward-level flood ranking was tested on 8 real floods (mean AUC 0.69; 0.79 against GHMC's own waterlogging list). Lake distance, terrain pocket and facilities are <i>indicators</i>, not validated predictions. Lake outlines are not legal FTL/buffer boundaries — verify with HMDA / the Irrigation Dept. Rain-to-depth is a stated assumption. Not legal, valuation or insurance advice.<br>
       Data: SRTM terrain · Telangana State GIS (GHMC nalas &amp; inundation list) · OpenStreetMap · ESA WorldCover · Open-Meteo · ${r.source === 'google' ? 'Google Places' : 'Overture Maps places (Meta · Microsoft · Foursquare)'} · GHMC public data. Generated ${new Date().toLocaleString('en-IN')}.</div>`;
   }
 
@@ -165,7 +165,7 @@ const Reports = (() => {
     const chk = `<div class="card"><h3>Before you pay: checklist</h3><div class="lead">Tailored to what this report found.</div><ul class="list">${qs.map(q => `<li>${esc(q)}</li>`).join('')}</ul></div>`;
 
     const inner = `${more}${chart}${neigh}${govCard(r)}${routesCard(r)}${cost}${ins}${chk}`;
-    return `<div class="printonly"><b>SETU — Customer report</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>
+    return `<div class="printonly"><b>Sethu Map — Customer report</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>
       ${hero}${kpis}${pillarCard(r, 'Your location profile', 'What the surroundings offer — and where they fall short. Flood safety is one of ${r.pillars.items.length} pillars.')}${free}
       ${lock(S, 'customer', inner, 'See the full report', 'The rain-to-water curve, neighbourhood and lake analysis, true cost of buying, insurance angle, a tailored document checklist and plain-language AI answers in English, Telugu or Hindi.', '₹299')}
       ${S.unlocked.customer ? aiCard(S, ['Is it safe to buy here?', 'What should I ask the seller?', 'Why this risk tier?']) + `<div style="margin-top:18px"><button class="btn ghost" data-act="print">🖨 Print / save as PDF</button></div>` : ''}${footnote(r)}`;
@@ -219,7 +219,7 @@ const Reports = (() => {
         <div class="kv"><span class="k">Ground vs surroundings</span><span class="v">${r.terrain ? (r.terrain.relief >= 0 ? '+' : '') + r.terrain.relief.toFixed(1) + ' m' : '…'}</span></div><div class="kv"><span class="k">Parks within 1 km</span><span class="v">${r.fac.park.n1km}${r.fac.park.capped ? '+' : ''}</span></div>
         <div class="kv"><span class="k">Industrial land</span><span class="v">${r.industry ? fmtKm(r.industry.d) + ' away' : 'none mapped nearby'}</span></div><div class="kv"><span class="k">Air quality now</span><span class="v">${S.air ? S.air.aqi + ' · ' + esc(S.air.band) : '…'}</span></div></div></div>
       <div class="card"><h3>Water-risk breakdown <span style="color:var(--muted);font-weight:600">· ${w.score}/100</span></h3><div class="lead">Every factor with its weight, so you can explain it to a client.</div>${factorRows(r.scores.water.parts)}</div>`;
-    return `<div class="printonly"><b>SETU — Listing brief</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>${hero}${price}
+    return `<div class="printonly"><b>Sethu Map — Listing brief</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>${hero}${price}
       ${lock(S, 'agent', inner, 'Unlock the full listing brief', 'Negotiation evidence, selling points, neighbourhood and land character, the full factor breakdown and a client-ready PDF.', '₹499 per client report')}
       ${S.unlocked.agent ? aiCard(S, ['How do I justify a lower price?', "What are this plot's selling points?", 'Is the lake a problem here?']) + `<div style="margin-top:18px"><button class="btn ghost" data-act="print">🖨 Print client report</button></div>` : ''}${footnote(r)}`;
   }
@@ -241,7 +241,7 @@ const Reports = (() => {
     else if (cl.out) {
       const o = cl.out;
       claimRes = o.error ? `<div class="callout warn" style="margin-top:16px">${esc(o.error)}</div>` : o.noEvidence
-        ? `<div class="callout warn" style="margin-top:16px"><b>No external evidence source for this cause yet.</b> SETU's evidence layer covers rain-related water damage. A ${esc(per.label.toLowerCase())} claim goes through standard checks. Roadmap: accident black-spot and fire-incident data.</div>`
+        ? `<div class="callout warn" style="margin-top:16px"><b>No external evidence source for this cause yet.</b> Sethu Map's evidence layer covers rain-related water damage. A ${esc(per.label.toLowerCase())} claim goes through standard checks. Roadmap: accident black-spot and fire-incident data.</div>`
         : `<div class="result ${o.level}"><h4>${esc(o.verdict)}</h4>${o.checks.map(c => `<div class="ck"><span>${c.ok ? '✅' : '⚠️'}</span><span><b>${esc(c.k)}:</b> ${esc(c.v)}</span></div>`).join('')}
           ${o.rain ? `<div class="chartwrap" style="margin-top:12px;max-width:520px">${Charts.rainBars(o.rain.days, cl.date)}</div>` : ''}<div class="legend-note">${esc(o.caveat)}</div></div>`;
     }
@@ -252,7 +252,7 @@ const Reports = (() => {
       <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap"><button class="btn" data-act="claim-run">Check evidence</button>
         <button class="btn ghost" data-act="claim-demo" data-d="1">Demo: Tolichowki · 13 Oct 2020</button><button class="btn ghost" data-act="claim-demo" data-d="2">Demo: Banjara Hills · 2 Mar 2020</button></div>${claimRes}</div>`;
     const fcHtml = S.fc ? `<div class="fc">${S.fc.map(x => { const d = r.outside ? 0 : SETUE.depthAt(r.wid, x.mm), h = Math.max(4, Math.round(x.mm / Math.max(60, ...S.fc.map(y => y.mm)) * 110)); return `<div><div class="col"><b class="tnum">${x.mm.toFixed(0)}</b><i style="height:${h}px;background:${d >= SETUE.D.thr ? 'var(--d)' : 'var(--accent)'}"></i></div>${new Date(x.date).toLocaleDateString('en-IN', { weekday: 'short' })}</div>`; }).join('')}</div>
-      <div class="legend-note">Daily rain in mm (Open-Meteo forecast). ${r.outside ? 'The flood model does not cover this address, so no surge estimate is shown.' : 'Orange bars are heavy enough to push this ward past the flooding threshold in the SETU model — expect a claims surge from this area after such a day.'}</div>` : '<div class="callout"><span class="spin"></span> &nbsp;Loading the 7-day outlook…</div>';
+      <div class="legend-note">Daily rain in mm (Open-Meteo forecast). ${r.outside ? 'The flood model does not cover this address, so no surge estimate is shown.' : 'Orange bars are heavy enough to push this ward past the flooding threshold in the Sethu Map model — expect a claims surge from this area after such a day.'}</div>` : '<div class="callout"><span class="spin"></span> &nbsp;Loading the 7-day outlook…</div>';
     const outlook = `<div class="card"><h3>Rain outlook → claim surge risk</h3><div class="lead">What the next week means for this ward.</div>${fcHtml}</div>`;
     const apiJson = JSON.stringify({
       location: { lat: +r.lat.toFixed(5), lon: +r.lon.toFixed(5), ward: r.ward.name }, source: r.source,
@@ -262,13 +262,13 @@ const Reports = (() => {
       factors_water: r.scores.water.parts.filter(p => p.v != null).map(p => ({ id: p.id, weight_pct: Math.round(p.wn * 100), points: +p.pts.toFixed(1), status: p.status }))
     }, null, 2);
     const api = `<div class="grid2"><div class="card"><h3>API-ready output</h3><div class="lead">The same engine behind this page, returned as JSON for your underwriting or claims systems. <b>Preview of the planned endpoint</b> — the response below is exactly what the engine computed for this location.</div>
-      <div class="code">curl "https://api.setu.example/v1/risk?lat=${r.lat.toFixed(5)}&lon=${r.lon.toFixed(5)}" \\\n  -H "Authorization: Bearer $SETU_KEY"</div></div>
+      <div class="code">curl "https://api.sethumap.example/v1/risk?lat=${r.lat.toFixed(5)}&lon=${r.lon.toFixed(5)}" \\\n  -H "Authorization: Bearer $SETHU_KEY"</div></div>
       <div class="card"><h3>Response</h3><div class="code" style="max-height:300px">${esc(apiJson)}</div></div></div>`;
     const prov = `<div class="card"><h3>What's validated, and what isn't</h3><div class="grid3" style="margin:0">
       <div><span class="st validated">validated</span><p style="margin-top:10px;color:var(--text2)">Ward flood-susceptibility rank: mean AUC <b>0.69</b> on 8 held-out floods, <b>0.79</b> against GHMC's own list. Our first version scored 0.49 — a coin flip.</p></div>
       <div><span class="st modelled">modelled</span><p style="margin-top:10px;color:var(--text2)">Depth at a given rainfall and hospital-road cut-off. A stated assumption anchored to documented flood extents.</p></div>
       <div><span class="st indicative">indicative</span><p style="margin-top:10px;color:var(--text2)">Lake distance, terrain pocket, facilities, fire reach. Useful signals — calibrate on your own claims before relying on them for pricing.</p></div></div></div>`;
-    return `<div class="printonly"><b>SETU — Underwriting &amp; claims evidence pack</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>
+    return `<div class="printonly"><b>Sethu Map — Underwriting &amp; claims evidence pack</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>
       ${hero}${pillarCard(r, 'Environment & resource profile', 'Context beyond flood: access to care, services, connectivity and air quality around the insured location.')}${govCard(r)}${seg}${factors}${claim}${outlook}${api}${prov}${aiCard(S, ['Why this tier?', 'What should I verify in a claim here?', 'How would you calibrate this on our claims?'])}
       <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn ghost" data-act="print">🖨 Print evidence pack</button><span class="price-pill" style="align-self:center">Pricing (proposed): platform fee + per-query API · pilot in shadow mode on your closed claims, inside your environment</span></div>${footnote(r)}`;
   }

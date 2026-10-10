@@ -1,4 +1,4 @@
-/* SETU location-intelligence engine.
+/* Sethu Map location-intelligence engine.
  * Pure data + scoring — no DOM. Turns a lat/lon into a structured, explainable report.
  * Every factor carries its weight, a plain-language note and a status:
  *   validated  = comes from the flood model tested on floods it never saw
@@ -395,7 +395,7 @@ const SETUE = (() => {
   function waterRisk(r) {
     const s = r.setu, w = r.water, t = r.terrain, lb = lakeBand(w);
     return normalize([
-      { id: 'sus', label: 'Flood-susceptibility rank (SETU model)', w: .40, v: r.outside ? null : s.pct, status: 'validated', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : `${Math.round(s.pct * 100)}th percentile of Hyderabad's 145 wards (higher floods earlier). Tested on floods it never saw.` },
+      { id: 'sus', label: 'Flood-susceptibility rank (Sethu Map model)', w: .40, v: r.outside ? null : s.pct, status: 'validated', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : `${Math.round(s.pct * 100)}th percentile of Hyderabad's 145 wards (higher floods earlier). Tested on floods it never saw.` },
       { id: 'depth', label: 'Modelled depth in a 192 mm storm', w: .18, v: r.outside ? null : depthV(s.depth[192]), status: 'modelled', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : s.depth[192] >= D.thr ? `${s.depth[192].toFixed(2)} m at ${r.ward.name} (Oct-2020-size rain)` : 'Ward stays dry at 192 mm' },
       { id: 'lake', label: 'Lake / tank proximity', w: .12, v: lakeV(w), status: 'indicative', note: lb.text },
       { id: 'pocket', label: 'Low pocket vs surroundings', w: .10, v: pocketV(t), status: 'indicative', note: pocketNote(t) },
@@ -426,7 +426,7 @@ const SETUE = (() => {
   function motorRisk(r) {
     const s = r.setu, t = r.terrain, dens = r.prof.density_class === 'dense' ? 1 : .55;
     return normalize([
-      { id: 'sus', label: 'Waterlogging susceptibility (SETU)', w: .22, v: r.outside ? null : s.pct, status: 'validated', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : `${Math.round(s.pct * 100)}th percentile of 145 wards` },
+      { id: 'sus', label: 'Waterlogging susceptibility (Sethu Map)', w: .22, v: r.outside ? null : s.pct, status: 'validated', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : `${Math.round(s.pct * 100)}th percentile of 145 wards` },
       { id: 'depth', label: 'Water depth a car would meet (192 mm)', w: .26, v: r.outside ? null : clamp(s.depth[192] / 0.6), status: 'modelled', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : s.depth[192] >= D.thr ? `${s.depth[192].toFixed(2)} m — vehicles stall near 0.3–0.5 m` : 'Dry at 192 mm' },
       { id: 'underpass', label: 'Underpasses / culvert roads within 1 km', w: .13, v: clamp(r.underpass1k / 3), status: 'indicative', note: `${r.underpass1k} mapped (they fill first and trap vehicles)` },
       { id: 'pocket', label: 'Low pocket (parking / road dips)', w: .12, v: pocketV(t), status: 'indicative', note: pocketNote(t) },
@@ -439,7 +439,7 @@ const SETUE = (() => {
     const fire = r.fac.fire.nearest ? r.fac.fire.nearest.d / 1000 : 9;
     const ind = r.industry ? r.industry.d : 9999;
     return normalize([
-      { id: 'sus', label: 'Flood susceptibility (SETU)', w: .22, v: r.outside ? null : s.pct, status: 'validated', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : `${Math.round(s.pct * 100)}th percentile of 145 wards` },
+      { id: 'sus', label: 'Flood susceptibility (Sethu Map)', w: .22, v: r.outside ? null : s.pct, status: 'validated', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : `${Math.round(s.pct * 100)}th percentile of 145 wards` },
       { id: 'depth', label: 'Modelled depth in a 192 mm storm', w: .18, v: r.outside ? null : depthV(s.depth[192]), status: 'modelled', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : s.depth[192] >= D.thr ? `${s.depth[192].toFixed(2)} m ground-floor water` : 'Dry at 192 mm' },
       { id: 'lake', label: 'Lake / tank proximity', w: .12, v: lakeV(w), status: 'indicative', note: lb.text },
       { id: 'pocket', label: 'Low pocket vs surroundings', w: .08, v: pocketV(t), status: 'indicative', note: pocketNote(t) },
@@ -458,7 +458,7 @@ const SETUE = (() => {
       { id: 'amb', label: 'Nearest 108 / government ambulance station', w: .10, v: r.amb ? clamp((r.amb.d / 1000 - 1.5) / 6.5) : 1, status: 'official', note: r.amb ? `${r.amb.name || 'Ambulance station'} · ${(r.amb.d / 1000).toFixed(1)} km · ${r.amb3} within 3 km (Telangana health GIS)` : 'No government ambulance station mapped nearby' },
       { id: 'clin', label: 'Clinics within 1.5 km', w: .13, v: clamp(1 - r.clinics15 / 5), status: 'indicative', note: `${r.clinics15} mapped (OpenStreetMap + Overture Maps)` },
       { id: 'cut', label: 'Hospital road cut in a 192 mm storm', w: .15, v: r.outside ? null : r.setu.cut192 ? 1 : 0, status: 'modelled', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : r.setu.cut192 ? 'Modelled road to the nearest hospital is blocked' : 'Road stays open in the model' },
-      { id: 'sus', label: 'Waterlogging on the way (SETU rank)', w: .10, v: r.outside ? null : r.setu.pct, status: 'validated', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : `${Math.round(r.setu.pct * 100)}th percentile of 145 wards` }
+      { id: 'sus', label: 'Waterlogging on the way (Sethu Map rank)', w: .10, v: r.outside ? null : r.setu.pct, status: 'validated', note: r.outside ? 'Flood model covers the 145 GHMC wards only — not applied at this address' : `${Math.round(r.setu.pct * 100)}th percentile of 145 wards` }
     ]);
   }
   const LOADING = { A: 'no loading', B: '+3–6%', C: '+8–12%', D: '+15–25%', E: '+30–45% or refer' };
