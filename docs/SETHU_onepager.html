@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SETHU — one-page overview</title>
+<style>
+@font-face{font-family:'Inter';font-weight:100 900;src:url(../web/vendor/fonts/inter-latin.woff2) format('woff2')}
+@page{size:A4 landscape;margin:0}
+:root{--navy:#0b1f3a;--navy2:#13335c;--teal:#0d9488;--teal2:#14b8a6;--amber:#f59e0b;--rose:#e11d48;--ink:#0f172a;--mut:#5b6b82;--line:#dbe3ee;--bg:#f4f7fb}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:297mm;height:210mm}
+body{font-family:'Inter','Segoe UI',system-ui,sans-serif;color:var(--ink);background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:11.5px;line-height:1.35}
+.page{width:297mm;height:210mm;display:grid;grid-template-rows:auto 1fr auto auto;overflow:hidden}
+
+/* header */
+.top{background:linear-gradient(120deg,var(--navy) 0%,var(--navy2) 60%,#0f4c5c 100%);color:#fff;padding:14px 26px 14px;display:flex;align-items:center;gap:22px;position:relative}
+.logo{display:flex;align-items:center;gap:12px}
+.logo svg{width:54px;height:54px}
+.logo b{font-size:40px;font-weight:900;letter-spacing:6px;line-height:1}
+.tag{margin-left:8px;border-left:2px solid rgba(255,255,255,.28);padding-left:20px}
+.tag h1{font-size:23px;font-weight:800;letter-spacing:-.3px;line-height:1.15}
+.tag h1 em{font-style:normal;color:#5eead4}
+.tag p{margin-top:4px;color:#cfe0f3;font-size:12.5px}
+.badge{margin-left:auto;text-align:right;font-size:10.5px;color:#cfe0f3;line-height:1.5}
+.badge b{display:block;font-size:12.5px;color:#fff}
+
+/* middle */
+.mid{display:grid;grid-template-columns:318px 1fr;gap:16px;padding:14px 26px 8px;min-height:0}
+.card{border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px 14px}
+.live{background:var(--bg)}
+.live .cap{font-size:9.5px;letter-spacing:.09em;font-weight:800;color:var(--teal);text-transform:uppercase}
+.live h2{font-size:15px;font-weight:800;line-height:1.2;margin:3px 0 0}
+.live .sub{color:var(--mut);font-size:10.5px}
+.dial{display:flex;align-items:center;gap:12px;margin:8px 0 6px}
+.dial svg{width:132px;height:78px;flex-shrink:0}
+.dial .t b{display:block;font-size:11px;font-weight:700}
+.dial .t span{font-size:10.5px;color:var(--mut)}
+.bars{display:grid;gap:5px}
+.bar{display:grid;grid-template-columns:104px 1fr 24px;gap:7px;align-items:center;font-size:10px}
+.bar .k{color:#26364d;font-weight:600}
+.bar .tr{height:7px;border-radius:4px;background:#dde5f0;overflow:hidden}
+.bar .tr i{display:block;height:100%;border-radius:4px}
+.bar b{text-align:right;font-weight:800}
+.near{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:9px}
+.near div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 7px;text-align:center}
+.near b{display:block;font-size:14px;font-weight:900;color:var(--teal)}
+.near span{font-size:9px;color:var(--mut);line-height:1.2;display:block}
+
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;min-height:0}
+.use{padding:0;overflow:hidden;display:flex;flex-direction:column}
+.use .hd{padding:10px 13px 9px;color:#fff}
+.use .hd .ic{font-size:21px;line-height:1}
+.use .hd h3{font-size:14.5px;font-weight:800;margin-top:3px;line-height:1.15}
+.use .hd p{font-size:10.2px;opacity:.9;margin-top:1px}
+.u1 .hd{background:linear-gradient(135deg,#0d9488,#0f766e)}
+.u2 .hd{background:linear-gradient(135deg,#d97706,#b45309)}
+.u3 .hd{background:linear-gradient(135deg,#1d4ed8,#1e3a8a)}
+.use ul{list-style:none;padding:9px 13px 4px;display:grid;gap:5px}
+.use li{font-size:10.6px;padding-left:15px;position:relative}
+.use li::before{content:'✓';position:absolute;left:0;color:var(--teal);font-weight:900}
+.why{margin:8px 13px 0;padding:7px 10px;border-radius:9px;font-size:10.6px;font-weight:700;line-height:1.3}
+.u1 .why{background:#ccfbf1;color:#0f766e}.u2 .why{background:#fef3c7;color:#92400e}.u3 .why{background:#dbeafe;color:#1e3a8a}
+.out{margin:auto 11px 11px;border-radius:10px;padding:8px 10px;font-size:10.2px;border:1px solid var(--line);background:var(--bg)}
+.out .o{font-size:8.8px;letter-spacing:.09em;text-transform:uppercase;font-weight:800;color:var(--mut)}
+.out b{font-weight:800}
+.good{color:#0f766e}.bad{color:var(--rose)}
+.tiers{display:flex;gap:5px;margin-top:5px}
+.tiers span{flex:1;text-align:center;border-radius:7px;padding:3px 0;font-size:9.5px;font-weight:700;background:#fff;border:1px solid var(--line)}
+.tiers span b{display:block;font-size:15px;font-weight:900;line-height:1.1}
+
+/* lower */
+.low{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px;padding:6px 26px 10px}
+.low h4{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:var(--teal);margin-bottom:6px}
+.uc{display:grid;grid-template-columns:1fr 1fr;gap:5px 10px}
+.uc div{font-size:10.2px;padding-left:12px;position:relative}
+.uc div::before{content:'●';position:absolute;left:0;color:var(--teal2);font-size:7px;top:3px}
+.uc div.next::before{color:var(--amber)}
+.uc small{display:inline-block;font-size:8px;font-weight:800;letter-spacing:.05em;color:#b45309;background:#fef3c7;border-radius:5px;padding:0 4px;margin-left:3px;vertical-align:1px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.stats div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:7px 6px;text-align:center}
+.stats b{display:block;font-size:19px;font-weight:900;color:var(--navy2);line-height:1.1}
+.stats span{font-size:8.8px;color:var(--mut);line-height:1.2;display:block}
+.stats .hl b{color:var(--teal)}
+.stats .warn b{color:var(--rose)}
+.note{font-size:9.2px;color:var(--mut);margin-top:6px;line-height:1.35}
+.biz{display:grid;grid-template-columns:1fr 84px;gap:10px;align-items:center}
+.biz ul{list-style:none;display:grid;gap:4px}
+.biz li{font-size:10.2px}
+.biz li b{color:var(--navy2)}
+.ask{margin-top:6px;background:linear-gradient(120deg,var(--navy),var(--navy2));color:#fff;border-radius:10px;padding:7px 10px;font-size:10.5px;font-weight:700}
+.ask em{font-style:normal;color:#5eead4}
+.qr{text-align:center;font-size:8.5px;color:var(--mut);line-height:1.25}
+.qr img{width:84px;height:84px;display:block;border:1px solid var(--line);border-radius:8px;padding:3px}
+
+.foot{background:var(--navy);color:#b9c9de;padding:7px 26px;font-size:9.2px;display:flex;gap:14px;align-items:center;justify-content:space-between}
+.foot b{color:#fff}
+.foot .src{display:flex;gap:6px;flex-wrap:wrap}
+.foot .src span{border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:1px 8px}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- header -->
+  <div class="top">
+    <div class="logo">
+      <svg viewBox="0 0 64 64" fill="none" stroke="#5eead4" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 40 Q32 6 59 40"/><path d="M5 40h54"/><path d="M16 40v-9M26 40V22M38 40V22M48 40v-9"/><path d="M3 48h58" stroke="#fff" stroke-width="2.4" opacity=".55"/>
+      </svg>
+      <b>SETHU</b>
+    </div>
+    <div class="tag">
+      <h1>The <em>credit score</em> for any address in Hyderabad.</h1>
+      <p>Type a place. Know whether to <b>buy</b> it, <b>price</b> it or <b>insure</b> it — and see exactly <b>why</b>.</p>
+    </div>
+    <div class="badge"><b>Sethu = “bridge”</b>one engine, three people,<br>the same facts for everyone</div>
+  </div>
+
+  <!-- middle -->
+  <div class="mid">
+    <div class="card live">
+      <div class="cap">Live example</div>
+      <h2>Cyber Gardens Convention Centre</h2>
+      <div class="sub">HITEC City · Ward 104 Kondapur</div>
+      <div class="dial">
+        <svg viewBox="0 0 140 82">
+          <path d="M14 74 A56 56 0 0 1 126 74" fill="none" stroke="#dde5f0" stroke-width="13" stroke-linecap="round"/>
+          <path d="M14 74 A56 56 0 0 1 126 74" fill="none" stroke="url(#g)" stroke-width="13" stroke-linecap="round" stroke-dasharray="151.4 176"/>
+          <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#14b8a6"/><stop offset="1" stop-color="#0d9488"/></linearGradient></defs>
+          <text x="70" y="62" text-anchor="middle" font-size="30" font-weight="900" fill="#0f172a">86</text>
+          <text x="70" y="77" text-anchor="middle" font-size="9" font-weight="700" fill="#5b6b82">/ 100 · GOOD</text>
+        </svg>
+        <div class="t"><b>Location score</b><span>8 factors, each measured from this exact spot. Higher is better.</span></div>
+      </div>
+      <div class="bars">
+        <div class="bar"><span class="k">Water &amp; flood safety</span><span class="tr"><i style="width:60%;background:var(--amber)"></i></span><b style="color:#b45309">60</b></div>
+        <div class="bar"><span class="k">Health-care access</span><span class="tr"><i style="width:91%;background:var(--teal2)"></i></span><b style="color:#0f766e">91</b></div>
+        <div class="bar"><span class="k">Schools &amp; daily needs</span><span class="tr"><i style="width:94%;background:var(--teal2)"></i></span><b style="color:#0f766e">94</b></div>
+        <div class="bar"><span class="k">Transit &amp; main roads</span><span class="tr"><i style="width:100%;background:var(--teal2)"></i></span><b style="color:#0f766e">100</b></div>
+        <div class="bar"><span class="k">Parks &amp; lakes</span><span class="tr"><i style="width:93%;background:var(--teal2)"></i></span><b style="color:#0f766e">93</b></div>
+        <div class="bar"><span class="k">Air quality (live)</span><span class="tr"><i style="width:69%;background:var(--amber)"></i></span><b style="color:#b45309">69</b></div>
+        <div class="bar"><span class="k">Jobs &amp; lifestyle hubs</span><span class="tr"><i style="width:100%;background:var(--teal2)"></i></span><b style="color:#0f766e">100</b></div>
+        <div class="bar"><span class="k">Fire &amp; police reach</span><span class="tr"><i style="width:100%;background:var(--teal2)"></i></span><b style="color:#0f766e">100</b></div>
+      </div>
+      <div class="near">
+        <div><b>68 m</b><span>nearest hospital<br>(Medicover)</span></div>
+        <div><b>438 m</b><span>nearest metro<br>(Hitechcity Jn.)</span></div>
+        <div><b>Dry</b><span>in an Oct-2020-size<br>192 mm storm</span></div>
+      </div>
+    </div>
+
+    <div class="three">
+      <div class="card use u1">
+        <div class="hd"><div class="ic">🏠</div><h3>Customer report</h3><p>For families buying or renting</p></div>
+        <ul>
+          <li>Plain-language verdict: <b>High caution · Proceed carefully · Looks reasonable</b></li>
+          <li>Flood depth, lake &amp; nala distance, tank-encroachment status</li>
+          <li>Nearest hospital, mall, metro, school, market</li>
+          <li><b>True-cost calculator</b> with duties, plus a price meter against the area’s asking band</li>
+        </ul>
+        <div class="why">Why it matters: catches a lake, flood or over-pricing problem <u>before</u> the advance is paid.</div>
+        <div class="out"><div class="o">Real output</div>₹90 lakh quote → <b>₹96.3 lakh</b> real cost (6% duties + 1% brokerage), and <b>₹7,500/sq ft</b> shown against the area’s ₹7,747–13,464 band.</div>
+      </div>
+      <div class="card use u2">
+        <div class="hd"><div class="ic">🏷️</div><h3>Real estate agent report</h3><p>For agents and brokers</p></div>
+        <ul>
+          <li><b>Selling points</b> you can lead with</li>
+          <li><b>What buyers will push back on</b> — with the facts</li>
+          <li>Market price band from property portals</li>
+          <li>Price check against your own comparables, plus commission and deal economics</li>
+        </ul>
+        <div class="why">Why it matters: close faster with evidence, and answer the flood question before it is asked.</div>
+        <div class="out"><div class="o">Real output</div>Answers the lake / flood question <b>before the buyer asks</b>, and prices a listing with evidence instead of guesswork.</div>
+      </div>
+      <div class="card use u3">
+        <div class="hd"><div class="ic">🛡️</div><h3>Insurer report</h3><p>For underwriters and claims teams</p></div>
+        <ul>
+          <li><b>Motor · Property · Health-access</b> risk tiers A–E, with the biggest drivers</li>
+          <li><b>Claim evidence check:</b> rain on the claim date, site susceptibility, official flood list</li>
+          <li>7-day rain outlook → likely claims surge</li>
+          <li>API-ready output for underwriting systems</li>
+        </ul>
+        <div class="why">Why it matters: honest claims paid faster; doubtful ones reviewed with reasons, never accused.</div>
+        <div class="out"><div class="o">Real output · rain-damage claims</div>13 Oct 2020, Tolichowki: 90 mm fell → <b class="good">fast-track</b>.<br>2 Mar 2020, Banjara Hills: no rain → <b class="bad">investigate</b>.
+          <div class="tiers"><span><b style="color:var(--teal)">C</b>Motor</span><span><b style="color:var(--teal)">C</b>Property</span><span><b style="color:var(--teal)">A</b>Health</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- lower -->
+  <div class="low">
+    <div>
+      <h4>Where it helps</h4>
+      <div class="uc">
+        <div>Buying a flat near a <b>lake or nala</b> (HYDRAA &amp; HMDA records)</div>
+        <div>Is the <b>road to the hospital</b> cut in a big storm?</div>
+        <div>Pricing and negotiating a <b>listing</b></div>
+        <div><b>Motor &amp; home</b> underwriting by address</div>
+        <div>Triaging <b>monsoon claims</b> with rain evidence</div>
+        <div>City planning: <b>rainfall planner</b> with Japanese flood-control methods</div>
+        <div class="next">Banks: collateral location check <small>NEXT</small></div>
+        <div class="next">Other cities: Chennai, Mumbai <small>NEXT</small></div>
+      </div>
+    </div>
+    <div>
+      <h4>Proof, shown not claimed</h4>
+      <div class="stats">
+        <div class="hl"><b>0.69</b><span>AUC on 8 real floods the model never saw</span></div>
+        <div class="hl"><b>0.79</b><span>AUC vs GHMC’s own waterlogging list</span></div>
+        <div class="warn"><b>0.49</b><span>our first version — a coin flip. We show it.</span></div>
+        <div><b>145</b><span>GHMC wards covered</span></div>
+        <div><b>1,192</b><span>tanks with 2014 vs 2023 encroachment status</span></div>
+        <div><b>96</b><span>GHMC nalas with existing vs proposed width</span></div>
+      </div>
+      <div class="note">Flood safety is <b>one of eight</b> factors (22%). The flood ranking is the validated part; everything else is a labelled indicator. Ward-level, not street-level.</div>
+    </div>
+    <div>
+      <h4>Business &amp; ask</h4>
+      <div class="biz">
+        <ul>
+          <li><b>Customers</b> pay per report</li>
+          <li><b>Agents</b> pay per client report</li>
+          <li><b>Insurers &amp; banks</b> license the API</li>
+          <li>Built on <b>public data only</b> — a new city in days</li>
+        </ul>
+        <div class="qr"><div id="qr"></div>Try your<br>own home</div>
+      </div>
+      <div class="ask">The ask: <em>one insurer pilot</em>, in shadow mode on their closed claims.</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="src"><b>Data:</b><span>OpenStreetMap</span><span>Overture Maps</span><span>Telangana State GIS</span><span>HYDRAA</span><span>HMDA</span><span>OpenCity</span><span>Open-Meteo</span><span>SRTM</span></div>
+    <div>Decision aid · asking prices, not deal prices · verify legal FTL status with HMDA</div>
+  </div>
+</div>
+
+<script src="../web/vendor/qrcode.min.js"></script>
+<script>
+try { const q = qrcode(0, 'M'); q.addData('https://setu-virid-five.vercel.app/'); q.make(); document.getElementById('qr').innerHTML = q.createImgTag(4, 0); } catch (e) { document.getElementById('qr').textContent = 'QR'; }
+</script>
+</body>
+</html>
