@@ -707,6 +707,57 @@ const argv = process.argv.slice(2);
     ok(/openfreemap\.org/.test(mapSrc) && /OpenMapTiles/.test(mapSrc) && /openstreetmap\.org\/copyright/.test(mapSrc), 'the basemap attribution names OpenFreeMap, OpenMapTiles and OpenStreetMap as the provider requires');
     ok(['maplibre-gl.js', 'maplibre-gl.css', 'leaflet-maplibre-gl.js'].every(f => fs.existsSync(path.join(WEB, 'vendor', f))), 'the MapLibre files are vendored (no CDN at runtime)');
   }
+  // ---- Step 1: state fire-station list and state seismic layer ----
+  {
+    const rd = f => JSON.parse(fs.readFileSync(path.join(WEB, f), 'utf8')), Q = D.quality;
+    const freshEngine = async blocked => {
+      const sb2 = { console, Math, JSON, Promise, Date, Set, Map, Array, Object, Number, String, isFinite, isNaN, parseFloat, setTimeout, clearTimeout, AbortController,
+        fetch: u => { if (/^https?:/.test(u)) return Promise.reject(new Error('offline')); const p = path.join(WEB, u); if (blocked.some(b => u === 'data/' + b) || !fs.existsSync(p)) return Promise.resolve({ ok: false, status: 404, json: async () => ({}) }); return Promise.resolve({ ok: true, json: async () => JSON.parse(fs.readFileSync(p, 'utf8')) }); } };
+      vm.createContext(sb2); vm.runInContext(fs.readFileSync(path.join(WEB, 'platform', 'engine.js'), 'utf8') + '\n;globalThis.SETUE = SETUE;', sb2); const E2 = sb2.SETUE; await E2.load(); return E2;
+    };
+    const reports = []; for (const [la, lo] of D.wards.map(w => [w.c[1], w.c[0]]).concat([[17.63, 78.48], [17.26, 78.43], [17.2403, 78.4294], [17.597, 78.57], [17.514, 78.45]])) { const r = await E.report(la, lo); if (r.ok) reports.push(r); }
+    const fj = rd('data/fire.json'), st = fj.stations, sj = rd('data/seismic.json');
+    ok(st.length === 71 && fj.meta.records === 71, 'all 71 fire-station records are kept');
+    ok(st.every(x => x[4] === 'Existing' || x[4] === 'Proposed') && st.filter(x => x[4] === 'Existing').length === 32 && st.filter(x => x[4] === 'Proposed').length === 39, "the source's own status is preserved exactly (32 Existing, 39 Proposed)");
+    const rem = {}; for (const x of st) rem[x[5]] = (rem[x[5]] || 0) + 1;
+    ok(rem['Moved'] === 24 && rem['Correct'] === 1 && rem['Kept same not found accurate'] === 6 && rem['Moved not found accurate'] === 1 && rem['Proposed'] === 39, "the source's remarks are preserved verbatim (Moved 24, Correct 1, not found accurate 7, Proposed 39)");
+    ok(st.every(x => x[0] > 16.9 && x[0] < 17.9 && x[1] > 78 && x[1] < 79.1), 'every fire record sits inside the Hyderabad region (no swapped or missing coordinates)');
+    ok(/never treated as confirmed/.test(fj.meta.note) && /never treated as confirmed/.test(Q.sources.tgrac_fire.limits), 'the data file and the registry both state that Proposed and Moved records are never treated as confirmed');
+    const pr = st.find(x => x[4] === 'Proposed'), ff = E.fireFacts(pr[0], pr[1]);
+    ok(ff.nearest && ff.nearest.s.status === 'Existing' && ff.proposed3.every(x => x.s.status === 'Proposed'), 'standing on a Proposed site, the nearest station is still an Existing one and the Proposed site is listed separately');
+    let badFire = 0, nInfo = 0, nUnk = 0;
+    for (const r of reports) {
+      const f = r.ev.sections.flatMap(s => s.findings).find(x => x.id === 'fire_gis'); if (!f) { badFire++; continue; }
+      if (!['info', 'unknown'].includes(f.level) || (f.kind === 'official' && f.conf !== 'low') || /operating|operational|response time (of|is)|within \d+ minutes/i.test(f.value.replace(/\(not operating\)/g, '')) || (f.level === 'info' && !/does not confirm that any station is operating/.test(f.note)) || (f.level === 'info' && !/listed as Existing/.test(f.value))) badFire++;
+      if (f.level === 'info') nInfo++; else nUnk++;
+    }
+    ok(badFire === 0 && nInfo > 50 && nUnk >= 1, 'the fire finding is only ever information or unknown, low confidence, says "listed as Existing", and never claims a station operates', `${badFire} bad, ${nInfo} info, ${nUnk} unknown`);
+    ok(reports.every(r => { const f = r.ev.sections.flatMap(s => s.findings).find(x => x.id === 'fire_gis'); return f.level !== 'info' || !/^[^·]*· [^·]* · listed as Proposed/.test(f.value); }), 'the headline station is never a Proposed one');
+    ok(sj.zones.length === 3 && sj.zones.map(z => z.zone).sort().join() === 'Zone II,Zone II,Zone III', 'all three seismic polygons are kept (two Zone II areas, one Zone III)');
+    let zn = 0, zo = 0, badSz = 0;
+    for (let la = 17.20; la <= 17.66; la += .02) for (let lo = 78.18; lo <= 78.70; lo += .02) { const z = E.seismicFacts(la, lo); zn++; if (z && z.zone === 'Zone II') zo++; }
+    ok(zo === zn, 'the whole map region reads as Zone II in the state layer, agreeing with the reference', `${zo} of ${zn}`);
+    for (const r of reports) {
+      const f = r.ev.sections.flatMap(s => s.findings).find(x => x.id === 'seismic_gis');
+      if (!f || f.level !== 'info' || f.kind !== 'official' || /\b(safe|safety rating|earthquake[- ]proof|resistant)\b/i.test(f.value) || !/nothing about whether a particular building is structurally safe/.test(f.note) || f.scope !== 'area') badSz++;
+    }
+    ok(badSz === 0, 'the seismic finding is information only, never a safety claim, and says it cannot speak for a building', badSz);
+    const refF = reports[0].ev.sections.flatMap(s => s.findings).find(x => x.id === 'seismic');
+    ok(/Zone II/.test(refF.value) && !/disagree/.test(refF.value), 'where the sources agree the reference line is unchanged');
+    const saved = D.seismicL;   // conflicting sources: pretend the state layer says Zone III here
+    D.seismicL = [{ zone: 'Zone III', intensity: 'Moderate Risk Zone intensity VII', rings: [[[17.3, 78.3], [17.3, 78.6], [17.6, 78.6], [17.6, 78.3], [17.3, 78.3]]], _b: [[17.3, 78.3, 17.6, 78.6]] }];
+    const rc = await E.report(17.4401, 78.3489), fc = rc.ev.sections.flatMap(s => s.findings), s1 = fc.find(x => x.id === 'seismic'), s2 = fc.find(x => x.id === 'seismic_gis');
+    ok(/disagree/.test(s1.value) && /Zone III/.test(s1.value) && /Zone III/.test(s2.value), 'if the state layer disagrees with the Zone II reference, the report says the sources disagree and shows both');
+    D.seismicL = [{ zone: 'Zone II', intensity: 'x', rings: [[[17.3, 78.3], [17.3, 78.6], [17.6, 78.6], [17.6, 78.3], [17.3, 78.3]]], _b: [[17.3, 78.3, 17.6, 78.6]] },
+      { zone: 'Zone III', intensity: 'y', rings: [[[17.3, 78.6], [17.3, 78.7], [17.6, 78.7], [17.6, 78.6], [17.3, 78.6]]], _b: [[17.3, 78.6, 17.6, 78.7]] }];
+    const rb = await E.report(17.45, 78.598), sb2 = rb.ev.sections.flatMap(s => s.findings).find(x => x.id === 'seismic_gis');
+    ok(sb2.conf === 'low' && /boundary/.test(sb2.value) && /approximate/.test(sb2.note), 'close to a zone boundary the finding drops to low confidence and says the zone is approximate');
+    D.seismicL = saved;
+    ok(Q.sources.tgrac_fire.licence === 'verify' && Q.sources.tgrac_seismic.licence === 'verify' && /no licence text/.test(Q.sources.tgrac_fire.licence_note) && /no licence text/.test(Q.sources.tgrac_seismic.licence_note), 'both new sources are registered with licence unverified');
+    ok(E.removalImpact('tgrac_fire').becomeUnknown.includes('fire_gis') && E.removalImpact('tgrac_seismic').becomeUnknown.includes('seismic_gis'), 'removing either source makes its finding unknown in the dashboard impact view');
+    const E2 = await freshEngine(['fire.json', 'seismic.json']), r2 = await E2.report(17.4401, 78.3489), g2 = r2.ev.sections.flatMap(s => s.findings);
+    ok(['fire_gis', 'seismic_gis'].every(id => { const f = g2.find(x => x.id === id); return f && f.level === 'unknown' && /not loaded/.test(f.value); }), 'with either file missing, the finding reads "data not loaded", never a reassuring result');
+  }
   // ---- live APIs (optional) ----
   if (argv.includes('--net')) {
     const el = await E.addTerrain(await E.report(17.4015, 78.4100));

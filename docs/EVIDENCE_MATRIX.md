@@ -6,16 +6,16 @@ The same data drives the internal dashboard at `web/quality.html`. Survey / obse
 
 ## Summary
 
-73 findings, 34 sources.
+75 findings, 36 sources.
 
 | Flag | Findings |
 |---|---|
 | Stale (older than allowed for this kind of data) | 4 |
-| Undated (no observation date published) | 39 |
-| Unvalidated (not checked against anything independent) | 41 |
+| Undated (no observation date published) | 41 |
+| Unvalidated (not checked against anything independent) | 42 |
 | Failed validation | 1 |
 | Licence: demo / non-commercial only | 10 |
-| Licence unverified | 64 |
+| Licence unverified | 66 |
 | No data (reported as unknown) | 3 |
 | Coarse scope (ward, mandal, locality or city-wide) | 7 |
 
@@ -50,13 +50,15 @@ The same data drives the internal dashboard at `web/quality.html`. Survey / obse
 | Noise monitors | Lakeer open-GIS repository (TSPCB 2018) | 2018-01 to 2018-12 | — | 2026-10-24 | monitoring station | 10 monitors | stale | unvalidated: dated and shown as such | verify: terms not confirmed | 1 |
 | Surface heat in the dry season | Landsat 8/9 Level-2 (USGS) via Microsoft Planetary Computer | 2024-03 to 2026-05 | — | 2026-10-24 | 150 m grid | study box | current | negative: across 27 mandals the ranking did not agree with station air temperature (Spearman -0.09, p = 0.66; stations differ by only about 2 C, so the test is weak) | ok: USGS open data | 1 |
 | Dry-season greenness (NDVI) | Landsat 8/9 Level-2 (USGS) via Microsoft Planetary Computer | 2024-03 to 2026-05 | — | 2026-10-24 | 150 m grid | study box | current | internal-check: physically consistent (park greenest, old city least) but not compared with an independent vegetation product | ok: USGS open data | 1 |
-| Earthquake zone | secondary sources citing IS 1893 (Part 1):2016 | not published | — | — | city | Hyderabad | reference | unvalidated: not checked against the BIS standard itself; a newer edition may change zones | ok: a published fact | 1 |
+| Earthquake zone | secondary sources citing IS 1893 (Part 1):2016 | not published | — | — | city | Hyderabad | reference | unvalidated: not checked against the BIS standard itself; a newer edition may change zones. The state GIS seismic layer (separate finding) puts the whole study box in Zone II, which agrees, but its own zoning edition is not published | ok: a published fact | 1 |
 | Asking-price ranges | property-portal price-trend pages compiled with an AI assistant | 2025 to 2026-10 | — | 2026-10-10 | locality | 77 localities | current | unvalidated: portal figures disagree widely; asking prices, not registered deals | verify: high risk: portal data, indirect provenance; needs a licensed source before commercial use | 1 |
 | Planning-authority areas (which plan governs) | TGRAC HMDA layers (MCH, HUDA, CDA, HADA, HMR, HMR growth corridor) and mandal boundaries | not published | 2025-04-17 | 2026-10-24 | authority-area polygon (simplified ~22 m) | HMDA region | reference | internal-check: checked at 14 known places (Gachibowli and Kondapur in CDA, Kukatpally and Uppal in HUDA, Shamshabad in HADA, Charminar and Banjara Hills in MCH) | verify: terms not confirmed | 1 |
 | Published master plans (documents) | HMDA: Revised Development Plan (circle PDFs), Master Plan 2031 mandal sheets, HUDA / HADA / CDA plans | 2021 to 2022 | — | 2026-10-24 | static PDF / JPEG sheets | 7 core circles, about 30 mandal sheets | documents | not-applicable: file dates are upload dates (2021-2022), not plan dates; sheets are 23-29 MB images, not georeferenced | verify: public HMDA website; reuse terms not confirmed | 2 |
 | Survey-parcel outlines | TGRAC Bhunaksha cadastral layer 'Cadastral 2.5m' | not published | 2025-04-19 | 2026-10-24 | parcel polygon (about 1 m after simplification) | survey parcels across most of the study box; the old MCH core is mostly a single placeholder polygon | undated | unvalidated: SNo is a village serial, not a survey number; about 1% of numbers are flagged duplicate or unreadable at source; accuracy and survey date not published | verify: terms not confirmed; owner fields never requested | 3 |
 | Parcels carrying a prohibitory-land category | TGRAC Bhunaksha layer 'ULB_Cadastral_Prohibited' | not published | 2025-04-19 | 2026-10-24 | parcel polygon | 812 parcels in the study box, mostly outside the old city | undated | unvalidated: legal basis, date and completeness not documented; the official prohibited-property list is reported to have contained many wrongly listed parcels | verify: terms not confirmed | 1 |
 | HMWSSB mapped water-supply pipes and sewer lines; service sections | TGRAC TCUR service (HMWSSB network layers) | not published | 2025-05-24 | 2026-10-24 | 100 m cells (derived); section polygons | supply pipes across most of the city; sewer lines only for the 'core city' | undated | unvalidated: mapping completeness is uneven (900 m boxes hold from 0 to over 700 pipe segments); a pipe on the map is not a connection | verify: terms not confirmed; pipe geometry is not redistributed, only coarse cell presence | 2 |
+| State fire-station list | Telangana State GIS (TGRAC) TCUR layer 61 'Fire Stations' | not published | 2025-05-24 | 2026-10-25 | point (positional accuracy not published) | 71 records for the Hyderabad metro districts: 32 Existing and 39 Proposed | undated | unvalidated: compared with OpenStreetMap at 10 places: the nearest Existing station matched at 4; OSM maps only 10 stations in the area so it cannot confirm the rest; 6 of the 8 OSM stations inside the study box sit on a listed station, 2 do not; the source's remarks (Moved, not found accurate) did not separate matching from non-matching stations | verify: no licence text is published for this service | 1 |
+| State seismic-zone layer | Telangana State GIS (TGRAC) TCUR layer 90 'Sesismic Zones' | not published | 2025-05-24 | 2026-10-25 | regional zone polygon (~50 m simplification) | 3 polygons: Zone II (two areas) and Zone III. The whole Hyderabad map region (17.20-17.66 N, 78.18-78.70 E, 2,392 grid points) is Zone II; the nearest Zone III boundary is at least 102 km away | undated | internal-check: agrees with the Zone II reference at all 2,392 grid points of the map region and at the 14 test places; the edition of the zoning behind the layer is not published and neither source is the BIS standard itself | verify: no licence text is published for this service | 1 |
 
 ## Findings
 
@@ -137,6 +139,8 @@ Scope says what a result applies to: the pin position, the matched parcel outlin
 | Nala widening near the plot (`widen`) | land | nearby: nala segments within 150 m; widths partly blank | GHMC nalas, drains and listed inundation points | undated, licence-unverified | — |
 | Typical asking price (apartments) (`price`) | land | locality: a named locality, asking prices | Asking-price ranges | unvalidated, licence-unverified, coarse-scope | no priced locality within 4 km |
 | Mapped features overlapping the parcel outline (`overlap`) | land | parcel: the whole matched survey outline, tested against three layers | Survey-parcel outlines; Disappeared water bodies; Forest boundary, high-voltage lines and substations; Tank capacity records and stream order | undated, unvalidated, licence-unverified | needs a pin that matches exactly one survey parcel; not possible in the old city core where no survey parcels are mapped |
+| Fire station on the state list (`fire_gis`) | infra | nearby: listed points within 10 km; straight line, not response time | State fire-station list | undated, unvalidated, licence-unverified | no station listed as Existing within 10 km, or the list is not loaded |
+| Earthquake zone (state GIS layer) (`seismic_gis`) | hazards | area: the regional zone polygon the pin is in, not a building | State seismic-zone layer | undated, licence-unverified | outside the zones mapped in the state layer, or the layer is not loaded |
 
 ## If a source is removed
 
@@ -178,3 +182,5 @@ Findings that rest only on the source become unknown; findings with other source
 | Survey-parcel outlines | plot | prohib, overlap |
 | Parcels carrying a prohibitory-land category | — | prohib |
 | HMWSSB mapped water-supply pipes and sewer lines; service sections | supplynet, sewernet | — |
+| State fire-station list | fire_gis | — |
+| State seismic-zone layer | seismic_gis | — |

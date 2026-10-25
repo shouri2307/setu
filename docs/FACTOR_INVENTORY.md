@@ -18,6 +18,7 @@ The report has five sections and **no combined score** (the original 8-pillar Lo
 | Surface heat | Partial | Landsat 8/9, 150 m | **not validated** (no rank agreement with station air temperature); low confidence |
 | Greenness (NDVI) | Implemented | Landsat 8/9, 150 m | dry-season greenness |
 | Seismic zone | Partial | "Zone II" per secondary sources, IS 1893:2016 | not checked against the standard; a newer edition may differ |
+| Earthquake zone (state GIS layer) | Implemented | TGRAC TCUR seismic layer: Zone II across the whole map region | regional zone only; says nothing about a building's structure; zoning edition unpublished |
 | Flood shelters | Implemented | GHMC list (101) | only listed localities |
 | Heavy-rain days per monsoon (mandal) | Implemented | TSDPS daily files, 5–7 complete June–October seasons 2018–2024 | about 1.4 a year; 2025 excluded (incomplete file); mandal not plot; too few seasons for a return period |
 | Storm analogs (preliminary association) | Implemented | 6 date-specific storms ≥ 60 mm vs news-named wards | associations only, tiny samples, never a probability |
@@ -49,6 +50,7 @@ The report has five sections and **no combined score** (the original 8-pillar Lo
 | Traffic congestion points, junction plan | Implemented | Hyderabad Traffic Police, GHMC | short lists |
 | Power breakdown history | Implemented (unscored) | FY2017-18 log | 8 years old |
 | High-voltage lines, substations | Implemented | TGRAC/TCUR | |
+| Fire station on the state list | Implemented | TGRAC TCUR fire layer (32 Existing, 39 Proposed) | straight-line; positions flagged uncertain by the source; never says a station operates |
 | Landfills (by size) | Implemented | 11 sites; only one ≥ 20 ha | |
 | Noise | Implemented (dated) | 10 monitors, 2018 | sparse |
 | Air quality | Implemented | live model | |

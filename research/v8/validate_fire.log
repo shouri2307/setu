@@ -1,0 +1,26 @@
+OSM fire stations in the box: 10 (host https://overpass-api.de/api/interpreter; OSM data timestamp 2026-10-25T08:06:35Z; fetched 2026-10-25 13:37)
+
+| place | nearest state-list station that is 'Existing' | nearest OSM station | same station? (within 500 m of each other) | nearest 'Proposed' |
+|---|---|---|---|---|
+| Secunderabad (Hussain Sagar side) | Secunderabad (Moved) 1.4 km | S P Road Fire Station 1.4 km | yes | Bandamaisamma (Near Musheerabad) 1.0 km |
+| Gachibowli | Madhapur (Moved) 3.0 km | panjagutta firestation 7.1 km | NO 5424 m apart | Indiranagar 0.1 km |
+| Charminar | Moghalpura (Moved) 0.3 km | مغل پورہ فائر اسٹیشن 0.3 km | yes | Jiyaguda 2.7 km |
+| Kukatpally | Kukatpally (Moved) 1.0 km | (unnamed) 1.0 km | yes | Yallamma banda (Kukatpally) 2.2 km |
+| LB Nagar | LB Nagar (Moved) 4.5 km | Malakpet Fire Station 5.9 km | NO 5802 m apart | Kharmanghat 2.2 km |
+| Uppal | LB Nagar (Moved) 2.3 km | (unnamed) 2.9 km | NO 4319 m apart | Uppal Metro rail 0.6 km |
+| Shamshabad | Chandrayangutta (Moved) 11.9 km | Rajiv Gandhi International Airport ARFF Main Station 1.9 km | NO 11700 m apart | RGI Airport 0.0 km |
+| Medchal | Jeedimetla (Moved) 12.1 km | (unnamed) 8.3 km | NO 11761 m apart | Gundlapochampally 8.2 km |
+| Miyapur | Kukatpally (Moved) 3.9 km | (unnamed) 3.9 km | yes | Miyapur Metro Station 1.9 km |
+| Banjara Hills | Secretariat (Kept same not found accurate) 2.3 km | panjagutta firestation 4.2 km | NO 6450 m apart | Khairatabad 1.8 km |
+
+nearest-station agreement: 4 of 10 places
+
+== Coverage both ways (are the two lists describing the same stations?)
+  state-list all 32 Existing: 32 stations | OSM station within 300 m: 7 | within 1 km: 7 | median distance to nearest OSM station: 2954 m
+  state-list remark Moved (24): 24 stations | OSM station within 300 m: 7 | within 1 km: 7 | median distance to nearest OSM station: 2651 m
+  state-list remark Correct (1): 1 stations | OSM station within 300 m: 0 | within 1 km: 0 | median distance to nearest OSM station: 1393 m
+  state-list remark '... not found accurate' (7): 7 stations | OSM station within 300 m: 0 | within 1 km: 0 | median distance to nearest OSM station: 3033 m
+  state-list Proposed (39): OSM station within 300 m: 0 (a proposed site that already has an OSM station would be notable)
+  OSM stations inside the study box: 8 | with a state-list 'Existing' station within 300 m: 6 | within 1 km: 6
+  OSM stations with NO state-list Existing station within 1 km: [('Fire St.', 17.4507, 78.4664), ('(unnamed)', 17.5516, 78.5227)]
+  the app's merged list (OSM + Overture + others) has 15 fire stations in the box

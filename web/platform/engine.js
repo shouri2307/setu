@@ -21,12 +21,12 @@ const SETUE = (() => {
   // ---------- loading ----------
   async function load(onProgress) {
     const get = p => fetch(p).then(r => { if (!r.ok) throw new Error(p); return r.json(); });
-    const names = ['zones', 'model', 'reco', 'wardfeat', 'geo', 'hospitals', 'meta', 'rates', 'gov', 'hmda', 'hy', 'gw', 'gwq', 'civic', 'storm', 'heat', 'access', 'land', 'tanks', 'rainstats', 'plan', 'prohib', 'network', 'parcelIdx', 'quality'];
+    const names = ['zones', 'model', 'reco', 'wardfeat', 'geo', 'hospitals', 'meta', 'rates', 'gov', 'hmda', 'hy', 'gw', 'gwq', 'civic', 'storm', 'heat', 'access', 'land', 'tanks', 'rainstats', 'plan', 'prohib', 'network', 'parcelIdx', 'quality', 'fire', 'seismic'];
     const paths = ['data/zones.json', 'data/model.json', 'data/reco.json', 'data/wardfeat.json',
       'data/geo.json', 'data/hospitals.json', 'data/meta.json', 'data/rates.json', 'data/gov.json', 'data/hmda_lakes.json', 'data/hydraa_tanks.json',
-      'data/groundwater.json', 'data/gwquality.json', 'data/civic.json', 'data/stormhist.json', 'data/heat.json', 'data/access.json', 'data/land.json', 'data/tanks.json', 'data/rainstats.json', 'data/plan.json', 'data/prohib.json', 'data/network.json', 'data/parcels/index.json', 'data/quality.json'];
+      'data/groundwater.json', 'data/gwquality.json', 'data/civic.json', 'data/stormhist.json', 'data/heat.json', 'data/access.json', 'data/land.json', 'data/tanks.json', 'data/rainstats.json', 'data/plan.json', 'data/prohib.json', 'data/network.json', 'data/parcels/index.json', 'data/quality.json', 'data/fire.json', 'data/seismic.json'];
     // the evidence layers added later are optional: if one is missing the report says "unavailable" instead of failing
-    const optional = { gw: { meta: {}, stations: [] }, gwq: { meta: {}, samples: [] }, civic: { meta: {} }, storm: { events: [], wards: {} }, heat: null, access: null, land: { meta: {}, gwp: [], gwp_attrs: [], lost: [], forest: [], tx: [], sub: [], endow: [] }, tanks: { meta: {}, tanks: [], streams: [] }, rainstats: { meta: {}, mandals: {} }, plan: null, prohib: null, network: null, parcelIdx: null, quality: null };
+    const optional = { gw: { meta: {}, stations: [] }, gwq: { meta: {}, samples: [] }, civic: { meta: {} }, storm: { events: [], wards: {} }, heat: null, access: null, land: { meta: {}, gwp: [], gwp_attrs: [], lost: [], forest: [], tx: [], sub: [], endow: [] }, tanks: { meta: {}, tanks: [], streams: [] }, rainstats: { meta: {}, mandals: {} }, plan: null, prohib: null, network: null, parcelIdx: null, quality: null, fire: null, seismic: null };
     D.loadFailed = [];
     const res = await Promise.all(paths.map((p, i) => get(p).catch(e => {
       D.loadFailed.push(p);
@@ -551,6 +551,8 @@ const SETUE = (() => {
     D.planL = D.plan && D.plan.zones ? { zones: D.plan.zones.map(z => ({ z: z.z, polys: polysBB(z.polys) })), mandals: D.plan.mandals.map(m => ({ ...m, polys: polysBB(m.polys) })) } : null;
     D.prohibL = D.prohib && D.prohib.p ? D.prohib.p.map(p => ({ cat: p[0], sy: p[1], part: p[2], extent: p[3], village: p[4], mandal: p[5], rings: p[6], _b: bbLL(p[6][0]) })) : null;
     D.networkL = D.network && D.network.meta ? { meta: D.network.meta, sup: new Map(D.network.supply.map(c => [c[0], [c[1], c[2]]])), sew: new Map(D.network.sewer.map(c => [c[0], [c[1], c[2]]])), sections: D.network.sections.map(x => ({ ...x, _b: x.rings.map(bbLL) })) } : null;
+    D.fireL = D.fire && D.fire.stations ? D.fire.stations.map(s => ({ lat: s[0], lon: s[1], name: s[2], district: s[3], status: s[4], remark: s[5], id: s[6] })) : null;
+    D.seismicL = D.seismic && D.seismic.zones ? D.seismic.zones.map(z => ({ ...z, _b: z.rings.map(bbLL) })) : null;
     const grid = g => g && g.meta ? g : null;
     D.access = grid(D.access);
     if (D.heat && D.heat.lst) {
@@ -860,6 +862,23 @@ const SETUE = (() => {
     return { inside: true, sup, sew, section, cellM: Math.round(m.cell_deg * 110540) };
   }
 
+  // ---------- state fire-station list and state seismic layer (Step 1) ----------
+  // Fire: the source's own words (Existing / Proposed, plus a remark such as "Moved") are kept. A Proposed station is never counted as present, and nothing here says a station is operating.
+  function fireFacts(lat, lon) {
+    const F = D.fireL; if (!F || !F.length) return null;
+    const all = F.map(s => ({ s, d: hav(lat, lon, s.lat, s.lon) })).sort((a, b) => a.d - b.d);
+    const ex = all.filter(x => x.s.status === 'Existing'), pr = all.filter(x => x.s.status === 'Proposed');
+    return { nearest: ex[0] || null, n5: ex.filter(x => x.d <= 5000).length, proposed3: pr.filter(x => x.d <= 3000), nExisting: ex.length, nProposed: pr.length, nMoved: ex.filter(x => /moved/i.test(x.s.remark)).length, nInaccurate: ex.filter(x => /not found accurate/i.test(x.s.remark)).length, nCorrect: ex.filter(x => /^correct$/i.test(x.s.remark)).length };
+  }
+  // Seismic: the zone polygon the point is in, and how far the nearest boundary with a DIFFERENT zone is (zone maps are coarse).
+  function seismicFacts(lat, lon) {
+    const Z = D.seismicL; if (!Z || !Z.length) return null;
+    const hit = Z.find(z => evenOdd(lat, lon, z.rings)); if (!hit) return { zone: null };
+    let other = null;
+    for (const z of Z) { if (z.zone === hit.zone) continue; z.rings.forEach((rg, i) => { if (!near(z._b[i], lat, lon, .06)) return; const d = distToPathLL(lat, lon, rg); if (!other || d < other.d) other = { zone: z.zone, d }; }); }
+    return { zone: hit.zone, intensity: hit.intensity, other };
+  }
+
   // ---------- pasted Google Maps links ----------
   // Returns {lat, lon} when the link carries coordinates; {text} when it carries an address or place name (to be looked up); {short, url} for a short link; null when it is not a Google Maps link.
   function parseMapsLink(q) {
@@ -993,8 +1012,17 @@ const SETUE = (() => {
       if (heat.ndvi != null) add('hazards', { id: 'green', label: 'Vegetation cover (dry-season greenness)', value: `NDVI ${heat.ndvi.toFixed(2)} · greener than ${Math.round(heat.npct * 100)}% of the city`, level: (r.water.lake && r.water.lake.inside) ? 'info' : heat.npct < .15 ? 'watch' : 'good', kind: 'observed', conf: heat.filled ? 'low' : 'medium', source: 'Landsat 8/9 red and near-infrared bands', period: `Mar–May 2024–26`, res: '150 m grid',
         note: (r.water.lake && r.water.lake.inside) ? 'This pin is on open water, so low greenness is expected and is not rated.' : 'In the dry season this mostly picks up trees and irrigated parks.', next: 'Compare with the parks list under Liveability.' });
     } else add('hazards', { id: 'heat', label: 'Surface heat in the dry season', value: 'not computed for this location', level: 'unknown', kind: 'unavailable', conf: 'unavailable', source: 'Landsat 8/9', note: 'The heat layer is missing or does not cover this point.', next: '' });
-    add('hazards', { id: 'seismic', label: 'Earthquake zone', value: 'Zone II (low hazard) under IS 1893 (Part 1):2016, per secondary sources — reference only', level: 'info', kind: 'reference', conf: 'low', source: 'BIS IS 1893 (Part 1):2016 seismic zone map as listed by secondary sources; not checked against the standard itself', period: 'standard of 2016; a newer edition may exist', res: 'regional',
+    const szG = seismicFacts(r.lat, r.lon), szConflict = szG && szG.zone && szG.zone !== 'Zone II';
+    add('hazards', { id: 'seismic', label: 'Earthquake zone', value: szConflict ? `Zone II is the usual reference for Hyderabad city, but the state GIS layer puts this spot in ${szG.zone}: the two sources disagree here (see the next finding)` : 'Zone II (low hazard) under IS 1893 (Part 1):2016, per secondary sources — reference only', level: 'info', kind: 'reference', conf: 'low', source: 'BIS IS 1893 (Part 1):2016 seismic zone map as listed by secondary sources; not checked against the standard itself', period: 'standard of 2016; a newer edition may exist', res: 'regional',
       note: 'A regional hazard class, not a prediction, and a newer edition of the code may change the zones. It says nothing about how a particular building was built.', next: 'Confirm the zone in the current BIS standard, and ask for the structural certificate and building-permission documents.' });
+    if (miss('seismic.json')) notRun('hazards', 'seismic_gis', 'Earthquake zone (state GIS layer)', 'state seismic-zone layer');
+    else if (!szG || !szG.zone) add('hazards', { id: 'seismic_gis', label: 'Earthquake zone (state GIS layer)', value: 'outside the zones mapped in the state layer', level: 'unknown', kind: 'unavailable', conf: 'unavailable', source: 'Telangana State GIS (TCUR) seismic-zone layer', period: '—', res: '—', note: 'No zone could be read for this location.', next: 'Check the seismic zone for the exact location in IS 1893.' });
+    else {
+      const nearB = szG.other && szG.other.d <= 2000;
+      add('hazards', { id: 'seismic_gis', label: 'Earthquake zone (state GIS layer)', value: `${szG.zone} · ${szG.intensity || 'intensity not stated'}${szG.other && szG.other.d <= 5000 ? ` · ${(szG.other.d / 1000).toFixed(1)} km from the ${szG.other.zone} boundary` : ''}`, level: 'info', kind: 'official', conf: nearB ? 'low' : 'medium',
+        source: 'Telangana State GIS (TCUR) seismic-zone layer, 3 polygons', period: 'undated (service document created 2025-05-24); the edition of the zoning behind it is not published', res: 'regional zone polygon (~50 m simplification)',
+        note: 'A regional hazard zone. It says nothing about whether a particular building is structurally safe: that depends on how and when it was built and needs an engineer. ' + (nearB ? `This spot is close to the ${szG.other.zone} boundary and zone maps are coarse, so treat the zone as approximate. ` : '') + 'It agrees with the Zone II reference for the whole city except where noted above; neither source is the BIS standard itself.', next: 'Ask for the building\'s structural design certificate and, for an older building, a structural audit by a licensed engineer.' });
+    }
     const cv = civicFacts(r.lat, r.lon);
     add('hazards', { id: 'shelter', label: 'Flood rehabilitation centres nearby', value: cv.rehab[0] ? `${cv.rehab2k} within 2 km · nearest ${km(cv.rehab[0].d)} (${cv.rehab[0].p[2] || 'centre'})` : 'none listed nearby', level: cv.rehab[0] && cv.rehab[0].d <= 1500 ? 'good' : 'info', kind: 'official', conf: 'medium', source: 'GHMC vulnerable-localities list (101 centres)', period: 'undated', res: 'point', note: 'Centres were identified for specific vulnerable localities, so many areas simply are not on the list.', next: 'Ask the ward office which centre serves this street.' });
     // ---------- WATER SECURITY ----------
@@ -1079,6 +1107,14 @@ const SETUE = (() => {
     if (miss('civic.json')) notRun('infra', 'landfill', 'Landfill / dump yard', 'landfill list');
     else add('infra', { id: 'landfill', label: 'Landfill / dump yard', value: lf ? `${lf.name} (${lf.ha.toFixed(lf.ha < 1 ? 1 : 0)} ha) · ${lf.inside ? 'inside' : km(lf.d)}` : 'none listed nearby', level: lf ? (major ? (lf.d <= 2000 ? 'concern' : lf.d <= 5000 ? 'watch' : 'good') : (lf.d <= 300 ? 'watch' : 'good')) : 'good', kind: 'official', conf: 'medium', source: 'Telangana open-data list of landfills and dump yards (11 sites)', period: 'undated', res: 'polygon',
       note: major ? 'A large dump yard: odour, smoke and leachate can reach a few kilometres.' : 'A small garbage transfer or processing point; the one large dump yard in the list is further away.', next: 'Visit on a hot afternoon with the wind blowing from the site.' });
+    const ff = fireFacts(r.lat, r.lon);
+    if (miss('fire.json')) notRun('infra', 'fire_gis', 'Fire station on the state list', 'state fire-station list');
+    else if (!ff || !ff.nearest || ff.nearest.d > 10000) add('infra', { id: 'fire_gis', label: 'Fire station on the state list', value: 'no station listed as Existing within 10 km', level: 'unknown', kind: 'unavailable', conf: 'unavailable', source: 'Telangana State GIS (TCUR) fire-station list', period: '—', res: '—',
+      note: `The state list holds only ${ff ? ff.nExisting : 'a few'} Existing stations for the whole region, so this does not mean none is near. See the OpenStreetMap-based fire-station finding under Everyday life.`, next: 'Ask the local fire station or the municipality which station covers the address.' });
+    else add('infra', { id: 'fire_gis', label: 'Fire station on the state list', value: `${ff.nearest.s.name || 'unnamed'} · ${km(ff.nearest.d)} · listed as Existing (source remark: ${ff.nearest.s.remark || 'none'})${ff.proposed3.length ? ` · ${ff.proposed3.length} more listed as Proposed within 3 km (not operating)` : ''}`,
+      level: 'info', kind: 'official', conf: 'low', source: 'Telangana State GIS (TCUR) fire-station list: ' + ff.nExisting + ' Existing and ' + ff.nProposed + ' Proposed records', period: 'undated (service document created 2025-05-24)', res: 'point; positional accuracy not published',
+      note: `Status and remark are the source's own words. Of ${ff.nExisting} Existing stations, ${ff.nMoved} carry the remark "Moved" and ${ff.nInaccurate} "not found accurate" (the list does not explain these), and only ${ff.nCorrect} says "Correct", so positions are uncertain. Checked against OpenStreetMap at 10 places the nearest station agreed at 4; OpenStreetMap maps only 10 stations here, so it cannot confirm the rest. This is a straight-line distance to a listed point, not a response time, and it does not confirm that any station is operating.`,
+      next: 'Ask the nearest fire station or the municipality for the response area of the station that covers this address.' });
     const nz = cv.noise;
     if (nz && nz.d <= 2500) add('infra', { id: 'noise', label: 'Nearest noise monitor (dated)', value: `${nz.p[2]} (${nz.p[3]}) · ${km(nz.d)} · day ${nz.p[4] ?? '?'} dB, night ${nz.p[5] ?? '?'} dB`, level: (nz.p[6] === 'Over-limit' || nz.p[7] === 'Over-limit') ? 'watch' : 'good', kind: 'observed', conf: 'low', source: 'TSPCB noise monitoring', period: 'Jan–Jun 2018 — dated', res: '10 sites citywide', note: 'Only ten monitors in the whole city.', next: 'Stand on the street at night.' });
     if (r.air) add('infra', { id: 'air', label: 'Air quality right now', value: `US AQI ${r.air.aqi} · ${r.air.band}`, level: r.air.aqi > 150 ? 'concern' : r.air.aqi > 100 ? 'watch' : 'good', kind: 'observed', conf: 'medium', source: 'Open-Meteo air-quality model', period: r.air.time, res: '~11 km model grid', note: 'A live modelled value, not a long-term average.', next: '' });
@@ -1364,5 +1400,5 @@ const SETUE = (() => {
     return L.join(' ');
   }
 
-  return { load, report, evidence, checklist, HIGH, parseMapsLink, compare, coverage, parcelLoad, parcelMatch, attachParcel, setParcel, planFacts, netFacts, prohibFacts, overlapFacts, freshness, qualityTable, removalImpact, PARCEL_LABEL, normNum, editSim, rainFacts, analogFacts, tankFacts, streamFacts, ANALOG_EVENTS, roadAccess, gwFacts, gwqFacts, civicFacts, heatFacts, accessFacts, SECTIONS, KIND_LABEL, HY_LABEL, hmdaText, hmdaLink, pillars, addTerrain, elevationProfile, reanalyse: analyse, airNow, curve, totalCost, market, priceBand, claimCheck, rainOn, forecast, depthAt, imd, narrate, locate, lakeBand, nearest, poisWithin, hav, inBounds, tier, LOADING, FAC, get D() { return D; }, get data() { return D; } };
+  return { load, report, evidence, checklist, HIGH, fireFacts, seismicFacts, parseMapsLink, compare, coverage, parcelLoad, parcelMatch, attachParcel, setParcel, planFacts, netFacts, prohibFacts, overlapFacts, freshness, qualityTable, removalImpact, PARCEL_LABEL, normNum, editSim, rainFacts, analogFacts, tankFacts, streamFacts, ANALOG_EVENTS, roadAccess, gwFacts, gwqFacts, civicFacts, heatFacts, accessFacts, SECTIONS, KIND_LABEL, HY_LABEL, hmdaText, hmdaLink, pillars, addTerrain, elevationProfile, reanalyse: analyse, airNow, curve, totalCost, market, priceBand, claimCheck, rainOn, forecast, depthAt, imd, narrate, locate, lakeBand, nearest, poisWithin, hav, inBounds, tier, LOADING, FAC, get D() { return D; }, get data() { return D; } };
 })();

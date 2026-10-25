@@ -55,3 +55,9 @@ Groundwater popup (value, period, resolution, confidence, caveat shown; clicking
 - **Bugs found by this batch's own checks:** my first coverage scan stored failed requests as zero (flat zero everywhere); `SNo` misread as the survey number; non-unique `OBJECTID` merging distinct pipes (22% lost in one dense tile); the server's line count over-counting; parcel tile grid reaching past the study box so edge pins were called 'outside'; six findings reading reassuring when their data file was missing.
 - **Independent recomputation:** water network at six places (see DATA_REGISTER section E).
 - **Not validated:** parcel outline positional accuracy (unpublished), the prohibitory layer's legal meaning, authority-area boundary dates, network completeness outside the places checked.
+
+## 8. Step 1 (fire stations, seismic zone), 25 Oct 2026
+- **Fire list vs OpenStreetMap, 10 places:** the nearest Existing station matched at 4. See DATA_REGISTER section E for the full account. OSM maps only 10 stations in the area, so it is **not** ground truth and cannot confirm 25 of the 32 Existing stations; the source's remarks ("Moved", "not found accurate") do not predict agreement. The finding therefore carries low confidence and quotes the source's words.
+- **Seismic:** state layer = Zone II at all 2,392 grid points of the map region; no disagreement with the reference anywhere.
+- **Tests (4,774 pass):** 71 records and statuses and remarks preserved verbatim; a Proposed station is never the headline station and never counted as present; the fire finding is information or unknown only, low confidence, never claims a station operates; the seismic finding is information only and never a safety claim; conflicting sources are both shown; near a zone boundary confidence drops; removing either file gives "data not loaded".
+- **Not validated:** positional accuracy of the fire points; the edition and date of the seismic zoning; the meaning of the source's remarks.

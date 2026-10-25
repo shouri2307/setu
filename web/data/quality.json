@@ -592,7 +592,7 @@
    "licence": "ok",
    "licence_note": "a published fact",
    "validation": "unvalidated",
-   "validation_note": "not checked against the BIS standard itself; a newer edition may change zones",
+   "validation_note": "not checked against the BIS standard itself; a newer edition may change zones. The state GIS seismic layer (separate finding) puts the whole study box in Zone II, which agrees, but its own zoning edition is not published",
    "stale_months": null,
    "limits": "reference only"
   },
@@ -729,6 +729,44 @@
    "validation_note": "no data: the report says so and never fills a value",
    "stale_months": null,
    "limits": ""
+  },
+  "tgrac_fire": {
+   "name": "State fire-station list",
+   "provider": "Telangana State GIS (TGRAC) TCUR layer 61 'Fire Stations'",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": "2025-05-24",
+   "fetched": "2026-10-25",
+   "res": "point (positional accuracy not published)",
+   "coverage": "71 records for the Hyderabad metro districts: 32 Existing and 39 Proposed",
+   "licence": "verify",
+   "licence_note": "no licence text is published for this service",
+   "validation": "unvalidated",
+   "validation_note": "compared with OpenStreetMap at 10 places: the nearest Existing station matched at 4; OSM maps only 10 stations in the area so it cannot confirm the rest; 6 of the 8 OSM stations inside the study box sit on a listed station, 2 do not; the source's remarks (Moved, not found accurate) did not separate matching from non-matching stations",
+   "stale_months": null,
+   "limits": "status and remark are the source's words and are not explained; Proposed and Moved are never treated as confirmed; distances are straight-line and do not confirm a station operates",
+   "files": [
+    "fire.json"
+   ]
+  },
+  "tgrac_seismic": {
+   "name": "State seismic-zone layer",
+   "provider": "Telangana State GIS (TGRAC) TCUR layer 90 'Sesismic Zones'",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": "2025-05-24",
+   "fetched": "2026-10-25",
+   "res": "regional zone polygon (~50 m simplification)",
+   "coverage": "3 polygons: Zone II (two areas) and Zone III. The whole Hyderabad map region (17.20-17.66 N, 78.18-78.70 E, 2,392 grid points) is Zone II; the nearest Zone III boundary is at least 102 km away",
+   "licence": "verify",
+   "licence_note": "no licence text is published for this service",
+   "validation": "internal-check",
+   "validation_note": "agrees with the Zone II reference at all 2,392 grid points of the map region and at the 14 test places; the edition of the zoning behind the layer is not published and neither source is the BIS standard itself",
+   "stale_months": null,
+   "limits": "a regional hazard zone; says nothing about the structural safety of a building",
+   "files": [
+    "seismic.json"
+   ]
   }
  },
  "factors": {
@@ -1478,6 +1516,26 @@
    ],
    "missing": "needs a pin that matches exactly one survey parcel; not possible in the old city core where no survey parcels are mapped",
    "label": "Mapped features overlapping the parcel outline"
+  },
+  "fire_gis": {
+   "sec": "infra",
+   "scope": "nearby",
+   "scope_text": "listed points within 10 km; straight line, not response time",
+   "sources": [
+    "tgrac_fire"
+   ],
+   "missing": "no station listed as Existing within 10 km, or the list is not loaded",
+   "label": "Fire station on the state list"
+  },
+  "seismic_gis": {
+   "sec": "hazards",
+   "scope": "area",
+   "scope_text": "the regional zone polygon the pin is in, not a building",
+   "sources": [
+    "tgrac_seismic"
+   ],
+   "missing": "outside the zones mapped in the state layer, or the layer is not loaded",
+   "label": "Earthquake zone (state GIS layer)"
   }
  }
 }
