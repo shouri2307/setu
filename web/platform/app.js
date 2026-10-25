@@ -225,7 +225,12 @@ async function startCompare(lat, lon, label) {
   });
 }
 function openCompare() { S.view = 'compare'; $('report').classList.remove('hide'); $('report').scrollTop = 0; renderCompare(); syncHash(); $('toast').classList.remove('show'); }
+function syncMatch() {   // draw the matched survey plot on the map (or clear it)
+  const m = S.r && S.r.parcel && S.r.parcel.match;
+  MapKit.setMatch(m && m.parcel && m.parcel.rings && (m.status === 'verified' || m.status === 'approximate') ? m.parcel.rings : null, m && m.status);
+}
 function refresh(fresh) {
+  syncMatch();
   if (S.view === 'compare') return renderCompare();
   if (S.view === 'report') {
     const a = document.activeElement;
@@ -268,6 +273,11 @@ document.addEventListener('click', e => {
     el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1800);
   }
   else if (a === 'open-topic') { const e = document.querySelector('.v-topics'); if (e) e.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  else if (a === 'plot-use') {
+    const la = +t.dataset.lat, lo = +t.dataset.lon, n = t.dataset.n, v = t.dataset.v || ''; if (!isFinite(la) || !isFinite(lo)) return;
+    setPin(la, lo, 'Survey no. ' + n + (v ? ', ' + v : '')).then(() => { S.pref.survey = n; if (v) S.pref.village = v; if (S.r && S.r.ok) { saveRef(S.r.lat, S.r.lon, S.pref); if (S.pdata) SETUE.setParcel(S.r, S.pdata, S.pref); refresh(); } });
+    toast('Checking survey no. ' + n + '…', 3000);
+  }
   else if (a === 'parcel-match') applyRef();
   else if (a === 'parcel-pick') { S.pref.survey = t.dataset.n; if (t.dataset.v && !S.pref.village) S.pref.village = t.dataset.v; applyRef(); }
   else if (a === 'parcel-clear') { S.pref = { survey: '', village: '', plot: '', layout: '', doc: '' }; applyRef(); }
@@ -392,7 +402,7 @@ async function boot() {
   try { wl = await fetch('data/wardloc.json').then(r => r.json()); } catch (e) { }
   const wards = D.wards.map(w => ({ id: w.id, name: w.name, rings: w.rings, pct: (D.wardfeat[String(w.id)] || {}).pct || 0, loc: wl[w.id] != null ? wl[w.id] : null }));
   await MapKit.init($('map'), {
-    bounds: D.zones.bounds, wards, water: D.geo.water, gov: D.gov, hy: D.hy, D, googleKey: S.cfg.mapsKey || '', onPick: (lat, lon) => { S.address = ''; $('q').value = ''; setPin(lat, lon, ''); },
+    plots: (la, lo) => SETUE.parcelLoad(la, lo), bounds: D.zones.bounds, wards, water: D.geo.water, gov: D.gov, hy: D.hy, D, googleKey: S.cfg.mapsKey || '', onPick: (lat, lon) => { S.address = ''; $('q').value = ''; setPin(lat, lon, ''); },
     poiRows: c => (S.gp && S.gp.cats && S.gp.cats[c] && S.gp.cats[c].length) ? S.gp.cats[c] : (D.geo.poi[c] || []), onEngine: applyMapEngine
   });
   $('maptools').onclick = e => {

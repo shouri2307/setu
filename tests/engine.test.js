@@ -268,7 +268,7 @@ const argv = process.argv.slice(2);
   for (const [k, f] of Object.entries(sample)) { const h = MK.popupFor(k, f, D); ok(h && need(h), `map popup for ${k} shows source, data period, resolution and confidence`); }
   ok(!MK.popupFor('ev_hv', sample.ev_hv, D).includes('X <b>KV') && MK.popupFor('ev_tankcap', sample.ev_tankcap, D).includes('A &amp; B') && MK.popupFor('ev_tankcap', sample.ev_tankcap, D).includes('not available'), 'map popups escape HTML and say "not available" when capacity is missing');
   ok(MK.popupFor('ev_tankcap', sample.ev_tankcap, D).includes('not verified encroachment') && MK.popupFor('ev_tankhy', sample.ev_tankhy, D).includes('not a legal'), 'tank popups separate a mapped outline / satellite class from verified or legal encroachment');
-  ok(MK.EV_KINDS.length === 7 && MK.EV_KINDS.every(k => MK.evInfo(k, D) && MK.evInfo(k, D).note && MK.evInfo(k, D).swatch.length), 'every evidence layer has a legend with swatches and a dataset-age note');
+  ok(MK.EV_KINDS.length === 8 && MK.EV_KINDS.every(k => MK.evInfo(k, D) && MK.evInfo(k, D).note && MK.evInfo(k, D).swatch.length), 'every evidence layer has a legend with swatches and a dataset-age note');
 
   // ---- routing: failover between hosts, caching, and honest failure ----
   const realFetch2 = sandbox.fetch; let calls = [];
@@ -689,6 +689,23 @@ const argv = process.argv.slice(2);
     const pp = E.parseMapsLink('https://www.google.com/maps/place/Shri+Ahobilam+Matt/@17.4022667,78.5197988,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!8m2!3d17.4022667!4d78.5197988');
     ok(pp && pp.lat === 17.4022667 && pp.name === 'Shri Ahobilam Matt', 'a place link keeps its readable name next to the coordinates (used as the label)');
     ok(E.parseMapsLink('https://www.google.com/maps/@17.44,78.35,15z').name === undefined, 'a plain map link has no place name');
+  }
+  // ---- map: survey-plot layer popup ----
+  {
+    const pop = MK.popupFor('ev_plots', { n: '91/1', v: 'Gachibowli', m: 'Serilingampalle', code: 0, rem: '', area: 2023400, lat: 17.4401, lon: 78.3489 }, D);
+    ok(/Survey no\. 91\/1/.test(pop) && /Gachibowli/.test(pop) && /202\.34 ha/.test(pop), 'the plot popup names the survey number, village and area');
+    ok(/not a legal boundary/.test(pop) && /many house plots/.test(pop) && /Source/.test(pop) && /Data period/.test(pop) && /Confidence/.test(pop), 'the plot popup says it is a drawn outline and shows source, period and confidence');
+    ok(/data-act="plot-use"/.test(pop) && /data-n="91\/1"/.test(pop) && /data-lat="17\.440100"/.test(pop), 'a plot offers "Check this plot" carrying its number and the clicked position');
+    const road = MK.popupFor('ev_plots', { n: '12', v: 'X', m: 'Y', code: 2, rem: 'Road', area: 300, lat: 17.4, lon: 78.4 }, D);
+    ok(!/plot-use/.test(road) && /not a plot/.test(road), 'a road, canal or tank feature offers no "Check this plot" button');
+    const flagged = MK.popupFor('ev_plots', { n: '5', v: 'X', m: 'Y', code: 1, rem: 'Duplicate Number', area: 900, lat: 17.4, lon: 78.4 }, D); ok(/duplicate or unreadable/.test(flagged) && /Duplicate Number/.test(flagged) && /low/.test(flagged), 'a number flagged at source is shown as such, with low confidence');
+    const evil = MK.popupFor('ev_plots', { n: '<img src=x onerror=alert(1)>', v: '"><script>x</script>', m: '', code: 0, rem: '<b>r</b>', area: 100, lat: 17.4, lon: 78.4 }, D); ok(!/<img|<script|<b>r/.test(evil), 'hostile text in a plot record is escaped in the popup');
+    const lg = MK.evInfo('ev_plots', D); ok(lg && lg.swatch.length === 4 && /not legal boundaries/.test(lg.note), 'the plot layer has a legend that repeats the not-a-legal-boundary caveat');
+    const mapSrc = fs.readFileSync(path.join(WEB, 'platform', 'map.js'), 'utf8');
+    ok(/visibilityState === 'visible'/.test(mapSrc), 'the basemap watchdog counts only visible seconds, so a background tab never forces the fallback');
+    ok(/L\.maplibreGL/.test(mapSrc) && /useRaster/.test(mapSrc) && /tile\.openstreetmap\.org/.test(mapSrc), 'the vector basemap has an OpenStreetMap raster fallback');
+    ok(/openfreemap\.org/.test(mapSrc) && /OpenMapTiles/.test(mapSrc) && /openstreetmap\.org\/copyright/.test(mapSrc), 'the basemap attribution names OpenFreeMap, OpenMapTiles and OpenStreetMap as the provider requires');
+    ok(['maplibre-gl.js', 'maplibre-gl.css', 'leaflet-maplibre-gl.js'].every(f => fs.existsSync(path.join(WEB, 'vendor', f))), 'the MapLibre files are vendored (no CDN at runtime)');
   }
   // ---- live APIs (optional) ----
   if (argv.includes('--net')) {

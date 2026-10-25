@@ -53,6 +53,13 @@ const MapKit = (() => {
         source: 'TGRAC / HMDA water-body layer (HMDA-ORR-GHMC)', period: 'extent from topo sheet or revenue map; status classes 2011 and 2023', res: 'polygon', conf: 'low', caveat: 'The outline is a mapped extent, not a legal boundary, and the status is a satellite classification, not verified encroachment. Capacity is the source\'s estimate, not measured storage.' }); }
     if (kind === 'ev_tankhy') return evPop({ title: `Tank · ${f.name || 'unnamed'}${f.village ? ', ' + f.village : ''}`, value: `satellite status 2023: ${HYLAB[f.s23] || 'not classified'} (2014: ${HYLAB[f.s14] || 'not classified'})`,
       source: 'TGRAC / HYDRAA water-body assessment', period: 'imagery 2014 and 2023', res: 'polygon', conf: 'medium', caveat: 'A satellite classification, not a legal notification or a verified encroachment finding.' });
+    if (kind === 'ev_plots') {
+      const ha = f.area >= 10000 ? (f.area / 1e4).toFixed(2) + ' ha' : Math.round(f.area || 0).toLocaleString('en-IN') + ' m²';
+      const note = f.code === 2 ? 'Mapped as a road, canal, stream or tank feature, not a plot. ' : f.code === 1 ? 'The source flags this number as duplicate or unreadable. ' : '';
+      return evPop({ title: `Survey no. ${f.n}`, value: `${f.v || 'village n/a'}${f.m ? ', ' + f.m : ''} · ${ha}`, rows: [['Remark in the source', f.rem || null]],
+        source: 'Telangana State GIS cadastral layer (TGRAC)', period: 'undated (service document created 2025-04-19)', res: 'drawn outline, about 1 m', conf: f.code ? 'low' : 'medium', caveat: note + 'A drawn outline is not a legal boundary and says nothing about title or ownership. A survey number can hold many house plots.' })
+        + (f.code === 2 ? '' : `<div style="margin-top:8px"><button type="button" class="v-btn sm" data-act="plot-use" data-n="${escH(f.n)}" data-v="${escH(f.v)}" data-lat="${Number(f.lat).toFixed(6)}" data-lon="${Number(f.lon).toFixed(6)}">Check this plot</button></div>`);
+    }
     if (kind === 'ev_heat') return evPop({ title: 'Dry-season surface heat', value: `${f.lst.toFixed(1)} °C land-surface · NDVI ${f.ndvi != null ? f.ndvi.toFixed(2) : 'n/a'}`, rows: [['Hotter than', f.pct != null ? Math.round(f.pct * 100) + '% of the city' : null]],
       source: 'Landsat 8/9 Collection 2 Level-2 (USGS) via Microsoft Planetary Computer', period: `${(D && D.heat && D.heat.meta && D.heat.meta.window) || 'Mar-May 2024-26'}, ${(D && D.heat && D.heat.meta && D.heat.meta.scenes) || '?'} scenes`, res: '150 m cell (30 m source)', conf: 'medium', caveat: 'Surface temperature of roofs, roads and soil, not the air temperature a resident feels.' });
     return '';
@@ -60,6 +67,7 @@ const MapKit = (() => {
   const EVINFO = {
     ev_wells: D => ({ title: 'Groundwater wells', swatch: [['#38bdf8', '< 5 m'], ['#22c55e', '5-10 m'], ['#eab308', '10-20 m'], ['#ef4444', '> 20 m']], unit: 'depth below ground, latest month', note: `Ground Water Dept monthly readings, latest ${((D.gwSt || []).reduce((m, x) => x.month > m ? x.month : m, '')) || 'n/a'}. One well ≠ your borewell.` }),
     ev_gwp: D => ({ title: 'Groundwater potential zones', swatch: [['#7f1d1d', 'nil'], ['#f97316', 'poor'], ['#eab308', 'limited'], ['#84cc16', 'moderate'], ['#22c55e', 'good'], ['#64748b', 'not stated']], unit: 'recharge condition', note: 'Regional hydrogeology map, undated, about 1:50,000. Low confidence at plot level.' }),
+    ev_plots: D => ({ title: 'Survey plots', swatch: [['#0b63ce', 'survey outline'], ['#965800', 'number flagged at source'], ['#94a3b8', 'road / canal / tank'], ['#16803c', 'matched to your pin']], unit: 'zoom in to see them', note: 'State cadastral outlines, undated. Drawn outlines, not legal boundaries; a survey number can hold many house plots. Click one to check it.' }),
     ev_heat: D => ({ title: 'Dry-season surface heat', swatch: [['rgb(49,130,189)', 'cooler'], ['rgb(250,220,90)', 'median'], ['rgb(215,48,39)', 'hotter']], unit: 'land-surface temperature', note: `Landsat ${D.heat && D.heat.meta ? D.heat.meta.scenes : '?'} clear scenes, Mar-May 2024-26. Click for the value.` }),
     ev_hv: D => ({ title: 'High-voltage lines and substations', swatch: [['#f43f5e', 'transmission line'], ['#fb923c', 'substation']], unit: '', note: 'State GIS (TCUR layer), undated. Proximity is not a legal corridor.' }),
     ev_lost: D => ({ title: 'Water bodies recorded as disappeared', swatch: [['#ef4444', 'recorded as disappeared']], unit: '', note: 'HMDA / TGRAC map record, undated. Not a legal finding.' }),
@@ -77,10 +85,19 @@ const MapKit = (() => {
     map.setMaxBounds(HYD); map.options.maxBoundsViscosity = 1;
     const lockZoom = () => { const s = map.getSize(); if (!s.x || !s.y) return; const z = map.getBoundsZoom(HYD, true); if (isFinite(z)) map.setMinZoom(Math.min(12, Math.max(9, z))); };
     lockZoom(); map.on('resize', lockZoom);
-    // OpenStreetMap, colour-graded for the dark theme through CSS (.inv on the tile pane)
-    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' }).addTo(map);
-    map.getPane('tilePane').classList.add('inv');
-    const base = osm;
+    // Basemap: OpenFreeMap vector tiles (OpenStreetMap data): crisp labels and real building footprints at every zoom; free for commercial use with attribution, provided as-is.
+    // If MapLibre did not load, WebGL is unavailable or the style cannot load in time, the plain OpenStreetMap raster tiles take over, so the map never goes blank.
+    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap contributors' });
+    let base = osm, vec = null;
+    const useRaster = why => { if (vec) { try { map.removeLayer(vec); } catch (e) { } vec = null; } base = osm; if (!map.hasLayer(osm)) osm.addTo(map); map.getPane('tilePane').classList.add('inv'); if (why) console.warn('Vector basemap off, using OpenStreetMap tiles:', why); };
+    try {
+      if (!(window.maplibregl && L.maplibreGL)) throw new Error('MapLibre not loaded');
+      vec = L.maplibreGL({ style: 'https://tiles.openfreemap.org/styles/liberty', attribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> © <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' }).addTo(map); base = vec;
+      const gl = vec.getMaplibreMap(); let loaded = false; gl.on('load', () => { loaded = true; });
+      gl.on('error', e => { if (!loaded) useRaster(e && e.error && e.error.message); });
+      // only VISIBLE seconds count: a background tab pauses drawing, and that is not a failure
+      let seen = 0; const wd = setInterval(() => { if (loaded || base !== vec) return clearInterval(wd); if (document.visibilityState === 'visible' && ++seen >= 20) { clearInterval(wd); useRaster('style did not load in 20 visible seconds'); } }, 1000);
+    } catch (e) { useRaster(e.message); }
     const esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Imagery © Esri' });
     const wards = L.layerGroup(), lakes = L.layerGroup(), ponds = L.layerGroup(), selStyle = { weight: 2.8, color: '#ffffff', opacity: .95 }, baseStyle = { weight: .7, color: '#cbd5e1', opacity: .28 };
     const wardLayers = new Map();
@@ -106,8 +123,35 @@ const MapKit = (() => {
       for (let i = 0; i < h.lst.length; i++) { const v = h.lst[i]; if (v == null) { im.data[i * 4 + 3] = 0; continue; } const c3 = col(v); im.data[i * 4] = c3[0]; im.data[i * 4 + 1] = c3[1]; im.data[i * 4 + 2] = c3[2]; im.data[i * 4 + 3] = 150; }
       x.putImageData(im, 0, 0); return c.toDataURL(); };
     map.on('click', e => { if (evL.ev_heat && cfg.D) { const f = heatLookup(cfg.D, e.latlng.lat, e.latlng.lng); if (f) L.popup({ maxWidth: 300 }).setLatLng(e.latlng).setContent(popupFor('ev_heat', f, cfg.D)).openOn(map); } });
+    // survey-plot outlines: the state cadastral layer, loaded lazily for the area in view and only when zoomed in (hundreds of polygons at most)
+    const plotsG = L.layerGroup().addTo(map), plotRenderer = L.canvas({ padding: .4 }); let plotsOn = false, plotSeq = 0, matchL = null, matchKey = '', plotTimer = null;
+    const plotStyle = p => p.code === 2 ? { color: '#94a3b8', weight: 1, dashArray: '4 3', fillColor: '#94a3b8', fillOpacity: .04 } : p.code === 1 ? { color: '#965800', weight: 1.2, fillColor: '#965800', fillOpacity: .05 } : { color: '#0b63ce', weight: 1.1, opacity: .9, fillColor: '#0b63ce', fillOpacity: .05 };
+    async function drawPlots() {
+      const seq = ++plotSeq; plotsG.clearLayers();
+      if (!plotsOn || map.getZoom() < 16 || !cfg.plots) return;
+      const c = map.getCenter(); let d = null; try { d = await cfg.plots(c.lat, c.lng); } catch (e) { return; }
+      if (seq !== plotSeq || !d || !d.ok) return;
+      const b = map.getBounds().pad(.15); let n = 0;
+      for (const p of d.parcels) {
+        if (p._b[2] < b.getSouth() || p._b[0] > b.getNorth() || p._b[3] < b.getWest() || p._b[1] > b.getEast()) continue;
+        const poly = L.polygon(p.rings, { ...plotStyle(p), renderer: plotRenderer, bubblingMouseEvents: false });
+        poly.on('click', e => { L.popup({ maxWidth: 300 }).setLatLng(e.latlng).setContent(popupFor('ev_plots', { ...p, lat: e.latlng.lat, lon: e.latlng.lng })).openOn(map); });
+        poly.addTo(plotsG); if (++n >= 2500) break;
+      }
+    }
+    const schedulePlots = () => { clearTimeout(plotTimer); plotTimer = setTimeout(drawPlots, 250); };
+    map.on('moveend zoomend', () => { if (plotsOn) schedulePlots(); });
     return {
+      getView() { const c = map.getCenter(); return { zoom: map.getZoom(), lat: c.lat, lon: c.lng, base: base === vec ? 'vector' : 'raster', plots: plotsG.getLayers().length }; },
+      jump(lat, lon, zoom) { map.setView([lat, lon], zoom, { animate: false }); },
+      setMatch(rings, status) {
+        const key = rings ? status + '|' + rings[0][0][0] + ',' + rings[0][0][1] : ''; if (key === matchKey) return; matchKey = key;
+        if (matchL) { map.removeLayer(matchL); matchL = null; } if (!rings) return;
+        const col = status === 'verified' ? '#16803c' : status === 'approximate' ? '#965800' : '#0b63ce';
+        matchL = L.polygon(rings, { color: col, weight: 3, fillColor: col, fillOpacity: .13, interactive: false, bubblingMouseEvents: false }).addTo(map);
+      },
       showEv(kind, on) {
+        if (kind === 'ev_plots') { plotsOn = on; if (on && map.getZoom() < 16) map.flyTo(map.getCenter(), 17, { duration: .6 }); else drawPlots(); return; }
         if (evL[kind]) { map.removeLayer(evL[kind]); evL[kind] = null; }
         if (!on || !cfg.D) return;
         const BM = { bubblingMouseEvents: false };   // a click on a feature opens its popup and must not also drop a pin
@@ -227,6 +271,7 @@ const MapKit = (() => {
         govG[kind] = list;
       },
       showEv() { /* evidence layers are drawn on the OpenStreetMap engine only */ },
+      setMatch() { /* the matched plot is drawn on the Leaflet engine only */ },
       setSatellite(on) { map.setMapTypeId(on ? 'hybrid' : 'roadmap'); },
       fitCity() { map.fitBounds({ south: b[1], west: b[0], north: b[3], east: b[2] }, { left: padL(), top: 20, right: 20, bottom: 20 }); },
       resize() { gm.event.trigger(map, 'resize'); }, destroy() { el.innerHTML = ''; tip.remove(); }
@@ -242,6 +287,7 @@ const MapKit = (() => {
     for (const k in st.gov) if (st.gov[k]) impl.showGov(k, true);
     for (const k in st.ev) if (st.ev[k]) impl.showEv(k, true);
     if (st.mode !== 'flood') impl.setColorMode(st.mode);
+    if (st.match) impl.setMatch(st.match.rings, st.match.status);
     if (st.pin) impl.setPin(st.pin.lat, st.pin.lon, st.pin.wid, false);
   }
   function fallback(why) {
@@ -274,6 +320,9 @@ const MapKit = (() => {
     setSatellite(on) { st.sat = on; call('setSatellite', on); },
     showGov(kind, on) { st.gov[kind] = on; call('showGov', kind, on); },
     showEv(kind, on) { st.ev[kind] = on; call('showEv', kind, on); },
+    jump(lat, lon, zoom) { call('jump', lat, lon, zoom); },
+    getView() { try { return impl && impl.getView ? impl.getView() : null; } catch (e) { return null; } },
+    setMatch(rings, status) { st.match = rings ? { rings, status } : null; call('setMatch', rings, status); },
     popupFor, evInfo: (kind, D) => EVINFO[kind] ? EVINFO[kind](D) : null, EV_KINDS: Object.keys(EVINFO),
     setColorMode(mode) { st.mode = mode; call('setColorMode', mode); },
     fitCity() { call('fitCity'); }, resize() { call('resize'); }
