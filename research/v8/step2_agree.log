@@ -1,0 +1,12 @@
+tiles where both layers have at least 50 numbered parcels: 118
+{'both_none': 62, 'only_main': 6, 'only_fourth': 23, 'same_number': 197, 'same_number_other_village': 2, 'different': 9, 'failed': 1}
+where both layers have a parcel at the point: 208 | same village+number: 197 (95%) | same number, village spelled differently: 2 | different number: 9
+  different: {'lat': 17.56625, 'lon': 78.31462, 'main': [('124/35', 'sultanpur')], 'fourth': [('174/35', 'sultanpur')]}
+  different: {'lat': 17.46075, 'lon': 78.56171, 'main': [('42/1', 'meerpet')], 'fourth': [('361/1', 'malkajgiri')]}
+  different: {'lat': 17.31179, 'lon': 78.43942, 'main': [('157', 'mailardevapalle')], 'fourth': [('158', 'mailardevapalle')]}
+  different: {'lat': 17.54508, 'lon': 78.57464, 'main': [('1024/2', 'jawaharnagar')], 'fourth': [('1012', 'jawaharnagar')]}
+  different: {'lat': 17.41342, 'lon': 78.33482, 'main': [('324', 'velkatur')], 'fourth': [('323', 'puppalguda')]}
+  different: {'lat': 17.56391, 'lon': 78.32952, 'main': [('308', 'sultanpur')], 'fourth': [('309', 'sultanpur')]}
+  different: {'lat': 17.52695, 'lon': 78.45269, 'main': [('290', 'jeedimatla')], 'fourth': [('291', 'jeedimatla')]}
+  different: {'lat': 17.51233, 'lon': 78.38363, 'main': [('236', 'nizampet')], 'fourth': [('254', 'nizampet')]}
+  different: {'lat': 17.42664, 'lon': 78.30239, 'main': [('117', 'vattinagulapalle')], 'fourth': [('142', 'vattinagulapalle')]}

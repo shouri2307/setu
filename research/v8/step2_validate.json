@@ -1,0 +1,522 @@
+[
+ {
+  "lake": "Rawiral Cheruvu",
+  "village": "Sardar Nagar",
+  "mandal": "Maheswaram",
+  "area_ha": 350.9,
+  "base_syno": "230",
+  "status_2023": "Live",
+  "main": {
+   "parcels": 154,
+   "numbered": 132,
+   "has_syn": 0,
+   "village_same": 0,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 154,
+   "numbered": 132,
+   "has_syn": 0,
+   "village_same": 0,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Gopi Cheruvu",
+  "village": "Serilingampalle (M)",
+  "mandal": "Serilingampalle",
+  "area_ha": 35.1,
+  "base_syno": "77",
+  "status_2023": "Live",
+  "main": {
+   "parcels": 36,
+   "numbered": 34,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.02,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 36,
+   "numbered": 34,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.02,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Kotta Cheruvu",
+  "village": "Vattinagulapalle",
+  "mandal": "Gandipet",
+  "area_ha": 16.5,
+  "base_syno": "468",
+  "status_2023": "Partially Encroached - Agriculture",
+  "main": {
+   "parcels": 54,
+   "numbered": 53,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.07,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 54,
+   "numbered": 53,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.07,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Patel Cheruvu",
+  "village": "Miyapur",
+  "mandal": "Serilingampalle",
+  "area_ha": 13.1,
+  "base_syno": "70",
+  "status_2023": "Live",
+  "main": {
+   "parcels": 8,
+   "numbered": 5,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.91,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 35,
+   "numbered": 30,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.78,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Dammai cheruvu",
+  "village": "Nagaram",
+  "mandal": "Keesara",
+  "area_ha": 10.7,
+  "base_syno": "241",
+  "status_2023": "Partially Encroached - Built-up",
+  "main": {
+   "parcels": 45,
+   "numbered": 45,
+   "has_syn": 0,
+   "village_same": 0,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 46,
+   "numbered": 46,
+   "has_syn": 0,
+   "village_same": 0,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Mukkasani Kunta",
+  "village": "Puppalguda",
+  "mandal": "Gandipet",
+  "area_ha": 8.0,
+  "base_syno": "285",
+  "status_2023": "Totally Encroached - Built-up",
+  "main": {
+   "parcels": 30,
+   "numbered": 29,
+   "has_syn": 1,
+   "village_same": 0,
+   "touches": 1,
+   "cover": 0.75,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 30,
+   "numbered": 29,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.72,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Amrakunta",
+  "village": "Jalpally",
+  "mandal": "Balapur",
+  "area_ha": 7.2,
+  "base_syno": "34",
+  "status_2023": "Live",
+  "main": {
+   "parcels": 12,
+   "numbered": 12,
+   "has_syn": 1,
+   "village_same": 0,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 20,
+   "numbered": 20,
+   "has_syn": 1,
+   "village_same": 0,
+   "touches": 1,
+   "cover": 1.0,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Gunta Bai Kunta",
+  "village": "Pedda Amberpet",
+  "mandal": "Abdullapurmet",
+  "area_ha": 6.4,
+  "base_syno": "98",
+  "status_2023": "Totally Encroached - Built-up",
+  "main": {
+   "parcels": 54,
+   "numbered": 53,
+   "has_syn": 1,
+   "village_same": 0,
+   "touches": 1,
+   "cover": 0.83,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 54,
+   "numbered": 53,
+   "has_syn": 1,
+   "village_same": 0,
+   "touches": 1,
+   "cover": 0.83,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Beera Cheru",
+  "village": "Nadargul",
+  "mandal": "Balapur",
+  "area_ha": 5.3,
+  "base_syno": "432",
+  "status_2023": "Partially Encroached - Agriculture",
+  "main": {
+   "parcels": 55,
+   "numbered": 55,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.51,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 55,
+   "numbered": 55,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.51,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Vaddervani Kunta",
+  "village": "Thumkunta",
+  "mandal": "Shamirpet",
+  "area_ha": 4.1,
+  "base_syno": "367",
+  "status_2023": "Totally Encroached - Built-up",
+  "main": {
+   "parcels": 11,
+   "numbered": 10,
+   "has_syn": 0,
+   "village_same": 0,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 10,
+   "numbered": 10,
+   "has_syn": 0,
+   "village_same": 0,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Kamballa Kunta",
+  "village": "Dommara pochampally",
+  "mandal": "Dundigal Gandimaisamma",
+  "area_ha": 3.6,
+  "base_syno": "108",
+  "status_2023": "Live",
+  "main": {
+   "parcels": 29,
+   "numbered": 28,
+   "has_syn": 1,
+   "village_same": 0,
+   "touches": 1,
+   "cover": 0.95,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 29,
+   "numbered": 28,
+   "has_syn": 1,
+   "village_same": 0,
+   "touches": 1,
+   "cover": 0.95,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Kandla Kunta",
+  "village": "Nadargul",
+  "mandal": "Balapur",
+  "area_ha": 3.3,
+  "base_syno": "553",
+  "status_2023": "Partially Encroached - Agriculture",
+  "main": {
+   "parcels": 13,
+   "numbered": 12,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.28,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 13,
+   "numbered": 12,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.28,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Chinna Kunta",
+  "village": "Kuntloor",
+  "mandal": "Abdullapurmet",
+  "area_ha": 2.9,
+  "base_syno": "176",
+  "status_2023": "Partially Encroached - Built-up",
+  "main": {
+   "parcels": 47,
+   "numbered": 44,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.95,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 47,
+   "numbered": 44,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.95,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Brhamana Kunta",
+  "village": "Puppalguda",
+  "mandal": "Gandipet",
+  "area_ha": 2.6,
+  "base_syno": "345",
+  "status_2023": "Totally Encroached - Built-up",
+  "main": {
+   "parcels": 16,
+   "numbered": 16,
+   "has_syn": 1,
+   "village_same": 0,
+   "touches": 1,
+   "cover": 0.91,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 16,
+   "numbered": 16,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.91,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Nallacheruvu",
+  "village": "Neknampur",
+  "mandal": "Gandipet",
+  "area_ha": 2.1,
+  "base_syno": "81",
+  "status_2023": "Totally Encroached - Built-up",
+  "main": {
+   "parcels": 31,
+   "numbered": 30,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.28,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 29,
+   "numbered": 29,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.25,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Mallanna Kunta(Uska Bavi)",
+  "village": "Ameenpur",
+  "mandal": "Ameenpur",
+  "area_ha": 1.6,
+  "base_syno": "956",
+  "status_2023": "Partially Encroached - Built-up",
+  "main": {
+   "parcels": 37,
+   "numbered": 34,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.98,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 36,
+   "numbered": 33,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.85,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Gangarayan Cheruvu",
+  "village": "Manneguda",
+  "mandal": "Abdullapurmet",
+  "area_ha": 1.2,
+  "base_syno": "314",
+  "status_2023": "Partially Encroached - Built-up",
+  "main": {
+   "parcels": 32,
+   "numbered": 31,
+   "has_syn": 1,
+   "village_same": 0,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 32,
+   "numbered": 31,
+   "has_syn": 1,
+   "village_same": 0,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Tangalal Kunta",
+  "village": "Nanakaramguda",
+  "mandal": "Serilingampalle",
+  "area_ha": 0.9,
+  "base_syno": "102",
+  "status_2023": "Live",
+  "main": {
+   "parcels": 13,
+   "numbered": 13,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 13,
+   "numbered": 13,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Bulbul Kunta",
+  "village": "Lakshmiguda",
+  "mandal": "Rajendranagar",
+  "area_ha": 0.6,
+  "base_syno": "53",
+  "status_2023": "Partially Encroached - Built-up",
+  "main": {
+   "parcels": 22,
+   "numbered": 21,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 0.1,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 8,
+   "numbered": 6,
+   "has_syn": 1,
+   "village_same": 1,
+   "touches": 1,
+   "cover": 1.0,
+   "truncated": false
+  }
+ },
+ {
+  "lake": "Kummari Kunta",
+  "village": "Ameenpur",
+  "mandal": "Ameenpur",
+  "area_ha": 0.1,
+  "base_syno": "995",
+  "status_2023": "Partially Encroached - Built-up",
+  "main": {
+   "parcels": 11,
+   "numbered": 11,
+   "has_syn": 0,
+   "village_same": 0,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  },
+  "fourth": {
+   "parcels": 14,
+   "numbered": 14,
+   "has_syn": 0,
+   "village_same": 0,
+   "touches": 0,
+   "cover": 0.0,
+   "truncated": false
+  }
+ }
+]

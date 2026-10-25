@@ -21,12 +21,12 @@ const SETUE = (() => {
   // ---------- loading ----------
   async function load(onProgress) {
     const get = p => fetch(p).then(r => { if (!r.ok) throw new Error(p); return r.json(); });
-    const names = ['zones', 'model', 'reco', 'wardfeat', 'geo', 'hospitals', 'meta', 'rates', 'gov', 'hmda', 'hy', 'gw', 'gwq', 'civic', 'storm', 'heat', 'access', 'land', 'tanks', 'rainstats', 'plan', 'prohib', 'network', 'parcelIdx', 'quality', 'fire', 'seismic'];
+    const names = ['zones', 'model', 'reco', 'wardfeat', 'geo', 'hospitals', 'meta', 'rates', 'gov', 'hmda', 'hy', 'gw', 'gwq', 'civic', 'storm', 'heat', 'access', 'land', 'tanks', 'rainstats', 'plan', 'prohib', 'network', 'parcelIdx', 'quality', 'fire', 'seismic', 'tanksyn'];
     const paths = ['data/zones.json', 'data/model.json', 'data/reco.json', 'data/wardfeat.json',
       'data/geo.json', 'data/hospitals.json', 'data/meta.json', 'data/rates.json', 'data/gov.json', 'data/hmda_lakes.json', 'data/hydraa_tanks.json',
-      'data/groundwater.json', 'data/gwquality.json', 'data/civic.json', 'data/stormhist.json', 'data/heat.json', 'data/access.json', 'data/land.json', 'data/tanks.json', 'data/rainstats.json', 'data/plan.json', 'data/prohib.json', 'data/network.json', 'data/parcels/index.json', 'data/quality.json', 'data/fire.json', 'data/seismic.json'];
+      'data/groundwater.json', 'data/gwquality.json', 'data/civic.json', 'data/stormhist.json', 'data/heat.json', 'data/access.json', 'data/land.json', 'data/tanks.json', 'data/rainstats.json', 'data/plan.json', 'data/prohib.json', 'data/network.json', 'data/parcels/index.json', 'data/quality.json', 'data/fire.json', 'data/seismic.json', 'data/tank_syn.json'];
     // the evidence layers added later are optional: if one is missing the report says "unavailable" instead of failing
-    const optional = { gw: { meta: {}, stations: [] }, gwq: { meta: {}, samples: [] }, civic: { meta: {} }, storm: { events: [], wards: {} }, heat: null, access: null, land: { meta: {}, gwp: [], gwp_attrs: [], lost: [], forest: [], tx: [], sub: [], endow: [] }, tanks: { meta: {}, tanks: [], streams: [] }, rainstats: { meta: {}, mandals: {} }, plan: null, prohib: null, network: null, parcelIdx: null, quality: null, fire: null, seismic: null };
+    const optional = { gw: { meta: {}, stations: [] }, gwq: { meta: {}, samples: [] }, civic: { meta: {} }, storm: { events: [], wards: {} }, heat: null, access: null, land: { meta: {}, gwp: [], gwp_attrs: [], lost: [], forest: [], tx: [], sub: [], endow: [] }, tanks: { meta: {}, tanks: [], streams: [] }, rainstats: { meta: {}, mandals: {} }, plan: null, prohib: null, network: null, parcelIdx: null, quality: null, fire: null, seismic: null, tanksyn: null };
     D.loadFailed = [];
     const res = await Promise.all(paths.map((p, i) => get(p).catch(e => {
       D.loadFailed.push(p);
@@ -553,6 +553,7 @@ const SETUE = (() => {
     D.networkL = D.network && D.network.meta ? { meta: D.network.meta, sup: new Map(D.network.supply.map(c => [c[0], [c[1], c[2]]])), sew: new Map(D.network.sewer.map(c => [c[0], [c[1], c[2]]])), sections: D.network.sections.map(x => ({ ...x, _b: x.rings.map(bbLL) })) } : null;
     D.fireL = D.fire && D.fire.stations ? D.fire.stations.map(s => ({ lat: s[0], lon: s[1], name: s[2], district: s[3], status: s[4], remark: s[5], id: s[6] })) : null;
     D.seismicL = D.seismic && D.seismic.zones ? D.seismic.zones.map(z => ({ ...z, _b: z.rings.map(bbLL) })) : null;
+    D.tankPar = D.tanksyn && D.tanksyn.par ? new Map(Object.entries(D.tanksyn.par).map(([id, ps]) => [Number(id), ps.map(p => ({ ...p, _b: p.rings.map(bbLL) }))])) : null;
     const grid = g => g && g.meta ? g : null;
     D.access = grid(D.access);
     if (D.heat && D.heat.lst) {
@@ -879,6 +880,28 @@ const SETUE = (() => {
     return { zone: hit.zone, intensity: hit.intensity, other };
   }
 
+  // ---------- tank survey number near the pin (Step 2) ----------
+  // The state water-body layer records some tanks' own survey number ('Base_Syno'). This finds the nearest such tank and the parcel carrying that number next to its outline.
+  // A parcel with the tank's number is a survey-record fact. It is NOT the legal Full Tank Level and says nothing about encroachment.
+  function tankSurveyFacts(lat, lon) {
+    if (!D.tankPar || !D.hy || !D.hy.tanks.length) return null;
+    let best = null;
+    for (const t of D.hy.tanks) t.rings.forEach((r, i) => {
+      if (!near(t._b[i], lat, lon, .01)) return;
+      const inside = pipLL(lat, lon, r), d = inside ? 0 : distToPathLL(lat, lon, r);
+      if (d <= 600 && (!best || d < best.d || (d === best.d && t.syn && !best.t.syn))) best = { d, inside, t };
+    });
+    if (!best) return { tank: null };
+    const t = best.t, out = { tank: { name: t.name, village: t.village, mandal: t.mandal, syn: t.syn, s23: t.s23, d: best.d, inside: best.inside }, searched: false, parcels: [], pinIn: null, nearest: null };
+    if (!t.syn) return out;
+    const ps = D.tankPar.get(t.id);
+    if (!ps) return out;                                   // the parcel search for this tank did not complete: say so, never "none found"
+    out.searched = true; out.parcels = ps;
+    out.pinIn = ps.find(p => evenOdd(lat, lon, p.rings)) || null;
+    for (const p of ps) p.rings.forEach(rg => { const d = distToPathLL(lat, lon, rg); if (!out.nearest || d < out.nearest.d) out.nearest = { d, p }; });
+    return out;
+  }
+
   // ---------- pasted Google Maps links ----------
   // Returns {lat, lon} when the link carries coordinates; {text} when it carries an address or place name (to be looked up); {short, url} for a short link; null when it is not a Google Maps link.
   function parseMapsLink(q) {
@@ -1168,6 +1191,24 @@ const SETUE = (() => {
         note: parts.length ? 'Two map layers disagree about the same ground. That is a reason to investigate, not proof of encroachment or of any legal restriction; either outline can be off by metres, and a survey number can be much larger than a house plot.' : 'Only three layers were tested, and a drawn outline can be off by metres. This is not a clearance.', next: 'Ask for a boundary demarcation (FMB sketch) and the revenue record history of the survey number.' });
     } else add('land', { id: 'overlap', label: 'Mapped features overlapping the parcel outline', value: 'needs a matched survey parcel', level: 'unknown', kind: 'unavailable', conf: 'unavailable', source: '—', period: '—', res: '—',
       note: 'Pin-based findings above test the pin position only. Tests against the whole parcel outline need a pin that matches exactly one survey parcel.', next: 'Enter the survey number from your deed so the pin can be matched to its outline.' });
+    const tsv = tankSurveyFacts(r.lat, r.lon), TSRC = 'Telangana State GIS: HYDRAA water-body layer (tank survey number) + Bhunaksha cadastral and HYDRAA parcel outlines', TPER = 'undated (cadastral service created 2025-04-19; tank layer undated)';
+    if (miss('tank_syn.json')) notRun('land', 'tank_survey', 'Tank survey number near this pin', 'tank survey-number data');
+    else if (tsv && tsv.tank) {
+      const tk = tsv.tank, nm = tk.name || 'an unnamed tank', dist = tk.inside ? 'this pin is on the tank outline' : km(tk.d) + ' from the tank outline', syn = tk.syn.replace(/_/g, ' and ');
+      if (!tk.syn) add('land', { id: 'tank_survey', label: 'Tank survey number near this pin', value: `${nm} · ${dist} · the state layer records no survey number for it`, level: 'info', kind: 'official', conf: 'low', source: TSRC, period: TPER, res: 'tank outline (satellite)',
+        note: 'Only about a quarter of the 1,192 tank records carry a survey number, so a missing number says nothing about the tank. It means a survey-number check is not possible from this layer.', next: 'Ask the revenue office for the tank\'s survey number and compare it with the survey number on your deed.' });
+      else if (!tsv.searched) add('land', { id: 'tank_survey', label: 'Tank survey number near this pin', value: `${nm} · ${dist} · recorded survey no. ${syn} · parcel search incomplete`, level: 'unknown', kind: 'unavailable', conf: 'unavailable', source: TSRC, period: TPER, res: '—',
+        note: 'The tank\'s survey number is recorded, but the parcel carrying it could not be looked up.', next: 'Check that survey number on Bhu Bharati.' });
+      else {
+        const cov = p => p.touch ? Math.round(p.cov * 100) + '% of the tank outline is inside it' : 'it does not touch the outline';
+        if (tsv.pinIn) add('land', { id: 'tank_survey', label: 'Tank survey number near this pin', value: `this pin is inside survey parcel ${tsv.pinIn.no} (${tsv.pinIn.v}), the survey number the state layer records for ${nm}${tk.inside ? '' : ' · ' + dist}`, level: tsv.pinIn.touch && tk.d <= 300 ? 'watch' : 'info', kind: 'official', conf: 'low', source: TSRC, period: TPER, res: 'parcel outline (~1 m) vs tank outline',
+          note: `A match of survey numbers: ${cov(tsv.pinIn)}. A survey parcel is often much larger than the water, so this does not say the plot is under water, inside the legal Full Tank Level or encroached. It is a reason to check the title, not a finding about it. In a 20-lake check a parcel with the tank's number touched the outline at 14 lakes and not at 6.`, next: 'Ask for the revenue record history of this survey number and for the FTL / buffer certificate from HYDRAA or the irrigation department.' });
+        else if (tsv.nearest) add('land', { id: 'tank_survey', label: 'Tank survey number near this pin', value: `${nm} · ${dist} · recorded survey no. ${syn} · parcel ${tsv.nearest.p.no} is ${km(tsv.nearest.d)} from the pin`, level: 'info', kind: 'official', conf: 'low', source: TSRC, period: TPER, res: 'parcel outline (~1 m) vs tank outline',
+          note: `${tsv.nearest.d <= 300 ? 'Close to' : 'Away from'} the tank survey parcel, not on it (${cov(tsv.nearest.p)}). This is not the legal Full Tank Level and says nothing about whether the pin is inside it.`, next: 'Ask HYDRAA or the irrigation department for the FTL / buffer certificate of this tank.' });
+        else add('land', { id: 'tank_survey', label: 'Tank survey number near this pin', value: `${nm} · ${dist} · recorded survey no. ${syn} · no parcel with that number found next to the outline`, level: 'info', kind: 'official', conf: 'low', source: TSRC, period: TPER, res: 'tank outline (satellite)',
+          note: 'In a 20-lake check a parcel with the tank\'s number was found next to the outline at 16 lakes and not at 4: the number may belong to another village, another numbering, or be a typing error in the layer.', next: 'Ask the revenue office which survey number the tank is recorded under.' });
+      }
+    }
     add('land', { id: 'perm', label: 'Layout and building permissions', value: 'not integrated', level: 'unknown', kind: 'unavailable', conf: 'unavailable', source: 'HMDA / DTCP', note: '', next: 'Ask for the approved layout (LP number) and building permission, and check them online.' });
     const lbd = lakeBand(r.water);
     add('land', { id: 'ftl', label: 'Lake buffer / FTL risk', value: ['inside', 'very close', 'near'].includes(lbd.band) ? lbd.text : 'no mapped lake or tank close by', level: ['inside', 'very close'].includes(lbd.band) ? 'concern' : lbd.band === 'near' ? 'watch' : 'good', kind: 'indicative', conf: 'medium', source: 'OpenStreetMap + TGRAC outlines', period: 'undated', res: 'polygon', note: 'Plots near a lake\'s Full Tank Level or buffer can face demolition. The outline above is not the legal boundary.', next: 'Get the FTL / buffer confirmation in writing.' });
@@ -1400,5 +1441,5 @@ const SETUE = (() => {
     return L.join(' ');
   }
 
-  return { load, report, evidence, checklist, HIGH, fireFacts, seismicFacts, parseMapsLink, compare, coverage, parcelLoad, parcelMatch, attachParcel, setParcel, planFacts, netFacts, prohibFacts, overlapFacts, freshness, qualityTable, removalImpact, PARCEL_LABEL, normNum, editSim, rainFacts, analogFacts, tankFacts, streamFacts, ANALOG_EVENTS, roadAccess, gwFacts, gwqFacts, civicFacts, heatFacts, accessFacts, SECTIONS, KIND_LABEL, HY_LABEL, hmdaText, hmdaLink, pillars, addTerrain, elevationProfile, reanalyse: analyse, airNow, curve, totalCost, market, priceBand, claimCheck, rainOn, forecast, depthAt, imd, narrate, locate, lakeBand, nearest, poisWithin, hav, inBounds, tier, LOADING, FAC, get D() { return D; }, get data() { return D; } };
+  return { load, report, evidence, checklist, HIGH, fireFacts, seismicFacts, tankSurveyFacts, parseMapsLink, compare, coverage, parcelLoad, parcelMatch, attachParcel, setParcel, planFacts, netFacts, prohibFacts, overlapFacts, freshness, qualityTable, removalImpact, PARCEL_LABEL, normNum, editSim, rainFacts, analogFacts, tankFacts, streamFacts, ANALOG_EVENTS, roadAccess, gwFacts, gwqFacts, civicFacts, heatFacts, accessFacts, SECTIONS, KIND_LABEL, HY_LABEL, hmdaText, hmdaLink, pillars, addTerrain, elevationProfile, reanalyse: analyse, airNow, curve, totalCost, market, priceBand, claimCheck, rainOn, forecast, depthAt, imd, narrate, locate, lakeBand, nearest, poisWithin, hav, inBounds, tier, LOADING, FAC, get D() { return D; }, get data() { return D; } };
 })();

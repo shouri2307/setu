@@ -1,0 +1,31 @@
+tanks with a name and a usable Base_Syno: 166 of 1192
+
+| # | lake (village) | ~area ha | Base_Syno | main layer: parcels / has Base_Syno / touches lake | Fourth_Window: parcels / has Base_Syno / touches lake |
+|---|---|---|---|---|---|
+| 1 | Rawiral Cheruvu (Sardar Nagar) | 350.9 | 230 | 132 / no / no | 132 / no / no |
+| 2 | Gopi Cheruvu (Serilingampalle (M)) | 35.1 | 77 | 34 / yes / yes 2% | 34 / yes / yes 2% |
+| 3 | Kotta Cheruvu (Vattinagulapalle) | 16.5 | 468 | 53 / yes / yes 7% | 53 / yes / yes 7% |
+| 4 | Patel Cheruvu (Miyapur) | 13.1 | 70 | 5 / yes / yes 91% | 30 / yes / yes 78% |
+| 5 | Dammai cheruvu (Nagaram) | 10.7 | 241 | 45 / no / no | 46 / no / no |
+| 6 | Mukkasani Kunta (Puppalguda) | 8.0 | 285 | 29 / yes / yes 75% | 29 / yes / yes 72% |
+| 7 | Amrakunta (Jalpally) | 7.2 | 34 | 12 / yes / no | 20 / yes / yes 100% |
+| 8 | Gunta Bai Kunta (Pedda Amberpet) | 6.4 | 98 | 53 / yes / yes 83% | 53 / yes / yes 83% |
+| 9 | Beera Cheru (Nadargul) | 5.3 | 432 | 55 / yes / yes 51% | 55 / yes / yes 51% |
+| 10 | Vaddervani Kunta (Thumkunta) | 4.1 | 367 | 10 / no / no | 10 / no / no |
+| 11 | Kamballa Kunta (Dommara pochampally) | 3.6 | 108 | 28 / yes / yes 95% | 28 / yes / yes 95% |
+| 12 | Kandla Kunta (Nadargul) | 3.3 | 553 | 12 / yes / yes 28% | 12 / yes / yes 28% |
+| 13 | Chinna Kunta (Kuntloor) | 2.9 | 176 | 44 / yes / yes 95% | 44 / yes / yes 95% |
+| 14 | Brhamana Kunta (Puppalguda) | 2.6 | 345 | 16 / yes / yes 91% | 16 / yes / yes 91% |
+| 15 | Nallacheruvu (Neknampur) | 2.1 | 81 | 30 / yes / yes 28% | 29 / yes / yes 25% |
+| 16 | Mallanna Kunta(Uska Bavi) (Ameenpur) | 1.6 | 956 | 34 / yes / yes 98% | 33 / yes / yes 85% |
+| 17 | Gangarayan Cheruvu (Manneguda) | 1.2 | 314 | 31 / yes / no | 31 / yes / no |
+| 18 | Tangalal Kunta (Nanakaramguda) | 0.9 | 102 | 13 / yes / no | 13 / yes / no |
+| 19 | Bulbul Kunta (Lakshmiguda) | 0.6 | 53 | 21 / yes / yes 10% | 6 / yes / yes 100% |
+| 20 | Kummari Kunta (Ameenpur) | 0.1 | 995 | 11 / no / no | 14 / no / no |
+
+lakes tested: 20; both layers answered: 20
+Fourth_Window returns more numbered parcels than the main layer at: 4 lakes; fewer at: 3 ; equal at: 13
+main layer has a parcel with the tank's survey number nearby: 16 | and it touches the lake outline: 13
+Fourth_Window has a parcel with the tank's survey number nearby: 16 | and it touches the lake outline: 14
+village spelling identical in the matching parcel (main layer): 10 of 16
+either layer touches: 14

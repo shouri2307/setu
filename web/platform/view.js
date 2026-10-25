@@ -30,7 +30,7 @@ const View = (() => {
     road: 'Distance to a main road', acc_hospital: 'Drive to a hospital', acc_metro: 'Drive to a metro or rail station', acc_bus: 'Drive to a bus stop', acc_school: 'Drive to a school', acc_market: 'Drive to a market',
     choke: 'Traffic jam points nearby', junc: 'Planned junction improvement', power: 'Power cuts (old record)', tx: 'High-voltage line nearby', sub: 'Electricity substation nearby', landfill: 'Garbage dump nearby', noise: 'Noise (old record)', air: 'Air quality right now',
     f_hospital: 'Hospital nearby', f_school: 'School nearby', f_market: 'Market nearby', f_metro: 'Metro or rail station nearby', f_bus: 'Bus station nearby', f_park: 'Park nearby', f_bank: 'Bank nearby', f_police: 'Police station nearby', f_fire: 'Fire station nearby', f_amb: '108 ambulance station', f_jobs: 'Jobs, malls and cinemas nearby',
-    fire_gis: 'Fire station on the state list', seismic_gis: 'Earthquake zone on the state map',
+    tank_survey: 'Tank survey number near this pin', fire_gis: 'Fire station on the state list', seismic_gis: 'Earthquake zone on the state map',
     lost: 'Built where a lake used to be?', forest: 'Forest land nearby', endow: 'Temple (endowment) land nearby', plot: 'Which plot is this?', prohib: 'Listed as restricted land?', planauth: 'Which official plan applies', zoning: 'What the land is zoned for',
     perm: 'Approved layout or building permission', overlap: 'Does the plot touch a lake, tank or forest?', ftl: 'Lake buffer (FTL) risk', widen: 'Planned drain widening', price: 'Typical asking price'
   };

@@ -6,16 +6,16 @@ The same data drives the internal dashboard at `web/quality.html`. Survey / obse
 
 ## Summary
 
-75 findings, 36 sources.
+76 findings, 37 sources.
 
 | Flag | Findings |
 |---|---|
 | Stale (older than allowed for this kind of data) | 4 |
-| Undated (no observation date published) | 41 |
+| Undated (no observation date published) | 42 |
 | Unvalidated (not checked against anything independent) | 42 |
 | Failed validation | 1 |
 | Licence: demo / non-commercial only | 10 |
-| Licence unverified | 66 |
+| Licence unverified | 67 |
 | No data (reported as unknown) | 3 |
 | Coarse scope (ward, mandal, locality or city-wide) | 7 |
 
@@ -59,6 +59,7 @@ The same data drives the internal dashboard at `web/quality.html`. Survey / obse
 | HMWSSB mapped water-supply pipes and sewer lines; service sections | TGRAC TCUR service (HMWSSB network layers) | not published | 2025-05-24 | 2026-10-24 | 100 m cells (derived); section polygons | supply pipes across most of the city; sewer lines only for the 'core city' | undated | unvalidated: mapping completeness is uneven (900 m boxes hold from 0 to over 700 pipe segments); a pipe on the map is not a connection | verify: terms not confirmed; pipe geometry is not redistributed, only coarse cell presence | 2 |
 | State fire-station list | Telangana State GIS (TGRAC) TCUR layer 61 'Fire Stations' | not published | 2025-05-24 | 2026-10-25 | point (positional accuracy not published) | 71 records for the Hyderabad metro districts: 32 Existing and 39 Proposed | undated | unvalidated: compared with OpenStreetMap at 10 places: the nearest Existing station matched at 4; OSM maps only 10 stations in the area so it cannot confirm the rest; 6 of the 8 OSM stations inside the study box sit on a listed station, 2 do not; the source's remarks (Moved, not found accurate) did not separate matching from non-matching stations | verify: no licence text is published for this service | 1 |
 | State seismic-zone layer | Telangana State GIS (TGRAC) TCUR layer 90 'Sesismic Zones' | not published | 2025-05-24 | 2026-10-25 | regional zone polygon (~50 m simplification) | 3 polygons: Zone II (two areas) and Zone III. The whole Hyderabad map region (17.20-17.66 N, 78.18-78.70 E, 2,392 grid points) is Zone II; the nearest Zone III boundary is at least 102 km away | undated | internal-check: agrees with the Zone II reference at all 2,392 grid points of the map region and at the 14 test places; the edition of the zoning behind the layer is not published and neither source is the BIS standard itself | verify: no licence text is published for this service | 1 |
+| Tank survey numbers and the parcels carrying them | Telangana State GIS (TGRAC): HYDRAA water-body layer 'Base_Syno', matched to Bhunaksha_Cadastral layer 0 and Hydra_Folder/Fourth_Window layer 0 | not published | 2025-04-19 | 2026-10-25 | tank outline (satellite) and parcel outline (~1 m) | 313 of 1,192 tank records carry a usable survey number (26%); for 271 of those a parcel with that number was found within 150 m of the outline, and for 253 it touches the outline | undated | internal-check: checked at 20 lakes chosen by a fixed rule (named tanks with a survey number, evenly spaced by size): a parcel with the tank's number was found nearby at 16 and touches the outline at 14 (cadastral layer alone: 13). The two parcel layers return the same parcels at 13 lakes; the HYDRAA layer has more at 4 and fewer at 3. The village spelling differs between layers at 6 of 16, so matching uses number and position, not names. Not checked against the revenue records themselves | verify: no licence text is published for these services | 1 |
 
 ## Findings
 
@@ -141,6 +142,7 @@ Scope says what a result applies to: the pin position, the matched parcel outlin
 | Mapped features overlapping the parcel outline (`overlap`) | land | parcel: the whole matched survey outline, tested against three layers | Survey-parcel outlines; Disappeared water bodies; Forest boundary, high-voltage lines and substations; Tank capacity records and stream order | undated, unvalidated, licence-unverified | needs a pin that matches exactly one survey parcel; not possible in the old city core where no survey parcels are mapped |
 | Fire station on the state list (`fire_gis`) | infra | nearby: listed points within 10 km; straight line, not response time | State fire-station list | undated, unvalidated, licence-unverified | no station listed as Existing within 10 km, or the list is not loaded |
 | Earthquake zone (state GIS layer) (`seismic_gis`) | hazards | area: the regional zone polygon the pin is in, not a building | State seismic-zone layer | undated, licence-unverified | outside the zones mapped in the state layer, or the layer is not loaded |
+| Tank survey number near this pin (`tank_survey`) | land | nearby: the nearest tank within 600 m and the survey parcel carrying its recorded number; a survey parcel is not a house plot | Tank survey numbers and the parcels carrying them | undated, licence-unverified | no tank within 600 m, the tank has no recorded survey number, or the file is not loaded |
 
 ## If a source is removed
 
@@ -184,3 +186,4 @@ Findings that rest only on the source become unknown; findings with other source
 | HMWSSB mapped water-supply pipes and sewer lines; service sections | supplynet, sewernet | — |
 | State fire-station list | fire_gis | — |
 | State seismic-zone layer | seismic_gis | — |
+| Tank survey numbers and the parcels carrying them | tank_survey | — |

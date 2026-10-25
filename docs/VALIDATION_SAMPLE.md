@@ -61,3 +61,11 @@ Groundwater popup (value, period, resolution, confidence, caveat shown; clicking
 - **Seismic:** state layer = Zone II at all 2,392 grid points of the map region; no disagreement with the reference anywhere.
 - **Tests (4,774 pass):** 71 records and statuses and remarks preserved verbatim; a Proposed station is never the headline station and never counted as present; the fire finding is information or unknown only, low confidence, never claims a station operates; the seismic finding is information only and never a safety claim; conflicting sources are both shown; near a zone boundary confidence drops; removing either file gives "data not loaded".
 - **Not validated:** positional accuracy of the fire points; the edition and date of the seismic zoning; the meaning of the source's remarks.
+
+## 9. Step 2 (tank survey numbers, lake-side parcels), 25 Oct 2026
+- **20 lakes:** a parcel with the tank's own survey number was found nearby at 16 and touches the outline at 14. Four lakes had no match (number may belong to another village or numbering, or be mistyped in the layer). Matching by village name alone missed half of them because spellings differ; the finding matches on number and position.
+- **All 313 numbered tanks:** a same-numbered parcel within 150 m for 271 (87%), touching the outline for 253 (81%).
+- **Parcel coverage, HYDRAA layer vs main layer:** similar totals, different places; 96% agreement on the number where both have a parcel. Not merged into plot matching (see DATA_REGISTER section E).
+- **Wording rule, tested:** the finding never says inside the legal FTL, encroached, illegal or safe to buy; it says a survey number matches and that this is a reason to check the title.
+- **Tests (4,790 pass):** placeholders dropped; every stored parcel carries the tank's number and no personal fields; counts in the file header match the file; statuses info/watch/unknown only, low confidence; an incomplete parcel search reads unknown, never "none found"; removing the file reads "data not loaded".
+- **Not validated:** the tank survey numbers against revenue records; the legal FTL (not retrievable); whether a numbered parcel is still a water body today.

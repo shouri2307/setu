@@ -29,6 +29,16 @@ STAT = {"Live": "L", "Partially Encroached - Built-up": "PB", "Totally Encroache
         "Partially Encroached - Agriculture": "PA", "Totally Encroached - Agriculture": "TA"}
 
 
+def usable_syn(raw):
+    """The tank's own survey number(s) as the layer records them ('Base_Syno'), or '' when it is blank or a placeholder.
+    Values of 10000 or more (88805 appears on 12 unrelated tanks, 99905 on 2) and text such as 'Not Visible' are placeholders, not survey numbers. '106_107' means two numbers."""
+    out = []
+    for part in str(raw or "").replace("&", "_").replace(",", "_").split("_"):
+        part = part.strip()
+        if part.replace("/", "").isdigit() and int(part.split("/")[0]) < 10000: out.append(part)
+    return "_".join(out)
+
+
 def get(url, params, tries=4):
     for a in range(tries):
         try:
@@ -72,8 +82,8 @@ def main():
             continue
         tanks.append({"name": (a.get("WB_Name") or "").strip(), "mandal": (a.get("Mandal") or "").strip(), "village": (a.get("Village") or "").strip(),
                       "admin": (a.get("Admin") or "").strip(), "origin": (a.get("WBCP") or "").strip(),
-                      "s14": STAT.get((a.get("WBS_2014") or "").strip(), "?"), "s23": STAT.get((a.get("WBS_2023") or "").strip(), "?"), "rings": rings})
-    (ROOT / "web" / "data" / "hydraa_tanks.json").write_text(json.dumps({"source": "TGRAC / HYDRAA water-body assessment (Telangana State GIS, public service)", "fetched": time.strftime("%Y-%m-%d"),
+                      "id": a.get("FID"), "syn": usable_syn(a.get("Base_Syno")), "s14": STAT.get((a.get("WBS_2014") or "").strip(), "?"), "s23": STAT.get((a.get("WBS_2023") or "").strip(), "?"), "rings": rings})
+    (ROOT / "web" / "data" / "hydraa_tanks.json").write_text(json.dumps({"source": "TGRAC / HYDRAA water-body assessment (Telangana State GIS, public service)", "fetched": time.strftime("%Y-%m-%d", time.localtime((CACHE / "hydraa_second_window.json").stat().st_mtime)),
         "legend": {"L": "Live", "PB": "Partially encroached (built-up)", "TB": "Totally encroached (built-up)", "PA": "Partially encroached (agriculture)", "TA": "Totally encroached (agriculture)"}, "tanks": tanks},
         separators=(",", ":"), ensure_ascii=False), encoding="utf-8")
     from collections import Counter

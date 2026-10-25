@@ -767,6 +767,26 @@
    "files": [
     "seismic.json"
    ]
+  },
+  "tgrac_tank_syn": {
+   "name": "Tank survey numbers and the parcels carrying them",
+   "provider": "Telangana State GIS (TGRAC): HYDRAA water-body layer 'Base_Syno', matched to Bhunaksha_Cadastral layer 0 and Hydra_Folder/Fourth_Window layer 0",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": "2025-04-19",
+   "fetched": "2026-10-25",
+   "res": "tank outline (satellite) and parcel outline (~1 m)",
+   "coverage": "313 of 1,192 tank records carry a usable survey number (26%); for 271 of those a parcel with that number was found within 150 m of the outline, and for 253 it touches the outline",
+   "licence": "verify",
+   "licence_note": "no licence text is published for these services",
+   "validation": "internal-check",
+   "validation_note": "checked at 20 lakes chosen by a fixed rule (named tanks with a survey number, evenly spaced by size): a parcel with the tank's number was found nearby at 16 and touches the outline at 14 (cadastral layer alone: 13). The two parcel layers return the same parcels at 13 lakes; the HYDRAA layer has more at 4 and fewer at 3. The village spelling differs between layers at 6 of 16, so matching uses number and position, not names. Not checked against the revenue records themselves",
+   "stale_months": null,
+   "limits": "a parcel with the tank's number is not the legal Full Tank Level and is not evidence of encroachment; the official FTL polygons could not be retrieved; most tank records have no survey number",
+   "files": [
+    "tank_syn.json",
+    "hydraa_tanks.json"
+   ]
   }
  },
  "factors": {
@@ -1536,6 +1556,16 @@
    ],
    "missing": "outside the zones mapped in the state layer, or the layer is not loaded",
    "label": "Earthquake zone (state GIS layer)"
+  },
+  "tank_survey": {
+   "sec": "land",
+   "scope": "nearby",
+   "scope_text": "the nearest tank within 600 m and the survey parcel carrying its recorded number; a survey parcel is not a house plot",
+   "sources": [
+    "tgrac_tank_syn"
+   ],
+   "missing": "no tank within 600 m, the tank has no recorded survey number, or the file is not loaded",
+   "label": "Tank survey number near this pin"
   }
  }
 }

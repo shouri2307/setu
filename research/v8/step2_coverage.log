@@ -1,0 +1,7 @@
+tiles: 154 | both counts returned: 154 | any failed: 0
+tiles with no numbered parcel in either layer: 0 | tiles with parcels in at least one: 154
+main only (HYDRAA has none): 11 | HYDRAA only (main has none): 9
+HYDRAA more than 1.25x main: 30 | main more than 1.25x HYDRAA: 13 | within 25%: 91
+sum of tile counts: main 47249, HYDRAA 49831 (HYDRAA / main = 1.05)
+tiles where HYDRAA has at least 50 more numbered parcels than main: [('78.42,17.38', 0, 888), ('78.42,17.35', 10, 818), ('78.51,17.44', 0, 528), ('78.54,17.38', 136, 582), ('78.54,17.44', 153, 571), ('78.48,17.41', 0, 393), ('78.48,17.38', 0, 392), ('78.42,17.41', 0, 360), ('78.39,17.47', 20, 335), ('78.42,17.32', 16, 295), ('78.39,17.29', 77, 347), ('78.57,17.38', 331, 600)]
+tiles where our shipped parcel tiles would gain from the HYDRAA layer (HYDRAA > 1.25x main or main empty): 39 of 154
