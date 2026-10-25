@@ -654,6 +654,22 @@ const argv = process.argv.slice(2);
     const lvl = {}; for (const s of rr.ev.sections) for (const f of s.findings) lvl[f.id] = f.level;
     ok(!['overlap', 'prohib'].some(id => lvl[id] === 'concern'), 'a map overlap or a prohibitory-layer listing is never rated "needs attention" on its own');
   }
+  // ---- pasted Google Maps links ----
+  {
+    const P = x => E.parseMapsLink(x);
+    const mine = 'https://www.google.com/maps/search/?api=1&query=Shri+Ahobilam+Matt%2C+2-2-20%2FB%2C+Bagh+Amberpet%2C+Hyderabad%2C+Telangana+500013';
+    ok(P(mine) && P(mine).text === 'Shri Ahobilam Matt, 2-2-20/B, Bagh Amberpet, Hyderabad, Telangana 500013', 'a Google "search?api=1&query=" link yields its address text (decoded, + as spaces, %2C as commas)');
+    ok(P('https://www.google.com/maps/search/?api=1&query=17.4401%2C78.3489') && P('https://www.google.com/maps/search/?api=1&query=17.4401%2C78.3489').lat === 17.4401, 'a query that is coordinates yields coordinates, not text');
+    ok(P('https://www.google.com/maps/place/Gachibowli,+Hyderabad/@17.4401,78.3489,15z').lat === 17.4401, 'a place link with @lat,lon yields coordinates');
+    ok(P('https://www.google.com/maps/place/17.4%C2%B0N/data=!3d17.4235!4d78.4745').lat === 17.4235 && P('https://www.google.com/maps/place/x/data=!3d17.4235!4d78.4745!5m1').lon === 78.4745, '!3d!4d pin coordinates win');
+    ok(P('https://www.google.com/maps/place/Hussain+Sagar+Lake/data=!4m2').text === 'Hussain Sagar Lake', 'a place link with a name and no coordinates yields the name');
+    ok(P('https://maps.app.goo.gl/AbC123xyz').short === true && P('https://maps.app.goo.gl/AbC123xyz').url === 'https://maps.app.goo.gl/AbC123xyz', 'a short link is recognised and its URL kept for the server to resolve');
+    ok(P('https://goo.gl/maps/AbC123').short === true, 'the older goo.gl/maps short links too');
+    ok(P('Gachibowli') === null && P('17.44, 78.35') === null && P('https://example.com/maps?q=1,2') === null, 'ordinary search text, coordinates and non-Google links are not treated as Google links');
+    ok(P('https://www.google.com/maps/search/?api=1&query=ab').short === true, 'a query shorter than 3 letters is not looked up');
+    ok(typeof P('https://www.google.com/maps/search/?api=1&query=%3Cb%3Ex%3C%2Fb%3E+road').text === 'string', 'text from a link is returned as plain text; the app shows it only through input.value and textContent, never as HTML');
+    const app = fs.readFileSync(path.join(WEB, 'platform', 'app.js'), 'utf8'); ok(!/innerHTML\s*=\s*[^;]*text/.test(app.slice(app.indexOf('async function searchText'), app.indexOf('async function doSearch'))), 'the link-search code never writes the pasted text into innerHTML');
+  }
   // ---- live APIs (optional) ----
   if (argv.includes('--net')) {
     const el = await E.addTerrain(await E.report(17.4015, 78.4100));

@@ -108,16 +108,30 @@ async function pickSuggestion(x) {
   }
   S.address = ''; setPin(x.lat, x.lon, x.main);
 }
-function parseMapsLink(q) {   // full Google Maps URLs carry the pin's coordinates; short links cannot be resolved in the browser
-  if (!/(google\.[a-z.]+\/maps|maps\.google|goo\.gl|maps\.app)/i.test(q)) return null;
-  const pick = re => { const m = q.match(re); return m ? { lat: +m[1], lon: +m[2] } : null; };
-  return pick(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/) || pick(/[?&](?:q|ll|query|destination|center)=(-?\d+\.\d+)(?:,|%2C)(-?\d+\.\d+)/i) || pick(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || { short: true };
+// a pasted Google Maps link is understood three ways: coordinates in it, an address in it (looked up), or a short link (the server follows the redirect)
+async function searchText(text) {
+  toast('Finding that address…', 6000);
+  let hit = null;
+  if (S.cfg.geocode) { const j = await api(`/api/geocode?q=${encodeURIComponent(text)}`, 8000).catch(() => null); if (j && j.lat != null && inRegion(j.lat, j.lon)) hit = { lat: j.lat, lon: j.lon, label: j.name || text.split(',')[0], address: j.address }; }
+  if (!hit) { const on = await onlineSearch(text); if (on.length) hit = { lat: on[0].lat, lon: on[0].lon, label: text.split(',')[0], address: on[0].sub }; }
+  if (!hit) return toast('Could not place that address on the map. Try the locality name, or click the map.', 6000);
+  $('toast').classList.remove('show'); $('q').value = text.split(',').slice(0, 2).join(','); S.address = hit.address || ''; return setPin(hit.lat, hit.lon, hit.label);
+}
+async function handleMapsLink(link) {
+  if (link.lat != null) return setPin(link.lat, link.lon, 'Pin from Google Maps link');
+  if (link.text) return searchText(link.text);
+  if (link.short && link.url) {
+    toast('Opening that short link…', 6000);
+    const j = await api(`/api/resolve?url=${encodeURIComponent(link.url)}`, 9000).catch(() => null);
+    const l2 = j && j.url ? SETUE.parseMapsLink(j.url) : null;
+    if (l2 && !l2.short) return handleMapsLink(l2);
+  }
+  toast('Could not read that Google link. Paste the full address from your browser bar, or search the place name.', 6500);
 }
 async function doSearch(q) {
   q = q.trim(); if (!q) return; $('sug').classList.remove('show');
-  const link = parseMapsLink(q);
-  if (link && link.short) return toast('That is a short Google link. Open it in your browser first, then paste the full address-bar URL here.', 6000);
-  if (link) return setPin(link.lat, link.lon, 'Pin from Google Maps link');
+  const link = SETUE.parseMapsLink(q);
+  if (link) return handleMapsLink(link);
   const m = q.match(/^\s*(-?\d{1,2}\.\d+)\s*[, ]\s*(-?\d{1,3}\.\d+)\s*$/);
   if (m) return setPin(+m[1], +m[2], 'Coordinates');
   if (sugItems.length && $('q').value === q) return pickSuggestion(sugItems[0]);

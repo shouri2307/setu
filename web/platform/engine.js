@@ -860,6 +860,23 @@ const SETUE = (() => {
     return { inside: true, sup, sew, section, cellM: Math.round(m.cell_deg * 110540) };
   }
 
+  // ---------- pasted Google Maps links ----------
+  // Returns {lat, lon} when the link carries coordinates; {text} when it carries an address or place name (to be looked up); {short, url} for a short link; null when it is not a Google Maps link.
+  function parseMapsLink(q) {
+    q = String(q || '').trim();
+    if (!/(google\.[a-z.]+\/maps|maps\.google|goo\.gl|maps\.app|g\.co\/kgs)/i.test(q)) return null;
+    const num = (re) => { const m = q.match(re); return m ? { lat: +m[1], lon: +m[2] } : null; };
+    const ll = num(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/) || num(/[?&](?:q|ll|query|destination|center)=(-?\d+\.\d+)(?:,|%2C)\s*(-?\d+\.\d+)/i) || num(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+    if (ll) return ll;
+    const dec = s => { try { return decodeURIComponent(s.replace(/\+/g, ' ')).replace(/\s+/g, ' ').trim(); } catch (e) { return s.replace(/\+/g, ' ').trim(); } };
+    const tq = q.match(/[?&](?:query|q|destination)=([^&#]+)/i);
+    if (tq && dec(tq[1]).length >= 3) return { text: dec(tq[1]) };
+    const pl = q.match(/\/maps\/place\/([^/@?#]+)/i);
+    if (pl && dec(pl[1]).length >= 3) return { text: dec(pl[1]) };
+    if (/(goo\.gl|maps\.app|g\.co\/kgs)/i.test(q)) return { short: true, url: (q.match(/https?:\/\/\S+/) || [q])[0] };
+    return { short: true, url: '' };
+  }
+
   // ---------- evidence-quality registry helpers ----------
   const Q = () => (D.quality && D.quality.sources) ? D.quality : null;
   const monthsBetween = (ym, asOf) => { const [y, mo] = String(ym).split('-').map(Number); return (asOf.getUTCFullYear() - y) * 12 + (asOf.getUTCMonth() + 1 - (mo || 12)); };
@@ -1346,5 +1363,5 @@ const SETUE = (() => {
     return L.join(' ');
   }
 
-  return { load, report, evidence, checklist, HIGH, compare, coverage, parcelLoad, parcelMatch, attachParcel, setParcel, planFacts, netFacts, prohibFacts, overlapFacts, freshness, qualityTable, removalImpact, PARCEL_LABEL, normNum, editSim, rainFacts, analogFacts, tankFacts, streamFacts, ANALOG_EVENTS, roadAccess, gwFacts, gwqFacts, civicFacts, heatFacts, accessFacts, SECTIONS, KIND_LABEL, HY_LABEL, hmdaText, hmdaLink, pillars, addTerrain, elevationProfile, reanalyse: analyse, airNow, curve, totalCost, market, priceBand, claimCheck, rainOn, forecast, depthAt, imd, narrate, locate, lakeBand, nearest, poisWithin, hav, inBounds, tier, LOADING, FAC, get D() { return D; }, get data() { return D; } };
+  return { load, report, evidence, checklist, HIGH, parseMapsLink, compare, coverage, parcelLoad, parcelMatch, attachParcel, setParcel, planFacts, netFacts, prohibFacts, overlapFacts, freshness, qualityTable, removalImpact, PARCEL_LABEL, normNum, editSim, rainFacts, analogFacts, tankFacts, streamFacts, ANALOG_EVENTS, roadAccess, gwFacts, gwqFacts, civicFacts, heatFacts, accessFacts, SECTIONS, KIND_LABEL, HY_LABEL, hmdaText, hmdaLink, pillars, addTerrain, elevationProfile, reanalyse: analyse, airNow, curve, totalCost, market, priceBand, claimCheck, rainOn, forecast, depthAt, imd, narrate, locate, lakeBand, nearest, poisWithin, hav, inBounds, tier, LOADING, FAC, get D() { return D; }, get data() { return D; } };
 })();

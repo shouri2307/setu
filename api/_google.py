@@ -186,6 +186,78 @@ def suggest(q, token):
     return res
 
 
+_geo_cache = {}
+HYD_BOX = (17.0, 18.0, 77.9, 79.0)   # south, north, west, east: results outside the Hyderabad region are dropped
+
+
+def geocode(q):
+    """Address text -> one point, with ONE Places Text Search request (cached). Used when a pasted Google Maps link carries an address and no coordinates."""
+    if not server_key():
+        return {"error": "no_key"}
+    q = (q or "").strip()[:200]
+    if len(q) < 3:
+        return {"error": "too_short"}
+    ck = q.lower()
+    with _lock:
+        hit = _geo_cache.get(ck)
+        if hit and time.time() - hit[0] < TTL:
+            return hit[1]
+    body = {"textQuery": q, "regionCode": "IN", "pageSize": 1,
+            "locationBias": {"circle": {"center": HYD, "radius": 45000.0}}}
+    try:
+        data = _post(f"{PLACES}/places:searchText", body, "places.displayName,places.formattedAddress,places.location")
+    except Exception as e:
+        return {"error": _err(e)}
+    ps = data.get("places") or []
+    if not ps:
+        res = {"error": "not_found"}
+    else:
+        loc = ps[0].get("location", {}); la, lo = loc.get("latitude"), loc.get("longitude")
+        if la is None or not (HYD_BOX[0] <= la <= HYD_BOX[1] and HYD_BOX[2] <= lo <= HYD_BOX[3]):
+            res = {"error": "outside_region"}
+        else:
+            res = {"lat": la, "lon": lo, "address": ps[0].get("formattedAddress", ""), "name": (ps[0].get("displayName") or {}).get("text", "")}
+    with _lock:
+        if len(_geo_cache) > 300:
+            _geo_cache.clear()
+        _geo_cache[ck] = (time.time(), res)
+    return res
+
+
+# Short Google links (maps.app.goo.gl/..., goo.gl/maps/...) cannot be opened from the browser (no CORS). The server follows the redirect itself.
+# This uses no Google API and no key. It will only ever contact Google's own link hosts, and refuses to follow a redirect anywhere else.
+LINK_HOSTS = ("maps.app.goo.gl", "goo.gl", "g.co", "google.com", "maps.google.com")
+
+
+def _link_ok(url):
+    try:
+        u = urlparse(url)
+    except Exception:
+        return False
+    h = (u.hostname or "").lower()
+    return u.scheme in ("http", "https") and any(h == x or h.endswith("." + x) for x in LINK_HOSTS)
+
+
+def resolve(url):
+    from urllib.request import HTTPRedirectHandler, build_opener
+    if not _link_ok(url):
+        return {"error": "not_a_google_link"}
+
+    class Guard(HTTPRedirectHandler):
+        def redirect_request(self, req, fp, code, msg, headers, newurl):
+            if not _link_ok(newurl):
+                raise HTTPError(newurl, 403, "redirect to a non-Google host refused", headers, fp)
+            return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+    try:
+        op = build_opener(Guard)
+        with op.open(Request(url, headers={"User-Agent": "Mozilla/5.0 SETU-link-resolver"}), timeout=7) as r:
+            final = r.geturl()
+    except Exception as e:
+        return {"error": _err(e)}
+    return {"url": final}
+
+
 def place(pid, token):
     if not server_key():
         return {"error": "no_key"}
@@ -224,13 +296,17 @@ def handle(path):
     route = u.path.rstrip("/")
     try:
         if route == "/api/config":
-            return 200, {"mapsKey": browser_key(), "places": bool(server_key()) and nearby_enabled(), "suggest": bool(server_key() or tomtom_key())}
+            return 200, {"mapsKey": browser_key(), "places": bool(server_key()) and nearby_enabled(), "suggest": bool(server_key() or tomtom_key()), "geocode": bool(server_key())}
         if route == "/api/health":
             return 200, health()
         if route == "/api/places":
             return 200, nearby_all(float(q["lat"]), float(q["lon"]))
         if route == "/api/suggest":
             return 200, (suggest(q.get("q", ""), q.get("token", "t")) if server_key() else tomtom_suggest(q.get("q", "")))
+        if route == "/api/geocode":
+            return 200, geocode(q.get("q", ""))
+        if route == "/api/resolve":
+            return 200, resolve(q.get("url", ""))
         if route == "/api/place":
             if q["id"].startswith("ll:"):          # TomTom result: coordinates are in the id
                 la, lo = q["id"][3:].split(",")
