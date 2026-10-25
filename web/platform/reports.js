@@ -84,6 +84,81 @@ const Reports = (() => {
       Data: SRTM terrain · Telangana State GIS (GHMC nalas &amp; inundation list) · OpenStreetMap · ESA WorldCover · Open-Meteo · ${r.source === 'google' ? 'Google Places' : 'Overture Maps places (Meta · Microsoft · Foursquare)'} · GHMC public data. Generated ${new Date().toLocaleString('en-IN')}.</div>`;
   }
 
+
+  /* ---------- five-section evidence report (no combined score; every finding shows where it comes from) ---------- */
+  const EVCOL = { Concern: 'var(--e)', Watch: 'var(--c)', Good: 'var(--a)', Unknown: 'var(--muted)' };
+  const EVIC = { concern: '⛔', watch: '⚠️', good: '✅', info: 'ℹ️', unknown: '❔' };
+  function evFinding(f) {
+    const KL = SETUE.KIND_LABEL;
+    return `<div class="evf lv-${f.level}"><div class="evh"><span class="ic">${EVIC[f.level]}</span><b>${esc(f.label)}</b><span class="kind k-${f.kind}">${esc(KL[f.kind] || f.kind)}</span></div>
+      <div class="evv">${esc(f.value)}</div>${f.note ? `<div class="evn">${esc(f.note)}</div>` : ''}
+      <div class="evm"><span>Confidence <b class="conf-${f.conf}">${esc(f.conf)}</b></span>${f.source ? `<span>Source: ${esc(f.source)}</span>` : ''}${f.period ? `<span>Period: ${esc(f.period)}</span>` : ''}${f.res ? `<span>Resolution: ${esc(f.res)}</span>` : ''}</div>
+      ${f.scope ? `<div class="evs"><span class="scope sc-${f.scope}">Applies to: ${SCOPE_LAB[f.scope] || esc(f.scope)}</span><small>${esc(f.scopeText || '')}</small></div>` : ''}
+      ${f.links && f.links.length ? `<div class="evl">${f.links.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join(' · ')}</div>` : ''}
+      ${f.next ? `<div class="evx">▸ Next: ${esc(f.next)}</div>` : ''}</div>`;
+  }
+  const SCOPE_LAB = { pin: 'the pin position', parcel: 'the matched parcel outline', nearby: 'features near the pin', area: 'an area estimate', ward: 'the whole ward', mandal: 'the whole mandal', locality: 'a locality', region: 'the whole city', live: 'live data for this position', none: 'nothing (no data)' };
+
+  function gapsCard(r) {
+    const g = (r.ev && r.ev.gaps) || []; if (!g.length) return '';
+    return `<details class="more gapcard"><summary><b>Why this report is incomplete</b><span>${g.length} thing${g.length === 1 ? '' : 's'} SETU could not establish</span></summary><div class="mbody"><div class="lead">Each item below is shown as unknown in the report. Unknown means "not established", never "safe".</div>
+      ${g.map(x => `<div class="gap"><b>${esc(x.label)}</b><i>${esc(x.section)}</i><span>${esc(x.why)}</span></div>`).join('')}</div></details>`;
+  }
+  function evidenceCard(r, S) { return r.ev ? View.identity(r, S) + View.shortVersion(r, S) + View.topics(r, S) : ''; }
+
+  /* ---------- evidence-driven due-diligence checklist: one action per concern or data gap; ticks are remembered on this device ---------- */
+  const chkStore = (key, set) => { try { if (set === undefined) return localStorage.getItem(key) === '1'; localStorage.setItem(key, set ? '1' : '0'); } catch (e) { return false; } };
+  function checklistCard(r) {
+    const c = SETUE.checklist(r); if (!c) return '';
+    const base = 'sethu.chk.' + r.lat.toFixed(4) + ',' + r.lon.toFixed(4) + '.';
+    const TAG = { concern: 'concern', watch: 'watch', unknown: 'data gap', standard: 'every purchase' };
+    const all = [...c.items, ...c.std], ticked = all.filter(it => chkStore(base + it.key)).length;
+    const row = it => { const k = base + it.key, done = chkStore(k), w = it.where || {};
+      return `<label class="chk${done ? ' done' : ''}"><input type="checkbox" data-chk="${esc(k)}"${done ? ' checked' : ''}><span class="cb"><span class="ct"><b>${esc(it.trigger.label)}</b><i class="lvtag lt-${it.trigger.level}">${TAG[it.trigger.level] || ''}</i></span>
+        ${it.trigger.value ? `<span class="cs">${esc(it.trigger.value)}</span>` : ''}<span class="cw">${esc(it.why)}</span><span class="ca"><b>Do:</b> ${esc(it.action)}</span>
+        <span class="cwh"><b>Where:</b> ${w.url ? `<a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(w.name)}</a>` : esc(w.name || '')}${w.status ? ` <small>(${esc(w.status)})</small>` : ''}</span>${it.doc ? `<span class="cd"><b>Ask for:</b> ${esc(it.doc)}</span>` : ''}</span></label>`; };
+    const groups = Object.entries(c.cats).map(([cat, name]) => { const its = [...c.items, ...c.std].filter(i => i.cat === cat); return its.length ? `<div class="chkgrp"><h4>${esc(name)}</h4>${its.map(row).join('')}</div>` : ''; }).join('');
+    return `<div class="card chkcard"><h3>Due-diligence checklist <span class="chkprog" style="color:var(--muted);font-weight:600">${ticked} of ${all.length} ticked</span></h3>
+      <div class="lead">Built from what this report found: one step for every concern, watch item and data gap, plus two checks that apply to every purchase. Legal and land-record checks are kept apart from flood, water and infrastructure ones.</div>${groups}
+      <div class="legend-note"><b>Unknown means "verify", not "unsafe".</b> A missing record is not a finding. SETU has not verified any office's process unless the line says so; where it says "not verified", ask the office what it needs. Ticks are saved on this device only.</div></div>`;
+  }
+
+
+  /* ============================== COMPARE TWO ADDRESSES ============================== */
+  const CMP_TAG = { 'a-more-severe': 'A is rated worse', 'b-more-severe': 'B is rated worse', same: 'same', 'not-comparable': 'only one side could be checked', 'both-unknown': "neither could be checked",
+    'only-a': 'shown for A only', 'only-b': 'shown for B only', 'differs-unrated': 'differs (not rated)' };
+  function compareView(S) {
+    const { a, b } = S.cmp, c = SETUE.compare(a, b), open = (S && S.open) || {};
+    const nameA = S.cmp.la || a.ward.name, nameB = S.cmp.lb || b.ward.name, pc = x => Math.round(x * 100) + '%', ST = View.STATUS;
+    const title = (id, lab) => View.title({ id, label: lab });
+    const cnt = r => { const all = r.ev.sections.flatMap(s => s.findings), n = l => all.filter(f => f.level === l).length; return { c: n('concern'), w: n('watch'), g: n('good'), u: n('unknown') }; };
+    const cell = f => { if (!f) return '<span class="cmuted">not shown for this address</span>'; const st = ST[f.level] || ST.info;
+      return `<span class="v-cell"><span class="v-ic b-${st.k}" aria-hidden="true">${st.glyph}</span><span><b class="s-${st.k}">${st.word}</b><br>${esc(f.value)}</span></span>`; };
+    const head = (r, nm, tag, cov, cl) => { const n = cnt(r), id = r.ev.identity;
+      return `<div class="v-card v-cmphead"><div class="v-eyebrow">Address ${tag}</div><h2>${esc(nm)}</h2><div class="v-sub">${esc(r.ward.name)} · ${r.lat.toFixed(4)}, ${r.lon.toFixed(4)}</div>
+        <div class="v-counts"><span class="n-bad"><b>${n.c}</b> need attention</span><span class="n-warn"><b>${n.w}</b> look into</span><span class="n-ok"><b>${n.g}</b> no issue found</span><span class="n-mute"><b>${n.u}</b> couldn't check</span></div>
+        <p class="v-small">${cov.known} of ${cov.total} findings had data (${pc(cov.pct)}) · ${cl} things to do before paying · ${esc(id.label)}</p>
+        <button class="v-btn ghost sm" data-act="cmp-open" data-which="${tag.toLowerCase()}">Open the full check for ${tag}</button></div>`; };
+    const diff = rw => `<div class="v-cdiff"><div class="v-cdt">${esc(title(rw.id, rw.label))}<small>${esc(rw.section)}</small></div><div class="v-ccols"><div><em>A</em>${cell(rw.a)}</div><div><em>B</em>${cell(rw.b)}</div></div></div>`;
+    const big = c.biggest.slice(0, 8).map(diff).join(''), gaps = c.notComparable.slice(0, 10).map(diff).join('');
+    const secs = c.sections.map(sec => {
+      const nd = sec.counts.aMore + sec.counts.bMore, T = View.TOPICS.find(t => t.id === sec.id) || { icon: '', title: sec.title };
+      const rating = r => ST[{ Concern: 'concern', Watch: 'watch', Good: 'good', Unknown: 'unknown' }[r]] || ST.unknown;
+      const rows = sec.rows.map(rw => `<div class="v-crow cmp-${rw.cmp}"><div class="v-cdt">${esc(title(rw.id, rw.label))}<small>${esc(CMP_TAG[rw.cmp])}</small></div><div class="v-ccols"><div><em>A</em>${cell(rw.a)}</div><div><em>B</em>${cell(rw.b)}</div></div></div>`).join('');
+      return `<details class="more v-topic t-mute" data-id="cmp_${sec.id}"${open['cmp_' + sec.id] !== undefined ? (open['cmp_' + sec.id] ? ' open' : '') : (nd ? ' open' : '')}><summary><span class="v-ticon" aria-hidden="true">${T.icon}</span><span class="v-tt"><b>${esc(T.title)}</b><small>${nd} rated difference${nd === 1 ? '' : 's'} · ${sec.counts.notComparable} only one side could be checked</small></span>
+        <span class="v-tr"><small>A: <b class="s-${rating(sec.ratingA).k}">${rating(sec.ratingA).word}</b></small><small>B: <b class="s-${rating(sec.ratingB).k}">${rating(sec.ratingB).word}</b></small></span></summary><div class="v-tbody">${rows}</div></details>`;
+    }).join('');
+    return `<div class="printonly"><b>SETHU — Address comparison</b> · ${new Date().toLocaleDateString('en-IN')}</div>
+      <div class="v-page v-cmp">
+        <section class="v-card"><div class="v-eyebrow">Comparing two addresses</div><h2>${esc(nameA)} <span style="color:var(--muted);font-weight:600">vs</span> ${esc(nameB)}</h2><p class="v-lead">${esc(c.note)}</p>
+          <div class="noprint v-idbtn"><button class="v-btn ghost sm" data-act="cmp-swap">⇄ Swap A and B</button><button class="v-btn ghost sm" data-act="cmp-start">Compare with a different address</button></div></section>
+        <div class="v-cmpheads">${head(a, nameA, 'A', c.coverage.a, c.checklist.a)}${head(b, nameB, 'B', c.coverage.b, c.checklist.b)}</div>
+        <section class="v-card"><div class="v-eyebrow">Biggest differences</div><h2>Where one address is rated worse</h2><p class="v-lead">Only findings both addresses could be checked for. "Rated worse" describes one finding, not the whole address.</p>${big || '<div class="callout">No rated finding differs between the two addresses.</div>'}</section>
+        <section class="v-card"><div class="v-eyebrow">Gaps</div><h2>Only one address could be checked</h2><p class="v-lead">Couldn't check is not the same as safe, and a gap is not a difference.</p>${gaps || '<div class="callout">Nothing was checked for only one of them.</div>'}</section>
+        <section class="v-topics"><div class="v-eyebrow">Section by section</div><h2>Every finding, side by side</h2>${secs}</section>
+        <p class="v-small">Both addresses use the same engine, sources and rules, including research data with non-commercial licences. A pin is not a surveyed plot for either address unless a survey outline was matched.</p></div>`;
+  }
+
   /* ---------- compact-report helpers ---------- */
   // collapsible detail section; open/closed state lives in S.open so re-renders (terrain, forecast, air arriving) do not close it
   function nearbyCard(r, title, lead) {
@@ -129,7 +204,7 @@ const Reports = (() => {
   const endNote = '<div class="endnote">Ward-level flood ranking tested on 8 real floods; every other figure is an indicator from open map data. Asking prices are not deal prices. Limits are listed in the full report.</div>';
 
   /* ============================== CUSTOMER ============================== */
-  function customer(S) {
+  function customerParts(S) {
     const r = S.r, w = r.tiers.water, v = r.buyer, thr = SETUE.D.thr, lb = SETUE.lakeBand(r.water);
     const d192 = r.outside ? null : r.setu.depth[192], fcMax = S.fc ? Math.max(...S.fc.map(x => x.mm)) : 0;
     const summary = r.outside ? 'This address lies beyond the 145 GHMC wards the validated flood model covers, so no flood verdict is given. Judge it on the surroundings below and ask locally about waterlogging.' : v.worst === 'red' ? 'Serious water-related concerns turned up. Read the full report before paying any advance.'
@@ -201,12 +276,26 @@ const Reports = (() => {
     const detail = `<div class="grid2">${chart}<div class="card"><h3>All flags</h3><div class="lead">Everything a careful buyer should know.</div>${flagList(v.flags)}</div></div>
       <div class="grid2">${chk}${lake}</div>${ins}${govCard(r)}<div class="grid2">${routesCard(r)}${fac}</div>
       ${pillarCard(r, 'Location profile', `Every pillar with its weight. Flood safety is one of ${r.pillars.items.length}.`)}${footnote(r)}`;
-    return `<div class="printonly"><b>SETHU — Customer report</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>
-      ${hero}
-      <div class="grid2">${whyScore(r)}${nearbyCard(r, 'Hospitals, malls, stations &amp; schools', false)}</div>
-      ${cost}
-      ${dlBar(S, 'Rain-versus-water curve · all flags · checklist · official drainage and tank records · insurance angle')}${endNote}
-      ${detailWrap(S, detail)}`;
+    return { cost, detail };
+  }
+  function aboutCard(r) {
+    const g = (r.ev && r.ev.gaps) || [];
+    return `<section class="v-card v-about"><div class="v-eyebrow">About this check</div><h2>How to read it, and what it cannot tell you</h2>
+      <ul class="v-ul"><li><b>Needs attention / look into / no issue found / couldn't check.</b> Every finding carries one of these four words and an icon. "No issue found" means the check ran and found nothing in the data we have; it is never a clearance. There is deliberately no single score: a serious flag is never averaged away by good amenities.</li>
+        <li><b>"Couldn't check" means verify, not unsafe.</b> It means no public data answered the question.</li>
+        <li><b>Public map data only.</b> Outlines are drawn, not legal boundaries. SETHU cannot see title, ownership, loans, court cases or what a seller has not shown you.</li>
+        <li><b>How local is each result?</b> Every finding says whether it applies to the pin, a nearby area, the whole ward or the whole city.</li></ul>
+      ${g.length ? `<details class="more v-more" data-id="gaps_all"><summary>Everything we couldn't check, and why (${g.length})</summary>${g.map(x => `<div class="v-gap"><b>${esc(x.label)}</b><i>${esc(x.section)}</i><span>${esc(x.why)}</span></div>`).join('')}</details>` : ''}
+      <p class="v-small">Where each number comes from, how recent it is and how far it was checked: <a href="quality.html" target="_blank" rel="noopener">data quality dashboard</a>. Generated ${new Date().toLocaleString('en-IN')}. Not legal, valuation or insurance advice.</p>
+      <div class="noprint"><button class="v-btn ghost" data-act="print">Print or save as PDF</button></div></section>`;
+  }
+  function customer(S) {
+    const r = S.r, P = customerParts(S);
+    return `<div class="printonly"><b>SETHU — Buyer check</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>
+      <div class="v-page">${View.identity(r, S)}${View.shortVersion(r, S)}${View.beforePay(r, S)}${View.topics(r, S)}
+        <details class="more v-topic t-mute" data-id="tp_costs"${S.open && S.open.tp_costs ? ' open' : ''}><summary><span class="v-ticon" aria-hidden="true">₹</span><span class="v-tt"><b>What it will really cost</b><small>Duties and brokerage on your quoted price, and a check against typical asking prices.</small></span><span class="v-tr"></span></summary><div class="v-tbody">${P.cost}</div></details>
+        <details class="more v-topic t-mute" data-id="tp_more"${S.open && S.open.tp_more ? ' open' : ''}><summary><span class="v-ticon" aria-hidden="true">📊</span><span class="v-tt"><b>Charts and official records</b><small>Rain-versus-water curve, official drainage and tank records, routes, every facility, insurance angle.</small></span><span class="v-tr"></span></summary><div class="v-tbody">${P.detail}</div></details>
+        ${aboutCard(r)}</div>`;
   }
 
   /* ============================== REAL ESTATE AGENT ============================== */
@@ -260,6 +349,8 @@ const Reports = (() => {
     return `<div class="printonly"><b>SETHU — Listing brief</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>${hero}
       <div class="sec-t" style="margin:2px 0 10px">What a buyer will ask about</div>${nearStrip(r, ['hospital', 'metro', 'mall', 'school'], true)}
       <div class="grid2">${posCard}${negCard}</div>
+      ${evidenceCard(r, S)}
+      ${checklistCard(r)}
       <div class="grid2">${price}${commission}</div>
       ${dlBar(S, 'Water-risk breakdown · location profile · official drainage and tank records · trade routes · every facility · water-risk breakdown')}${endNote}
       ${detailWrap(S, detail)}`;
@@ -301,7 +392,8 @@ const Reports = (() => {
       tiers: { motor: T.motor.letter, property: T.prop.letter, health: T.health.letter, water: T.water.letter },
       scores: { motor: r.scores.motor.score, property: r.scores.prop.score, health: r.scores.health.score, water: r.scores.water.score },
       flood_model: r.outside ? null : { susceptibility_percentile: Math.round(r.setu.pct * 100), depth_m: { '100mm': +r.setu.depth[100].toFixed(2), '192mm': +r.setu.depth[192].toFixed(2), '300mm': +r.setu.depth[300].toFixed(2) }, starts_flooding_at_mm: r.setu.floodsAtMm },
-      factors_water: r.scores.water.parts.filter(p => p.v != null).map(p => ({ id: p.id, weight_pct: Math.round(p.wn * 100), points: +p.pts.toFixed(1), status: p.status }))
+      factors_water: r.scores.water.parts.filter(p => p.v != null).map(p => ({ id: p.id, weight_pct: Math.round(p.wn * 100), points: +p.pts.toFixed(1), status: p.status })),
+      evidence_sections: r.ev ? r.ev.sections.map(x => ({ section: x.id, rating: x.rating, concern: x.counts.concern, watch: x.counts.watch, good: x.counts.good, unknown: x.counts.unknown })) : undefined
     }, null, 2);
     const api = `<div class="grid2"><div class="card"><h3>API-ready output</h3><div class="lead">The same engine behind this page, returned as JSON for your underwriting or claims systems. <b>Preview of the planned endpoint</b> — the response is exactly what the engine computed for this location.</div>
       <div class="code">curl "https://api.sethu.example/v1/risk?lat=${r.lat.toFixed(5)}&lon=${r.lon.toFixed(5)}" \\\n  -H "Authorization: Bearer $SETHU_KEY"</div></div>
@@ -314,9 +406,11 @@ const Reports = (() => {
     return `<div class="printonly"><b>SETHU — Underwriting &amp; claims evidence pack</b> · ${esc(S.label || r.ward.name)} · ${new Date().toLocaleDateString('en-IN')}</div>
       ${hero}${claim}
       <div class="grid2">${outlook}<div class="card"><h3>Care &amp; access nearby</h3><div class="lead">Response and care reach around the insured location.</div>${nearStrip(r, ['hospital', 'fire', 'police', 'metro'])}</div></div>
+      ${evidenceCard(r, S)}
+      ${checklistCard(r)}
       ${dlBar(S, 'All underwriting factors with weights · API-ready JSON · environment profile · official drainage records · what is validated')}${endNote}
       ${detailWrap(S, detail)}`;
   }
 
-  return { render: (lens, S) => lens === 'customer' ? customer(S) : lens === 'agent' ? agent(S) : insurer(S), inr };
+  return { render: (lens, S) => lens === 'customer' ? customer(S) : lens === 'agent' ? agent(S) : insurer(S), compare: compareView, inr };
 })();

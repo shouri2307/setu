@@ -1,0 +1,446 @@
+{
+ "Hussain Sagar": {
+  "lat": 17.4235,
+  "lon": 78.4745,
+  "wid": 0,
+  "outside": false,
+  "tanks": {
+   "n2": 1,
+   "nCap": 1,
+   "capM3": 22952181.7781192,
+   "nearest_d": 0,
+   "nearest_name": "Husain Sagar",
+   "enc2023": 1
+  },
+  "stream": {
+   "d": 103.60349240180295,
+   "o": 4,
+   "name": null
+  },
+  "rain": {
+   "mandal": "Khairatabad",
+   "years": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "per_year": [
+    [
+     2018,
+     0,
+     466.4,
+     54.4
+    ],
+    [
+     2019,
+     2,
+     907.5,
+     98.8
+    ],
+    [
+     2020,
+     3,
+     1254.7,
+     174.5
+    ],
+    [
+     2021,
+     1,
+     797.6,
+     66
+    ],
+    [
+     2022,
+     1,
+     855.3,
+     75.1
+    ],
+    [
+     2023,
+     2,
+     826,
+     88.6
+    ],
+    [
+     2024,
+     1,
+     995.8,
+     73.4
+    ]
+   ],
+   "mean_over": 1.43,
+   "wettest": [
+    174.5,
+    "2020-10-14"
+   ]
+  },
+  "analog": {
+   "n": 3,
+   "k": 1
+  },
+  "checklist": [
+   "sus:concern",
+   "storms:concern",
+   "lake:concern",
+   "hy:concern",
+   "gwno3:concern",
+   "ftl:concern",
+   "depth:watch",
+   "gwp:unknown",
+   "supply:unknown",
+   "plot:unknown",
+   "zoning:unknown",
+   "perm:unknown",
+   "price:unknown"
+  ]
+ },
+ "Gachibowli": {
+  "lat": 17.4401,
+  "lon": 78.3489,
+  "wid": 1,
+  "outside": false,
+  "tanks": {
+   "n2": 17,
+   "nCap": 17,
+   "capM3": 427170.70377463335,
+   "nearest_d": 467.17659647320943,
+   "nearest_name": null,
+   "enc2023": 10
+  },
+  "stream": null,
+  "rain": {
+   "mandal": "Serilingampally",
+   "years": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "per_year": [
+    [
+     2018,
+     1,
+     639.9,
+     78.2
+    ],
+    [
+     2019,
+     0,
+     889.3,
+     45.2
+    ],
+    [
+     2020,
+     1,
+     1176,
+     171.8
+    ],
+    [
+     2021,
+     0,
+     786.9,
+     56.4
+    ],
+    [
+     2022,
+     2,
+     975.2,
+     90.2
+    ],
+    [
+     2023,
+     2,
+     883.2,
+     100.4
+    ],
+    [
+     2024,
+     2,
+     894.5,
+     73
+    ]
+   ],
+   "mean_over": 1.14,
+   "wettest": [
+    171.8,
+    "2020-10-14"
+   ]
+  },
+  "analog": {
+   "n": 5,
+   "k": 1
+  },
+  "checklist": [
+   "sus:concern",
+   "lake:concern",
+   "gwf:concern",
+   "ftl:concern",
+   "depth:watch",
+   "storms:watch",
+   "gwno3:watch",
+   "gwp:watch",
+   "gwdepth:unknown",
+   "supply:unknown",
+   "plot:unknown",
+   "zoning:unknown",
+   "perm:unknown",
+   "price:unknown"
+  ]
+ },
+ "Charminar": {
+  "lat": 17.3616,
+  "lon": 78.4747,
+  "wid": 66,
+  "outside": false,
+  "tanks": {
+   "n2": 3,
+   "nCap": 3,
+   "capM3": 20890.96110833793,
+   "nearest_d": 1556.2519237142535,
+   "nearest_name": null,
+   "enc2023": 3
+  },
+  "stream": null,
+  "rain": {
+   "mandal": "Bahadurpura",
+   "years": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "per_year": [
+    [
+     2018,
+     1,
+     422.2,
+     73.8
+    ],
+    [
+     2019,
+     1,
+     662.7,
+     105.8
+    ],
+    [
+     2020,
+     3,
+     1258,
+     150.8
+    ],
+    [
+     2021,
+     2,
+     737.2,
+     89.8
+    ],
+    [
+     2022,
+     0,
+     843.4,
+     53.3
+    ],
+    [
+     2023,
+     1,
+     721,
+     80.6
+    ],
+    [
+     2024,
+     1,
+     846.1,
+     79.9
+    ]
+   ],
+   "mean_over": 1.29,
+   "wettest": [
+    150.8,
+    "2020-10-14"
+   ]
+  },
+  "analog": {
+   "n": 4,
+   "k": 0
+  },
+  "checklist": [
+   "sus:watch",
+   "heat:watch",
+   "gwf:watch",
+   "choke:watch",
+   "supply:unknown",
+   "plot:unknown",
+   "zoning:unknown",
+   "perm:unknown",
+   "price:unknown"
+  ]
+ },
+ "Saroornagar lake": {
+  "lat": 17.3558,
+  "lon": 78.526,
+  "wid": 110,
+  "outside": false,
+  "tanks": {
+   "n2": 6,
+   "nCap": 6,
+   "capM3": 2247087.0175367985,
+   "nearest_d": 0,
+   "nearest_name": "Sarurnagar Cheruvu",
+   "enc2023": 5
+  },
+  "stream": {
+   "d": 119.99601972363736,
+   "o": 3,
+   "name": null
+  },
+  "rain": {
+   "mandal": "Saroornagar",
+   "years": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "per_year": [
+    [
+     2018,
+     0,
+     454.3,
+     46.2
+    ],
+    [
+     2019,
+     0,
+     814.2,
+     59.7
+    ],
+    [
+     2020,
+     3,
+     1369.4,
+     169.5
+    ],
+    [
+     2021,
+     3,
+     1082.1,
+     148
+    ],
+    [
+     2022,
+     0,
+     912.7,
+     61.3
+    ],
+    [
+     2023,
+     1,
+     572.9,
+     75.6
+    ],
+    [
+     2024,
+     1,
+     816.1,
+     91
+    ]
+   ],
+   "mean_over": 1.14,
+   "wettest": [
+    169.5,
+    "2020-10-14"
+   ]
+  },
+  "analog": {
+   "n": 2,
+   "k": 0
+  },
+  "checklist": [
+   "lake:concern",
+   "hy:concern",
+   "gwtrend:concern",
+   "gwno3:concern",
+   "ftl:concern",
+   "gwf:watch",
+   "nalaenc:unknown",
+   "gwp:unknown",
+   "supply:unknown",
+   "plot:unknown",
+   "zoning:unknown",
+   "perm:unknown",
+   "gwdepth:unknown",
+   "price:unknown"
+  ]
+ },
+ "Shamshabad edge": {
+  "lat": 17.2403,
+  "lon": 78.4294,
+  "wid": null,
+  "outside": true,
+  "tanks": {
+   "n2": 7,
+   "nCap": 5,
+   "capM3": 523838.34167448536,
+   "nearest_d": 0,
+   "nearest_name": null,
+   "enc2023": 7
+  },
+  "stream": null,
+  "rain": null,
+  "analog": null,
+  "checklist": [
+   "hy:concern",
+   "lost:concern",
+   "lake:watch",
+   "gwp:watch",
+   "forest:watch",
+   "ftl:watch",
+   "gwdepth:unknown",
+   "supply:unknown",
+   "plot:unknown",
+   "zoning:unknown",
+   "perm:unknown",
+   "price:unknown"
+  ]
+ },
+ "Medchal": {
+  "lat": 17.63,
+  "lon": 78.48,
+  "wid": null,
+  "outside": true,
+  "tanks": {
+   "n2": 8,
+   "nCap": 0,
+   "capM3": 0,
+   "nearest_d": 316.30929916357127,
+   "nearest_name": null,
+   "enc2023": 1
+  },
+  "stream": null,
+  "rain": null,
+  "analog": null,
+  "checklist": [
+   "gwtrend:concern",
+   "gwf:concern",
+   "gwdepth:unknown",
+   "supply:unknown",
+   "plot:unknown",
+   "zoning:unknown",
+   "perm:unknown",
+   "price:unknown"
+  ]
+ }
+}

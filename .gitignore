@@ -15,3 +15,14 @@ tests/_*.pdf
 data/_raw_paste.txt
 SETU_demo.pptx
 research/rates_before_import.json
+
+# raw research downloads and scratch output (large; re-creatable with the pipeline scripts)
+research/external/
+research/v6/*.npy
+research/v6/*.log
+research/v6/*.png
+
+# batch 4 scratch
+research/v7/raw/
+research/v7/*.log
+research/v7/engine.js.before_b4

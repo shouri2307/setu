@@ -70,6 +70,11 @@ def tomtom_suggest(q):
     return res
 
 
+def nearby_enabled():
+    """Nearby Search costs one request per category per pin (8 per report), so it is OFF unless GOOGLE_PLACES_NEARBY=1. Address search stays on."""
+    return os.environ.get("GOOGLE_PLACES_NEARBY", "").strip() == "1"
+
+
 def server_key():
     return os.environ.get("GOOGLE_PLACES_SERVER_KEY", "").strip()
 
@@ -120,6 +125,8 @@ def nearby_one(cat, lat, lon, radius=5000):
 def nearby_all(lat, lon):
     if not server_key():
         return {"error": "no_key", "cats": {}}
+    if not nearby_enabled():
+        return {"error": "nearby_disabled", "cats": {}}   # no Google request is made; the app uses its OpenStreetMap / Overture places
     key = (round(lat, 3), round(lon, 3))
     with _lock:
         hit = _cache.get(key)
@@ -142,9 +149,20 @@ def nearby_all(lat, lon):
     return res
 
 
+_sug_cache = {}
+
+
 def suggest(q, token):
     if not server_key():
         return {"error": "no_key", "items": []}
+    q = (q or "").strip()
+    if len(q) < 3:
+        return {"items": []}                       # never bill a request for one or two letters
+    ck = q.lower()
+    with _lock:
+        hit = _sug_cache.get(ck)
+        if hit and time.time() - hit[0] < TTL:
+            return hit[1]                          # the same text again costs nothing
     body = {"input": q, "sessionToken": token, "includedRegionCodes": ["in"],
             "locationBias": {"circle": {"center": HYD, "radius": 45000.0}}}
     try:
@@ -160,7 +178,12 @@ def suggest(q, token):
         items.append({"id": pp.get("placeId"),
                       "main": (sf.get("mainText") or {}).get("text") or (pp.get("text") or {}).get("text", ""),
                       "sub": (sf.get("secondaryText") or {}).get("text", "")})
-    return {"items": items}
+    res = {"items": items}
+    with _lock:
+        if len(_sug_cache) > 500:
+            _sug_cache.clear()
+        _sug_cache[ck] = (time.time(), res)
+    return res
 
 
 def place(pid, token):
@@ -181,11 +204,14 @@ def health():
         s = tomtom_suggest("Gachibowli")
         res["tomtom_search"] = {"ok": not s.get("error"), "error": s.get("error"), "results": len(s.get("items", []))}
     if server_key():
-        try:
-            n = nearby_one("hospital", 17.385, 78.486, 2000)
-            res["places_nearby"] = {"ok": True, "results": len(n)}
-        except Exception as e:
-            res["places_nearby"] = {"ok": False, "error": _err(e)}
+        if nearby_enabled():
+            try:
+                n = nearby_one("hospital", 17.385, 78.486, 2000)
+                res["places_nearby"] = {"ok": True, "results": len(n)}
+            except Exception as e:
+                res["places_nearby"] = {"ok": False, "error": _err(e)}
+        else:
+            res["places_nearby"] = {"ok": True, "results": 0, "note": "off (GOOGLE_PLACES_NEARBY not set): saves requests"}
         s = suggest("Gachibowli", "health-check")
         res["places_autocomplete"] = {"ok": not s.get("error"), "error": s.get("error"), "results": len(s.get("items", []))}
     return res
@@ -198,7 +224,7 @@ def handle(path):
     route = u.path.rstrip("/")
     try:
         if route == "/api/config":
-            return 200, {"mapsKey": browser_key(), "places": bool(server_key()), "suggest": bool(server_key() or tomtom_key())}
+            return 200, {"mapsKey": browser_key(), "places": bool(server_key()) and nearby_enabled(), "suggest": bool(server_key() or tomtom_key())}
         if route == "/api/health":
             return 200, health()
         if route == "/api/places":

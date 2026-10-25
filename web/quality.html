@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SETHU evidence quality</title>
+<meta name="description" content="Internal dashboard: every finding's sources, observation dates, resolution, coverage, licence, validation status and what changes if a source is removed.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="platform/styles.css">
+<link rel="stylesheet" href="platform/theme.css">
+<style>
+  body{overflow:auto;height:auto}
+  .qwrap{max-width:1280px;margin:0 auto;padding:22px 16px 80px}
+  .qwrap h1{font-size:26px;margin-bottom:4px}.qwrap h2{font-size:19px;margin:30px 0 8px}
+  .qwrap .sub{color:var(--muted);font-size:14px;max-width:880px}
+  .qtiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:10px;margin:18px 0}
+  .qt{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;text-align:left}
+  .qt b{display:block;font-size:26px;line-height:1.1}.qt span{font-size:12.5px;color:var(--text2)}.qt.on{border-color:var(--accent);box-shadow:0 0 0 2px rgba(56,189,248,.2)}
+  .qbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0 10px}.qbar input,.qbar select{background:var(--surface);border:1px solid var(--line2);border-radius:8px;padding:7px 10px;color:var(--text);font-size:14px}
+  .qscroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  table.qt2{border-collapse:collapse;width:100%;min-width:980px;font-size:13px}
+  table.qt2 th{position:sticky;top:0;background:var(--surface2);text-align:left;padding:8px 10px;font-size:12px;color:var(--text2);white-space:nowrap;border-bottom:1px solid var(--line2)}
+  table.qt2 td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.qt2 tr:hover td{background:rgba(15,27,45,.04)}
+  .pill{display:inline-block;padding:1px 8px;border-radius:999px;border:1px solid var(--line2);font-size:11.5px;margin:1px 3px 1px 0;white-space:nowrap}
+  .pill.bad{border-color:var(--e);color:var(--e)}.pill.warn{border-color:var(--c);color:var(--c)}.pill.ok{border-color:var(--a);color:var(--a)}.pill.mute{color:var(--muted)}
+  .qn{color:var(--muted);font-size:12px;display:block;margin-top:2px}
+  .qpanel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0}
+  .qlive input{width:120px}.qlive table{margin-top:8px}
+  .qbtn{background:var(--accent-d);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-weight:700;cursor:pointer}.qbtn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line2)}
+  .qlist{columns:2;column-gap:28px;font-size:13px;margin-top:6px}@media(max-width:700px){.qlist{columns:1}}
+  a.back{color:var(--accent);font-size:14px;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="qwrap">
+  <a class="back" href="index.html">← SETHU map</a>
+  <h1>Evidence quality <span style="color:var(--muted);font-weight:600;font-size:18px">· internal</span></h1>
+  <p class="sub" id="qsub">Loading…</p>
+  <div class="qtiles" id="qtiles"></div>
+
+  <h2>Findings</h2>
+  <p class="sub">One row per finding the report can show. <b>Applies to</b> says how local the result really is. Flags are computed from the registry: nothing here is hand-coloured.</p>
+  <div class="qbar"><input id="qf" placeholder="Filter findings…" aria-label="Filter findings"><select id="qs" aria-label="Section"><option value="">All sections</option></select><button class="qbtn ghost" id="qclear">Clear filters</button><span class="sub" id="qcount"></span></div>
+  <div class="qscroll"><table class="qt2" id="qfind"></table></div>
+
+  <h2>Sources</h2>
+  <p class="sub">Survey or observation dates are kept apart from the date a GIS service document was created: the second says when someone published a map, not when the ground was surveyed.</p>
+  <div class="qscroll"><table class="qt2" id="qsrc"></table></div>
+  <div class="qpanel" id="qrem" hidden></div>
+
+  <h2>Check a place</h2>
+  <div class="qpanel qlive"><p class="sub">Run the live evidence engine for a pin and see, finding by finding, what it rests on and what it could not establish.</p>
+    <div class="qbar"><input id="qlat" value="17.4401" aria-label="Latitude"><input id="qlon" value="78.3489" aria-label="Longitude"><input id="qsy" placeholder="survey no. (optional)" aria-label="Survey number"><button class="qbtn" id="qgo">Run</button><span class="sub" id="qmsg"></span></div>
+    <div id="qout"></div></div>
+</div>
+<script src="platform/engine.js"></script>
+<script src="platform/quality.js"></script>
+</body>
+</html>

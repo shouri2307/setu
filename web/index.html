@@ -7,10 +7,11 @@
 <meta name="description" content="SETHU: check any Hyderabad address before you buy, sell or insure it.">
 <link rel="stylesheet" href="vendor/leaflet.css">
 <link rel="stylesheet" href="platform/styles.css">
+<link rel="stylesheet" href="platform/theme.css">
 </head>
 <body>
 <header class="topbar">
-  <button class="logo" id="logo" aria-label="SETHU home"><b>SETHU</b></button>
+  <button class="logo" id="logo" aria-label="SETHU home"><span><b>SETHU</b><small>Check an address before you buy</small></span></button>
   <div class="search">
     <span class="ico">🔍</span>
     <input id="q" placeholder="Search a place — or paste a Google Maps link" autocomplete="off" aria-label="Search a location">
@@ -19,31 +20,43 @@
     <div class="sug" id="sug"></div>
   </div>
   <div class="actions">
-    <button class="btn ghost sm" id="engBtn">⚙ Engine</button>
-    <button class="btn ghost sm" id="qrBtn">📱 QR</button>
+    <button class="btn ghost sm" id="engBtn">How it works</button>
+    <button class="btn ghost sm" id="qrBtn">Open on phone</button>
+    <a class="btn ghost sm" href="quality.html" title="Where every number comes from, how recent it is and how far it was checked">Data quality</a>
   </div>
 </header>
 
 <main class="screen">
   <div id="map" aria-label="Map"></div>
   <div class="maptools" id="maptools">
-    <button class="chip on" data-t="wards">Flood risk</button>
-    <button class="chip on" data-t="lakes">Lakes</button>
+    <button class="chip on" data-t="wards">Flood risk by ward</button>
+    <button class="chip on" data-t="lakes">Lakes &amp; tanks</button>
     <button class="chip" data-t="hospital">🏥 Hospitals</button>
     <button class="chip" data-t="metro">🚇 Metro &amp; transit</button>
     <button class="chip" data-t="sat">🛰 Satellite</button>
-    <button class="chip" data-t="more">Layers ▾</button>
+    <button class="chip" data-t="more">More layers ▾</button>
     <div class="morebox" id="morebox">
+      <div class="mgrp">Flood &amp; water</div>
       <button class="chip" data-t="mode" data-mode="flood">Colour: flood rank</button>
-      <button class="chip" data-t="school">🏫 Schools</button>
-      <button class="chip" data-t="fire">🚒 Fire</button>
-      <button class="chip" data-t="tanks">Tank encroachment</button>
-      <button class="chip" data-t="nalas">Nalas</button>
+      <button class="chip" data-t="nalas">Drains (nalas)</button>
+      <button class="chip" data-t="drains">Drain lines</button>
       <button class="chip" data-t="spots">Listed flood spots</button>
-      <button class="chip" data-t="drains">Drains</button>
+      <button class="chip" data-t="tanks">Tank encroachment</button>
+      <button class="chip" data-t="ev_tankcap">Tank status &amp; capacity</button>
+      <button class="chip" data-t="ev_streams">Natural streams</button>
+      <button class="chip" data-t="ev_wells">Groundwater wells</button>
+      <button class="chip" data-t="ev_gwp">Groundwater zones</button>
+      <div class="mgrp">Land &amp; utilities</div>
+      <button class="chip" data-t="ev_lost">Disappeared tanks</button>
+      <button class="chip" data-t="ev_hv">High-voltage lines</button>
+      <button class="chip" data-t="ev_heat">Surface heat</button>
+      <div class="mgrp">Places</div>
+      <button class="chip" data-t="school">🏫 Schools</button>
+      <button class="chip" data-t="fire">🚒 Fire stations</button>
     </div>
   </div>
   <div class="maplegend" id="maplegend"><b>Flood-susceptibility rank</b><div class="ramp"></div><div class="rr"><span>lower</span><span>higher</span></div></div>
+  <div class="evlegend" id="evlegend"></div>
   <aside class="dock" id="dock"></aside>
   <section class="report hide" id="report" aria-label="Report"></section>
 </main>
@@ -57,6 +70,7 @@
 <script src="platform/charts.js"></script>
 <script src="platform/map.js"></script>
 <script src="platform/reports.js"></script>
+<script src="platform/view.js"></script>
 <script src="platform/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,1483 @@
+{
+ "meta": {
+  "updated": "2026-10-24",
+  "about": "Evidence-quality registry: for every source, when it was observed, how fine it is, where it covers, who may use it, and how far it was checked; for every finding, which sources it rests on and what it actually applies to. Hand-maintained and enforced by tests: the engine cannot emit a finding that is not listed here.",
+  "validation": {
+   "validated": "compared with an independent reference and agreed (agreement may still be modest)",
+   "internal-check": "recomputed or cross-checked from the same source family; the source itself was not checked against the ground",
+   "negative": "tested against an independent reference and did NOT agree",
+   "unvalidated": "not checked against anything independent",
+   "not-applicable": "a pointer, definition or live service rather than a measurement"
+  },
+  "licence": {
+   "ok": "commercial use allowed with attribution",
+   "verify": "terms not confirmed",
+   "restricted": "demo / non-commercial only"
+  },
+  "nature": {
+   "snapshot": "a map or record of one moment",
+   "periodic": "measured repeatedly; goes stale",
+   "history": "a record of past events",
+   "model": "a computed estimate",
+   "live": "fetched when the report opens",
+   "reference": "a published fact or definition",
+   "documents": "published documents, not machine-readable data"
+  },
+  "scope": {
+   "pin": "computed at the exact pin position (point in a mapped shape)",
+   "nearby": "describes features within a stated distance of the pin",
+   "area": "an estimate from several nearby records or a regional map unit",
+   "ward": "a value for the whole GHMC ward the pin is in",
+   "mandal": "a value for the whole mandal",
+   "locality": "a value for a named locality",
+   "region": "a city- or region-wide fact",
+   "live": "fetched now for this position",
+   "none": "no data: nothing is claimed",
+   "parcel": "the matched survey-parcel outline (only when the pin matches exactly one outline; a survey number can hold many house plots)"
+  },
+  "files_note": "files: the web/data files a source is loaded from; tests remove them one at a time and check that no finding turns reassuring"
+ },
+ "sources": {
+  "sethu_model": {
+   "name": "SETHU ward flood model",
+   "provider": "this project (terrain, drainage and land-cover features; labels from news-named flooded wards)",
+   "nature": "model",
+   "obs": [
+    "2016-09",
+    "2026-06"
+   ],
+   "svc": null,
+   "fetched": "2026-09-22",
+   "res": "145 GHMC wards",
+   "coverage": "the 145 GHMC wards only; not applied outside",
+   "licence": "verify",
+   "licence_note": "labels come from news reports; input datasets' terms not all confirmed",
+   "validation": "validated",
+   "validation_note": "tested on floods it never saw (leave-one-event-out) AUC about 0.69: better than chance, modest; labels cap what any model can reach",
+   "stale_months": null,
+   "limits": "ranks wards, not streets; news-named wards are not the only wards that flooded",
+   "files": [
+    "model.json",
+    "wardfeat.json",
+    "zones.json"
+   ]
+  },
+  "tsdps_storms": {
+   "name": "Storm rainfall by mandal (8 documented floods)",
+   "provider": "Open Data Telangana (TSDPS) daily mandal rainfall",
+   "nature": "history",
+   "obs": [
+    "2020-10",
+    "2026-06"
+   ],
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "mandal",
+   "coverage": "27 mandals around Hyderabad",
+   "licence": "restricted",
+   "licence_note": "non-commercial; written permission needed (tsdps-plg@telangana.gov.in)",
+   "validation": "validated",
+   "validation_note": "14 Oct 2020 mandal readings average 211 mm against the 192 mm reference",
+   "stale_months": null,
+   "limits": "mandal rain is not rain at the plot; a ward named in news is not the only ward that flooded",
+   "files": [
+    "stormhist.json"
+   ]
+  },
+  "tsdps_monsoon": {
+   "name": "Heavy-rain days per monsoon",
+   "provider": "Open Data Telangana (TSDPS) daily weather files, June-October 2018-2025",
+   "nature": "history",
+   "obs": [
+    "2018-06",
+    "2024-10"
+   ],
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "mandal",
+   "coverage": "27 mandals, 5-7 complete monsoons each (2025 excluded: incomplete file)",
+   "licence": "restricted",
+   "licence_note": "non-commercial; written permission needed",
+   "validation": "validated",
+   "validation_note": "recomputed independently at 4 places (28 yearly counts, no mismatch); agrees with the older file series on 4,104 shared mandal-days",
+   "stale_months": null,
+   "limits": "2025 storms are not in the counts; too few seasons for a return period",
+   "files": [
+    "rainstats.json"
+   ]
+  },
+  "osm": {
+   "name": "Roads, hospitals, schools, shops and other places",
+   "provider": "OpenStreetMap (Overpass) merged with Overture Maps places",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": null,
+   "fetched": "2026-09-22",
+   "res": "point / line",
+   "coverage": "study box; completeness varies by neighbourhood",
+   "licence": "verify",
+   "licence_note": "OSM is ODbL (attribution and share-alike); Overture terms vary by theme",
+   "validation": "unvalidated",
+   "validation_note": "nothing checks that a mapped hospital or school still operates or offers the service named",
+   "stale_months": 24,
+   "limits": "undated; mapping gaps look like 'nothing nearby'",
+   "files": [
+    "geo.json"
+   ]
+  },
+  "opencity_transit": {
+   "name": "Bus stops, metro stations, police stations",
+   "provider": "OpenCity / Telangana open data (TSRTC, HMRL GTFS stops, Hyderabad police)",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": null,
+   "fetched": "2026-10-10",
+   "res": "point",
+   "coverage": "Hyderabad",
+   "licence": "verify",
+   "licence_note": "listed as public domain by OpenCity; original terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "stop locations only; no timetable, frequency or service check",
+   "stale_months": 24,
+   "limits": "undated; presence of a stop does not mean a usable service",
+   "files": [
+    "geo.json"
+   ]
+  },
+  "health_gis": {
+   "name": "108 ambulance stations and health facilities",
+   "provider": "Telangana State GIS health layers (TGRAC)",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": null,
+   "fetched": "2026-10-10",
+   "res": "point",
+   "coverage": "Hyderabad area",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "locations not checked on the ground",
+   "stale_months": 24,
+   "limits": "undated",
+   "files": [
+    "hospitals.json"
+   ]
+  },
+  "openmeteo_elev": {
+   "name": "90 m elevation around the pin",
+   "provider": "Open-Meteo elevation API",
+   "nature": "live",
+   "obs": null,
+   "svc": null,
+   "fetched": null,
+   "res": "90 m",
+   "coverage": "global",
+   "licence": "restricted",
+   "licence_note": "free tier is non-commercial; needs a paid plan or another source before real traffic",
+   "validation": "unvalidated",
+   "validation_note": "coarse; integer-metre terrain model",
+   "stale_months": null,
+   "limits": "fetched when the report opens; if the call fails the finding says so"
+  },
+  "openmeteo_air": {
+   "name": "Air quality now",
+   "provider": "Open-Meteo air-quality API",
+   "nature": "live",
+   "obs": null,
+   "svc": null,
+   "fetched": null,
+   "res": "model grid (about 11 km)",
+   "coverage": "global",
+   "licence": "restricted",
+   "licence_note": "free tier is non-commercial",
+   "validation": "not-applicable",
+   "validation_note": "a modelled snapshot of the current hour, not a measurement at the pin",
+   "stale_months": null,
+   "limits": "one hour; says nothing about typical air"
+  },
+  "osrm": {
+   "name": "Road travel time and distance",
+   "provider": "OSRM public demo servers on OpenStreetMap roads (two hosts, failover)",
+   "nature": "live",
+   "obs": null,
+   "svc": null,
+   "fetched": null,
+   "res": "road network",
+   "coverage": "global",
+   "licence": "restricted",
+   "licence_note": "public demo servers; not for production traffic",
+   "validation": "unvalidated",
+   "validation_note": "the second host runs the same engine and data, so it is a failover, not an independent check; no Google comparison was run",
+   "stale_months": null,
+   "limits": "no live traffic; typical car speeds; 'nearest' facility is by straight line first"
+  },
+  "tgrac_nalas": {
+   "name": "GHMC nalas, drains and listed inundation points",
+   "provider": "Telangana State GIS (TGRAC) GHMC Nalas and Vulnerability map",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": "2025-04-16",
+   "fetched": "2026-10-10",
+   "res": "line segment / point",
+   "coverage": "96 nalas, 1,162 segments, 23 inundation points",
+   "licence": "verify",
+   "licence_note": "OpenCity lists it public domain; original terms not confirmed",
+   "validation": "internal-check",
+   "validation_note": "audited for blanks and duplicates; encroachment fields are all zero in the source and are not shown as data",
+   "stale_months": 36,
+   "limits": "survey date unknown; only the map-document creation date is published",
+   "files": [
+    "gov.json"
+   ]
+  },
+  "hydraa_tanks": {
+   "name": "Tank status 2014 vs 2023",
+   "provider": "TGRAC / HYDRAA water-body assessment",
+   "nature": "snapshot",
+   "obs": [
+    "2014",
+    "2023"
+   ],
+   "svc": "2025-05-03",
+   "fetched": "2026-10-10",
+   "res": "tank polygon",
+   "coverage": "1,192 tanks",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "internal-check",
+   "validation_note": "satellite class (live / encroached), not a legal finding",
+   "stale_months": 36,
+   "limits": "satellite-based status; not the legal lake boundary",
+   "files": [
+    "hydraa_tanks.json"
+   ]
+  },
+  "hmda_lakes": {
+   "name": "HMDA lake list and FTL notification status",
+   "provider": "HMDA lakes information portal (lakes.hmda.gov.in)",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": null,
+   "fetched": "2026-10-10",
+   "res": "lake (no geometry)",
+   "coverage": "2,980 lakes; 55% lack a final notification",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "internal-check",
+   "validation_note": "matched to tank outlines by name, which can mis-match",
+   "stale_months": 24,
+   "limits": "no outlines; names matched, not coordinates",
+   "files": [
+    "hmda_lakes.json"
+   ]
+  },
+  "tgrac_waterbodies": {
+   "name": "Tank capacity records and stream order",
+   "provider": "TGRAC HMDA_ORR_GHMC_Water_Bodies layers 13 and 14",
+   "nature": "snapshot",
+   "obs": [
+    "2011",
+    "2023"
+   ],
+   "svc": "2025-04-22",
+   "fetched": "2026-10-24",
+   "res": "tank polygon / stream line",
+   "coverage": "2,048 de-duplicated tank records (capacity for 750), 1,355 stream segments",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "internal-check",
+   "validation_note": "recomputed independently from the raw download at six places with no mismatch; capacity is the source's area x bund / 2 estimate and is missing for 63% of tanks",
+   "stale_months": 36,
+   "limits": "present-day storage not measured; streams are terrain-derived and do not prove a buried channel",
+   "files": [
+    "tanks.json"
+   ]
+  },
+  "tgrac_gwp": {
+   "name": "Groundwater potential map",
+   "provider": "TGRAC Groundwater_Potential",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": "2025-12-06",
+   "fetched": "2026-10-24",
+   "res": "mapped unit (regional)",
+   "coverage": "1,979 units in the study box",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "read correctly from the service; accuracy and survey date not published",
+   "stale_months": null,
+   "limits": "regional map unit, not the ground at the pin",
+   "files": [
+    "land.json"
+   ]
+  },
+  "tgrac_lost": {
+   "name": "Disappeared water bodies",
+   "provider": "TGRAC 'Water Bodies - Disappeared' layer",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": "2025-04-22",
+   "fetched": "2026-10-24",
+   "res": "polygon",
+   "coverage": "study box",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "read correctly; accuracy and survey date not published",
+   "stale_months": null,
+   "limits": "a map record, not a legal finding",
+   "files": [
+    "land.json"
+   ]
+  },
+  "tgrac_tcur": {
+   "name": "Forest boundary, high-voltage lines and substations",
+   "provider": "TGRAC TCUR (Telangana Core Urban Region)",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": "2025-05-24",
+   "fetched": "2026-10-24",
+   "res": "polygon / line / point",
+   "coverage": "study box",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "read correctly; accuracy and survey date not published",
+   "stale_months": null,
+   "limits": "survey date unknown",
+   "files": [
+    "land.json"
+   ]
+  },
+  "tgrac_endow": {
+   "name": "Endowment properties",
+   "provider": "TGRAC Endowment Lands 2026",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": "2026-07-28",
+   "fetched": "2026-10-24",
+   "res": "point (location approximate)",
+   "coverage": "Hyderabad",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "points, not boundaries",
+   "stale_months": null,
+   "limits": "approximate locations; owner and personal layers deliberately not used",
+   "files": [
+    "land.json"
+   ]
+  },
+  "gwd_levels": {
+   "name": "Groundwater levels",
+   "provider": "Telangana Ground Water Department via Open Data Telangana",
+   "nature": "periodic",
+   "obs": [
+    "2021-01",
+    "2026-07"
+   ],
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "monitoring well (point)",
+   "coverage": "1,526 clean stations statewide, 115 in the Hyderabad area",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "validated",
+   "validation_note": "Bahadurpura April-2025 minimum matches the official report exactly; Hyderabad June means within 0.7 m of official; wells 1.5 km apart differ by metres",
+   "stale_months": 6,
+   "limits": "needs at least 3 agreeing wells for an area estimate; swapped coordinates and placeholder positions were cleaned",
+   "files": [
+    "groundwater.json"
+   ]
+  },
+  "gwd_quality": {
+   "name": "Groundwater quality samples",
+   "provider": "Telangana Ground Water Department via Open Data Telangana",
+   "nature": "periodic",
+   "obs": [
+    "2018",
+    "2025"
+   ],
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "sample point",
+   "coverage": "10,668 samples 2021+ (pre- and post-monsoon)",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "internal-check",
+   "validation_note": "downloaded and parsed; not compared with an independent laboratory source",
+   "stale_months": 24,
+   "limits": "scattered samples; one sample says nothing about the water at a house",
+   "files": [
+    "gwquality.json"
+   ]
+  },
+  "civic_landfill": {
+   "name": "Landfills and dump yards",
+   "provider": "Lakeer open-GIS repository (Telangana / GHMC sources)",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "polygon",
+   "coverage": "11 sites",
+   "licence": "verify",
+   "licence_note": "terms of each original dataset not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "not checked against GHMC",
+   "stale_months": 36,
+   "limits": "undated",
+   "files": [
+    "civic.json"
+   ]
+  },
+  "civic_power": {
+   "name": "Power breakdown history",
+   "provider": "Lakeer open-GIS repository (utility log)",
+   "nature": "history",
+   "obs": [
+    "2017-04",
+    "2018-03"
+   ],
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "grid cell",
+   "coverage": "FY2017-18 only",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "dated and shown unscored",
+   "stale_months": 24,
+   "limits": "more than eight years old",
+   "files": [
+    "civic.json"
+   ]
+  },
+  "civic_traffic": {
+   "name": "Traffic choke points and planned junction improvements",
+   "provider": "Lakeer open-GIS repository (Hyderabad Traffic Police, GHMC)",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "point",
+   "coverage": "short lists",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "not checked",
+   "stale_months": 36,
+   "limits": "undated; short lists, not a traffic study",
+   "files": [
+    "civic.json"
+   ]
+  },
+  "civic_shelter": {
+   "name": "Flood rehabilitation centres",
+   "provider": "Lakeer open-GIS repository (GHMC list)",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "point",
+   "coverage": "101 listed localities",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "not checked",
+   "stale_months": 36,
+   "limits": "only listed localities",
+   "files": [
+    "civic.json"
+   ]
+  },
+  "civic_wq": {
+   "name": "Lake, river and STP water quality",
+   "provider": "Lakeer open-GIS repository (TSPCB 2017)",
+   "nature": "history",
+   "obs": [
+    "2017-01",
+    "2017-12"
+   ],
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "monitoring station",
+   "coverage": "sparse stations",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "dated and shown as such",
+   "stale_months": 24,
+   "limits": "more than eight years old",
+   "files": [
+    "civic.json"
+   ]
+  },
+  "civic_noise": {
+   "name": "Noise monitors",
+   "provider": "Lakeer open-GIS repository (TSPCB 2018)",
+   "nature": "history",
+   "obs": [
+    "2018-01",
+    "2018-12"
+   ],
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "monitoring station",
+   "coverage": "10 monitors",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "dated and shown as such",
+   "stale_months": 24,
+   "limits": "more than seven years old",
+   "files": [
+    "civic.json"
+   ]
+  },
+  "landsat_lst": {
+   "name": "Surface heat in the dry season",
+   "provider": "Landsat 8/9 Level-2 (USGS) via Microsoft Planetary Computer",
+   "nature": "snapshot",
+   "obs": [
+    "2024-03",
+    "2026-05"
+   ],
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "150 m grid",
+   "coverage": "study box",
+   "licence": "ok",
+   "licence_note": "USGS open data",
+   "validation": "negative",
+   "validation_note": "across 27 mandals the ranking did not agree with station air temperature (Spearman -0.09, p = 0.66; stations differ by only about 2 C, so the test is weak)",
+   "stale_months": 24,
+   "limits": "surface, not air, temperature; reported with low confidence",
+   "files": [
+    "heat.json"
+   ]
+  },
+  "landsat_ndvi": {
+   "name": "Dry-season greenness (NDVI)",
+   "provider": "Landsat 8/9 Level-2 (USGS) via Microsoft Planetary Computer",
+   "nature": "snapshot",
+   "obs": [
+    "2024-03",
+    "2026-05"
+   ],
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "150 m grid",
+   "coverage": "study box",
+   "licence": "ok",
+   "licence_note": "USGS open data",
+   "validation": "internal-check",
+   "validation_note": "physically consistent (park greenest, old city least) but not compared with an independent vegetation product",
+   "stale_months": 24,
+   "limits": "dry-season greenness only",
+   "files": [
+    "heat.json"
+   ]
+  },
+  "seismic_ref": {
+   "name": "Earthquake zone",
+   "provider": "secondary sources citing IS 1893 (Part 1):2016",
+   "nature": "reference",
+   "obs": null,
+   "svc": null,
+   "fetched": null,
+   "res": "city",
+   "coverage": "Hyderabad",
+   "licence": "ok",
+   "licence_note": "a published fact",
+   "validation": "unvalidated",
+   "validation_note": "not checked against the BIS standard itself; a newer edition may change zones",
+   "stale_months": null,
+   "limits": "reference only"
+  },
+  "prices": {
+   "name": "Asking-price ranges",
+   "provider": "property-portal price-trend pages compiled with an AI assistant",
+   "nature": "snapshot",
+   "obs": [
+    "2025",
+    "2026-10"
+   ],
+   "svc": null,
+   "fetched": "2026-10-10",
+   "res": "locality",
+   "coverage": "77 localities",
+   "licence": "verify",
+   "licence_note": "high risk: portal data, indirect provenance; needs a licensed source before commercial use",
+   "validation": "unvalidated",
+   "validation_note": "portal figures disagree widely; asking prices, not registered deals",
+   "stale_months": 6,
+   "limits": "never a valuation; sample counts not available",
+   "files": [
+    "rates.json"
+   ]
+  },
+  "hmda_zones": {
+   "name": "Planning-authority areas (which plan governs)",
+   "provider": "TGRAC HMDA layers (MCH, HUDA, CDA, HADA, HMR, HMR growth corridor) and mandal boundaries",
+   "nature": "reference",
+   "obs": null,
+   "svc": "2025-04-17",
+   "fetched": "2026-10-24",
+   "res": "authority-area polygon (simplified ~22 m)",
+   "coverage": "HMDA region",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "internal-check",
+   "validation_note": "checked at 14 known places (Gachibowli and Kondapur in CDA, Kukatpally and Uppal in HUDA, Shamshabad in HADA, Charminar and Banjara Hills in MCH)",
+   "stale_months": null,
+   "limits": "undated; HMDA's jurisdiction was reportedly widened in 2025 (secondary source)",
+   "files": [
+    "plan.json"
+   ]
+  },
+  "hmda_plans": {
+   "name": "Published master plans (documents)",
+   "provider": "HMDA: Revised Development Plan (circle PDFs), Master Plan 2031 mandal sheets, HUDA / HADA / CDA plans",
+   "nature": "documents",
+   "obs": [
+    "2021",
+    "2022"
+   ],
+   "svc": null,
+   "fetched": "2026-10-24",
+   "res": "static PDF / JPEG sheets",
+   "coverage": "7 core circles, about 30 mandal sheets",
+   "licence": "verify",
+   "licence_note": "public HMDA website; reuse terms not confirmed",
+   "validation": "not-applicable",
+   "validation_note": "file dates are upload dates (2021-2022), not plan dates; sheets are 23-29 MB images, not georeferenced",
+   "stale_months": null,
+   "limits": "SETU does not read them and cannot state the land-use zone of any plot",
+   "files": []
+  },
+  "tgrac_cadastral": {
+   "name": "Survey-parcel outlines",
+   "provider": "TGRAC Bhunaksha cadastral layer 'Cadastral 2.5m'",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": "2025-04-19",
+   "fetched": "2026-10-24",
+   "res": "parcel polygon (about 1 m after simplification)",
+   "coverage": "survey parcels across most of the study box; the old MCH core is mostly a single placeholder polygon",
+   "licence": "verify",
+   "licence_note": "terms not confirmed; owner fields never requested",
+   "validation": "unvalidated",
+   "validation_note": "SNo is a village serial, not a survey number; about 1% of numbers are flagged duplicate or unreadable at source; accuracy and survey date not published",
+   "stale_months": null,
+   "limits": "a drawn outline is not a legal boundary and says nothing about title",
+   "files": [
+    "parcels/index.json"
+   ]
+  },
+  "tgrac_prohib": {
+   "name": "Parcels carrying a prohibitory-land category",
+   "provider": "TGRAC Bhunaksha layer 'ULB_Cadastral_Prohibited'",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": "2025-04-19",
+   "fetched": "2026-10-24",
+   "res": "parcel polygon",
+   "coverage": "812 parcels in the study box, mostly outside the old city",
+   "licence": "verify",
+   "licence_note": "terms not confirmed",
+   "validation": "unvalidated",
+   "validation_note": "legal basis, date and completeness not documented; the official prohibited-property list is reported to have contained many wrongly listed parcels",
+   "stale_months": null,
+   "limits": "NOT the registration department's register; free-text categories",
+   "files": [
+    "prohib.json"
+   ]
+  },
+  "hmwssb_network": {
+   "name": "HMWSSB mapped water-supply pipes and sewer lines; service sections",
+   "provider": "TGRAC TCUR service (HMWSSB network layers)",
+   "nature": "snapshot",
+   "obs": null,
+   "svc": "2025-05-24",
+   "fetched": "2026-10-24",
+   "res": "100 m cells (derived); section polygons",
+   "coverage": "supply pipes across most of the city; sewer lines only for the 'core city'",
+   "licence": "verify",
+   "licence_note": "terms not confirmed; pipe geometry is not redistributed, only coarse cell presence",
+   "validation": "unvalidated",
+   "validation_note": "mapping completeness is uneven (900 m boxes hold from 0 to over 700 pipe segments); a pipe on the map is not a connection",
+   "stale_months": null,
+   "limits": "no mapped pipe never means no supply; a mapped pipe never means a working tap",
+   "files": [
+    "network.json"
+   ]
+  },
+  "none": {
+   "name": "No source",
+   "provider": "—",
+   "nature": "reference",
+   "obs": null,
+   "svc": null,
+   "fetched": null,
+   "res": "—",
+   "coverage": "none",
+   "licence": "ok",
+   "licence_note": "",
+   "validation": "not-applicable",
+   "validation_note": "no data: the report says so and never fills a value",
+   "stale_months": null,
+   "limits": ""
+  }
+ },
+ "factors": {
+  "sus": {
+   "sec": "hazards",
+   "scope": "ward",
+   "scope_text": "the whole ward, not the street",
+   "sources": [
+    "sethu_model"
+   ],
+   "missing": "outside the 145 GHMC wards the model is not applied",
+   "label": "Flood susceptibility (SETHU model)"
+  },
+  "depth": {
+   "sec": "hazards",
+   "scope": "ward",
+   "scope_text": "the whole ward, a stated-rain scenario",
+   "sources": [
+    "sethu_model"
+   ],
+   "missing": "outside the 145 GHMC wards the model is not applied",
+   "label": "Modelled water depth in a 192 mm storm"
+  },
+  "storms": {
+   "sec": "hazards",
+   "scope": "ward",
+   "scope_text": "the ward's mandal in 8 documented floods",
+   "sources": [
+    "tsdps_storms",
+    "sethu_model"
+   ],
+   "missing": "mandal not among the 27 with rainfall data",
+   "label": "What this ward's mandal recorded in 8 documented floods"
+  },
+  "heavyrain": {
+   "sec": "hazards",
+   "scope": "mandal",
+   "scope_text": "the whole mandal",
+   "sources": [
+    "tsdps_monsoon"
+   ],
+   "missing": "mandal not among the 27 with complete monsoon seasons",
+   "label": "Heavy-rain days per monsoon in this mandal"
+  },
+  "analog": {
+   "sec": "hazards",
+   "scope": "ward",
+   "scope_text": "the ward's mandal, six dated storms",
+   "sources": [
+    "tsdps_storms"
+   ],
+   "missing": "fewer than 3 qualifying storms or mandal not covered",
+   "label": "Storm analogs (preliminary historical association)"
+  },
+  "pocket": {
+   "sec": "hazards",
+   "scope": "nearby",
+   "scope_text": "about 1 km around the pin, 90 m terrain",
+   "sources": [
+    "openmeteo_elev"
+   ],
+   "missing": "the elevation service did not answer",
+   "label": "Low pocket vs surroundings"
+  },
+  "lake": {
+   "sec": "hazards",
+   "scope": "nearby",
+   "scope_text": "lakes and tanks near the pin; the outline is not the legal boundary",
+   "sources": [
+    "osm",
+    "tgrac_waterbodies"
+   ],
+   "missing": "",
+   "label": "Lake / tank proximity"
+  },
+  "nala": {
+   "sec": "hazards",
+   "scope": "nearby",
+   "scope_text": "nalas within a stated distance",
+   "sources": [
+    "tgrac_nalas"
+   ],
+   "missing": "",
+   "label": "Mapped nala nearby"
+  },
+  "nalaenc": {
+   "sec": "hazards",
+   "scope": "nearby",
+   "scope_text": "the nearest mapped nala",
+   "sources": [
+    "tgrac_nalas"
+   ],
+   "missing": "encroachment fields are blank in the source",
+   "label": "Recorded encroachment on this nala"
+  },
+  "stream": {
+   "sec": "hazards",
+   "scope": "nearby",
+   "scope_text": "natural streams within 500 m",
+   "sources": [
+    "tgrac_waterbodies"
+   ],
+   "missing": "",
+   "label": "Natural stream channel nearby"
+  },
+  "inund": {
+   "sec": "hazards",
+   "scope": "nearby",
+   "scope_text": "23 officially listed points only",
+   "sources": [
+    "tgrac_nalas"
+   ],
+   "missing": "",
+   "label": "Officially listed inundation area"
+  },
+  "hy": {
+   "sec": "hazards",
+   "scope": "nearby",
+   "scope_text": "the nearest assessed tank",
+   "sources": [
+    "hydraa_tanks"
+   ],
+   "missing": "",
+   "label": "Nearest tank: 2014 vs 2023 satellite status"
+  },
+  "hmda": {
+   "sec": "hazards",
+   "scope": "nearby",
+   "scope_text": "the nearest tank matched by name",
+   "sources": [
+    "hmda_lakes",
+    "hydraa_tanks"
+   ],
+   "missing": "no name match",
+   "label": "HMDA lake notification"
+  },
+  "heat": {
+   "sec": "hazards",
+   "scope": "nearby",
+   "scope_text": "the 150 m cell around the pin",
+   "sources": [
+    "landsat_lst"
+   ],
+   "missing": "pin outside the heat grid or no clear scene",
+   "label": "Surface heat in the dry season"
+  },
+  "green": {
+   "sec": "hazards",
+   "scope": "nearby",
+   "scope_text": "the 150 m cell around the pin",
+   "sources": [
+    "landsat_ndvi"
+   ],
+   "missing": "pin outside the grid",
+   "label": "Vegetation cover (dry-season greenness)"
+  },
+  "seismic": {
+   "sec": "hazards",
+   "scope": "region",
+   "scope_text": "the whole city",
+   "sources": [
+    "seismic_ref"
+   ],
+   "missing": "",
+   "label": "Earthquake zone"
+  },
+  "shelter": {
+   "sec": "hazards",
+   "scope": "nearby",
+   "scope_text": "listed centres within a stated distance",
+   "sources": [
+    "civic_shelter"
+   ],
+   "missing": "",
+   "label": "Flood rehabilitation centres nearby"
+  },
+  "gw": {
+   "sec": "water",
+   "scope": "area",
+   "scope_text": "nearby wells",
+   "sources": [
+    "gwd_levels"
+   ],
+   "missing": "no monitoring wells loaded",
+   "label": "Groundwater depth"
+  },
+  "gwnear": {
+   "sec": "water",
+   "scope": "nearby",
+   "scope_text": "one monitoring well",
+   "sources": [
+    "gwd_levels"
+   ],
+   "missing": "",
+   "label": "Nearest monitoring well (observed)"
+  },
+  "gwdepth": {
+   "sec": "water",
+   "scope": "area",
+   "scope_text": "median of at least 3 agreeing wells within 3 km",
+   "sources": [
+    "gwd_levels"
+   ],
+   "missing": "fewer than 3 wells nearby, or the wells disagree",
+   "label": "Groundwater depth around here (median of nearby wells)"
+  },
+  "gwpre": {
+   "sec": "water",
+   "scope": "area",
+   "scope_text": "median of nearby wells",
+   "sources": [
+    "gwd_levels"
+   ],
+   "missing": "fewer than 3 wells nearby",
+   "label": "Depth at the end of the dry season (Apr–May)"
+  },
+  "gwrec": {
+   "sec": "water",
+   "scope": "area",
+   "scope_text": "median of nearby wells",
+   "sources": [
+    "gwd_levels"
+   ],
+   "missing": "fewer than 3 wells nearby",
+   "label": "Rebound after the monsoon"
+  },
+  "gwtrend": {
+   "sec": "water",
+   "scope": "area",
+   "scope_text": "median trend of nearby wells",
+   "sources": [
+    "gwd_levels"
+   ],
+   "missing": "too little history in nearby wells",
+   "label": "Multi-year trend"
+  },
+  "gwcov": {
+   "sec": "water",
+   "scope": "nearby",
+   "scope_text": "monitoring density around the pin",
+   "sources": [
+    "gwd_levels"
+   ],
+   "missing": "",
+   "label": "How well monitored is this spot?"
+  },
+  "gwq": {
+   "sec": "water",
+   "scope": "area",
+   "scope_text": "samples within 3-5 km",
+   "sources": [
+    "gwd_quality"
+   ],
+   "missing": "no recent samples nearby",
+   "label": "Groundwater quality"
+  },
+  "gwf": {
+   "sec": "water",
+   "scope": "area",
+   "scope_text": "samples within 3-5 km, not this well",
+   "sources": [
+    "gwd_quality"
+   ],
+   "missing": "no recent samples nearby",
+   "label": "Fluoride in nearby groundwater"
+  },
+  "gwno3": {
+   "sec": "water",
+   "scope": "area",
+   "scope_text": "samples within 3-5 km, not this well",
+   "sources": [
+    "gwd_quality"
+   ],
+   "missing": "no recent samples nearby",
+   "label": "Nitrate in nearby groundwater"
+  },
+  "gwtds": {
+   "sec": "water",
+   "scope": "area",
+   "scope_text": "samples within 3-5 km, not this well",
+   "sources": [
+    "gwd_quality"
+   ],
+   "missing": "no recent samples nearby",
+   "label": "Salinity (TDS) in nearby groundwater"
+  },
+  "aq": {
+   "sec": "water",
+   "scope": "area",
+   "scope_text": "nearby sample records",
+   "sources": [
+    "gwd_quality"
+   ],
+   "missing": "",
+   "label": "Principal aquifer type (nearby sample records)"
+  },
+  "lakewq": {
+   "sec": "water",
+   "scope": "nearby",
+   "scope_text": "the nearest monitoring station (2017)",
+   "sources": [
+    "civic_wq"
+   ],
+   "missing": "",
+   "label": "Nearest lake / river water-quality station"
+  },
+  "stp": {
+   "sec": "water",
+   "scope": "nearby",
+   "scope_text": "the nearest plant",
+   "sources": [
+    "civic_wq"
+   ],
+   "missing": "",
+   "label": "Sewage treatment plant outlet nearby"
+  },
+  "gwp": {
+   "sec": "water",
+   "scope": "area",
+   "scope_text": "the regional map unit the pin falls in",
+   "sources": [
+    "tgrac_gwp"
+   ],
+   "missing": "pin outside the mapped units",
+   "label": "Hydrogeology of the ground here (regional map)"
+  },
+  "tankstore": {
+   "sec": "water",
+   "scope": "nearby",
+   "scope_text": "tanks within 2 km",
+   "sources": [
+    "tgrac_waterbodies"
+   ],
+   "missing": "capacity is missing for 63% of tanks",
+   "label": "Mapped tank storage nearby"
+  },
+  "supply": {
+   "sec": "water",
+   "scope": "none",
+   "scope_text": "no data: connection, supply hours and tanker use are not published",
+   "sources": [
+    "none"
+   ],
+   "missing": "no public record of connections, supply frequency or tanker dependence per address",
+   "label": "Water connection, supply hours and tanker dependence"
+  },
+  "supplynet": {
+   "sec": "water",
+   "scope": "nearby",
+   "scope_text": "mapped pipes in the 100 m cells around the pin",
+   "sources": [
+    "hmwssb_network"
+   ],
+   "missing": "pin outside the mapped network area",
+   "label": "Mapped HMWSSB supply pipe near the pin"
+  },
+  "sewernet": {
+   "sec": "water",
+   "scope": "nearby",
+   "scope_text": "mapped sewer lines in the 100 m cells around the pin (core city only)",
+   "sources": [
+    "hmwssb_network"
+   ],
+   "missing": "sewer lines are mapped only for the core city",
+   "label": "Mapped sewer line near the pin"
+  },
+  "road": {
+   "sec": "infra",
+   "scope": "nearby",
+   "scope_text": "nearest mapped main road",
+   "sources": [
+    "osm"
+   ],
+   "missing": "",
+   "label": "Distance to a main road"
+  },
+  "acc_hospital": {
+   "sec": "infra",
+   "scope": "live",
+   "scope_text": "road route from the pin to the nearest mapped hospitals",
+   "sources": [
+    "osrm",
+    "osm"
+   ],
+   "missing": "the routing servers did not answer",
+   "label": "Hospital: road travel"
+  },
+  "acc_metro": {
+   "sec": "infra",
+   "scope": "live",
+   "scope_text": "road route from the pin to the nearest mapped station",
+   "sources": [
+    "osrm",
+    "opencity_transit"
+   ],
+   "missing": "the routing servers did not answer",
+   "label": "Metro / rail station: road travel"
+  },
+  "acc_bus": {
+   "sec": "infra",
+   "scope": "live",
+   "scope_text": "road route from the pin to the nearest mapped stop",
+   "sources": [
+    "osrm",
+    "opencity_transit"
+   ],
+   "missing": "the routing servers did not answer",
+   "label": "Bus stop: road travel"
+  },
+  "acc_school": {
+   "sec": "infra",
+   "scope": "live",
+   "scope_text": "road route from the pin to the nearest mapped school",
+   "sources": [
+    "osrm",
+    "osm"
+   ],
+   "missing": "the routing servers did not answer",
+   "label": "School: road travel"
+  },
+  "acc_market": {
+   "sec": "infra",
+   "scope": "live",
+   "scope_text": "road route from the pin to the nearest mapped market",
+   "sources": [
+    "osrm",
+    "osm"
+   ],
+   "missing": "the routing servers did not answer",
+   "label": "Market / supermarket: road travel"
+  },
+  "choke": {
+   "sec": "infra",
+   "scope": "nearby",
+   "scope_text": "points within 1 km",
+   "sources": [
+    "civic_traffic"
+   ],
+   "missing": "",
+   "label": "Traffic congestion points within 1 km"
+  },
+  "junc": {
+   "sec": "infra",
+   "scope": "nearby",
+   "scope_text": "the nearest planned junction",
+   "sources": [
+    "civic_traffic"
+   ],
+   "missing": "",
+   "label": "GHMC junction improvement planned nearby"
+  },
+  "power": {
+   "sec": "infra",
+   "scope": "area",
+   "scope_text": "cells within 1.5 km, FY2017-18",
+   "sources": [
+    "civic_power"
+   ],
+   "missing": "",
+   "label": "Power breakdown history (dated)"
+  },
+  "tx": {
+   "sec": "infra",
+   "scope": "nearby",
+   "scope_text": "lines within a stated distance",
+   "sources": [
+    "tgrac_tcur"
+   ],
+   "missing": "",
+   "label": "High-voltage transmission line nearby"
+  },
+  "sub": {
+   "sec": "infra",
+   "scope": "nearby",
+   "scope_text": "substations within 3 km",
+   "sources": [
+    "tgrac_tcur"
+   ],
+   "missing": "",
+   "label": "Electricity substation nearby"
+  },
+  "landfill": {
+   "sec": "infra",
+   "scope": "nearby",
+   "scope_text": "the nearest site",
+   "sources": [
+    "civic_landfill"
+   ],
+   "missing": "",
+   "label": "Landfill / dump yard"
+  },
+  "noise": {
+   "sec": "infra",
+   "scope": "nearby",
+   "scope_text": "the nearest monitor (2018)",
+   "sources": [
+    "civic_noise"
+   ],
+   "missing": "",
+   "label": "Nearest noise monitor (dated)"
+  },
+  "air": {
+   "sec": "infra",
+   "scope": "live",
+   "scope_text": "model grid, the current hour",
+   "sources": [
+    "openmeteo_air"
+   ],
+   "missing": "the air-quality service did not answer",
+   "label": "Air quality right now"
+  },
+  "f_hospital": {
+   "sec": "live",
+   "scope": "nearby",
+   "scope_text": "mapped places within a stated distance; service not verified",
+   "sources": [
+    "osm"
+   ],
+   "missing": "",
+   "label": "Hospital"
+  },
+  "f_school": {
+   "sec": "live",
+   "scope": "nearby",
+   "scope_text": "mapped places within a stated distance; service not verified",
+   "sources": [
+    "osm"
+   ],
+   "missing": "",
+   "label": "School"
+  },
+  "f_market": {
+   "sec": "live",
+   "scope": "nearby",
+   "scope_text": "mapped places within a stated distance",
+   "sources": [
+    "osm"
+   ],
+   "missing": "",
+   "label": "Market / supermarket"
+  },
+  "f_metro": {
+   "sec": "live",
+   "scope": "nearby",
+   "scope_text": "mapped stations within a stated distance",
+   "sources": [
+    "osm",
+    "opencity_transit"
+   ],
+   "missing": "",
+   "label": "Metro / rail station"
+  },
+  "f_bus": {
+   "sec": "live",
+   "scope": "nearby",
+   "scope_text": "mapped stations within a stated distance; frequency unknown",
+   "sources": [
+    "osm",
+    "opencity_transit"
+   ],
+   "missing": "",
+   "label": "Bus station"
+  },
+  "f_park": {
+   "sec": "live",
+   "scope": "nearby",
+   "scope_text": "mapped places within a stated distance",
+   "sources": [
+    "osm"
+   ],
+   "missing": "",
+   "label": "Park"
+  },
+  "f_bank": {
+   "sec": "live",
+   "scope": "nearby",
+   "scope_text": "mapped places within a stated distance",
+   "sources": [
+    "osm"
+   ],
+   "missing": "",
+   "label": "Bank"
+  },
+  "f_police": {
+   "sec": "live",
+   "scope": "nearby",
+   "scope_text": "mapped stations within a stated distance",
+   "sources": [
+    "osm",
+    "opencity_transit"
+   ],
+   "missing": "",
+   "label": "Police station"
+  },
+  "f_fire": {
+   "sec": "live",
+   "scope": "nearby",
+   "scope_text": "mapped stations within a stated distance",
+   "sources": [
+    "osm"
+   ],
+   "missing": "",
+   "label": "Fire station"
+  },
+  "f_amb": {
+   "sec": "live",
+   "scope": "nearby",
+   "scope_text": "108 stations within a stated distance",
+   "sources": [
+    "health_gis"
+   ],
+   "missing": "",
+   "label": "Government ambulance (108) station"
+  },
+  "f_jobs": {
+   "sec": "live",
+   "scope": "nearby",
+   "scope_text": "mapped offices, malls and cinemas within 3-5 km",
+   "sources": [
+    "osm"
+   ],
+   "missing": "",
+   "label": "Jobs and lifestyle hubs"
+  },
+  "lost": {
+   "sec": "land",
+   "scope": "pin",
+   "scope_text": "tested at the pin position, not matched to a parcel",
+   "sources": [
+    "tgrac_lost"
+   ],
+   "missing": "",
+   "label": "Disappeared water body"
+  },
+  "forest": {
+   "sec": "land",
+   "scope": "pin",
+   "scope_text": "tested at the pin position, with distance if outside",
+   "sources": [
+    "tgrac_tcur"
+   ],
+   "missing": "",
+   "label": "Forest land boundary"
+  },
+  "endow": {
+   "sec": "land",
+   "scope": "nearby",
+   "scope_text": "points within 400 m; locations approximate",
+   "sources": [
+    "tgrac_endow"
+   ],
+   "missing": "",
+   "label": "Endowment (temple) properties nearby"
+  },
+  "plot": {
+   "sec": "land",
+   "scope": "pin",
+   "scope_text": "which surveyed parcel the pin falls in; boundaries are a drawn outline, not a legal boundary",
+   "sources": [
+    "tgrac_cadastral"
+   ],
+   "missing": "no survey parcels are mapped here (the old city core), or the pin is on a road or unmapped land",
+   "label": "Plot identity (survey parcel)"
+  },
+  "prohib": {
+   "sec": "land",
+   "scope": "pin",
+   "scope_text": "tested at the pin position against parcels listed in a state GIS layer",
+   "sources": [
+    "tgrac_prohib",
+    "tgrac_cadastral"
+   ],
+   "missing": "no parcel mapped here, so the layer cannot be tested; the legal register is on the registration portal",
+   "label": "Listed in a state prohibitory-land layer"
+  },
+  "planauth": {
+   "sec": "land",
+   "scope": "pin",
+   "scope_text": "which authority's plan governs the area the pin is in",
+   "sources": [
+    "hmda_zones",
+    "hmda_plans"
+   ],
+   "missing": "pin outside the HMDA authority areas held",
+   "label": "Which official plan governs this area"
+  },
+  "zoning": {
+   "sec": "land",
+   "scope": "none",
+   "scope_text": "no data: the plans are published as images and PDFs and are not read",
+   "sources": [
+    "hmda_plans"
+   ],
+   "missing": "HMDA publishes the plans as static sheets; no queryable land-use layer was found",
+   "label": "Master-plan land use and zoning"
+  },
+  "perm": {
+   "sec": "land",
+   "scope": "none",
+   "scope_text": "no data: approvals are held in HMDA / DTCP systems",
+   "sources": [
+    "none"
+   ],
+   "missing": "no public bulk record of layout and building permissions was reached",
+   "label": "Layout and building permissions"
+  },
+  "ftl": {
+   "sec": "land",
+   "scope": "nearby",
+   "scope_text": "lake outline distance; not the legal FTL",
+   "sources": [
+    "osm",
+    "tgrac_waterbodies"
+   ],
+   "missing": "",
+   "label": "Lake buffer / FTL risk"
+  },
+  "widen": {
+   "sec": "land",
+   "scope": "nearby",
+   "scope_text": "nala segments within 150 m; widths partly blank",
+   "sources": [
+    "tgrac_nalas"
+   ],
+   "missing": "",
+   "label": "Nala widening near the plot"
+  },
+  "price": {
+   "sec": "land",
+   "scope": "locality",
+   "scope_text": "a named locality, asking prices",
+   "sources": [
+    "prices"
+   ],
+   "missing": "no priced locality within 4 km",
+   "label": "Typical asking price (apartments)"
+  },
+  "overlap": {
+   "sec": "land",
+   "scope": "parcel",
+   "scope_text": "the whole matched survey outline, tested against three layers",
+   "sources": [
+    "tgrac_cadastral",
+    "tgrac_lost",
+    "tgrac_tcur",
+    "tgrac_waterbodies"
+   ],
+   "missing": "needs a pin that matches exactly one survey parcel; not possible in the old city core where no survey parcels are mapped",
+   "label": "Mapped features overlapping the parcel outline"
+  }
+ }
+}

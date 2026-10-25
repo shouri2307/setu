@@ -27,8 +27,14 @@ const S = {
   unlocked: { customer: true, agent: true, insurer: true }, open: {},
   cust: { price: '9000000', area: '1200', brokerage: '1' }, agent: { ask: '9500', area: '1200', comps: '8800, 9200, 9600', guide: '', fee: '1' },
   claim: { peril: 'rain_vehicle', date: '', amount: '', out: null, busy: false },
-  ai: { q: '', a: '', think: false }, PERILS, cfg: { places: false, mapsKey: '' }, seq: 0, token: Math.random().toString(36).slice(2), busy: false
+  ai: { q: '', a: '', think: false }, PERILS, cfg: { places: false, mapsKey: '' }, seq: 0, token: Math.random().toString(36).slice(2), busy: false, cmp: null, cmpPending: false, cmpBuilding: false, cmpA: null, cmpSeq: 0,
+  pref: { survey: '', village: '', plot: '', layout: '', doc: '' }, pdata: null
 };
+/* the buyer's own references stay on this device (localStorage) and never go into the link */
+const refKey = (lat, lon) => 'sethu.ref.' + lat.toFixed(4) + ',' + lon.toFixed(4);
+function loadRef(lat, lon) { const e = { survey: '', village: '', plot: '', layout: '', doc: '' }; try { return Object.assign(e, JSON.parse(localStorage.getItem(refKey(lat, lon)) || '{}')); } catch (x) { return e; } }
+function saveRef(lat, lon, ref) { try { localStorage.setItem(refKey(lat, lon), JSON.stringify(ref)); } catch (x) { } }
+function applyRef() { const r = S.r; if (!r || !r.ok) return; saveRef(r.lat, r.lon, S.pref); if (S.pdata) SETUE.setParcel(r, S.pdata, S.pref); renderReport(); }
 
 function toast(t, ms = 2800) { const e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(() => e.classList.remove('show'), ms); }
 const fmtKm = m => m == null ? '—' : m < 950 ? Math.round(m / 10) * 10 + ' m' : (m / 1000).toFixed(1) + ' km';
@@ -123,71 +129,89 @@ async function doSearch(q) {
 
 /* ------------------------------ pin → report ------------------------------ */
 async function setPin(lat, lon, label, opts = {}) {
+  if ((S.cmpPending || S.cmpBuilding) && S.cmpA && S.cmpA.ok) return startCompare(lat, lon, label);   // address A was fixed when Compare was pressed; this pick is B
   const seq = ++S.seq; S.busy = true;
-  S.label = label || ''; S.gp = null; S.fc = null; S.air = null; S.terrain = null; S.ai = { q: '', a: '', think: false }; S.claim.out = null;
+  S.label = label || ''; S.gp = null; S.fc = null; S.air = null; S.terrain = null; S.access = null; S.pdata = null; S.pref = loadRef(lat, lon); S.ai = { q: '', a: '', think: false }; S.claim.out = null;
   const r = await SETUE.report(lat, lon);
   if (seq !== S.seq) return;
   S.r = r; S.busy = false;
   if (r.ok) MapKit.setPin(lat, lon, r.outside ? null : r.wid, true); else MapKit.clearPin();
-  if (!opts.keepView && S.view === 'report') closeReport(true);
+  if (!opts.keepView && (S.view === 'report' || S.view === 'compare')) closeReport(true);
   refresh(true); syncHash();
   if (!r.ok) return;
   // enrich in the background; every step re-renders without disturbing typing
   SETUE.elevationProfile(lat, lon).then(t => { if (seq !== S.seq) return; S.terrain = t; S.r.terrain = t; SETUE.reanalyse(S.r); refresh(); });
   SETUE.forecast(lat, lon).then(f => { if (seq !== S.seq) return; S.fc = f; refresh(); }).catch(() => { });
+  SETUE.roadAccess(lat, lon).then(ac => { if (seq !== S.seq) return; S.access = ac; if (S.r && ac) { S.r.access = ac; SETUE.reanalyse(S.r); } refresh(); }).catch(() => { });
   SETUE.airNow(lat, lon).then(a => { if (seq !== S.seq) return; S.air = a; if (S.r) { S.r.air = a; SETUE.reanalyse(S.r); } refresh(); });
+  SETUE.parcelLoad(lat, lon).then(d => { if (seq !== S.seq) return; S.pdata = d; if (S.r && S.r.ok) SETUE.setParcel(S.r, d, S.pref); refresh(); }).catch(() => { });
   if (S.cfg.places) {
     api(`/api/places?lat=${lat}&lon=${lon}`, 9000).then(async gp => {
       if (seq !== S.seq) return;
       if (gp && gp.cats && Object.keys(gp.cats).length) {
         S.gp = gp; const r2 = await SETUE.report(lat, lon, gp); if (seq !== S.seq || !r2.ok) return;
-        r2.terrain = S.terrain; r2.air = S.air; SETUE.reanalyse(r2); S.r = r2; refresh();
+        r2.terrain = S.terrain; r2.air = S.air; r2.access = S.access; if (S.pdata) r2.parcel = { data: S.pdata, ref: S.pref, match: SETUE.parcelMatch(lat, lon, S.pdata, S.pref) }; SETUE.reanalyse(r2); S.r = r2; refresh();
       } else if (gp && gp.error) console.warn('Places unavailable, using OSM backup:', gp.error);
     }).catch(e => console.warn('Places call failed, using OSM backup', e));
   }
 }
 function syncHash() {
   if (!S.r || !S.r.ok) return;
-  const h = S.view === 'report' ? `#/r/${S.lens}/${S.r.lat.toFixed(5)},${S.r.lon.toFixed(5)}` : `#/l/${S.r.lat.toFixed(5)},${S.r.lon.toFixed(5)}`;
+  const h = S.view === 'compare' && S.cmp ? `#/c/${S.cmp.a.lat.toFixed(5)},${S.cmp.a.lon.toFixed(5)}/${S.cmp.b.lat.toFixed(5)},${S.cmp.b.lon.toFixed(5)}` : S.view === 'report' ? `#/r/${S.lens}/${S.r.lat.toFixed(5)},${S.r.lon.toFixed(5)}` : `#/l/${S.r.lat.toFixed(5)},${S.r.lon.toFixed(5)}`;
   if (location.hash !== h) { try { history.replaceState(null, '', h); } catch (e) { } }
 }
 
 /* ------------------------------ rendering ------------------------------ */
 function renderDock() {
   const d = $('dock'), r = S.r;
-  if (!r) {
-    const poi = (SETUE.D.geo && SETUE.D.geo.poi) || {}, n = k => (poi[k] || []).length;
-    const stat = (v, l) => `<div><b>${v}</b><span>${l}</span></div>`;
-    d.innerHTML = `<div class="panel scroll intro"><h1>Check any Hyderabad address <em>before</em> you buy, sell or insure it.</h1>
-      <p>Search a place or tap the map, then pick the report that fits you.</p>
-      <div class="who">${['customer', 'agent', 'insurer'].map(l => `<div class="wrow"><span class="e">${LENS_ICON[l]}</span><span><b>${LENS_NAME[l]}</b><span>${LENS_SUB[l]}</span></span>${infoIcon(l)}</div>`).join('')}</div>
-      <div class="proof">${stat('145', 'wards')}${stat(Math.floor(n('hospital') / 100) * 100 + '+', 'hospitals')}${stat(Math.floor(n('school') / 100) * 100 + '+', 'schools')}${stat('8', 'real floods tested')}</div>
-      <div class="chips">${PLACES.slice(0, 6).map((p, i) => `<button class="chip" data-act="place" data-i="${i}">${esc(p[0])}</button>`).join('')}</div></div>`;
-    return;
-  }
-  if (!r.ok) { d.innerHTML = `<div class="panel intro"><h1>Outside our <em>coverage</em></h1><p>SETHU covers Hyderabad. Pick a point on the map, or search a Hyderabad locality.</p><button class="btn" data-act="clear">Back</button></div>`; return; }
-  const d192 = r.outside ? null : r.setu.depth[192], thr = SETUE.D.thr, top = r.buyer.flags[0], out = r.outside;
-  const title = S.label && !['Coordinates', 'My location'].includes(S.label) ? S.label : r.ward.name;
-  d.innerHTML = `<div class="panel scroll lc"><div class="eyebrow">Location</div><h2>${esc(title)}</h2>
-    <div class="sub">${esc(r.ward.name)}${S.address ? ' · ' + esc(S.address) : ''}</div>
-    <div class="row"><div class="kpi"><div class="l">Location score</div><div class="v">${r.pillars.score}</div><div class="t">${r.pillars.label}</div></div>
-      <div class="kpi"><div class="l">${out ? 'Flood model' : '2020 storm'}</div><div class="v sm" style="color:${out ? 'var(--muted)' : d192 >= .5 ? 'var(--e)' : d192 >= thr ? 'var(--c)' : 'var(--a)'}">${out ? 'n/a' : d192 >= thr ? d192.toFixed(2) + ' m' : 'Dry'}</div><div class="t">${out ? 'outside wards' : 'modelled depth'}</div></div>
-      <div class="kpi"><div class="l">Facilities</div><div class="v">${r.scores.dev.score}</div><div class="t">out of 100</div></div></div>
-    <div class="callout" style="margin-bottom:18px"><b>${esc(top.t)}.</b> ${esc(top.d.length > 120 ? top.d.slice(0, 117) + '…' : top.d)}</div>
-    <div class="reports">${['customer', 'agent', 'insurer'].map(l => `<button class="rbtn" data-act="open" data-lens="${l}"><span class="e">${LENS_ICON[l]}</span><span><b>${LENS_NAME[l]}</b><span>${LENS_SUB[l]}</span></span>${infoIcon(l)}</button>`).join('')}</div></div>`;
+  if (!r) { d.innerHTML = View.landing(S); return; }
+  if (!r.ok) { d.innerHTML = `<div class="v-panel"><h1 class="v-h1">Outside our <em>coverage</em></h1><p class="v-lead">SETHU covers Hyderabad. Pick a point on the map, or search a Hyderabad locality.</p><button class="v-btn" data-act="clear">Back</button></div>`; return; }
+  d.innerHTML = View.dock(S);
 }
+const VIEW_TABS = [['customer', 'Buyer check'], ['agent', 'For agents'], ['insurer', 'For insurers']];
 function renderReport() {
   const v = $('report'), r = S.r; if (!r || !r.ok) return;
   const sc = v.scrollTop;
   const title = S.label && !['Coordinates', 'My location'].includes(S.label) ? S.label : r.ward.name;
-  v.innerHTML = `<div class="rhead"><div class="rin"><button class="btn ghost sm back" data-act="back">← Map</button>
-    <div><h1>${esc(title)}</h1><div class="loc">${esc(r.ward.name)} · ${r.lat.toFixed(4)}, ${r.lon.toFixed(4)}</div></div>
-    <div class="tabs">${['customer', 'agent', 'insurer'].map(l => `<button data-act="tab" data-lens="${l}" class="${S.lens === l ? 'on' : ''}">${LENS_ICON[l]} ${l === 'customer' ? 'Customer' : l === 'agent' ? '<span class="lg">Real estate agent</span><span class="sm">Real estate</span>' : 'Insurer'}${infoIcon(l)}</button>`).join('')}</div>
-    <button class="btn ghost sm noprint" data-act="print">🖨 PDF</button><button class="btn ghost sm noprint" data-act="share">🔗 Share</button></div></div>
-    <div class="rbody">${Reports.render(S.lens, S)}</div>`;
+  v.innerHTML = `<div class="v-rhead"><div class="v-rin"><button class="v-btn ghost sm v-back" data-act="back">← Map</button>
+    <div><h1>${esc(title)}</h1><div class="v-loc">${esc(r.ward.name)} · ${r.lat.toFixed(4)}, ${r.lon.toFixed(4)}</div></div>
+    <div class="v-rtools noprint"><button class="v-btn ghost sm" data-act="cmp-start">⇄ Compare</button><button class="v-btn ghost sm" data-act="print">Print / PDF</button><button class="v-btn ghost sm" data-act="share">Copy link</button></div>
+    <div class="v-views noprint" role="tablist">${VIEW_TABS.map(([l, n]) => `<button role="tab" aria-selected="${S.lens === l}" data-act="tab" data-lens="${l}" class="${S.lens === l ? 'on' : ''}">${n}</button>`).join('')}</div></div></div>
+    <div class="rbody${S.lens === 'customer' ? '' : ' wide'}">${Reports.render(S.lens, S)}</div>`;
   v.scrollTop = sc;
 }
+function renderCompare() {
+  const v = $('report'); if (!S.cmp) return; const sc = v.scrollTop;
+  v.innerHTML = `<div class="v-rhead"><div class="v-rin"><button class="v-btn ghost sm v-back" data-act="back">← Map</button>
+    <div><h1>Compare two addresses</h1><div class="v-loc">${esc(S.cmp.la || S.cmp.a.ward.name)} vs ${esc(S.cmp.lb || S.cmp.b.ward.name)}</div></div>
+    <div class="v-rtools noprint"><button class="v-btn ghost sm" data-act="print">Print / PDF</button><button class="v-btn ghost sm" data-act="share">Copy link</button></div></div></div>
+    <div class="rbody wide">${Reports.compare(S)}</div>`;
+  v.scrollTop = sc;
+}
+const metres = (la1, lo1, la2, lo2) => { const k = Math.cos(la1 * Math.PI / 180); return Math.hypot((lo2 - lo1) * k * 111320, (la2 - la1) * 110540); };
+const cleanLabel = (l, fb) => l && !['Coordinates', 'My location'].includes(l) ? l : fb;
+async function startCompare(lat, lon, label) {
+  const A = S.cmpA || S.r;
+  if (!A || !A.ok) return;
+  if (metres(A.lat, A.lon, lat, lon) < 20) { toast('That is the same address as A. Pick a different one for B.', 4500); return; }   // stays in "pick the second address"
+  const seq = ++S.cmpSeq; S.cmpPending = false; S.cmpBuilding = true; toast('Comparing the two addresses…', 6000);
+  const rb = await SETUE.report(lat, lon);
+  if (seq !== S.cmpSeq) return;   // a newer pick for B replaced this one
+  if (!rb.ok) { toast('That address is outside Hyderabad coverage'); S.cmpBuilding = false; S.cmpPending = true; renderDock(); return; }
+  // the parcel layer is local and quick; it is part of the evidence for B, so wait for it
+  const pd = await SETUE.parcelLoad(lat, lon).catch(() => null); if (seq !== S.cmpSeq) return;
+  if (pd) rb.parcel = { data: pd, ref: {}, match: SETUE.parcelMatch(lat, lon, pd, {}) };
+  SETUE.reanalyse(rb);
+  S.cmp = { a: A, b: rb, la: cleanLabel(S.cmpA === S.r ? S.label : '', A.ward.name), lb: cleanLabel(label, rb.ward.name) };
+  S.cmpBuilding = false; openCompare();
+  // slow live lookups (elevation, road routing, air) fill in afterwards, so the comparison never waits on a slow server
+  Promise.all([SETUE.elevationProfile(lat, lon).catch(() => null), SETUE.roadAccess(lat, lon).catch(() => null), SETUE.airNow(lat, lon).catch(() => null)]).then(([t, ac, air]) => {
+    if (seq !== S.cmpSeq) return; rb.terrain = t; rb.access = ac; rb.air = air; SETUE.reanalyse(rb); if (S.view === 'compare') renderCompare();
+  });
+}
+function openCompare() { S.view = 'compare'; $('report').classList.remove('hide'); $('report').scrollTop = 0; renderCompare(); syncHash(); $('toast').classList.remove('show'); }
 function refresh(fresh) {
+  if (S.view === 'compare') return renderCompare();
   if (S.view === 'report') {
     const a = document.activeElement;
     if (!fresh && a && /^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName) && $('report').contains(a)) { clearTimeout(refresh._t); refresh._t = setTimeout(() => refresh(), 1200); return; }
@@ -209,6 +233,10 @@ document.addEventListener('click', e => {
   if (a === 'place') { const p = PLACES[+t.dataset.i]; $('q').value = p[0]; S.address = ''; setPin(p[1], p[2], p[0]); }
   else if (a === 'open') openReport(t.dataset.lens);
   else if (a === 'back') closeReport();
+  else if (a === 'cmp-start') { const A = S.view === 'compare' && S.cmp ? S.cmp.a : S.r; if (!A || !A.ok) return; S.cmpA = A; S.cmpPending = true; if (S.view !== 'explore') closeReport(true); renderDock(); toast('Now search or click the map for the second address', 6000); }
+  else if (a === 'cmp-cancel') { S.cmpPending = false; S.cmpBuilding = false; S.cmpSeq++; S.cmpA = null; renderDock(); }
+  else if (a === 'cmp-swap') { if (S.cmp) { S.cmp = { a: S.cmp.b, b: S.cmp.a, la: S.cmp.lb, lb: S.cmp.la }; syncHash(); renderCompare(); } }
+  else if (a === 'cmp-open') { const w = t.dataset.which === 'b' ? 'b' : 'a'; if (S.cmp) { S.r = S.cmp[w]; S.label = w === 'a' ? S.cmp.la : S.cmp.lb; MapKit.setPin(S.r.lat, S.r.lon, S.r.outside ? null : S.r.wid, false); openReport('customer'); } }
   else if (a === 'tab') { S.lens = t.dataset.lens; S.ai = { q: '', a: '', think: false }; renderReport(); $('report').scrollTop = 0; syncHash(); }
   else if (a === 'clear') { S.r = null; MapKit.clearPin(); renderDock(); history.replaceState(null, '', '#/'); }
   else if (a === 'print') window.print();
@@ -218,6 +246,16 @@ document.addEventListener('click', e => {
   else if (a === 'cust-calc' || a === 'agent-calc') renderReport();
   else if (a === 'cust-example') { S.cust = { price: '9000000', area: '1200', brokerage: '1' }; renderReport(); }
   else if (a === 'agent-example') { S.agent = { ask: '9500', area: '1200', comps: '8800, 9200, 9600', guide: '', fee: '1' }; renderReport(); }
+  else if (a === 'jump') {
+    const id = t.dataset.id, el = document.getElementById('f_' + id); if (!el) return;
+    const tp = el.closest('details.v-topic'); if (tp && !tp.open) { tp.open = true; S.open[tp.dataset.id] = true; }
+    const fd = el.querySelector('details.v-fd'); if (fd) { fd.open = true; S.open['fd_' + id] = true; }
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1800);
+  }
+  else if (a === 'open-topic') { const e = document.querySelector('.v-topics'); if (e) e.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  else if (a === 'parcel-match') applyRef();
+  else if (a === 'parcel-pick') { S.pref.survey = t.dataset.n; if (t.dataset.v && !S.pref.village) S.pref.village = t.dataset.v; applyRef(); }
+  else if (a === 'parcel-clear') { S.pref = { survey: '', village: '', plot: '', layout: '', doc: '' }; applyRef(); }
   else if (a === 'claim-run') runClaim();
   else if (a === 'claim-demo') demoClaim(+t.dataset.d);
 });
@@ -307,13 +345,31 @@ async function route() {
     S.lens = m[1]; const lat = +m[2], lon = +m[3];
     if (!S.r || Math.abs(S.r.lat - lat) > 1e-5 || Math.abs(S.r.lon - lon) > 1e-5) await setPin(lat, lon, '', { keepView: true });
     if (S.r && S.r.ok) openReport(S.lens);
+  } else if ((m = h.match(/^#\/c\/(-?[\d.]+),(-?[\d.]+)\/(-?[\d.]+),(-?[\d.]+)/))) {
+    const la = +m[1], lo = +m[2], lb = +m[3], lob = +m[4];
+    if (!S.r || Math.abs(S.r.lat - la) > 1e-5 || Math.abs(S.r.lon - lo) > 1e-5) await setPin(la, lo, '', { keepView: true });
+    if (!S.cmp || Math.abs(S.cmp.b.lat - lb) > 1e-5 || Math.abs(S.cmp.b.lon - lob) > 1e-5 || Math.abs(S.cmp.a.lat - la) > 1e-5) { S.cmpA = S.r; S.cmpPending = true; await startCompare(lb, lob, ''); } else openCompare();
   } else if ((m = h.match(/^#\/l\/(-?[\d.]+),(-?[\d.]+)/)) || (m = h.match(/^#(-?[\d.]+),(-?[\d.]+)/))) {
     if (!S.r) await setPin(+m[1], +m[2], '');
   }
 }
+// legend for the evidence layers: swatches plus the age and caveat of each active dataset
+function renderEvLegend() {
+  const box = $('evlegend'), on = [...document.querySelectorAll('#maptools .chip.on[data-t^="ev_"]')].map(c => c.dataset.t);
+  if (!box) return;
+  box.innerHTML = on.map(k => { const i = MapKit.evInfo(k, SETUE.D); return i ? `<div class="evl"><b>${esc(i.title)}</b>${i.unit ? ` <span>${esc(i.unit)}</span>` : ''}<div class="sw">${i.swatch.map(s => `<i><u style="background:${s[0]}"></u>${esc(s[1])}</i>`).join('')}</div><small>${esc(i.note)}</small></div>` : ''; }).join('');
+  box.classList.toggle('show', on.length > 0);
+}
+// due-diligence checklist ticks are remembered on this device
+document.addEventListener('change', e => {
+  const t = e.target; if (!t.matches || !t.matches('input[data-chk]')) return;
+  try { localStorage.setItem(t.dataset.chk, t.checked ? '1' : '0'); } catch (x) { }
+  const lab = t.closest('label'); if (lab) lab.classList.toggle('done', t.checked);
+  const card = t.closest('.chkcard'); if (card) { const p = card.querySelector('.chkprog'); if (p) p.textContent = card.querySelectorAll('input[data-chk]:checked').length + ' of ' + card.querySelectorAll('input[data-chk]').length + ' ticked'; }
+});
 function applyMapEngine(engine, why) { if (why) toast(why + ' — using the OpenStreetMap map instead', 4500); }
 async function boot() {
-  $('dock').innerHTML = '<div class="panel intro"><p><span class="spin"></span> &nbsp;Loading the SETHU engine…</p></div>';
+  $('dock').innerHTML = '<div class="v-panel"><p class="v-lead"><span class="spin"></span> &nbsp;Loading the SETHU engine…</p></div>';
   try { await SETUE.load(); } catch (e) { $('dock').innerHTML = '<div class="panel intro"><p>Could not load data files. Serve the site from the <code>web/</code> folder.</p></div>'; return; }
   try { S.cfg = await api('/api/config', 4000); } catch (e) { S.cfg = { places: false, suggest: false, mapsKey: '' }; }
   const D = SETUE.D;
@@ -321,7 +377,7 @@ async function boot() {
   try { wl = await fetch('data/wardloc.json').then(r => r.json()); } catch (e) { }
   const wards = D.wards.map(w => ({ id: w.id, name: w.name, rings: w.rings, pct: (D.wardfeat[String(w.id)] || {}).pct || 0, loc: wl[w.id] != null ? wl[w.id] : null }));
   await MapKit.init($('map'), {
-    bounds: D.zones.bounds, wards, water: D.geo.water, gov: D.gov, hy: D.hy, googleKey: S.cfg.mapsKey || '', onPick: (lat, lon) => { S.address = ''; $('q').value = ''; setPin(lat, lon, ''); },
+    bounds: D.zones.bounds, wards, water: D.geo.water, gov: D.gov, hy: D.hy, D, googleKey: S.cfg.mapsKey || '', onPick: (lat, lon) => { S.address = ''; $('q').value = ''; setPin(lat, lon, ''); },
     poiRows: c => (S.gp && S.gp.cats && S.gp.cats[c] && S.gp.cats[c].length) ? S.gp.cats[c] : (D.geo.poi[c] || []), onEngine: applyMapEngine
   });
   $('maptools').onclick = e => {
@@ -331,6 +387,7 @@ async function boot() {
     if (t === 'wards' || t === 'lakes') { MapKit.setLayer(t, on); if (t === 'wards') $('maplegend').style.display = on ? '' : 'none'; }
     else if (t === 'sat') MapKit.setSatellite(on);
     else if (t === 'nalas' || t === 'spots' || t === 'drains' || t === 'tanks') MapKit.showGov(t, on);
+    else if (t.indexOf('ev_') === 0) { MapKit.showEv(t, on); renderEvLegend(); }
     else if (t === 'mode') {
       const loc = c.dataset.mode !== 'loc'; c.dataset.mode = loc ? 'loc' : 'flood'; c.classList.remove('on');
       c.textContent = loc ? 'Colour: location score' : 'Colour: flood rank';
