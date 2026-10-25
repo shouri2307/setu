@@ -744,7 +744,7 @@ const SETUE = (() => {
     if (parcelTiles.has(key)) return parcelTiles.get(key);
     try {
       const j = await fetch('data/parcels/' + key + '.json').then(r => { if (!r.ok) throw new Error(key); return r.json(); });
-      const t = j.p.map(row => ({ n: row[0], v: j.v[row[1]], m: j.m[row[2]], code: row[3], rem: row[4], rings: row[5], _b: bbLL(row[5][0]), area: Math.round(areaM2(row[5])) }));
+      const t = j.p.map(row => ({ n: row[0], v: j.v[row[1]], m: j.m[row[2]], code: row[3], rem: row[4], rings: row[5], _b: bbLL(row[5][0]) }));
       parcelTiles.set(key, t); return t;
     } catch (e) { return null; }   // a failed tile is never cached and never read as "no parcels"
   }

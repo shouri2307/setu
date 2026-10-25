@@ -232,9 +232,3 @@ details.more.v-topic>summary span{font-size:inherit;color:inherit}
 .v-crow.cmp-a-more-severe .v-ccols>div:first-child,.v-crow.cmp-b-more-severe .v-ccols>div:last-child{outline:2px solid var(--badbg);background:#fff}
 .cmuted{color:var(--muted);font-size:14px}
 @media (max-width:860px){.v-cmpheads,.v-ccols{grid-template-columns:1fr}}
-/* layers dropdown: a floating panel under the toolbar, never part of the chip row */
-.maptools{align-items:flex-start}
-.morebox{position:absolute;top:calc(100% + 8px);left:0;z-index:40;width:min(560px,calc(100vw - 500px));display:none;flex-wrap:wrap;gap:6px}
-.morebox.show{display:flex}
-.morebox .mgrp{flex:0 0 100%}
-@media (max-width:860px){.morebox{position:fixed;left:8px;right:8px;top:112px;width:auto;max-height:55vh;overflow:auto}}
