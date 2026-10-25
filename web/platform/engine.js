@@ -867,7 +867,8 @@ const SETUE = (() => {
     if (!/(google\.[a-z.]+\/maps|maps\.google|goo\.gl|maps\.app|g\.co\/kgs)/i.test(q)) return null;
     const num = (re) => { const m = q.match(re); return m ? { lat: +m[1], lon: +m[2] } : null; };
     const ll = num(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/) || num(/[?&](?:q|ll|query|destination|center)=(-?\d+\.\d+)(?:,|%2C)\s*(-?\d+\.\d+)/i) || num(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
-    if (ll) return ll;
+    const dec0 = s => { try { return decodeURIComponent(s.replace(/\+/g, ' ')).replace(/\s+/g, ' ').trim(); } catch (e) { return s.replace(/\+/g, ' ').trim(); } };
+    if (ll) { const pn = q.match(/\/maps\/place\/([^/@?#]+)/i); if (pn && dec0(pn[1]).length >= 3 && !/^-?\d/.test(dec0(pn[1]))) ll.name = dec0(pn[1]); return ll; }
     const dec = s => { try { return decodeURIComponent(s.replace(/\+/g, ' ')).replace(/\s+/g, ' ').trim(); } catch (e) { return s.replace(/\+/g, ' ').trim(); } };
     const tq = q.match(/[?&](?:query|q|destination)=([^&#]+)/i);
     if (tq && dec(tq[1]).length >= 3) return { text: dec(tq[1]) };
@@ -1148,8 +1149,8 @@ const SETUE = (() => {
     });
     const QQ = Q();
     for (const sec of sections) for (const f of sec.findings) { const qf = QQ && QQ.factors[f.id]; f.scope = qf ? qf.scope : null; f.scopeText = qf ? qf.scope_text : ''; f.sourceIds = qf ? qf.sources : []; }
-    const identity = pc ? { status: pc.status, label: PARCEL_LABEL[pc.status], text: pc.text, usable: pc.usable, parcel: pc.parcel ? { number: pc.parcel.number, village: pc.parcel.village, mandal: pc.parcel.mandal, areaM2: pc.parcel.areaM2 } : null }
-      : { status: 'pending', label: 'Not matched yet', text: 'This report describes a map pin, not a surveyed plot.', usable: false, parcel: null };
+    const identity = pc ? { status: pc.status, reason: pc.reason, label: PARCEL_LABEL[pc.status], text: pc.text, usable: pc.usable, parcel: pc.parcel ? { number: pc.parcel.number, village: pc.parcel.village, mandal: pc.parcel.mandal, areaM2: pc.parcel.areaM2 } : null }
+      : { status: 'pending', reason: '', label: 'Not matched yet', text: 'This report describes a map pin, not a surveyed plot.', usable: false, parcel: null };
     const gapsSrc = QQ ? Object.entries(QQ.sources).filter(([, sr]) => sr.files && sr.files.length && sr.files.every(f => (D.loadFailed || []).includes('data/' + f))).map(([id, sr]) => ({ id: 'src:' + id, label: sr.name, section: 'Data sources', value: 'data not loaded', why: 'its data file could not be loaded, so every finding that rests only on it is unavailable' })) : [];
     const gaps0 = sections.flatMap(sec => sec.findings.filter(f => f.level === 'unknown').map(f => ({ id: f.id, label: f.label, section: sec.title, value: f.value, why: (QQ && QQ.factors[f.id] && QQ.factors[f.id].missing) || f.note || 'no data' })));
     const gaps = [...gapsSrc, ...gaps0];

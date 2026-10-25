@@ -1,0 +1,4 @@
+const fs=require('fs'),path=require('path'),vm=require('vm');const WEB=path.join(__dirname,'..','..','web');
+const sb={console,Math,JSON,Promise,Date,Set,Map,Array,Object,Number,String,isFinite,isNaN,parseFloat,setTimeout,clearTimeout,AbortController,fetch:u=>{if(/^https?:/.test(u))return Promise.reject(new Error('offline'));const p=path.join(WEB,u);return fs.existsSync(p)?Promise.resolve({ok:true,json:async()=>JSON.parse(fs.readFileSync(p,'utf8'))}):Promise.resolve({ok:false,status:404,json:async()=>({})});}};
+vm.createContext(sb);vm.runInContext(fs.readFileSync(path.join(WEB,'platform','engine.js'),'utf8')+'\n;globalThis.SETUE=SETUE;',sb);
+const E=sb.SETUE;(async()=>{await E.load();const r=await E.report(17.4022667,78.5197988);await E.attachParcel(r,{});const m=r.parcel.match;console.log('no survey number entered ->',m.status,'/',m.reason,'| identity:',r.ev.identity.status);console.log(m.text);})();

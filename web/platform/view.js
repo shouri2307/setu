@@ -41,6 +41,7 @@ const View = (() => {
   const flat = r => r.ev.sections.flatMap(s => s.findings.map(f => ({ ...f, sec: s.id })));
   const isHigh = f => SETUE.HIGH.has(f.id);
   const byWeight = (a, b) => (isHigh(b) - isHigh(a)) || 0;
+  const MISMATCH = new Set(['number-mismatch', 'neighbour', 'village-mismatch']);   // only these mean "your number does not fit the pin"
   const label = r => r.label || '';
 
   /* ---------- the counts that drive both the map card and the report summary ---------- */
@@ -57,8 +58,8 @@ const View = (() => {
   /* ---------- identity: a map pin is never called a plot ---------- */
   function identity(r, S) {
     const id = r.ev.identity, p = (S && S.pref) || {}, m = r.parcel && r.parcel.match;
-    const tone = { verified: 'ok', approximate: 'warn', none: 'bad', unavailable: 'mute', pending: 'mute' }[id.status] || 'mute';
-    const head = id.status === 'verified' ? 'Matched to a surveyed plot outline' : id.status === 'approximate' ? 'Probably this survey number: please confirm' : id.status === 'none' ? 'The pin does not match the survey number you entered'
+    const tone = id.status === 'none' ? (MISMATCH.has(id.reason) ? 'bad' : 'mute') : ({ verified: 'ok', approximate: 'warn', unavailable: 'mute', pending: 'mute' }[id.status] || 'mute');   // red only for a real mismatch; a gap in the map is missing data
+    const head = id.status === 'verified' ? 'Matched to a surveyed plot outline' : id.status === 'approximate' ? 'Probably this survey number: please confirm' : id.status === 'none' ? (MISMATCH.has(id.reason) ? 'The pin does not match the survey number you entered' : id.reason === 'on-feature' ? 'The pin is on a road, canal or tank, not on a plot' : 'The pin is not on a mapped survey plot')
       : id.status === 'unavailable' ? 'This report is about a map pin: survey outlines are not available here' : 'This report is about a map pin, not a verified plot';
     const cand = m && m.candidates && m.candidates.length > 1 ? `<div class="v-cand"><b>The pin could be on:</b> ${m.candidates.map(c => `<button type="button" class="v-pill" data-act="parcel-pick" data-n="${esc(c.number)}" data-v="${esc(c.village)}">Sy. ${esc(c.number)} · ${esc(c.village)}${c.d ? ' · ' + c.d + ' m away' : ''}</button>`).join(' ')}</div>` : '';
     const area = id.parcel && id.parcel.areaM2 ? ` The mapped outline covers about ${id.parcel.areaM2 >= 10000 ? (id.parcel.areaM2 / 10000).toFixed(2) + ' hectares' : id.parcel.areaM2.toLocaleString('en-IN') + ' m²'}.` : '';
@@ -144,8 +145,8 @@ const View = (() => {
   /* ---------- the card beside the map ---------- */
   function dock(S) {
     const r = S.r, tl = S.label && !['Coordinates', 'My location'].includes(S.label) ? S.label : r.ward.name, T = tally(r, S), id = r.ev.identity;
-    const tone = { verified: 'ok', approximate: 'warn', none: 'bad' }[id.status] || 'mute';
-    const idText = id.status === 'verified' ? 'Matched to a surveyed plot outline' : id.status === 'approximate' ? 'Probably a survey number: confirm in the check' : id.status === 'none' ? 'Does not match the survey number entered' : 'A map pin, not a verified plot';
+    const tone = id.status === 'none' ? (MISMATCH.has(id.reason) ? 'bad' : 'mute') : ({ verified: 'ok', approximate: 'warn' }[id.status] || 'mute');
+    const idText = id.status === 'verified' ? 'Matched to a surveyed plot outline' : id.status === 'approximate' ? 'Probably a survey number: confirm in the check' : id.status === 'none' ? (MISMATCH.has(id.reason) ? 'Does not match the survey number entered' : id.reason === 'on-feature' ? 'On a road, canal or tank, not a plot' : 'Not on a mapped survey plot') : 'A map pin, not a verified plot';
     const top = [...T.concern, ...T.watch].slice(0, 3);
     return `<div class="v-panel scroll"><div class="v-eyebrow">Selected place</div><h2 class="v-dh">${esc(tl)}</h2><div class="v-sub">${esc(r.ward.name)}${S.address ? ' · ' + esc(S.address) : ''}${r.outside ? ' · outside the 145 wards' : ''}</div>
       <div class="v-idchip t-${tone}"><span class="v-ic">${tone === 'ok' ? '✓' : tone === 'bad' ? '!' : tone === 'warn' ? '≈' : '📍'}</span>${esc(idText)}</div>

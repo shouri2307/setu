@@ -670,6 +670,26 @@ const argv = process.argv.slice(2);
     ok(typeof P('https://www.google.com/maps/search/?api=1&query=%3Cb%3Ex%3C%2Fb%3E+road').text === 'string', 'text from a link is returned as plain text; the app shows it only through input.value and textContent, never as HTML');
     const app = fs.readFileSync(path.join(WEB, 'platform', 'app.js'), 'utf8'); ok(!/innerHTML\s*=\s*[^;]*text/.test(app.slice(app.indexOf('async function searchText'), app.indexOf('async function doSearch'))), 'the link-search code never writes the pasted text into innerHTML');
   }
+  // ---- wording must say what actually happened ----
+  {
+    const SBx = r => ({ r, label: '', cust: {}, agent: {}, claim: { peril: 'rain_vehicle', date: '', amount: '', out: null, busy: false }, ai: {}, fc: null, air: { aqi: 80, band: 'x' }, access: {}, terrain: { relief: 0 }, line: 'motor', PERILS: PER, open: {}, pref: { survey: '', village: '', plot: '', layout: '', doc: '' } });
+    const r = await E.report(17.4401, 78.3489), mk = (la, lo, w) => ({ ok: true, outsideBox: false, parcels: w });
+    const sq = (la, lo, h) => { const a = h / 110540, b = h / (111320 * Math.cos(la * Math.PI / 180)); return [[la - a, lo - b], [la - a, lo + b], [la + a, lo + b], [la + a, lo - b], [la - a, lo - a]]; };
+    const bbox = ring => [Math.min(...ring.map(p => p[0])), Math.min(...ring.map(p => p[1])), Math.max(...ring.map(p => p[0])), Math.max(...ring.map(p => p[1]))];
+    const P = (la, lo, n) => { const ring = sq(la, lo, 40); return { n, v: 'X', m: 'Y', code: 0, rem: '', rings: [ring], _b: bbox(ring) }; };
+    // a pin in a gap between plots, with NO survey number typed
+    E.setParcel(r, mk(0, 0, [P(17.4401 + 0.0009, 78.3489, '1'), P(17.4401 - 0.0009, 78.3489, '2')]), {});
+    let d = View.dock(SBx(r)), id = View.identity(r, SBx(r));
+    ok(r.ev.identity.status === 'none' && r.ev.identity.reason === 'unmapped', 'a pin in a gap between plots is "no match / unmapped"');
+    ok(!/survey number (you )?entered/i.test(d.replace(/<[^>]+>/g, ' ')) && /Not on a mapped survey plot/.test(d), 'the map card does NOT claim a survey number was entered when none was');
+    ok(!/does not match the survey number you entered/i.test(id) && /not on a mapped survey plot/i.test(id), 'the identity box says the pin is not on a mapped plot, not that a number mismatched');
+    // the same status with a typed number that does not fit really is a mismatch
+    E.setParcel(r, mk(0, 0, [P(17.4401, 78.3489, '7')]), { survey: '99' }); d = View.dock(SBx(r));
+    ok(r.ev.identity.reason === 'number-mismatch' && /Does not match the survey number entered/.test(d), 'with a typed number that does not fit, the card says so');
+    const pp = E.parseMapsLink('https://www.google.com/maps/place/Shri+Ahobilam+Matt/@17.4022667,78.5197988,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!8m2!3d17.4022667!4d78.5197988');
+    ok(pp && pp.lat === 17.4022667 && pp.name === 'Shri Ahobilam Matt', 'a place link keeps its readable name next to the coordinates (used as the label)');
+    ok(E.parseMapsLink('https://www.google.com/maps/@17.44,78.35,15z').name === undefined, 'a plain map link has no place name');
+  }
   // ---- live APIs (optional) ----
   if (argv.includes('--net')) {
     const el = await E.addTerrain(await E.report(17.4015, 78.4100));

@@ -72,6 +72,7 @@ async function onlineSearch(q) {
 }
 async function updateSuggestions(q) {
   const el = $('sug');
+  if (SETUE.parseMapsLink(q)) { el.classList.remove('show'); sugItems = []; return; }   // a pasted Google link is not search text: no "no exact match" box
   if (!q.trim() || q.trim().length < 2) { el.classList.remove('show'); sugItems = []; return; }
   let items = [];
   if (S.cfg.suggest) { try { const j = await api(`/api/suggest?q=${encodeURIComponent(q)}&token=${S.token}`, 4000); items = (j.items || []).filter(x => { const m = /^ll:(-?[\d.]+),(-?[\d.]+)/.exec(x.id || ''); return !m || inRegion(+m[1], +m[2]); }).map(x => ({ id: x.id, main: x.main, sub: x.sub })); } catch (e) { } }
@@ -118,7 +119,7 @@ async function searchText(text) {
   $('toast').classList.remove('show'); $('q').value = text.split(',').slice(0, 2).join(','); S.address = hit.address || ''; return setPin(hit.lat, hit.lon, hit.label);
 }
 async function handleMapsLink(link) {
-  if (link.lat != null) return setPin(link.lat, link.lon, 'Pin from Google Maps link');
+  if (link.lat != null) { $('sug').classList.remove('show'); if (link.name) $('q').value = link.name; return setPin(link.lat, link.lon, link.name || 'Pin from Google Maps link'); }
   if (link.text) return searchText(link.text);
   if (link.short && link.url) {
     toast('Opening that short link…', 6000);
