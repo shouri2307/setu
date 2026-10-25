@@ -1,0 +1,191 @@
+
+## HMDA lakes portal
+   https://lakes.hmda.gov.in/
+   -> 200  text/html; charset=utf-8  250 KB text
+   title: HMDA-Lakes
+   data/api-ish links: []
+   licence/captcha/login hints: []
+
+## HYDRAA asset protection
+   https://hydraa.telangana.gov.in/functions/asset-protection
+   -> 200  text/html; charset=utf-8  51 KB text
+   title: HYDRAA - Hyderabad Disaster Response and Asset Protection Agency
+   data/api-ish links: ['/Assets/ASSEST PROTECTION UNITS.pdf', '/Assets/HYDRAA_APU.pdf', 'https://lakes.hmda.gov.in/']
+   licence/captcha/login hints: []
+
+## TGRAC water datasets
+   https://tgrac.telangana.gov.in/trac/water-datasets.php
+   -> 200    18 KB text
+   title: Tgrac - Planning Department Governament Telangana
+   data/api-ish links: ['water-datasets.php']
+   licence/captcha/login hints: []
+
+## TGRAC WebGIS
+   https://tgrac.telangana.gov.in/trac/webgis.php
+   -> 200    38 KB text
+   title: Tgrac - Planning Department Governament Telangana
+   data/api-ish links: ['https://tgrac.telangana.gov.in/forestlands/fl/Default.aspx']
+   licence/captcha/login hints: []
+
+## Bhu Bharati know land status
+   https://www.bhubharati.telangana.gov.in/knowLandStatus
+   -> 0    0 KB text
+
+## Bhuvan Telangana water resources (TWRIS)
+   https://bhuvan-app1.nrsc.gov.in/twris/geoportal/twris.php
+   -> 200  text/html; charset=UTF-8  22 KB text
+   title: ISRO's Geoportal | Gateway to Indian Earth Observation | Applications
+   data/api-ish links: []
+   licence/captcha/login hints: []
+
+## NRSC NDEM disaster documents
+   https://ndem.nrsc.gov.in/
+   -> 200  text/html; charset=UTF-8  54 KB text
+   title: National Database of Emergency Managment
+   data/api-ish links: ['https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap', 'https://fonts.googleapis.com/icon?family=Material+Icons']
+   licence/captcha/login hints: []
+
+## CPCB AQI portal
+   https://airquality.cpcb.gov.in/AQI_India/
+   -> 200  text/html  93 KB text
+   title: Central Control Room | Air Quality
+   data/api-ish links: ['https://fonts.googleapis.com']
+   licence/captcha/login hints: []
+
+## OGD India AQI catalogue
+   https://www.data.gov.in/catalog/real-time-air-quality-index
+   -> 200  text/html; charset=utf-8  250 KB text
+   title: Real time Air Quality Index | Open Government Data (OGD) Platform India
+   data/api-ish links: []
+   licence/captcha/login hints: ['Licensed under MIT (https://github', 'LICENSE) */ :root { --blue: #007bff; --indigo: #6610f2; --purple: #6f42c1; --pin']
+
+## India-WRIS
+   https://nwic.in/wris/
+   -> 200  text/html  8 KB text
+   title: India-WRIS
+   data/api-ish links: ['https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css', 'https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css', 'https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap', 'https://fonts.googleapis.com/css?family=Barlow:300,400,400i,500,700%7CAlegreya:400', 'https://fonts.googleapis.com/css?family=Roboto:300,400,500', 'https://fonts.googleapis.com/icon?family=Material+Icons']
+   licence/captcha/login hints: []
+
+## CGWB groundwater monitoring
+   https://cgwb.gov.in/en/ground-water-level-monitoring
+   -> 0    0 KB text
+
+## Telangana fire services station list
+   https://tgfireuat.cgg.gov.in/WebSite/knowurfstn.aspx
+   -> 200  text/html; charset=utf-8  47 KB text
+   title: Telangana Fire Disaster Response Emergency and Civil Defence Department
+   data/api-ish links: ['../WebSite/ADFO.aspx', '../WebSite/Attendance.aspx', '../WebSite/Circulars.aspx', '../WebSite/Contact.aspx', '../WebSite/Disclaimer.aspx', '../WebSite/DistrictOfficers.aspx', '../WebSite/Download.aspx', '../WebSite/EmployeeCorner.aspx']
+   licence/captcha/login hints: ['Licence Training Fire Prevention Tips for Survival from Fire Key Contacts Home S', 'Licence Temporary Fire Crackers Shop Existing Permanent Fire Crackers Wholesale ', 'Licence Change in the name of the premises /ownership / nature and quantity of H']
+
+## NRSC NDEM flood map pattern
+   example map: 200 1573770 Mon, 02 Sep 2024 11:10:29 GMT application/pdf
+   directory 2020/TS/ -> 403 238 | listing: []
+   directory 2021/TS/ -> 404 626 | listing: ['/', 'favicon.ico', 'img/isro.png', 'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap']
+   directory 2023/TS/ -> 403 238 | listing: []
+   directory 2024/TS/ -> 403 238 | listing: []
+   directory 2025/TS/ -> 403 238 | listing: []
+
+## HMDA plan files: georeferencing
+   SHAMSHABAD.jpg first 64 KB: 206 65536 bytes; starts ffd8ffe0 | EXIF GPS tag present: False | GeoTIFF/XMP geo tags: False
+   JPEG dimensions (h x w): 8224 x 53251
+   sidecar .jgw: 404
+   sidecar .jpgw: 404
+   sidecar .wld: 404
+   sidecar .xml: 404
+   sidecar .aux.xml: 404
+   sidecar .prj: 404
+Traceback (most recent call last):
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\urllib3\connectionpool.py", line 470, in _make_request
+    self._validate_conn(conn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\urllib3\connectionpool.py", line 1125, in _validate_conn
+    conn.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\urllib3\connection.py", line 878, in connect
+    wrapped_socket, is_verified = _ssl_wrap_socket_and_match_hostname(
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sock=sock,
+        ^^^^^^^^^^
+    ...<14 lines>...
+        assert_fingerprint=self.assert_fingerprint,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\urllib3\connection.py", line 1080, in _ssl_wrap_socket_and_match_hostname
+    ssl_sock = ssl_wrap_socket(
+        sock=sock,
+    ...<8 lines>...
+        tls_in_tls=tls_in_tls,
+    )
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\urllib3\util\ssl_.py", line 437, in ssl_wrap_socket
+    ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\urllib3\util\ssl_.py", line 481, in _ssl_wrap_socket_impl
+    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\K SREEHARI\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 455, in wrap_socket
+    return self.sslsocket_class._create(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sock=sock,
+        ^^^^^^^^^^
+    ...<5 lines>...
+        session=session
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\K SREEHARI\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1076, in _create
+    self.do_handshake()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\K SREEHARI\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1372, in do_handshake
+    self._sslobj.do_handshake()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\urllib3\connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\urllib3\connectionpool.py", line 494, in _make_request
+    raise new_e
+urllib3.exceptions.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\requests\adapters.py", line 696, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\urllib3\connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\urllib3\util\retry.py", line 555, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='www.hmda.gov.in', port=443): Max retries exceeded with url: /wp-content/uploads/2022/06/GHMC_Circle_No-IV(Old_Circle_No-I).pdf (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\K SREEHARI\Desktop\setu\research\v8\discover_portals.py", line 50, in <module>
+    hdr = requests.get(pdf, headers={**H, "Range": "bytes=0-3000000"}, timeout=90).content
+          ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\requests\api.py", line 87, in get
+    return request("get", url, params=params, **kwargs)
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\requests\api.py", line 71, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\requests\sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\requests\sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Users\K SREEHARI\Desktop\setu\.venv\Lib\site-packages\requests\adapters.py", line 727, in send
+    raise SSLError(e, request=request)
+requests.exceptions.SSLError: HTTPSConnectionPool(host='www.hmda.gov.in', port=443): Max retries exceeded with url: /wp-content/uploads/2022/06/GHMC_Circle_No-IV(Old_Circle_No-I).pdf (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))

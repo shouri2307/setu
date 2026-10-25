@@ -77,3 +77,6 @@ Not scraped or reused. Used only to discover what exists; originals are fetched 
 - **Line layers:** `OBJECTID` is not unique (404 distinct values over 481 lines in one box); the real key is `OBJECTID_12`. `returnCountOnly` over-counts lines, so completeness is checked geometrically. Polygon tiles are checked against the server count exactly.
 - **Water network:** independent recomputation (exact shapely clipping against each cell, raw unsimplified geometry) at six places: 82 cells compared, window totals within about 4%, worst single cell 59 m, diameter mismatches 2 of 82.
 - **Missing-data safety:** each optional data file was removed in turn; six findings (`nala`, `inund`, `lost`, `choke`, `landfill`, `f_jobs`) used to read good or concern when their data was absent and now read 'data not loaded'.
+
+## F. Discovery round 2 (25 Oct 2026)
+The state GIS server holds 49 folders, 171 services and 2,038 layers (not the 22 services surveyed earlier). A second discovery pass (HYDRAA lake-side parcels and tank survey numbers, revenue land class, fire stations, state seismic layer, geology datasets, NDEM flood maps, portals, HMDA plan-file georeferencing) is written up in [SOURCE_DISCOVERY_2.md](SOURCE_DISCOVERY_2.md). Nothing from it is integrated yet; all of it is "licence unverified".

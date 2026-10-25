@@ -1,0 +1,9506 @@
+[
+{
+"service": "SampleWorldCities",
+"type": "MapServer",
+"folder": null,
+"layers": [
+[
+0,
+"Cities"
+],
+[
+1,
+"Continent"
+],
+[
+2,
+"World"
+]
+],
+"created": null
+},
+{
+"service": "Abadi_Folder/Abadi_Admin",
+"type": "MapServer",
+"folder": "Abadi_Folder",
+"layers": [
+[
+0,
+"Abadi Prpperties Drone Image"
+],
+[
+1,
+"Plinth_Area"
+],
+[
+2,
+"Property_Area"
+],
+[
+3,
+"Angadi Kistapur"
+],
+[
+4,
+"Boundary Points - Coordinates"
+],
+[
+5,
+"GIS ID"
+],
+[
+6,
+"Plot Boundaries_Area Measurements"
+],
+[
+7,
+"Boundary Facings Map Measurements"
+],
+[
+8,
+"Boundary Facings Field Measurments"
+],
+[
+9,
+"Yavapur"
+],
+[
+10,
+"Boundary Points - Coordinates"
+],
+[
+11,
+"GIS ID"
+],
+[
+12,
+"Plot Boundaries_Area Measurements"
+],
+[
+13,
+"Boundary Facings Map Measurements"
+],
+[
+14,
+"Boundary Facings Field Measurments"
+]
+],
+"created": null
+},
+{
+"service": "Abadi_Folder/Abadi_Drone_Image",
+"type": "MapServer",
+"folder": "Abadi_Folder",
+"layers": [
+[
+0,
+"Annareddypalley_Drone_Image.tif"
+],
+[
+1,
+"Nacharla__Drone_Image.tif"
+],
+[
+2,
+"gangadharpally_drone_25cm.img"
+],
+[
+3,
+"Angadi Kistapur"
+],
+[
+4,
+"Yavapur"
+]
+],
+"created": null
+},
+{
+"service": "Abadi_Folder/Abadi_Final",
+"type": "MapServer",
+"folder": "Abadi_Folder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"Roads"
+],
+[
+2,
+"Roads"
+],
+[
+3,
+"Drinage"
+],
+[
+4,
+"Eletricity"
+],
+[
+5,
+"Sanitation"
+],
+[
+6,
+"Water Supply"
+],
+[
+7,
+"OHSR1"
+],
+[
+8,
+"Taps"
+],
+[
+9,
+"trans"
+],
+[
+10,
+"Building Roof Type"
+],
+[
+11,
+"Abadi Prpperties Drone Image"
+],
+[
+12,
+"Plinth_Area"
+],
+[
+13,
+"Property_Area"
+],
+[
+14,
+"Property_Area_Lines"
+],
+[
+15,
+"Abadi - Angadi Kistapur and Yavapur"
+],
+[
+16,
+"Ground Control Points"
+],
+[
+17,
+"Boundary Points Coordinates"
+],
+[
+18,
+"Boundary Facings Map Measurements"
+],
+[
+19,
+"GIS ID"
+],
+[
+20,
+"Plinth"
+],
+[
+21,
+"Plot Boundaries Area Measurements"
+],
+[
+22,
+"AbadiProperties Satellite Image"
+]
+],
+"created": null
+},
+{
+"service": "Abadi_Folder/Abadi_Image_Layer_Sas",
+"type": "MapServer",
+"folder": "Abadi_Folder",
+"layers": [
+[
+0,
+"56K13SW_compressed.tif"
+],
+[
+1,
+"56K9SE_compressed.tif"
+]
+],
+"created": null
+},
+{
+"service": "Abadi_Folder/Abadi_Image_Layer",
+"type": "MapServer",
+"folder": "Abadi_Folder",
+"layers": [
+[
+0,
+"Angadi Kistapur"
+]
+],
+"created": null
+},
+{
+"service": "AdministrativeInfoSystem_Folder/Administrative_Information_System_Query",
+"type": "MapServer",
+"folder": "AdministrativeInfoSystem_Folder",
+"layers": [
+[
+0,
+"Parliament Constituency Boundary"
+],
+[
+1,
+"Assembly Constituency Boundary"
+],
+[
+2,
+"Revenuen Division Boundary"
+],
+[
+3,
+"Mandal Boundary"
+],
+[
+4,
+"Village Boundary"
+],
+[
+5,
+"District Boundary"
+],
+[
+6,
+"State Boundary"
+],
+[
+7,
+"Urban Local Bodies"
+]
+],
+"created": null
+},
+{
+"service": "AdministrativeInfoSystem_Folder/Administrative_Information_System",
+"type": "MapServer",
+"folder": "AdministrativeInfoSystem_Folder",
+"layers": [
+[
+0,
+"Water Resources"
+],
+[
+1,
+"Canal"
+],
+[
+2,
+"Reservoir"
+],
+[
+3,
+"Natural Stream - Drainage"
+],
+[
+4,
+"Water Body / Tank"
+],
+[
+5,
+"River"
+],
+[
+6,
+"Settlemen_Exent_Old"
+],
+[
+7,
+"Settlements Layer Polygon"
+],
+[
+8,
+"Administrative Head Quaters"
+],
+[
+9,
+"Settlement-Habitation"
+],
+[
+10,
+"Gram Pancahayat Head Quarter"
+],
+[
+11,
+"Mandal Head Quarter"
+],
+[
+12,
+"Revenue Division Head Quarter"
+],
+[
+13,
+"District Head Quarter"
+],
+[
+14,
+"Infrastructure"
+],
+[
+15,
+"RRR_Southern_Part"
+],
+[
+16,
+"RRR_Northern_Part"
+],
+[
+17,
+"Outer Ring Road"
+],
+[
+18,
+"Railway Stations"
+],
+[
+19,
+"Railway Network"
+],
+[
+20,
+"Road Network"
+],
+[
+21,
+"New Group Layer"
+],
+[
+22,
+"Urban Local Bodies"
+],
+[
+23,
+"Parliament Constituency Boundary"
+],
+[
+24,
+"Assembly Constituency Boundary"
+],
+[
+25,
+"Revenuen Division Boundary"
+],
+[
+26,
+"Mandal Boundary"
+],
+[
+27,
+"Village Boundary"
+],
+[
+28,
+"District Boundary"
+],
+[
+29,
+"State Boundary"
+],
+[
+30,
+"District Boundary"
+],
+[
+31,
+"Forest Boundary"
+]
+],
+"created": null
+},
+{
+"service": "Agri2/Agriculture2_Administrative_Layers",
+"type": "MapServer",
+"folder": "Agri2",
+"layers": [
+[
+0,
+"Administrative Unit"
+],
+[
+1,
+"Habitations"
+],
+[
+2,
+"Gram Panchayat"
+],
+[
+3,
+"Mandal Head Quarter"
+],
+[
+4,
+"District Head Quarter"
+],
+[
+5,
+"State Boundary"
+],
+[
+6,
+"District Boundary"
+],
+[
+7,
+"Mandal Boundary"
+],
+[
+8,
+"VillagecBoundary"
+],
+[
+9,
+"Outer Ring Road"
+],
+[
+10,
+"Road Network"
+],
+[
+11,
+"National Highway"
+],
+[
+12,
+"National Highway Proposed"
+],
+[
+13,
+"State Highway"
+],
+[
+14,
+"Major District Road"
+],
+[
+15,
+"Other District Road"
+],
+[
+16,
+"Water Resources Information"
+],
+[
+17,
+"River"
+],
+[
+18,
+"WaterBody"
+],
+[
+19,
+"Canal"
+],
+[
+20,
+"Reservoir"
+],
+[
+21,
+"Stream / Drainage"
+]
+],
+"created": null
+},
+{
+"service": "Agri2/Agriculture2_CropAnalysis_Layers",
+"type": "MapServer",
+"folder": "Agri2",
+"layers": [
+[
+0,
+"Base Survey - Land Parcels"
+],
+[
+1,
+"Field Level Parcels"
+],
+[
+2,
+"Land Use / Land Cover"
+],
+[
+3,
+"Cultivable Land"
+],
+[
+4,
+"Land Put to Non Agriculture Use"
+],
+[
+5,
+"Non-Agriculture Land Class"
+],
+[
+6,
+"Crop Land Layer"
+],
+[
+7,
+"Groundtruth"
+],
+[
+8,
+"All__Crops_Survey_CTO_Records"
+],
+[
+9,
+"Ground Truth - Rabi Season 2023"
+],
+[
+10,
+"February 2023"
+],
+[
+11,
+"March 2023"
+],
+[
+12,
+"April 2023"
+],
+[
+13,
+"Resources Layers"
+],
+[
+14,
+"Land_Elevation (in m)"
+],
+[
+15,
+"Land_Slope (in %)"
+],
+[
+16,
+"Irrigation Type"
+],
+[
+17,
+"Irrigation Source"
+],
+[
+18,
+"Irrigation Projects"
+],
+[
+19,
+"Rainfall (mm)"
+],
+[
+20,
+"Soil"
+],
+[
+21,
+"Soil Nutrient Status"
+],
+[
+22,
+"Classified Images - Crop Type"
+],
+[
+23,
+"lc08_l1tp_144049_wanaparthy_paddy_cotton_mosaic.img"
+],
+[
+24,
+"Kharif Paddy 2022-23"
+],
+[
+25,
+"Kharif Paddy 2021-22"
+],
+[
+26,
+"Cotton 2020"
+],
+[
+27,
+"NDVI/NDWI"
+],
+[
+28,
+"Normalized Difference Vegetation Index (NDVI)"
+],
+[
+29,
+"tc_mod250_sep2021_ndvi_agm_ts.img"
+],
+[
+30,
+"tc_mod250_sep2022_ndvi_agm_ts.img"
+],
+[
+31,
+"Normalized Difference Water Index (NDWI)"
+],
+[
+32,
+"tc_mod250_sep2021_ndwi_agm_ts.img"
+],
+[
+33,
+"tc_mod250_sep2022_ndwi_agm_ts.img"
+],
+[
+34,
+"Vegetation Condition Index (VCI)"
+],
+[
+35,
+"VHR Satellite Image (Carto 2S Merged) - Feb 2022"
+]
+],
+"created": null
+},
+{
+"service": "Agri2/Agriculture2_LULC_Cadastral",
+"type": "MapServer",
+"folder": "Agri2",
+"layers": [
+[
+0,
+"dagada_karif_crop_2023"
+],
+[
+1,
+"Dagada_LULC_Cadastral"
+],
+[
+2,
+"Dagada_Karif_Crop_2023"
+],
+[
+3,
+"Wanaparthy_Master_Cadastral"
+],
+[
+4,
+"Sentinel_t43pht_20230831_10m_dagada_Crops.img"
+],
+[
+5,
+"Sentinel_t43pht_20230831_10m_dagada_Image.img"
+]
+],
+"created": null
+},
+{
+"service": "Agri2/Agriculture2_Query",
+"type": "MapServer",
+"folder": "Agri2",
+"layers": [
+[
+0,
+"Dagada_Field_Parcels"
+]
+],
+"created": null
+},
+{
+"service": "Agriculture/Agri_Admin",
+"type": "MapServer",
+"folder": "Agriculture",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"State Boundary"
+],
+[
+2,
+"District Boundary"
+],
+[
+3,
+"Mandals Boundary"
+],
+[
+4,
+"Villagel Boundary"
+],
+[
+5,
+"Settlement Boundary"
+],
+[
+6,
+"Settlements Locations"
+],
+[
+7,
+"Infrastructure Layers"
+],
+[
+8,
+"National / State Highway"
+],
+[
+9,
+"Railway_Network"
+],
+[
+10,
+"National / State Highway"
+],
+[
+11,
+"District / Village Road Network"
+],
+[
+12,
+"Water Resources"
+],
+[
+13,
+"Reservoir"
+],
+[
+14,
+"Water Bodies"
+],
+[
+15,
+"River"
+],
+[
+16,
+"Drainage / Stream Network"
+]
+],
+"created": null
+},
+{
+"service": "Agriculture/Agri_Cadastral1",
+"type": "MapServer",
+"folder": "Agriculture",
+"layers": [
+[
+0,
+"Field Level Agriculture Data"
+],
+[
+1,
+"Dagada_ChinnambaviFinal"
+],
+[
+2,
+"Chinnam Bavi Land Parcel "
+],
+[
+3,
+"Land Use / Land Cover"
+],
+[
+4,
+"Soil Type"
+],
+[
+5,
+"Irrigation"
+],
+[
+6,
+"Agricultural Land (Crop Type)"
+],
+[
+7,
+"Elevation"
+],
+[
+8,
+"Slope"
+],
+[
+9,
+"Agro-Climatic Condition"
+],
+[
+10,
+"Dagada_Wanaparthy_R.tif"
+],
+[
+11,
+"Field Level Agriculture Data2"
+],
+[
+12,
+"Land_Parcel_Map_-_Dagada"
+],
+[
+13,
+"Crop_Type_Map_2021-22_Kharif_RS_Based"
+],
+[
+14,
+"Irrigation_Map"
+],
+[
+15,
+"LULC Map"
+],
+[
+16,
+"Soil_Map"
+],
+[
+17,
+"Land Parcel Map old- Dagada"
+]
+],
+"created": null
+},
+{
+"service": "Agriculture/Agri_Cadastral_6Villages",
+"type": "MapServer",
+"folder": "Agriculture",
+"layers": [
+[
+0,
+"Land Parcel Boundary"
+],
+[
+1,
+"Cadastral Boundary"
+],
+[
+2,
+"High Resolution Satellite Image"
+],
+[
+3,
+"Pocharam"
+],
+[
+4,
+"Perur"
+],
+[
+5,
+"Kothapeta"
+],
+[
+6,
+"Kancherlagudem"
+],
+[
+7,
+"Chandapur"
+],
+[
+8,
+"Anepuram"
+]
+],
+"created": null
+},
+{
+"service": "Agriculture/Agri_Cadastral_Query",
+"type": "MapServer",
+"folder": "Agriculture",
+"layers": [
+[
+0,
+"Masterfile_Dagada_Village"
+],
+[
+1,
+"Masterfile_Dagada_Village_Dissolve"
+],
+[
+2,
+"Dagada_with_dharani_data_Govtland"
+]
+],
+"created": null
+},
+{
+"service": "Agriculture/Agri_Cadastral_Wanaparthy",
+"type": "MapServer",
+"folder": "Agriculture",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"State Boundary"
+],
+[
+2,
+"District Boundary"
+],
+[
+3,
+"Mandals Boundary"
+],
+[
+4,
+"Villagel Boundary"
+],
+[
+5,
+"Settlement Boundary"
+],
+[
+6,
+"Settlements Locations"
+],
+[
+7,
+"Wanaparthy"
+]
+],
+"created": null
+},
+{
+"service": "Agriculture/Agri_Cadastral",
+"type": "MapServer",
+"folder": "Agriculture",
+"layers": [
+[
+0,
+"Field Level Agriculture Data3"
+],
+[
+1,
+"Dagada with dharani data"
+],
+[
+2,
+"Dagada with dharani data"
+],
+[
+3,
+"Dagada_ChinnambaviFinal"
+],
+[
+4,
+"Crop Condition"
+],
+[
+5,
+"Non Agriculture"
+],
+[
+6,
+"Crop Layer"
+],
+[
+7,
+"Land Parcel"
+],
+[
+8,
+"Land Use / Land Cover"
+],
+[
+9,
+"Soil Type"
+],
+[
+10,
+"Irrigation Source"
+],
+[
+11,
+"Agriculture Land"
+],
+[
+12,
+"Crop Type"
+],
+[
+13,
+"Crop_Type_Map_2021-22_Kharif_RS_Based"
+],
+[
+14,
+"Wanaparthy_final"
+],
+[
+15,
+"VHR Satellite Image (Carto 2S Merged) - Feb 2022"
+]
+],
+"created": null
+},
+{
+"service": "Agriculture/Agri_Mobile",
+"type": "MapServer",
+"folder": "Agriculture",
+"layers": [
+[
+0,
+"Field Level Agriculture Data"
+],
+[
+1,
+"Dagada_ChinnambaviFinal"
+],
+[
+2,
+"Dagada_Wanaparthy_R.tif"
+],
+[
+3,
+"Administrative Layers"
+],
+[
+4,
+"State Boundary"
+],
+[
+5,
+"District Boundary"
+],
+[
+6,
+"Mandals Boundary"
+],
+[
+7,
+"Villagel Boundary"
+],
+[
+8,
+"Settlement Boundary"
+],
+[
+9,
+"Settlements Locations"
+]
+],
+"created": null
+},
+{
+"service": "Archaeology_Folder/Archaeology_Admin",
+"type": "MapServer",
+"folder": "Archaeology_Folder",
+"layers": [
+[
+0,
+"Administrative Unit"
+],
+[
+1,
+"GWMC Boundary"
+],
+[
+2,
+"GWMC Wards"
+],
+[
+3,
+"District_Boundary"
+],
+[
+4,
+"District Boundary"
+],
+[
+5,
+"Mandal_Boundary"
+],
+[
+6,
+"Village_Boundary"
+],
+[
+7,
+"District Head Quarter"
+],
+[
+8,
+"Mandal Head Quarter"
+],
+[
+9,
+"Transport Network"
+],
+[
+10,
+"Transport Locations"
+],
+[
+11,
+"TS_Rail_Network"
+],
+[
+12,
+"City Road Warangal"
+],
+[
+13,
+"Road Network Telangana"
+],
+[
+14,
+"Water Bodies Infromation"
+],
+[
+15,
+"Reservoir"
+],
+[
+16,
+"WaterBody"
+],
+[
+17,
+"River"
+],
+[
+18,
+"Stream / Drainage"
+]
+],
+"created": null
+},
+{
+"service": "Archaeology_Folder/Archaeology_Facilities",
+"type": "MapServer",
+"folder": "Archaeology_Folder",
+"layers": [
+[
+0,
+"Agro Industries"
+],
+[
+1,
+"Agro_Industry"
+],
+[
+2,
+"Cold_Storage"
+],
+[
+3,
+"Collection_Centre_or_Pack_House"
+],
+[
+4,
+"GRaM_Notified"
+],
+[
+5,
+"Mandi_Notified"
+],
+[
+6,
+"Sugar_Mills"
+],
+[
+7,
+"Warehouse"
+],
+[
+8,
+"Is_Part_of_Rurban_Cluster"
+],
+[
+9,
+"Education"
+],
+[
+10,
+"Degree_College"
+],
+[
+11,
+"High_School_General"
+],
+[
+12,
+"High_School_Girls"
+],
+[
+13,
+"Higher_Secondary_School"
+],
+[
+14,
+"ITI"
+],
+[
+15,
+"Medical"
+],
+[
+16,
+"Bedded_Hospital"
+],
+[
+17,
+"Community_Health_Centre"
+],
+[
+18,
+"Primary_Health_Centre"
+],
+[
+19,
+"Veterinary_Hospital"
+],
+[
+20,
+"Transport / Adminstration"
+],
+[
+21,
+"Bank"
+],
+[
+22,
+"Block_Headquarter"
+],
+[
+23,
+"Bus_Stand"
+],
+[
+24,
+"Fuel_Station"
+],
+[
+25,
+"Panchayat_Headquarter"
+],
+[
+26,
+"Tourist_Places"
+]
+],
+"created": null
+},
+{
+"service": "Archaeology_Folder/Archaeology_Query",
+"type": "MapServer",
+"folder": "Archaeology_Folder",
+"layers": [
+[
+0,
+"Actualwall"
+],
+[
+1,
+"LP_Gandi Site"
+],
+[
+2,
+"Site-I-Area of Interest"
+],
+[
+3,
+"Site-II-Area of Interest"
+],
+[
+4,
+"Master_File_Point"
+],
+[
+5,
+"GPR_Lines_Master_Database"
+],
+[
+6,
+"Site1-2_Point_Master"
+]
+],
+"created": null
+},
+{
+"service": "Archaeology_Folder/Archaeology_Raster",
+"type": "MapServer",
+"folder": "Archaeology_Folder",
+"layers": [
+[
+0,
+"Drone Image LP Gandi Site"
+],
+[
+1,
+"Slope (in %)"
+],
+[
+2,
+"Digital Elevation Model (DEM) LP Gandi"
+],
+[
+3,
+"DIgital Surface Model (DSM) LP Gandi"
+],
+[
+4,
+"Digital Elevation Model (DEM)"
+],
+[
+5,
+"Topo_Fort_Area_rectified.img"
+],
+[
+6,
+"True Ortho Photo (Drone Image)"
+],
+[
+7,
+"56O9NW_compressed.tif"
+],
+[
+8,
+"56O9NE_compressed.tif"
+],
+[
+9,
+"LISS IV Satellite Image"
+],
+[
+10,
+"LISS IV Satellite Image"
+],
+[
+11,
+"rec-irsl3-101-60-08jun07.img"
+]
+],
+"created": null
+},
+{
+"service": "Archaeology_Folder/Archaeology",
+"type": "MapServer",
+"folder": "Archaeology_Folder",
+"layers": [
+[
+0,
+"Station Wise GPR Reflectors Information (Depth in m)"
+],
+[
+1,
+"Site-2"
+],
+[
+2,
+"Station Information Free Lines"
+],
+[
+3,
+"Station Information Horizontal Lines"
+],
+[
+4,
+"Station Information Vertical Lines"
+],
+[
+5,
+"Station Information Back Slope Lines"
+],
+[
+6,
+"Site-1"
+],
+[
+7,
+"Station Information Free Lines"
+],
+[
+8,
+"Station Information Horizontal Lines"
+],
+[
+9,
+"Station Information Vertical Lines"
+],
+[
+10,
+"Anomalies Information"
+],
+[
+11,
+"Depth Point - Site I"
+],
+[
+12,
+"Depth Point Site II"
+],
+[
+13,
+"Anomalous Structure - Site I"
+],
+[
+14,
+"Anomalous Structure - Site II"
+],
+[
+15,
+"Grid Wise Depth Information"
+],
+[
+16,
+"GPR Survey Plan Site Location"
+],
+[
+17,
+"Site-II_Details"
+],
+[
+18,
+"Free Line Points"
+],
+[
+19,
+"DGPS Survey Locations"
+],
+[
+20,
+"Boundary Pillar Stones"
+],
+[
+21,
+"Backside Slope point Location"
+],
+[
+22,
+"GPR Survey along Back Side Slope"
+],
+[
+23,
+"GPR Survey along Axial Line"
+],
+[
+24,
+"GPR Survey along Free Lines"
+],
+[
+25,
+"Site-II-Area of Interest"
+],
+[
+26,
+"Site-I- Details"
+],
+[
+27,
+"DGPS Survey Locations Free Lines"
+],
+[
+28,
+"DGPS Survey Locations"
+],
+[
+29,
+"Boundary Pillar Stones"
+],
+[
+30,
+"Open Structure"
+],
+[
+31,
+"GPR Survey along Axial Line"
+],
+[
+32,
+"GPR Survey along Free Lines"
+],
+[
+33,
+"Site-I-Area of Interest"
+],
+[
+34,
+"Warangal Mud-Fort Details"
+],
+[
+35,
+"Ground Control Point (GCP) -  LP Gandi Site"
+],
+[
+36,
+"Ground Control Point (GCP)  - Mud Wall Fort"
+],
+[
+37,
+"Archeological Sites"
+],
+[
+38,
+"Field_Photos"
+],
+[
+39,
+"Fort Road Junction - Passage"
+],
+[
+40,
+"Traverse Length (8 Km)"
+],
+[
+41,
+"line"
+],
+[
+42,
+"Actual Wall 150 Meter Buffer (Inner)"
+],
+[
+43,
+"Actual Wall 150 Meter Buffer (Outer)"
+],
+[
+44,
+"Phase Wise Mud Fort Wall - Survey"
+],
+[
+45,
+"Actualwall"
+],
+[
+46,
+"Ring"
+],
+[
+47,
+"LP_Gandi Site"
+],
+[
+48,
+"LP Gandi Site Contour 0.25 m"
+],
+[
+49,
+"Zones"
+],
+[
+50,
+"Tourism Locations"
+],
+[
+51,
+"Field Site Anamolies"
+],
+[
+52,
+"Field_Site"
+],
+[
+53,
+"Slope_Direction"
+],
+[
+54,
+"Structural_Anamolies"
+],
+[
+55,
+"BUNDS"
+],
+[
+56,
+"Magnetic Survey Site Location"
+],
+[
+57,
+"Site - 2 Condition"
+],
+[
+58,
+"Site2_Depth_Location_GPR"
+],
+[
+59,
+"Site 2_Magnetic Contours_ptz"
+],
+[
+60,
+"Site 2_Magnetic Grid with Contours_ptz"
+],
+[
+61,
+"Site 2_Magnetic Contours_lnz"
+],
+[
+62,
+"Site 2_Magnetic Contours_pgz"
+],
+[
+63,
+"Site 2_Magnetic Grid with Contours_pgz"
+],
+[
+64,
+"Site 2_Magnetic Grid with Contours_lnz"
+],
+[
+65,
+"GPR_Anamolies_Magnetic"
+],
+[
+66,
+"GPR Grids Location (1m Interval)"
+],
+[
+67,
+"GPR Grids (1m Interval)"
+],
+[
+68,
+"Site 2_Magnetic Map.tif"
+],
+[
+69,
+"Site-1 Condition"
+],
+[
+70,
+"Site 1_Magnetic Contours_ptz"
+],
+[
+71,
+"Site 1_Magnetic Grid with Contours_ptz"
+],
+[
+72,
+"Site 1_Magnetic Contours_lnz"
+],
+[
+73,
+"Site 1_Magnetic Grid with Contours_lnz"
+],
+[
+74,
+"Site 1_Magnetic Contours_pgz"
+],
+[
+75,
+"Site 1_Magnetic Grid with Contours_pgz"
+],
+[
+76,
+"Site1_Depth_Location_GPR"
+],
+[
+77,
+"Possible_Structure_Site-1"
+],
+[
+78,
+"GPR_Grids_Location_(1m_Interval)"
+],
+[
+79,
+"GPR Grids (1m Interval)"
+],
+[
+80,
+"Site 1_Magnetic Map.tif"
+]
+],
+"created": null
+},
+{
+"service": "Bhubarathi_Folder/Bhubarathi_Query",
+"type": "MapServer",
+"folder": "Bhubarathi_Folder",
+"layers": [
+[
+0,
+"Resurveyed_Field_Boundary_"
+]
+],
+"created": null
+},
+{
+"service": "Bhubarathi_Folder/Bhubarathi",
+"type": "MapServer",
+"folder": "Bhubarathi_Folder",
+"layers": [
+[
+0,
+"Embhora_Cadastral Data_1950s"
+],
+[
+1,
+"New Group Layer"
+],
+[
+2,
+"Resurveyed_Field_Boundary_"
+],
+[
+3,
+"Boundary Stones"
+],
+[
+4,
+"OffSetLine"
+],
+[
+5,
+"GeoLineSplitted"
+]
+],
+"created": null
+},
+{
+"service": "Bhunaksha_Folder/Bhunaksha_Cadastral",
+"type": "MapServer",
+"folder": "Bhunaksha_Folder",
+"layers": [
+[
+0,
+"Cadastral 2.5m"
+],
+[
+1,
+"Cadastral 30cm"
+],
+[
+2,
+"Village"
+],
+[
+3,
+"Mandals"
+],
+[
+4,
+"District"
+]
+],
+"created": null
+},
+{
+"service": "Bhunaksha_Folder/Bhunaksha_query",
+"type": "MapServer",
+"folder": "Bhunaksha_Folder",
+"layers": [
+[
+0,
+"Full Cadastral"
+],
+[
+1,
+"ULB cadastral"
+],
+[
+2,
+"ULB Villages"
+],
+[
+3,
+"ULB"
+],
+[
+4,
+"Mandals"
+],
+[
+5,
+"District"
+],
+[
+6,
+"Village"
+],
+[
+7,
+"Cadastral"
+]
+],
+"created": null
+},
+{
+"service": "Bhunaksha_Folder/Bhunaksha",
+"type": "MapServer",
+"folder": "Bhunaksha_Folder",
+"layers": [
+[
+0,
+"ULB_Cadastral_Prohibited"
+],
+[
+1,
+"ULB_Cadastral_Congested"
+],
+[
+2,
+"ULB cadastral"
+],
+[
+3,
+"Cadastral 30cm"
+],
+[
+4,
+"ULB Villages"
+],
+[
+5,
+"ULB"
+],
+[
+6,
+"Mandals"
+],
+[
+7,
+"District"
+]
+],
+"created": null
+},
+{
+"service": "CadastralAgricultureLULC/CadastralAgricultureLULC",
+"type": "MapServer",
+"folder": "CadastralAgricultureLULC",
+"layers": [
+[
+6,
+"Administrative Layers"
+]
+],
+"created": null
+},
+{
+"service": "DistrictFormation_Folder/DistrictFormation_Queries",
+"type": "MapServer",
+"folder": "DistrictFormation_Folder",
+"layers": [
+[
+0,
+"State_Boundary"
+],
+[
+1,
+"District_Boundary"
+],
+[
+2,
+"Revenue_Division_Boundary"
+],
+[
+3,
+"Mandal_Boundary"
+],
+[
+4,
+"Village_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "DistrictFormation_Folder/DistrictFormation",
+"type": "MapServer",
+"folder": "DistrictFormation_Folder",
+"layers": [
+[
+0,
+"Infrastructure"
+],
+[
+1,
+"Rail"
+],
+[
+2,
+"Hyderabad_ORR"
+],
+[
+3,
+"Roads_Major"
+],
+[
+4,
+"Roads_State_Highways"
+],
+[
+5,
+"Reservoirs"
+],
+[
+6,
+"Rivers_Manor"
+],
+[
+7,
+"HeadQuarters"
+],
+[
+8,
+"Mandal_HQ"
+],
+[
+9,
+"Revenue_HQ"
+],
+[
+10,
+"District_HQ"
+],
+[
+11,
+"Admin Boundaries"
+],
+[
+12,
+"Village_Boundary"
+],
+[
+13,
+"Mandal_Boundary"
+],
+[
+14,
+"Assembly_Boundary"
+],
+[
+15,
+"Revenue_Divisions"
+],
+[
+16,
+"District_Boundary"
+],
+[
+17,
+"District_Boundary"
+],
+[
+18,
+"State_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "DistrictFormation_Folder/DistrictReorganisation",
+"type": "MapServer",
+"folder": "DistrictFormation_Folder",
+"layers": [
+[
+0,
+"HeadQuarters"
+],
+[
+6,
+"Infrastructure"
+],
+[
+13,
+"Water Resources"
+],
+[
+17,
+"Admin Boundaries"
+]
+],
+"created": null
+},
+{
+"service": "DLSFolder/Digital_Land_Survey_BKP",
+"type": "MapServer",
+"folder": "DLSFolder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"District Boundary"
+],
+[
+2,
+"Mandals Boundary"
+],
+[
+3,
+"Village Boundary"
+],
+[
+4,
+"Dharani_Database"
+],
+[
+5,
+"Owners_Info_In_BaseSurvey_LandParcel_Final"
+],
+[
+6,
+"Dagada"
+],
+[
+7,
+"Geo Coordinates (Boundary Stone)"
+],
+[
+8,
+"Base Cadastral (Survey No)"
+],
+[
+9,
+"Subdivision Cadastral (Sub Survey No) "
+],
+[
+10,
+"Base Survey Land Classification"
+],
+[
+11,
+"Geo-referenced Revenue Map"
+],
+[
+12,
+"High Resolution Satellite Image (Catrosat 2s)"
+],
+[
+13,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+14,
+"Dharmapur"
+],
+[
+15,
+"Geo Coordinates (Boundary Stone)"
+],
+[
+16,
+"Base Cadastral (Survey No)"
+],
+[
+17,
+"Subdivision Cadastral (Sub Survey No) "
+],
+[
+18,
+"Base Survey Land Classification"
+],
+[
+19,
+"Geo-referenced - Revenue Map"
+],
+[
+20,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+21,
+"Drone Image"
+],
+[
+22,
+"Gangadharpalle"
+],
+[
+23,
+"Geo Coordinates (Boundary Stone)"
+],
+[
+24,
+"Base Cadastral (Survey No)"
+],
+[
+25,
+"Subdivision Cadastral (Sub Survey No) "
+],
+[
+26,
+"Base_Survey_Land_Classification"
+],
+[
+27,
+"Geo-referenced - Revenue Map"
+],
+[
+28,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+29,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+30,
+"Drone Image"
+]
+],
+"created": null
+},
+{
+"service": "DLSFolder/Digital_Land_Survey_Mobile",
+"type": "MapServer",
+"folder": "DLSFolder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"District Boundary"
+],
+[
+2,
+"Mandals Boundary"
+],
+[
+3,
+"Village Boundary"
+],
+[
+4,
+"Owners_Info_In_BaseSurvey_LandParcel_Final"
+],
+[
+5,
+"Base Cadastral (Survey No)"
+],
+[
+6,
+"Subdivision Cadastral Dagada"
+],
+[
+7,
+"Subdivision Cadastral Gangadharpalle"
+],
+[
+8,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+9,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+10,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+11,
+"High Resolution Satellite Image (30 cm)"
+]
+],
+"created": null
+},
+{
+"service": "DLSFolder/Digital_Land_Survey_Query",
+"type": "MapServer",
+"folder": "DLSFolder",
+"layers": [
+[
+0,
+"Base_Cadastral"
+],
+[
+1,
+"Owners_Info_In_BaseSurvey_LandParcel_Final_Joined"
+],
+[
+2,
+"Dharani_Database"
+],
+[
+3,
+"Subdivision_Parcels"
+],
+[
+4,
+"Base_Cadastral_joined"
+],
+[
+5,
+"Base_Cadastral_joined_DF"
+],
+[
+6,
+"Base_Cadastral_joined_Backup"
+]
+],
+"created": null
+},
+{
+"service": "DLSFolder/Digital_Land_Survey_UPD",
+"type": "MapServer",
+"folder": "DLSFolder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"District Boundary"
+],
+[
+2,
+"Mandals Boundary"
+],
+[
+3,
+"Village Boundary"
+],
+[
+4,
+"Base Cadastral GeoCoordinates (Boundary Stone)"
+],
+[
+5,
+"Sub-Divisions GeoCoordinates (Boundary Stone)"
+],
+[
+6,
+"Base_Cadastral_Joined_Final Dharani"
+],
+[
+7,
+"Base_Cadastral_Joined_FinalRB"
+],
+[
+8,
+"Base Cadastral (Survey No)"
+],
+[
+9,
+"Sub-Divisions Parcels (Survey No)"
+],
+[
+10,
+"Land Classification (Base Survey No)"
+],
+[
+11,
+"Revenue Scanned Maps"
+],
+[
+12,
+"Geo-referenced Revenue Map (Dagada)"
+],
+[
+13,
+"Geo-referenced - Revenue Map (Dharmapur)"
+],
+[
+14,
+"Geo-referenced - Revenue Map (Gangadharpally)"
+],
+[
+15,
+"Drone Images"
+],
+[
+16,
+"Drone Image (Gangadharpally)"
+],
+[
+17,
+"Drone Image (Dharmapur)"
+],
+[
+18,
+"High Resolution Satellite Image (Catrosat 2s)- Dagada"
+],
+[
+19,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+20,
+"High Resolution Satellite Image (30 cm)-Gangadharpally"
+],
+[
+21,
+"High Resolution Satellite Image (30 cm)-Gangadharpally"
+],
+[
+22,
+"High Resolution Satellite Image (30 cm)-Dharmapur"
+],
+[
+23,
+"High Resolution Satellite Image (30 cm)- Dagada"
+]
+],
+"created": null
+},
+{
+"service": "DLSFolder/Digital_Land_Survey",
+"type": "MapServer",
+"folder": "DLSFolder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"District Boundary"
+],
+[
+2,
+"Mandals Boundary"
+],
+[
+3,
+"Village Boundary"
+],
+[
+4,
+"Dharani_Database"
+],
+[
+5,
+"Owners_Info_In_BaseSurvey_LandParcel_Final"
+],
+[
+6,
+"Dagada"
+],
+[
+7,
+"Geo Coordinates (Boundary Stone)"
+],
+[
+8,
+"Base Cadastral (Survey No)"
+],
+[
+9,
+"Subdivision Cadastral (Sub Survey No) "
+],
+[
+10,
+"Base Survey Land Classification"
+],
+[
+11,
+"Geo-referenced Revenue Map"
+],
+[
+12,
+"High Resolution Satellite Image (Catrosat 2s)"
+],
+[
+13,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+14,
+"Dharmapur"
+],
+[
+15,
+"Geo Coordinates (Boundary Stone)"
+],
+[
+16,
+"Base Cadastral (Survey No)"
+],
+[
+17,
+"Subdivision Cadastral (Sub Survey No) "
+],
+[
+18,
+"Base Survey Land Classification"
+],
+[
+19,
+"Geo-referenced - Revenue Map"
+],
+[
+20,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+21,
+"Drone Image"
+],
+[
+22,
+"Gangadharpalle"
+],
+[
+23,
+"Geo Coordinates (Boundary Stone)"
+],
+[
+24,
+"Base Cadastral (Survey No)"
+],
+[
+25,
+"Subdivision Cadastral (Sub Survey No) "
+],
+[
+26,
+"Base_Survey_Land_Classification"
+],
+[
+27,
+"Geo-referenced - Revenue Map"
+],
+[
+28,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+29,
+"High Resolution Satellite Image (30 cm)"
+],
+[
+30,
+"Drone Image"
+]
+],
+"created": null
+},
+{
+"service": "EndowmentLands_Folder/Endowment_Lands_Admin_New",
+"type": "MapServer",
+"folder": "EndowmentLands_Folder",
+"layers": [
+[
+0,
+"Administrative Boundary"
+],
+[
+1,
+"Habitation"
+],
+[
+2,
+"Mandal Head Quartres"
+],
+[
+3,
+"Revenue Head Quarters"
+],
+[
+4,
+"District Head Quarters"
+],
+[
+5,
+"State Head Quarter"
+],
+[
+6,
+"Gram Panchayat Head Quarters Location (Poly)"
+],
+[
+7,
+"State Boundary"
+],
+[
+8,
+"District Boundary"
+],
+[
+9,
+"Mandal Boundary"
+],
+[
+10,
+"Village Boundary"
+],
+[
+11,
+"Parliament Constituency Boundary"
+],
+[
+12,
+"Assembly Constituency Boundary"
+],
+[
+13,
+"Endowment Properties"
+],
+[
+14,
+"Endowment Properties Hyderabad"
+],
+[
+15,
+"Boundary Stones"
+],
+[
+16,
+"Boundary Stones Labels"
+],
+[
+17,
+"Properties Type"
+],
+[
+18,
+"Endowment Properties Type"
+],
+[
+19,
+"Road Network"
+],
+[
+20,
+"National Highway (Proposed)"
+],
+[
+21,
+"National Highway (NH)"
+],
+[
+22,
+"State Highway (SH)"
+],
+[
+23,
+"Major District  Road (MDR)"
+],
+[
+24,
+"Other District Road (ODR)"
+],
+[
+25,
+"Existing P R Roads"
+],
+[
+26,
+"BT Road"
+],
+[
+27,
+"CC  Road"
+],
+[
+28,
+"WBM Road"
+],
+[
+29,
+"Gravel Road"
+],
+[
+30,
+"Earthen Road"
+],
+[
+31,
+"Railway Line"
+],
+[
+32,
+"Water Resources"
+],
+[
+33,
+"River"
+],
+[
+34,
+"Reservoirs"
+]
+],
+"created": null
+},
+{
+"service": "EndowmentLands_Folder/Endowment_Lands_Old",
+"type": "MapServer",
+"folder": "EndowmentLands_Folder",
+"layers": [
+[
+0,
+"Administrative Boundary"
+],
+[
+1,
+"TS_Habitations"
+],
+[
+2,
+"SubSurveyNumbers"
+],
+[
+3,
+"Mandal Head Quartres"
+],
+[
+4,
+"Revenue Head Quarters"
+],
+[
+5,
+"District Head Quarters"
+],
+[
+6,
+"State Head Quarter"
+],
+[
+7,
+"Gram Panchayat Head Quarters Location (Poly)"
+],
+[
+8,
+"State Boundary"
+],
+[
+9,
+"District Boundary"
+],
+[
+10,
+"Mandal Boundary"
+],
+[
+11,
+"Village_Boundary"
+],
+[
+12,
+"Parliament Constituency Boundary"
+],
+[
+13,
+"Assembly Constituency Boundary"
+],
+[
+14,
+"Endowment Properties"
+],
+[
+15,
+"Hyderabad Temples "
+],
+[
+16,
+"Laltitudes_Longitudes"
+],
+[
+17,
+"Properties Type"
+],
+[
+18,
+"Road Network"
+],
+[
+19,
+"National Highway (Proposed)"
+],
+[
+20,
+"National Highway (NH)"
+],
+[
+21,
+"State Highway (SH)"
+],
+[
+22,
+"Major District  Road (MDR)"
+],
+[
+23,
+"Other District Road (ODR)"
+],
+[
+24,
+"Existing P R Roads"
+],
+[
+25,
+"BT Road"
+],
+[
+26,
+"CC  Road"
+],
+[
+27,
+"WBM Road"
+],
+[
+28,
+"Gravel Road"
+],
+[
+29,
+"Earthen Road"
+],
+[
+30,
+"Water Resources"
+],
+[
+31,
+"River"
+],
+[
+32,
+"Reservoirs"
+],
+[
+33,
+"Highwayroads"
+],
+[
+34,
+"National Highway (Proposed)"
+],
+[
+35,
+"National Highway (NH)"
+],
+[
+36,
+"State Highway (SH)"
+]
+],
+"created": null
+},
+{
+"service": "EndowmentLands_Folder/Endowment_Lands_Query_New",
+"type": "MapServer",
+"folder": "EndowmentLands_Folder",
+"layers": [
+[
+0,
+"Endowment Properties Type"
+],
+[
+1,
+"Endowment_Property_Type"
+]
+],
+"created": null
+},
+{
+"service": "EndowmentLands_Folder/Endowment_Lands_Query_Old",
+"type": "MapServer",
+"folder": "EndowmentLands_Folder",
+"layers": [
+[
+0,
+"District_Boundary"
+],
+[
+1,
+"Mandal_Boundary"
+],
+[
+2,
+"Village_Boundary"
+],
+[
+3,
+"Endowment Lands TS"
+],
+[
+4,
+"Endowment_Temples_Web"
+],
+[
+5,
+"Hyderabad_Temples_Data"
+],
+[
+6,
+"Temples_Endowment_Data_Single_Polygon"
+],
+[
+7,
+"Temples_Endowment_Data_Transpose_Web_Final_withunique"
+],
+[
+8,
+"Temples_Endowment_Data_Web_Final_withunique"
+],
+[
+9,
+"Temples_Endowment_With_UniqueCode"
+],
+[
+10,
+"Temples_Endowment_With_UniqueCode_Transpose"
+]
+],
+"created": null
+},
+{
+"service": "EndowmentLands_Folder/Endowment_Lands_Temples_Layer",
+"type": "MapServer",
+"folder": "EndowmentLands_Folder",
+"layers": [
+[
+0,
+"Parcel Level View"
+],
+[
+1,
+"TS_Habitations"
+],
+[
+2,
+"Parcel_Level"
+],
+[
+3,
+"Hyderabad Temples "
+],
+[
+4,
+"Laltitudes_Longitudes"
+],
+[
+5,
+"Parcel Labels"
+],
+[
+6,
+"TS_Habitations"
+],
+[
+7,
+"Laltitudes_Longitudes"
+],
+[
+8,
+"Parcel_Level"
+]
+],
+"created": null
+},
+{
+"service": "EndowmentLands_Folder/EndowmentLands_Admin_2026",
+"type": "MapServer",
+"folder": "EndowmentLands_Folder",
+"layers": [
+[
+0,
+"Administrative Boundary"
+],
+[
+1,
+"Habitation"
+],
+[
+2,
+"Mandal Head Quartres"
+],
+[
+3,
+"Revenue Head Quarters"
+],
+[
+4,
+"District Head Quarters"
+],
+[
+5,
+"State Head Quarter"
+],
+[
+6,
+"Gram Panchayat Head Quarters Location (Poly)"
+],
+[
+7,
+"State Boundary"
+],
+[
+8,
+"District Boundary"
+],
+[
+9,
+"Mandal Boundary"
+],
+[
+10,
+"Village Boundary"
+],
+[
+11,
+"Parliament Constituency Boundary"
+],
+[
+12,
+"Assembly Constituency Boundary"
+],
+[
+13,
+"Endowment Properties"
+],
+[
+14,
+"Endowment Properties Hyderabad"
+],
+[
+15,
+"Boundary Stones"
+],
+[
+16,
+"Boundary Stones Labels"
+],
+[
+17,
+"Properties Type"
+],
+[
+18,
+"Endowment Properties Type"
+],
+[
+19,
+"Road Network"
+],
+[
+20,
+"National Highway (Proposed)"
+],
+[
+21,
+"National Highway (NH)"
+],
+[
+22,
+"State Highway (SH)"
+],
+[
+23,
+"Major District  Road (MDR)"
+],
+[
+24,
+"Other District Road (ODR)"
+],
+[
+25,
+"Existing P R Roads"
+],
+[
+26,
+"BT Road"
+],
+[
+27,
+"CC  Road"
+],
+[
+28,
+"WBM Road"
+],
+[
+29,
+"Gravel Road"
+],
+[
+30,
+"Earthen Road"
+],
+[
+31,
+"Railway Line"
+],
+[
+32,
+"Water Resources"
+],
+[
+33,
+"River"
+],
+[
+34,
+"Reservoirs"
+]
+],
+"created": null
+},
+{
+"service": "ForestLands_Folder/ForestLands_Query",
+"type": "MapServer",
+"folder": "ForestLands_Folder",
+"layers": [
+[
+0,
+"Annaram"
+]
+],
+"created": null
+},
+{
+"service": "ForestLands_Folder/ForestLands",
+"type": "MapServer",
+"folder": "ForestLands_Folder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"State Boundary"
+],
+[
+2,
+"District_Boundary"
+],
+[
+3,
+"Mandal_Boundary"
+],
+[
+4,
+"Village_Boundary"
+],
+[
+5,
+"Habitation"
+],
+[
+6,
+"Geographical Feature"
+],
+[
+7,
+"Notional Forest Block Boundaries"
+],
+[
+8,
+"Notional Block-1 Boundary Points"
+],
+[
+9,
+"Notional Block-2 Boundary Points"
+],
+[
+10,
+"Notional Block-3 Boundary Points"
+],
+[
+11,
+"Notional Block - 1 Boundary"
+],
+[
+12,
+"Notional Block - 2 Boundary"
+],
+[
+13,
+"Notional Block - 3 Boundary"
+],
+[
+14,
+"Legacy Boundary Pillars"
+],
+[
+15,
+"Legacy Boundaries - 3 Blocks"
+],
+[
+16,
+"Magnetic Directions & Distances"
+],
+[
+17,
+"Magentic Control Points"
+],
+[
+18,
+"Block -1 Boundary"
+],
+[
+19,
+"Block - 2 Boundary"
+],
+[
+20,
+"Block - 3 Boundary"
+],
+[
+21,
+"Points"
+],
+[
+22,
+"Boundaries as per Forest Legacy Records"
+],
+[
+23,
+"Boundaries as per Revenue Records"
+],
+[
+24,
+"Sy No with Parcel Boundary"
+],
+[
+25,
+"Village Cadastral Maps"
+],
+[
+26,
+"Pilot Block Land Parcels Boundary Points"
+],
+[
+27,
+"Pilot Block Land Parcels"
+],
+[
+28,
+"Cadastral Data"
+],
+[
+29,
+"Tiff Maps"
+],
+[
+30,
+"ANNARAM-KUSKI_40.TIF"
+],
+[
+31,
+"ANNARAM-KUSKI_30.TIF"
+],
+[
+32,
+"ANNARAM-KUSKI_20.TIF"
+],
+[
+33,
+"ANNARAM-KUSKI_10.TIF"
+],
+[
+34,
+"1824004_YELLAMPET11_20.TIF"
+],
+[
+35,
+"1824004_YELLAMPET1_10.TIF"
+],
+[
+36,
+"1824004_YELLAMPET-P2.jpg"
+],
+[
+37,
+"1824004_YELLAMPET-P1.jpg"
+],
+[
+38,
+"R_1824005_Somarampet_40.TIF"
+],
+[
+39,
+"R_1824005_Somarampet_30.TIF"
+],
+[
+40,
+"R_1824005_Somarampet_20.TIF"
+],
+[
+41,
+"R_1824005_Somarampet_10.TIF"
+]
+],
+"created": null
+},
+{
+"service": "GHMCDockets_Folder/GHMC_Dockets",
+"type": "MapServer",
+"folder": "GHMCDockets_Folder",
+"layers": [
+[
+0,
+"Building_Matched"
+],
+[
+1,
+"Building"
+],
+[
+2,
+"AssessedDocketsRoport"
+]
+],
+"created": null
+},
+{
+"service": "GHMCHealth_Folder/GHMC_Health_Facilities_Admin",
+"type": "MapServer",
+"folder": "GHMCHealth_Folder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"Outer Ringroad"
+],
+[
+2,
+"Hyderabad"
+],
+[
+3,
+"Wards"
+],
+[
+4,
+"Circles"
+]
+],
+"created": null
+},
+{
+"service": "GHMCHealth_Folder/GHMC_Health_Facilities",
+"type": "MapServer",
+"folder": "GHMCHealth_Folder",
+"layers": [
+[
+0,
+"HEALTH_FACILITIES"
+],
+[
+1,
+"GHMC_SLUMS"
+],
+[
+2,
+"WARDS"
+],
+[
+3,
+"CIRCLES"
+]
+],
+"created": null
+},
+{
+"service": "GHMCNalas_Folder/GHMCNalas_Hyd_Raster",
+"type": "MapServer",
+"folder": "GHMCNalas_Folder",
+"layers": [
+[
+0,
+"Hyderabad_GCS.tif"
+]
+],
+"created": null
+},
+{
+"service": "GHMCNalas_Folder/GHMCNalas_vul",
+"type": "MapServer",
+"folder": "GHMCNalas_Folder",
+"layers": [
+[
+0,
+"Area_Name"
+],
+[
+1,
+"Inundation Areas"
+],
+[
+2,
+"Nala"
+],
+[
+3,
+"Proposed Width"
+],
+[
+4,
+"Existing Width"
+],
+[
+5,
+"Segments"
+],
+[
+6,
+"Cadstral"
+],
+[
+7,
+"GHMC ZONES"
+],
+[
+8,
+"OUTER_RINGROAD"
+],
+[
+9,
+"Hyderabad"
+],
+[
+10,
+"OUTER_RINGROAD_BND_ROADS"
+],
+[
+11,
+"CANAL_DRAIN"
+],
+[
+12,
+"RIVER_STREAM"
+],
+[
+13,
+"TANKS"
+]
+],
+"created": null
+},
+{
+"service": "GovtHospitals_Folder/Health_Facilities_Mapping",
+"type": "MapServer",
+"folder": "GovtHospitals_Folder",
+"layers": [
+[
+0,
+"PHC Criteria Mandalwise Population"
+],
+[
+1,
+"Gap Areas"
+],
+[
+2,
+"PHC_10km_Buffer"
+],
+[
+3,
+"Gap_Villages_10km"
+],
+[
+4,
+"Villages_15Km_Buffer"
+],
+[
+5,
+"PHC_15Km_Buffer_Merge"
+],
+[
+6,
+"Health Facilities"
+],
+[
+7,
+"Central Medical Stores"
+],
+[
+8,
+"Medical Colleges"
+],
+[
+9,
+"District Hospital"
+],
+[
+10,
+"Area Hospital"
+],
+[
+11,
+"Civil Dispensary"
+],
+[
+12,
+"Maternity Community Health Centre"
+],
+[
+13,
+"Basti Dawakhana"
+],
+[
+14,
+"Urban Community Health Centre"
+],
+[
+15,
+"Urban Primary Health Centre"
+],
+[
+16,
+"Community Health Centre"
+],
+[
+17,
+"Primary Health Centre"
+],
+[
+18,
+"Sub Centre"
+],
+[
+19,
+"Ambulances"
+],
+[
+20,
+"Existing Ambulance Stations"
+],
+[
+21,
+"Proposed Ambulance Stations"
+],
+[
+22,
+"102"
+],
+[
+23,
+"EMRI Neo ALS"
+],
+[
+24,
+"EMRI ALS"
+],
+[
+25,
+"EMRI BLS"
+],
+[
+26,
+"Govt. ALS"
+],
+[
+27,
+"Govt. BLS"
+],
+[
+28,
+"Ambulance Status"
+],
+[
+29,
+"Ambulances Gaps 10km Buffer"
+],
+[
+30,
+"Ambulance Gap Villages 10km"
+],
+[
+31,
+"Ambulances Gaps 15km Buffer"
+],
+[
+32,
+"Ambulance Gap Villages 15km"
+],
+[
+33,
+"Administrative Layer"
+],
+[
+34,
+"Settlement / Habitation"
+],
+[
+35,
+"Gram Panchayat"
+],
+[
+36,
+"Mandal Headquarter"
+],
+[
+37,
+"Revenue Headquarter"
+],
+[
+38,
+"District Headquarter"
+],
+[
+39,
+"State Boundary"
+],
+[
+40,
+"Parliament Constituency Boundary"
+],
+[
+41,
+"Assembly Constituency Boundary"
+],
+[
+42,
+"District_Boundary"
+],
+[
+43,
+"District Boundary"
+],
+[
+44,
+"Revenue Divisions"
+],
+[
+45,
+"Mandal Boundary"
+],
+[
+46,
+"Village Boundary"
+],
+[
+47,
+"State Indicator"
+],
+[
+48,
+"Urban Local Bodies"
+],
+[
+49,
+"HMDA Boundary"
+],
+[
+50,
+"Municipalty - Corporation"
+],
+[
+51,
+"Wards Municipality"
+],
+[
+52,
+"Outer Ring Road"
+],
+[
+53,
+"Regional Ring Road"
+],
+[
+54,
+"Colony Boundary"
+],
+[
+55,
+"Docket Boundary"
+],
+[
+56,
+"Ward Boundary"
+],
+[
+57,
+"Circle Boundary"
+],
+[
+58,
+"Zone Boundary"
+],
+[
+59,
+"Road & Rail Network"
+],
+[
+60,
+"National Highway"
+],
+[
+61,
+"National Highway Proposed"
+],
+[
+62,
+"State Highway"
+],
+[
+63,
+"Major District Road"
+],
+[
+64,
+"Other District Road"
+],
+[
+65,
+"Rural Roads"
+],
+[
+66,
+"Railway Network"
+],
+[
+67,
+"Railway_Stations"
+],
+[
+68,
+"Water Resources"
+],
+[
+69,
+"Forest"
+],
+[
+70,
+"Reservoir"
+],
+[
+71,
+"River"
+]
+],
+"created": null
+},
+{
+"service": "GovtHospitals_Folder/Health_Facilities_Query",
+"type": "MapServer",
+"folder": "GovtHospitals_Folder",
+"layers": [
+[
+0,
+"Health_Facilities"
+],
+[
+1,
+"Ambulances"
+],
+[
+2,
+"Amblances_926_Final"
+],
+[
+3,
+"Health_Facilities_Total"
+],
+[
+4,
+"Amblances_Total"
+],
+[
+5,
+"Health_Facilities_and_Ambulances"
+],
+[
+6,
+"Sub_Centre1"
+]
+],
+"created": null
+},
+{
+"service": "GWD_Folder/GWD_Layers",
+"type": "MapServer",
+"folder": "GWD_Folder",
+"layers": [
+[
+0,
+"GWD WELLS"
+],
+[
+1,
+"GWD CONTOUR"
+],
+[
+2,
+"GWD DEM"
+],
+[
+3,
+"GWD TIN"
+]
+],
+"created": null
+},
+{
+"service": "GWD_Folder/GWD_Query",
+"type": "MapServer",
+"folder": "GWD_Folder",
+"layers": [
+[
+0,
+"GWD WELLS"
+]
+],
+"created": null
+},
+{
+"service": "GWDPotential_Folder/Groundwater_Potential",
+"type": "MapServer",
+"folder": "GWDPotential_Folder",
+"layers": [
+[
+0,
+"District_Boundary"
+],
+[
+1,
+"Mandal_Boundary"
+],
+[
+2,
+"Village_Boundary"
+],
+[
+3,
+"NC/PC Habitation / Villages / Cities"
+],
+[
+4,
+"Wells Observed During Field Visit"
+],
+[
+5,
+"Drain (Line)"
+],
+[
+6,
+"Stru1"
+],
+[
+7,
+"Roads"
+],
+[
+8,
+"Rail"
+],
+[
+9,
+"WRDPP"
+],
+[
+10,
+"WRDPL"
+],
+[
+11,
+"Drain (Poly)"
+],
+[
+12,
+"Ground Water Potential"
+]
+],
+"created": null
+},
+{
+"service": "GWP_Folder/GWP",
+"type": "MapServer",
+"folder": "GWP_Folder",
+"layers": [
+[
+0,
+"District_BoundaryAnno"
+],
+[
+1,
+"Default"
+],
+[
+2,
+"State_Boundary"
+],
+[
+3,
+"District Boundary"
+],
+[
+4,
+"Mandal Boundary"
+],
+[
+5,
+"Village_Boundary"
+],
+[
+6,
+"250K Grid"
+],
+[
+7,
+"50K Grid"
+]
+],
+"created": null
+},
+{
+"service": "HIS_Folder/HIS_Health_Facilities_Mapping",
+"type": "MapServer",
+"folder": "HIS_Folder",
+"layers": [
+[
+0,
+"Gap Areas"
+],
+[
+5,
+"Health Facilities"
+],
+[
+18,
+"Ambulances"
+],
+[
+30,
+"Administrative Layer"
+],
+[
+45,
+"Urban Local Bodies"
+],
+[
+57,
+"Road & Rail Network"
+],
+[
+66,
+"Water Resources"
+]
+],
+"created": null
+},
+{
+"service": "HIS_Folder/HIS_Health_Facilities_Query",
+"type": "MapServer",
+"folder": "HIS_Folder",
+"layers": [],
+"created": null
+},
+{
+"service": "HMDA_Folder/HMDA",
+"type": "MapServer",
+"folder": "HMDA_Folder",
+"layers": [
+[
+0,
+"HMDA"
+],
+[
+1,
+"DISTRICT"
+],
+[
+2,
+"MANDALS"
+],
+[
+3,
+"VILLAGE"
+],
+[
+4,
+"MANUFACTURE(INDUSTRIAL)"
+],
+[
+5,
+"Cadastral"
+],
+[
+6,
+"Pocket"
+]
+],
+"created": null
+},
+{
+"service": "Hostels/Hostels_New",
+"type": "MapServer",
+"folder": "Hostels",
+"layers": [
+[
+0,
+"Post Metric Hostels"
+],
+[
+1,
+"Pre Metric Hostels"
+],
+[
+2,
+"District Boundary"
+],
+[
+3,
+"Mandal Boundary"
+],
+[
+4,
+"Post_Metric_Hostels"
+],
+[
+5,
+"Pre_Metric_Hostels"
+]
+],
+"created": null
+},
+{
+"service": "Hostels/Hostels",
+"type": "MapServer",
+"folder": "Hostels",
+"layers": [
+[
+0,
+"Post Metric Hostels"
+],
+[
+1,
+"Pre Metric Hostels"
+],
+[
+2,
+"District Boundary"
+],
+[
+3,
+"Mandal Boundary"
+]
+],
+"created": null
+},
+{
+"service": "Hydra_Folder/Administrative_Layer",
+"type": "MapServer",
+"folder": "Hydra_Folder",
+"layers": [
+[
+0,
+"ORR Administrative"
+],
+[
+1,
+"Contonment_Area"
+],
+[
+2,
+"ORR_Mandals"
+],
+[
+3,
+"ORR_Villages"
+],
+[
+4,
+"GHMC_BND"
+],
+[
+5,
+"ORR"
+],
+[
+6,
+"TG Administrative"
+],
+[
+7,
+"TS_VILLAGES_10926_FINAL"
+],
+[
+8,
+"TS_DISTRICTS_33"
+],
+[
+9,
+"TS_MANDALS_632"
+]
+],
+"created": null
+},
+{
+"service": "Hydra_Folder/First_Window_Image",
+"type": "MapServer",
+"folder": "Hydra_Folder",
+"layers": [
+[
+0,
+"GHMCORR2014.tif"
+]
+],
+"created": null
+},
+{
+"service": "Hydra_Folder/First_Window",
+"type": "MapServer",
+"folder": "Hydra_Folder",
+"layers": [
+[
+0,
+"ORR Tanks"
+]
+],
+"created": null
+},
+{
+"service": "Hydra_Folder/Fourth_Window",
+"type": "MapServer",
+"folder": "Hydra_Folder",
+"layers": [
+[
+0,
+"Cadastral Parcels"
+]
+],
+"created": null
+},
+{
+"service": "Hydra_Folder/FTL_Query",
+"type": "MapServer",
+"folder": "Hydra_Folder",
+"layers": [],
+"created": null
+},
+{
+"service": "Hydra_Folder/FTL_Tanks",
+"type": "MapServer",
+"folder": "Hydra_Folder",
+"layers": [
+[
+0,
+"2014"
+],
+[
+3,
+"2023"
+],
+[
+6,
+"2025"
+]
+],
+"created": null
+},
+{
+"service": "Hydra_Folder/Second_Window_Image",
+"type": "MapServer",
+"folder": "Hydra_Folder",
+"layers": [
+[
+0,
+"2023_2024GHMC.tif"
+]
+],
+"created": null
+},
+{
+"service": "Hydra_Folder/Second_Window",
+"type": "MapServer",
+"folder": "Hydra_Folder",
+"layers": [
+[
+0,
+"ORR Tanks"
+]
+],
+"created": null
+},
+{
+"service": "Hydra_Folder/Third_Window",
+"type": "MapServer",
+"folder": "Hydra_Folder",
+"layers": [
+[
+0,
+"Topo 25K"
+]
+],
+"created": null
+},
+{
+"service": "Hydra_Folder/Topo_Tanks",
+"type": "MapServer",
+"folder": "Hydra_Folder",
+"layers": [
+[
+0,
+"2014"
+],
+[
+3,
+"2023"
+],
+[
+6,
+"2025"
+]
+],
+"created": null
+},
+{
+"service": "Hydra_Folder/WaterBody_Monitoring_Rasters",
+"type": "MapServer",
+"folder": "Hydra_Folder",
+"layers": [
+[
+0,
+"Satellite Data 2014"
+],
+[
+1,
+"Satellite Data 2023"
+],
+[
+2,
+"Satellite Data 2025"
+]
+],
+"created": null
+},
+{
+"service": "IandCAD_Folder/I_and_CAD",
+"type": "MapServer",
+"folder": "IandCAD_Folder",
+"layers": [
+[
+0,
+"TS_RAIL"
+],
+[
+1,
+"TANKS"
+],
+[
+2,
+"TS_ROADS"
+],
+[
+3,
+"District_Boundary"
+],
+[
+4,
+"Mandal_Boundary"
+],
+[
+5,
+"Habitations"
+],
+[
+6,
+"Mandal_HQ"
+],
+[
+7,
+"Reservoirs"
+],
+[
+8,
+"Village_Boundary"
+],
+[
+9,
+"Command_Boundary"
+],
+[
+10,
+"Command_Boundary"
+],
+[
+11,
+"LULC50K_2011-12"
+],
+[
+12,
+"SRSP_OT"
+],
+[
+13,
+"SRSP_CANAL"
+],
+[
+14,
+"SRSP-I COMMAND_2014-15.img"
+],
+[
+15,
+"SRSP-I COMMAND_2013-14.img"
+],
+[
+16,
+"NSLC-COMMAND_2014-15.img"
+],
+[
+17,
+"NSLC-COMMAND_2013-14.img"
+]
+],
+"created": null
+},
+{
+"service": "ISMSAgriculture_Folder/ISMS_Agriculture",
+"type": "MapServer",
+"folder": "ISMSAgriculture_Folder",
+"layers": [
+[
+0,
+"isms_collected_points"
+],
+[
+1,
+"Cadastral Layer"
+],
+[
+2,
+"Medak"
+],
+[
+3,
+"Administrative Layers"
+],
+[
+4,
+"State Boundary"
+],
+[
+5,
+"District_Boundary"
+],
+[
+6,
+"Mandal_Boundary"
+],
+[
+7,
+"Village_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "ISMSFolder/ISMS_Agriculture",
+"type": "MapServer",
+"folder": "ISMSFolder",
+"layers": [
+[
+0,
+"isms_collected_points"
+],
+[
+1,
+"Cadastral Layer"
+],
+[
+2,
+"Medak"
+],
+[
+3,
+"Administrative Layers"
+],
+[
+4,
+"State Boundary"
+],
+[
+5,
+"District_Boundary"
+],
+[
+6,
+"Mandal_Boundary"
+],
+[
+7,
+"Village_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "LIS_Folder/LandInformationSystem_Admin",
+"type": "MapServer",
+"folder": "LIS_Folder",
+"layers": [
+[
+0,
+"TS_DistrictBoundaries"
+],
+[
+1,
+"TS_MandalBoundaries"
+],
+[
+2,
+"TS_VillageBoundaries"
+]
+],
+"created": null
+},
+{
+"service": "LIS_Folder/LandInformationSystem_Query",
+"type": "MapServer",
+"folder": "LIS_Folder",
+"layers": [
+[
+0,
+"TS Cadastral Boundary 30 cm"
+],
+[
+1,
+"dharani_data"
+]
+],
+"created": null
+},
+{
+"service": "LIS_Folder/LandInformationSystem",
+"type": "MapServer",
+"folder": "LIS_Folder",
+"layers": [
+[
+0,
+"Village Tri-Bi Junctions Layer"
+],
+[
+1,
+"Village Cadastral Units Control Points - Layer"
+],
+[
+2,
+"Jogulamba Gadwal"
+],
+[
+3,
+"Mahabubnagar"
+],
+[
+4,
+"Nagarkurnool"
+],
+[
+5,
+"Nalgonda"
+],
+[
+6,
+"Narayanpet"
+],
+[
+7,
+"Sangareddy"
+],
+[
+8,
+"Siddipet"
+],
+[
+9,
+"Suryapet"
+],
+[
+10,
+"Wanaparthy"
+],
+[
+11,
+"Village Cadastral Units Layer V0"
+],
+[
+12,
+"Village Cadastral Units Layer V1 - 9Districts"
+],
+[
+13,
+"Land Parcel Pahani Layer - Dagada"
+],
+[
+14,
+"Land Parcel Layer"
+],
+[
+15,
+"Land Parcel Layer - Wanaparthy"
+],
+[
+16,
+"Land Parcel Layer - Nalgonda"
+],
+[
+17,
+"Land Parcel Layer - Suryapet"
+],
+[
+18,
+"Village Cadastral Units Control Points"
+],
+[
+19,
+"Mahabubnagar"
+],
+[
+20,
+"Nagarkurnool"
+],
+[
+21,
+"Nalgonda"
+],
+[
+22,
+"Narayanpet"
+],
+[
+23,
+"Sangareddy"
+],
+[
+24,
+"Siddipet"
+],
+[
+25,
+"Suryapet"
+],
+[
+26,
+"Wanaparthy"
+],
+[
+27,
+"Jogulamba Gadwal"
+],
+[
+28,
+"Village Cadstral Units Layer V1 Districts"
+],
+[
+29,
+"Village Cadstral Units Layer  V1-Jogulamba_Gadwal"
+],
+[
+30,
+"Village Cadstral Units Layer V1-Mahabubnagar"
+],
+[
+31,
+"Village Cadstral Units Layer V1-Nagarkurnool"
+],
+[
+32,
+"Village Cadstral Units Layer V1-Nalgonda"
+],
+[
+33,
+"Village Cadstral Units Layer V1-Narayanpet"
+],
+[
+34,
+"Village Cadstral Units Layer V1-Sangareddy"
+],
+[
+35,
+"Village Cadstral Units Layer V1-Siddipet"
+],
+[
+36,
+"Village Cadstral Units Layer V1-Suryapet"
+],
+[
+37,
+"Village Cadstral Units Layer V1-Wanaparthy"
+],
+[
+38,
+"District Boundary"
+],
+[
+39,
+"Mandals Boundary"
+],
+[
+40,
+"Village Boundary"
+]
+],
+"created": null
+},
+{
+"service": "Master_Administrative_Folder/Master_Administrative_Boundary_test",
+"type": "FeatureServer",
+"folder": "Master_Administrative_Folder",
+"layers": [
+[
+0,
+"Master_Assembly_Constituency_Boundary"
+],
+[
+1,
+"Master_Parliament_Constituency_Boundary"
+],
+[
+2,
+"Master_District_Boundary"
+],
+[
+3,
+"Master_Revenue_Division_Boundary"
+],
+[
+4,
+"Master_Mandal_Boundary"
+],
+[
+5,
+"Master_Village_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "Master_Administrative_Folder/Master_Administrative_Boundary_test",
+"type": "MapServer",
+"folder": "Master_Administrative_Folder",
+"layers": [
+[
+0,
+"Master_Assembly_Constituency_Boundary"
+],
+[
+1,
+"Master_Parliament_Constituency_Boundary"
+],
+[
+2,
+"Master_District_Boundary"
+],
+[
+3,
+"Master_Revenue_Division_Boundary"
+],
+[
+4,
+"Master_Mandal_Boundary"
+],
+[
+5,
+"Master_Village_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "Master_Administrative_Folder/Master_Administrative_Boundary",
+"type": "MapServer",
+"folder": "Master_Administrative_Folder",
+"layers": [
+[
+0,
+"Assembly_Constituency_Boundary"
+],
+[
+1,
+"Parliament_Constituency_Boundary"
+],
+[
+2,
+"District_Boundary"
+],
+[
+3,
+"Revenue_Division_Boundary"
+],
+[
+4,
+"Mandal_Boundary"
+],
+[
+5,
+"Village_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "MICensus_Folder/MICensus_Sixth",
+"type": "MapServer",
+"folder": "MICensus_Folder",
+"layers": [
+[
+0,
+"MICensusWholeData"
+],
+[
+1,
+"State Boundary"
+],
+[
+2,
+"District Boundary"
+],
+[
+3,
+"Mandal Boundary"
+],
+[
+4,
+"Village Boundary"
+]
+],
+"created": null
+},
+{
+"service": "Mines_Folder/Mines_Administrative_Layers",
+"type": "MapServer",
+"folder": "Mines_Folder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"State Boundary"
+],
+[
+2,
+"District_Boundary"
+],
+[
+3,
+"Mandal_Boundary"
+],
+[
+4,
+"Village_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "Mines_Folder/Mines_Geology_Layer",
+"type": "MapServer",
+"folder": "Mines_Folder",
+"layers": [
+[
+0,
+"Geo-Morphology"
+],
+[
+1,
+"Lithology"
+],
+[
+2,
+"Structures"
+],
+[
+3,
+"Rock_type_merged"
+],
+[
+4,
+"Weathering_Morophology"
+]
+],
+"created": null
+},
+{
+"service": "Mines_Folder/Mines_Images",
+"type": "MapServer",
+"folder": "Mines_Folder",
+"layers": [
+[
+0,
+"D_zoom_21.tif"
+],
+[
+1,
+"C_zoom_21.tif"
+],
+[
+2,
+"B_zoom_21.tif"
+],
+[
+3,
+"A_zoom_21.tif"
+]
+],
+"created": null
+},
+{
+"service": "Mines_Folder/Mines_Query",
+"type": "MapServer",
+"folder": "Mines_Folder",
+"layers": [
+[
+0,
+"Mines"
+]
+],
+"created": null
+},
+{
+"service": "Mines_Folder/Mines",
+"type": "MapServer",
+"folder": "Mines_Folder",
+"layers": [
+[
+0,
+"Mine_Lease_Boundary_Points"
+],
+[
+1,
+"Mines"
+]
+],
+"created": null
+},
+{
+"service": "MinesProject3/Mines_Project_3_Admin",
+"type": "MapServer",
+"folder": "MinesProject3",
+"layers": [
+[
+0,
+"District"
+],
+[
+1,
+"Mandal"
+],
+[
+2,
+"Village"
+],
+[
+3,
+"Satellite Imagery"
+],
+[
+4,
+"50_zoom_21.tif"
+],
+[
+5,
+"51_zoom_21.tif"
+],
+[
+6,
+"49_zoom_21.tif"
+],
+[
+7,
+"48_zoom_21.tif"
+],
+[
+8,
+"47_zoom_21.tif"
+],
+[
+9,
+"46_zoom_21.tif"
+],
+[
+10,
+"45_zoom_21.tif"
+],
+[
+11,
+"44_zoom_21.tif"
+],
+[
+12,
+"53_zoom_21.tif"
+],
+[
+13,
+"43_zoom_21.tif"
+],
+[
+14,
+"52_zoom_21.tif"
+]
+],
+"created": null
+},
+{
+"service": "MinesProject3/Mines_Project_3_Query",
+"type": "MapServer",
+"folder": "MinesProject3",
+"layers": [
+[
+0,
+"District"
+],
+[
+1,
+"Mandal"
+],
+[
+2,
+"Village"
+],
+[
+3,
+"Mines"
+],
+[
+4,
+"Mine_Lease_Boundary_Points"
+]
+],
+"created": null
+},
+{
+"service": "MinesProject3/Mines_Project_3",
+"type": "MapServer",
+"folder": "MinesProject3",
+"layers": [
+[
+0,
+"Mine DGPS Points"
+],
+[
+1,
+"Mines"
+]
+],
+"created": null
+},
+{
+"service": "MusiRiver/Musi_Basin_Web_Publication_Raster",
+"type": "MapServer",
+"folder": "MusiRiver",
+"layers": [
+[
+0,
+"Elevation_Slope"
+],
+[
+1,
+"Slope"
+],
+[
+2,
+"Musi Gardient Slope"
+],
+[
+3,
+"Contour Range"
+],
+[
+4,
+"Cartosat Digital Elevation Model"
+],
+[
+5,
+"Elevation (SRTM)"
+],
+[
+6,
+"SOI Toposheet"
+],
+[
+7,
+"Toposheet SoI 50K"
+],
+[
+8,
+"Toposheet SoI 25K"
+],
+[
+9,
+"Satellite Image"
+],
+[
+10,
+"High Resolution - Yadadri Bhuvangiri"
+],
+[
+11,
+"56K10NE_compressed.tif"
+],
+[
+12,
+"56k10SE_compressed.tif"
+],
+[
+13,
+"56K11NE_compressed.tif"
+],
+[
+14,
+"56K11SE_compressed.tif"
+],
+[
+15,
+"56K13SE_compressed.tif"
+],
+[
+16,
+"56K13SW_compressed.tif"
+],
+[
+17,
+"56K14NE_compressed.tif"
+],
+[
+18,
+"56K14NW_compressed.tif"
+],
+[
+19,
+"56K14SE_compressed.tif"
+],
+[
+20,
+"56K14SW_compressed.tif"
+],
+[
+21,
+"56K15NE_compressed.tif"
+],
+[
+22,
+"56K15NW_compressed.tif"
+],
+[
+23,
+"56K15SE_compressed.tif"
+],
+[
+24,
+"56K15SW_compressed.tif"
+],
+[
+25,
+"56K16NE_compressed.tif"
+],
+[
+26,
+"56K16NW_compressed.tif"
+],
+[
+27,
+"56K16SE_compressed.tif"
+],
+[
+28,
+"56K16SW_compressed.tif"
+],
+[
+29,
+"56O2NE_compressed.tif"
+],
+[
+30,
+"56O2NW_compressed.tif"
+],
+[
+31,
+"56O2SE_compressed.tif"
+],
+[
+32,
+"56O2SW_compressed1.tif"
+],
+[
+33,
+"56O3NE_compressed.tif"
+],
+[
+34,
+"56O3NW_compressed.tif"
+],
+[
+35,
+"56O3SE_compressed.tif"
+],
+[
+36,
+"56O3SW_compressed.tif"
+],
+[
+37,
+"56O6SW_Compressed.tif"
+],
+[
+38,
+"56O7NE_Compressed.tif"
+],
+[
+39,
+"56O7NW_Compressed.tif"
+],
+[
+40,
+"56O7SE_Compressed.tif"
+],
+[
+41,
+"56O7SW_compressed.tif"
+],
+[
+42,
+"High Resolution - Medchal"
+],
+[
+43,
+"56K7SE_compressed.tif"
+],
+[
+44,
+"56K7NE_compressed.tif"
+],
+[
+45,
+"56K6SE_compressed.tif"
+],
+[
+46,
+"56K11SW_compressed.tif"
+],
+[
+47,
+"56K11SE_compressed.tif"
+],
+[
+48,
+"56K11NW_compressed.tif"
+],
+[
+49,
+"56K11NE_compressed.tif"
+],
+[
+50,
+"56K10SW_compressed.tif"
+],
+[
+51,
+"56k10SE_compressed.tif"
+],
+[
+52,
+"High Resoltion- Ranga Reddy"
+],
+[
+53,
+"56L9NW_compressed.tif"
+],
+[
+54,
+"56L9NE_compressed.tif"
+],
+[
+55,
+"56K4NE_compressed.tif"
+],
+[
+56,
+"56K4SE_compressed.tif"
+],
+[
+57,
+"56K7NW_compressed.tif"
+],
+[
+58,
+"56K3SE_compressed.tif"
+],
+[
+59,
+"56L5NW_compressed.tif"
+],
+[
+60,
+"56K3NE_compressed.tif"
+],
+[
+61,
+"56L5NE_compressed.tif"
+],
+[
+62,
+"56K12SW_compressed.tif"
+],
+[
+63,
+"56K8SW_compressed.tif"
+],
+[
+64,
+"56K12SE_compressed.tif"
+],
+[
+65,
+"56K8SE_compressed.tif"
+],
+[
+66,
+"56K12NW_compressed.tif"
+],
+[
+67,
+"56K8NE_compressed.tif"
+],
+[
+68,
+"56K12NE_compressed.tif"
+],
+[
+69,
+"56K7SW_compressed.tif"
+],
+[
+70,
+"56K8NW_compressed.tif"
+],
+[
+71,
+"56K8NE_compressed.tif"
+],
+[
+72,
+"DEIMOS-2016"
+],
+[
+73,
+"LISS3 2005-06"
+],
+[
+74,
+"LISS IV_Ranga Reddy 2012"
+],
+[
+75,
+"IKONOS HYDERABAD 2000"
+],
+[
+76,
+"Cartosat 1 Fused (LISS IV+PAN)"
+],
+[
+77,
+"Sentinel Oct 2018"
+],
+[
+78,
+"Sentinel Feb 2022"
+],
+[
+79,
+"Sentinel Oct 2023"
+],
+[
+80,
+"Landsat1975"
+]
+],
+"created": null
+},
+{
+"service": "MusiRiver/Musi_Basin_Web_Publication_vector",
+"type": "MapServer",
+"folder": "MusiRiver",
+"layers": [
+[
+0,
+"Musi Catchment - "
+],
+[
+1,
+"Musi_AWS_Rain Gauge Stations"
+],
+[
+2,
+"Musi_DES Rain Gauge Stations"
+],
+[
+3,
+"Musi_Rail"
+],
+[
+4,
+"Musi_Roads"
+],
+[
+5,
+"Musi_Parliament_Bnd"
+],
+[
+6,
+"Musi_Basin_Boundary"
+],
+[
+7,
+"Administrative  Boundary"
+],
+[
+8,
+"Settlement / Habitation"
+],
+[
+9,
+"Gram Panchayat"
+],
+[
+10,
+"Mandal Head Quarter"
+],
+[
+11,
+"Musi_Dist_BND"
+],
+[
+12,
+"Mandal_Boundary"
+],
+[
+13,
+"Musi_Village_BND"
+],
+[
+14,
+"Musi_ASSEMBLY_BND"
+],
+[
+15,
+"Hydrology"
+],
+[
+16,
+"Musi_Canal"
+],
+[
+17,
+"Musi_Reservoir"
+],
+[
+18,
+"Musi_River"
+],
+[
+19,
+"Musi_Tanks"
+],
+[
+20,
+"Musi_Stream"
+],
+[
+21,
+"River"
+],
+[
+22,
+"Reservoirs TG"
+],
+[
+23,
+"Proposed Roads - Development"
+],
+[
+24,
+"Roads_Proposed"
+],
+[
+25,
+"Existing_Roads_tobe_Developed"
+],
+[
+26,
+"Musi_River_Morphology_line"
+],
+[
+27,
+"Village Cadastral"
+],
+[
+28,
+"Town Survey No"
+],
+[
+29,
+"Musi_River_Morphology"
+],
+[
+30,
+"Musi_River"
+],
+[
+31,
+"Musi_River_Cadastral_Maps"
+],
+[
+32,
+"Musi_River_Rev_BND"
+],
+[
+33,
+"Musi River Length"
+],
+[
+34,
+"Musi_Upto_Confluence"
+],
+[
+35,
+"Musa_Upto_Confluence"
+],
+[
+36,
+"Musi_Confluence_to_ORR"
+],
+[
+37,
+"Watersheds_Joining_Musi"
+],
+[
+38,
+"GHMC_Watersheds2"
+],
+[
+39,
+"GHMC_ORR_Selected_Watersheds"
+],
+[
+40,
+"Survey No Cadastral_Town Survey"
+],
+[
+41,
+"Hyderabad_Cadastral"
+],
+[
+42,
+"Cadastral_in_ORR"
+],
+[
+43,
+"GHMC_Roads_Line"
+],
+[
+44,
+"Administrative Boundary _Telangana"
+],
+[
+45,
+"Settlement / Habitation"
+],
+[
+46,
+"Gram Panchayat Head Quarters Location"
+],
+[
+47,
+"Mandal Head Quarter"
+],
+[
+48,
+"Revenue Head Quarter"
+],
+[
+49,
+"District Head Quarter"
+],
+[
+50,
+"GHMC_Wards"
+],
+[
+51,
+"GHMC_Circles"
+],
+[
+52,
+"GHMC_Zones"
+],
+[
+53,
+"COLONIES"
+],
+[
+54,
+"Villages"
+],
+[
+55,
+"Mandal_Boundary"
+],
+[
+56,
+"Urban Local Bodies"
+],
+[
+57,
+"District Boundary"
+],
+[
+58,
+"Parliament Constituency Boundary"
+],
+[
+59,
+"Assembly Constituency Boundary"
+],
+[
+60,
+"ULB_Mandal "
+],
+[
+61,
+"Forest"
+],
+[
+62,
+"Road Network"
+],
+[
+63,
+"HMDA"
+],
+[
+64,
+"Regional Ring Road (RRR)"
+],
+[
+65,
+"Outer Ring Road (ORR)"
+],
+[
+66,
+"State Highway (SH)"
+],
+[
+67,
+"National Highway (Proposed)"
+],
+[
+68,
+"National Highway"
+],
+[
+69,
+"Rail Network"
+],
+[
+70,
+"Inventory of Water & STP"
+],
+[
+71,
+"Water_Quality_Monitoring_Station_Locations"
+],
+[
+72,
+"STP_Locations"
+],
+[
+73,
+"Common_Effluent_Treatment_Plants_Locations"
+],
+[
+74,
+"Ambient_Air_Quality_Locations"
+],
+[
+75,
+"TRANSCO Structures "
+],
+[
+76,
+"Transmission_Substations"
+],
+[
+77,
+"Transmission_Towers"
+],
+[
+78,
+"GHMC Nalas"
+],
+[
+79,
+"Present Nalas Centerline"
+],
+[
+80,
+"Present Nalas Existing Width"
+],
+[
+81,
+"Sewer Line"
+],
+[
+82,
+"Core_City_Manholes"
+],
+[
+83,
+"Core_City_SewerLine"
+],
+[
+84,
+"HYD_ROADS"
+],
+[
+85,
+"Water Pipeline Network HMWSSB"
+],
+[
+86,
+"Valve"
+],
+[
+87,
+"Source_line"
+],
+[
+88,
+"Supply_Line"
+],
+[
+89,
+"Pumphouse"
+],
+[
+90,
+"Reservoir"
+],
+[
+91,
+"River & Centreline"
+],
+[
+92,
+"Musi_Gardient_Length_Point"
+],
+[
+93,
+"Musi Basin Boundary"
+],
+[
+94,
+"River_Centre_Line_ORR"
+],
+[
+95,
+"River_Centre_Line"
+],
+[
+96,
+"Musi_Gardient_Length"
+],
+[
+97,
+"Width"
+],
+[
+98,
+"Recreation_line (Km)"
+],
+[
+99,
+"Musi_Gardient_Spatial_Join_2"
+],
+[
+100,
+"Musi River Course - SOI Topo"
+],
+[
+101,
+"Recreation_line_0.50Km"
+],
+[
+102,
+"Musi_final"
+],
+[
+103,
+"Confluence_Nala_Buffer_10m"
+],
+[
+104,
+"Bufferzone 500 Meter"
+],
+[
+105,
+"Building_Roads_Place Name"
+],
+[
+106,
+"Places along Musi "
+],
+[
+107,
+"Area_Name"
+],
+[
+108,
+"Roads"
+],
+[
+109,
+"Contours (.5 m)"
+],
+[
+110,
+"Water Body Information"
+],
+[
+111,
+"Stream - Drainage - Canal"
+],
+[
+112,
+"Water Bodies"
+],
+[
+113,
+"Stream Polygon"
+],
+[
+114,
+"Land Use / Land Cover"
+]
+],
+"created": null
+},
+{
+"service": "PoliceProperties_Folder/Police_Admin_Layers",
+"type": "MapServer",
+"folder": "PoliceProperties_Folder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"State Boundary"
+],
+[
+2,
+"District Boundary"
+],
+[
+3,
+"Mandal Boundary"
+],
+[
+4,
+"Village Boundary"
+],
+[
+5,
+"MP Constituency Boundary"
+],
+[
+6,
+"MLA Constituency Boundary"
+],
+[
+7,
+"Habitations"
+],
+[
+8,
+"Gram Panchayats"
+],
+[
+9,
+"Road Layers"
+],
+[
+10,
+"R&B Roads"
+],
+[
+11,
+"PR Roads Show All"
+],
+[
+12,
+"National Highway (NH)"
+],
+[
+13,
+"State Highway"
+],
+[
+14,
+"Infrastructure Layers"
+],
+[
+15,
+"Fire Stations"
+],
+[
+16,
+"Airports"
+],
+[
+17,
+"Water Bodies"
+],
+[
+18,
+"Lakes - Ponds - Tanks"
+],
+[
+19,
+"Rivers"
+],
+[
+20,
+"Reservoirs"
+]
+],
+"created": null
+},
+{
+"service": "PoliceProperties_Folder/Police_District_Division_Zone_Boundaries",
+"type": "MapServer",
+"folder": "PoliceProperties_Folder",
+"layers": [
+[
+0,
+"District_Boundaries"
+],
+[
+1,
+"Police_SDPO_Boundary"
+],
+[
+2,
+"Police_Circle_Boundary"
+],
+[
+3,
+"Police_Zone_Boundary"
+],
+[
+4,
+"Police_Division_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "PoliceProperties_Folder/Police_Properties2_Hyderabad_Queries",
+"type": "MapServer",
+"folder": "PoliceProperties_Folder",
+"layers": [
+[
+0,
+"Hyderabad Police Property Boundaries"
+],
+[
+1,
+"Hyderabad Police Property Cadastral"
+],
+[
+2,
+"Boundary Corner Points"
+],
+[
+3,
+"Hyderabad Police Property Boundaries_Points"
+],
+[
+4,
+"Hyderabad Police Property Cadastral_Points"
+]
+],
+"created": null
+},
+{
+"service": "PoliceProperties_Folder/Police_Properties2_Points",
+"type": "MapServer",
+"folder": "PoliceProperties_Folder",
+"layers": [
+[
+0,
+"Boundary Corner Points"
+],
+[
+1,
+"Hyderabad Police Property Boundaries Points"
+],
+[
+2,
+"Hyderabad Police Property Cadastrall Points"
+],
+[
+3,
+"Telangana Police Property Boundaries Points"
+],
+[
+4,
+"Telangana Police Property Cadastral Points"
+]
+],
+"created": null
+},
+{
+"service": "PoliceProperties_Folder/Police_Properties2_Queries",
+"type": "MapServer",
+"folder": "PoliceProperties_Folder",
+"layers": [
+[
+0,
+"Telangana Police Property Boundaries"
+],
+[
+1,
+"Hyderabad Police Property Boundaries"
+],
+[
+2,
+"Telangana Police Property Cadastral"
+],
+[
+3,
+"Hyderabad Police Property Cadastral"
+]
+],
+"created": null
+},
+{
+"service": "PoliceProperties_Folder/Police_Properties2_Telangana_Queries",
+"type": "MapServer",
+"folder": "PoliceProperties_Folder",
+"layers": [
+[
+0,
+"Telangana Police Property Boundaries"
+],
+[
+1,
+"Telangana Police Property Cadastral"
+],
+[
+2,
+"Boundary Corner Points"
+],
+[
+3,
+"Telangana Police Property Boundaries Points"
+],
+[
+4,
+"Telangana Police Property Cadastral Points"
+]
+],
+"created": null
+},
+{
+"service": "PoliceProperties_Folder/Police_Properties2",
+"type": "MapServer",
+"folder": "PoliceProperties_Folder",
+"layers": [
+[
+0,
+"Telangana Police Stations"
+],
+[
+1,
+"Hyderabad Police Stations"
+],
+[
+2,
+"Property Boundaries"
+],
+[
+3,
+"Hyderabad Police Property Boundaries"
+],
+[
+4,
+"Hyderabad Police Property Cadastral"
+],
+[
+5,
+"Telangana Police Property Boundaries"
+],
+[
+6,
+"Telangana Police Property Cadastral"
+]
+],
+"created": null
+},
+{
+"service": "PoliceProperties_Folder/Police",
+"type": "MapServer",
+"folder": "PoliceProperties_Folder",
+"layers": [
+[
+0,
+"PS Jurisdiction Boundaries"
+]
+],
+"created": null
+},
+{
+"service": "RISOLD_Folder/PRProject",
+"type": "MapServer",
+"folder": "RISOLD_Folder",
+"layers": [],
+"created": null
+},
+{
+"service": "RISOLD_Folder/RIS_AdminLayers",
+"type": "MapServer",
+"folder": "RISOLD_Folder",
+"layers": [],
+"created": null
+},
+{
+"service": "RISOLD_Folder/RIS_All",
+"type": "MapServer",
+"folder": "RISOLD_Folder",
+"layers": [
+[
+0,
+"Roads"
+],
+[
+3,
+"Gram Panchayats"
+],
+[
+7,
+"Hydrology layers"
+],
+[
+12,
+"Administrative"
+]
+],
+"created": null
+},
+{
+"service": "RISOLD_Folder/RIS_GPs",
+"type": "MapServer",
+"folder": "RISOLD_Folder",
+"layers": [],
+"created": null
+},
+{
+"service": "RISOLD_Folder/RIS_Labels",
+"type": "MapServer",
+"folder": "RISOLD_Folder",
+"layers": [],
+"created": null
+},
+{
+"service": "RISOLD_Folder/RIS_Old",
+"type": "MapServer",
+"folder": "RISOLD_Folder",
+"layers": [
+[
+0,
+"State Level View"
+],
+[
+8,
+"Existing R & B Roads"
+],
+[
+12,
+"District Level View"
+],
+[
+13,
+"Gram Panchayats Connectivity"
+],
+[
+28,
+"Existing R & B Roads"
+],
+[
+34,
+"Existing P R Road"
+],
+[
+40,
+"P R Proposed Roads"
+],
+[
+43,
+"Mandal Level View"
+],
+[
+45,
+"Gram Panchayats Connectivity"
+],
+[
+58,
+"Existing R & B Roads"
+],
+[
+65,
+"Existing P R Roads"
+],
+[
+71,
+"Proposed PR Road Connectivity"
+],
+[
+74,
+"Grampanchayat Level View"
+],
+[
+76,
+"Gram Panchayats Connectivity"
+],
+[
+89,
+"Existing R & B Roads"
+],
+[
+95,
+"Existing P R Roads"
+],
+[
+102,
+"Proposed PR Road Connectivity"
+],
+[
+105,
+"Water Resources"
+],
+[
+111,
+"Labels Text"
+],
+[
+117,
+"All layers State View"
+],
+[
+119,
+"Gram Panchayats"
+],
+[
+123,
+"Gram Panchayat Classification Pending"
+],
+[
+134,
+"Other Layers"
+]
+],
+"created": null
+},
+{
+"service": "RISOLD_Folder/RIS_PRRoads",
+"type": "MapServer",
+"folder": "RISOLD_Folder",
+"layers": [],
+"created": null
+},
+{
+"service": "RISOLD_Folder/RIS_Queries_old",
+"type": "MapServer",
+"folder": "RISOLD_Folder",
+"layers": [],
+"created": null
+},
+{
+"service": "RISOLD_Folder/RIS_Queries",
+"type": "MapServer",
+"folder": "RISOLD_Folder",
+"layers": [],
+"created": null
+},
+{
+"service": "RISOLD_Folder/RIS_RBRoads",
+"type": "MapServer",
+"folder": "RISOLD_Folder",
+"layers": [],
+"created": null
+},
+{
+"service": "RISOLD_Folder/RISAdminLayers",
+"type": "MapServer",
+"folder": "RISOLD_Folder",
+"layers": [
+[
+0,
+"Administrative Layers"
+]
+],
+"created": null
+},
+{
+"service": "RnB_Folder/RnB_Admin",
+"type": "MapServer",
+"folder": "RnB_Folder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"Gram Panchayat Head Quarters Location"
+],
+[
+2,
+"Mandal Head Quarters"
+],
+[
+3,
+"Revenue Head Quarters"
+],
+[
+4,
+"District Head Quarters"
+],
+[
+5,
+"State Head Quarter"
+],
+[
+6,
+"State Boundary"
+],
+[
+7,
+"Parliament Constituency Boundary"
+],
+[
+8,
+"Assembly Constituency Boundary"
+],
+[
+9,
+"District Boundary"
+],
+[
+10,
+"Revenue Division Boundary"
+],
+[
+11,
+"Mandal Boundary"
+],
+[
+12,
+"ORR_RRR_HMDA"
+],
+[
+13,
+"HMDA"
+],
+[
+14,
+"Regional Ring Road (RRR)"
+],
+[
+15,
+"Outer Ring Road (ORR)"
+],
+[
+16,
+"Railway Network"
+],
+[
+17,
+"Water Resources"
+],
+[
+18,
+"River"
+],
+[
+19,
+"Tank"
+],
+[
+20,
+"Reservoirs"
+],
+[
+21,
+"Stream"
+],
+[
+22,
+"Canal"
+]
+],
+"created": null
+},
+{
+"service": "RnB_Folder/RnB_Query",
+"type": "MapServer",
+"folder": "RnB_Folder",
+"layers": [
+[
+0,
+"TS_PR_RB_Road_Network_From_To"
+],
+[
+1,
+"TS_Road_Network_300424"
+],
+[
+2,
+"TS_RB_Lane_Details_Revised_030524_Authority_DELETE"
+],
+[
+3,
+"ORR_RRR_1"
+]
+],
+"created": null
+},
+{
+"service": "RnB_Folder/RnB_Roads",
+"type": "MapServer",
+"folder": "RnB_Folder",
+"layers": [
+[
+0,
+"Existing R & B Roads"
+],
+[
+1,
+"National Highway (NH)"
+],
+[
+2,
+"National Highway (Proposed)"
+],
+[
+3,
+"State Highway (SH)"
+],
+[
+4,
+"District Major Road (DMR)"
+],
+[
+5,
+"Other District Road (ODR)"
+],
+[
+6,
+"Existing P R Roads"
+],
+[
+7,
+"BT Road"
+],
+[
+8,
+"CC  Road"
+],
+[
+9,
+"WBM Road"
+],
+[
+10,
+"Gravel Road"
+],
+[
+11,
+"Earthen Road"
+],
+[
+12,
+"RB  Lane Details"
+],
+[
+13,
+"RB Road Network Within RRR"
+],
+[
+14,
+"Gram Panchayats Connectivity"
+],
+[
+15,
+"Connected Grampanchayat"
+],
+[
+16,
+"Unconnected - Ongoing Gram Panchayat"
+],
+[
+17,
+"Unconnected  - Proposed Gram Panchayat"
+],
+[
+18,
+"Proposed PR Road Connectivity"
+],
+[
+19,
+"Ongoing Road"
+],
+[
+20,
+"Proposed Road"
+]
+],
+"created": null
+},
+{
+"service": "RRR_Folder/RRR_Query",
+"type": "MapServer",
+"folder": "RRR_Folder",
+"layers": [
+[
+0,
+"District Boundary"
+],
+[
+1,
+"Mandal Boundary"
+],
+[
+2,
+"Total Villages RRR_Alingnment - 88 Nos"
+],
+[
+3,
+"Obstruction_New_Alignment"
+]
+],
+"created": null
+},
+{
+"service": "RRR_Folder/RRR",
+"type": "MapServer",
+"folder": "RRR_Folder",
+"layers": [
+[
+0,
+"Industrial Location"
+],
+[
+1,
+"River_RRR_Intersect_Point"
+],
+[
+2,
+"Cross Drainage Network"
+],
+[
+3,
+"Length of Road Village Wise - 198.5 Kms"
+],
+[
+4,
+"Southern_RRR_Alingnment_1810"
+],
+[
+5,
+"Electric Transmission "
+],
+[
+6,
+"Towers Data"
+],
+[
+7,
+"Transmission Lines "
+],
+[
+8,
+"Sub Stations"
+],
+[
+9,
+"Water Resources"
+],
+[
+10,
+"Tank_Bunds"
+],
+[
+11,
+"Drainage_Stream"
+],
+[
+12,
+"WaterBodies_Southern_RRR_Image_Correction"
+],
+[
+13,
+"Old Alignment- RRR"
+],
+[
+14,
+"Regional Ring Road - RRR"
+],
+[
+15,
+"Southernpart_RRR_Buffer_100m"
+],
+[
+16,
+"Southernpart_RRR_Buffer50m"
+],
+[
+17,
+"Mining Units"
+],
+[
+18,
+"Road and Rail Network"
+],
+[
+19,
+"NH and NH Proposed"
+],
+[
+20,
+"State Highway (SH)"
+],
+[
+21,
+" Major District Road (MDR)"
+],
+[
+22,
+"Other District Road (ODR)"
+],
+[
+23,
+"Rural Road"
+],
+[
+24,
+"Railway Network"
+],
+[
+25,
+"Railway_Stations"
+],
+[
+26,
+"RRR Villages Buffer"
+],
+[
+27,
+"RRR Alingnment 100m Buffer"
+],
+[
+28,
+"RRR Alingnment 50m Buffer"
+],
+[
+29,
+"Southern_RRR_Alignment_50m_Buffer_Line"
+],
+[
+30,
+"Southern_RRR_Alignment_100m_Buffer_Line"
+],
+[
+31,
+"Villages - RRR Alignment along the RRR - 81 Nos"
+],
+[
+32,
+"Villages - RRR Alignment along the RRR 50 m Buffer - 83 Nos"
+],
+[
+33,
+"Villages - RRR Alignment along the RRR  100 m Buffer - 88 Nos"
+],
+[
+34,
+"Total Villages RRR_Alignment - 88 Nos"
+],
+[
+35,
+"Southern Villages - 88 Nos"
+],
+[
+36,
+"Water Resources Information"
+],
+[
+37,
+"WaterBodies_Southern_RRR"
+],
+[
+38,
+"River_Intersect_Point"
+],
+[
+39,
+"Drainage_Intersect_SO_2"
+],
+[
+40,
+"Drainage_Intersect"
+],
+[
+41,
+"Geotagged Waterbodies"
+],
+[
+42,
+"Water Supply Pipe Line Network"
+],
+[
+43,
+"Stream Order"
+],
+[
+44,
+"Order_1"
+],
+[
+45,
+"Order_2"
+],
+[
+46,
+"Order_3"
+],
+[
+47,
+"Order_4"
+],
+[
+48,
+"Order_5"
+],
+[
+49,
+"Order_6"
+],
+[
+50,
+"Order_7"
+],
+[
+51,
+"Order_8"
+],
+[
+52,
+"Order_9"
+],
+[
+53,
+"Order_10"
+],
+[
+54,
+"Order_11"
+],
+[
+55,
+"Canal"
+],
+[
+56,
+"Reservoirs"
+],
+[
+57,
+"Waterbodies"
+],
+[
+58,
+"River"
+],
+[
+59,
+"Stream Network / Drainage"
+],
+[
+60,
+"Buffer_5 Km"
+],
+[
+61,
+"Buffer_1km"
+],
+[
+62,
+"Administrative Unit"
+],
+[
+63,
+"Municipalty - Corporation"
+],
+[
+64,
+"Wards Municipality"
+],
+[
+65,
+"Settlement / Habitation"
+],
+[
+66,
+"Gram Panchayat"
+],
+[
+67,
+"Mandal Head Quarter"
+],
+[
+68,
+"Revenue Head Quarter"
+],
+[
+69,
+"District Head Quarter"
+],
+[
+70,
+"Urban Local Bodies"
+],
+[
+71,
+"Forest_Layer"
+],
+[
+72,
+"Village Bounadry"
+],
+[
+73,
+"HMDA Boundary"
+],
+[
+74,
+"Outer Ring Road"
+],
+[
+75,
+"District Boundary"
+],
+[
+76,
+"Revenue Divisions"
+],
+[
+77,
+"Mandal Boundary"
+],
+[
+78,
+"ULB - Mandal "
+],
+[
+79,
+"Village Boundary"
+],
+[
+80,
+"Assembly_Boundary"
+],
+[
+81,
+"Parilament_Boundary"
+],
+[
+82,
+"District Boundary"
+],
+[
+83,
+"District Boundary"
+],
+[
+84,
+"Cadastral_RRR"
+],
+[
+85,
+"Hills"
+],
+[
+86,
+"Obstruction_New_Alignment"
+],
+[
+87,
+"RRR_Toposheet.img"
+]
+],
+"created": null
+},
+{
+"service": "RythuBandhuFolder/RythuBandhu1",
+"type": "MapServer",
+"folder": "RythuBandhuFolder",
+"layers": [
+[
+0,
+"Village_Landuse_Map"
+],
+[
+1,
+"Village_LandCategory_Map"
+],
+[
+2,
+"Village_Cadastral_Map"
+],
+[
+3,
+"Village_Rythubandu_Details"
+],
+[
+4,
+"Export_Output"
+],
+[
+5,
+"Sum_Output"
+]
+],
+"created": null
+},
+{
+"service": "RythuBandhuFolder/RythuBandhu2",
+"type": "MapServer",
+"folder": "RythuBandhuFolder",
+"layers": [
+[
+0,
+"Village_Landuse_Map"
+],
+[
+1,
+"Village_Landcategory_Map"
+],
+[
+2,
+"Village_Cadastral_Map"
+],
+[
+3,
+"Mamidigi_Rythubandumap"
+],
+[
+4,
+"RB_Eligible"
+]
+],
+"created": null
+},
+{
+"service": "RythuBandhuFolder/RythuBandhu_Images1",
+"type": "MapServer",
+"folder": "RythuBandhuFolder",
+"layers": [
+[
+0,
+"utm_geogle_chilatiguda.img"
+],
+[
+1,
+"R_19370351.tif"
+],
+[
+2,
+"Export_Output"
+],
+[
+3,
+"Sum_Output"
+]
+],
+"created": null
+},
+{
+"service": "RythuBandhuFolder/RythuBandhu_Images2",
+"type": "MapServer",
+"folder": "RythuBandhuFolder",
+"layers": [
+[
+0,
+"utm_google_mamidgi.img"
+],
+[
+1,
+"R_17280301.tif"
+],
+[
+2,
+"Export_Output"
+],
+[
+3,
+"Sum_Output"
+]
+],
+"created": null
+},
+{
+"service": "RythuBandhuFolder/RythuBandhu_Images",
+"type": "MapServer",
+"folder": "RythuBandhuFolder",
+"layers": [
+[
+0,
+"ENUGALLU-TARI_R.tif"
+],
+[
+1,
+"R_ENUGALLU-KUSKI.tif"
+]
+],
+"created": null
+},
+{
+"service": "RythuBandhuFolder/RythuBandhu",
+"type": "MapServer",
+"folder": "RythuBandhuFolder",
+"layers": [
+[
+0,
+"Village_Cadastral_bnd"
+],
+[
+1,
+"Village_Cadastral"
+],
+[
+2,
+"Village_Cadastral"
+],
+[
+3,
+"Rythubandhu_Eligible_Land_Merge"
+]
+],
+"created": null
+},
+{
+"service": "SandReaches2_Folder/Sand_Administrative_Layers",
+"type": "MapServer",
+"folder": "SandReaches2_Folder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"District_Boundary"
+],
+[
+2,
+"Mandal_Boundary"
+],
+[
+3,
+"Village_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "SandReaches2_Folder/Sand_Drainage_Layers",
+"type": "MapServer",
+"folder": "SandReaches2_Folder",
+"layers": [
+[
+0,
+"Drainage"
+],
+[
+1,
+"Rivers"
+]
+],
+"created": null
+},
+{
+"service": "SandReaches2_Folder/Sand_Images",
+"type": "MapServer",
+"folder": "SandReaches2_Folder",
+"layers": [
+[
+0,
+"SAND REACHES TELANGANA 2025 T0"
+],
+[
+1,
+"SAND_REACHES_TELANGANA_2026_T1"
+],
+[
+2,
+"t44qne_20260228.img"
+],
+[
+3,
+"t44qmf_20260228.img"
+],
+[
+4,
+"t44qkg_20260303.img"
+],
+[
+5,
+"t44qld_20260303.img"
+],
+[
+6,
+"t44qle_20260303.img"
+],
+[
+7,
+"t44qkf_20260308.img"
+],
+[
+8,
+"t44qmf_20260211.img"
+],
+[
+9,
+"t43qgu_20260308.img"
+],
+[
+10,
+"t43qgv_20260301.img"
+],
+[
+11,
+"t43qgv_20260306.img"
+],
+[
+12,
+"t43qha_20260303.img"
+],
+[
+13,
+"t43qgu_20260301.img"
+],
+[
+14,
+"t44qkf_20260303.img"
+],
+[
+15,
+"t44qme_20260208.img"
+],
+[
+16,
+"t43qga_20260306.img"
+],
+[
+17,
+"t44qke_20260303.img"
+],
+[
+18,
+"t44qme_20260206.img"
+],
+[
+19,
+"t43qga_20260301.img"
+],
+[
+20,
+"t44qkd_20260303.img"
+],
+[
+21,
+"t44qlg_20260303.img"
+],
+[
+22,
+"t43pgt_20260306.img"
+],
+[
+23,
+"t43qhv_20260313.img"
+],
+[
+24,
+"t44qlf_20260308.img"
+],
+[
+25,
+"t43pgt_20260209.img"
+],
+[
+26,
+"t43qhc_20260303.img"
+],
+[
+27,
+"t44qle_20260308.img"
+]
+],
+"created": null
+},
+{
+"service": "SandReaches2_Folder/Sand_Query",
+"type": "MapServer",
+"folder": "SandReaches2_Folder",
+"layers": [
+[
+0,
+"SAND REACHES TELANGANA 2025 T0"
+],
+[
+1,
+"SAND REACHES TELANGANA 2026 T1"
+]
+],
+"created": null
+},
+{
+"service": "SandReaches2_Folder/Sand_Reaches_Layers",
+"type": "MapServer",
+"folder": "SandReaches2_Folder",
+"layers": [
+[
+0,
+"SAND REACHES TELANGANA 2025 T0"
+],
+[
+1,
+"SAND_REACHES_TELANGANA_2026_T1"
+]
+],
+"created": null
+},
+{
+"service": "SandReaches2_Folder/Sand_Thematic_Layers",
+"type": "MapServer",
+"folder": "SandReaches2_Folder",
+"layers": [
+[
+0,
+"Structures"
+],
+[
+1,
+"Geo-Morphology"
+],
+[
+2,
+"Lithology"
+],
+[
+3,
+"Rock_type_merged"
+],
+[
+4,
+"Weathering_Morophology"
+],
+[
+5,
+"Drainage"
+],
+[
+6,
+"Rivers"
+]
+],
+"created": null
+},
+{
+"service": "SchoolGIS_Folder/Schools_FLayer",
+"type": "FeatureServer",
+"folder": "SchoolGIS_Folder",
+"layers": [
+[
+0,
+"Management"
+]
+],
+"created": null
+},
+{
+"service": "SchoolGIS_Folder/Schools_FLayer",
+"type": "MapServer",
+"folder": "SchoolGIS_Folder",
+"layers": [
+[
+0,
+"Management"
+]
+],
+"created": null
+},
+{
+"service": "SchoolGIS_Folder/Schools",
+"type": "MapServer",
+"folder": "SchoolGIS_Folder",
+"layers": [
+[
+0,
+"Category"
+],
+[
+1,
+"Management"
+],
+[
+2,
+"Anganwadi_Locations_Dept"
+],
+[
+3,
+"Management"
+],
+[
+4,
+"School Building Compound Wall"
+],
+[
+5,
+"Administrative Layers"
+],
+[
+6,
+"State Boundary"
+],
+[
+7,
+"District Boundary"
+],
+[
+8,
+"Mandals Boundary"
+],
+[
+9,
+"Villagel Boundary"
+],
+[
+10,
+"Settlement Boundary"
+],
+[
+11,
+"Settlements Locations"
+],
+[
+12,
+"Docket Boundary"
+],
+[
+13,
+"Ward Boundary"
+],
+[
+14,
+"Circle Boundary"
+],
+[
+15,
+"Zone Boundary"
+],
+[
+16,
+"Infrastructure Layers"
+],
+[
+17,
+"National / State Highway"
+],
+[
+18,
+"Railway_Network"
+],
+[
+19,
+"National / State Highway"
+],
+[
+20,
+"District / Village Road Network"
+],
+[
+21,
+"Sum_Output_2"
+]
+],
+"created": null
+},
+{
+"service": "singareni_folder/Singareni_Admin",
+"type": "MapServer",
+"folder": "singareni_folder",
+"layers": [
+[
+0,
+"District"
+],
+[
+1,
+"Mandal"
+],
+[
+2,
+"Village"
+],
+[
+3,
+"Railway"
+],
+[
+4,
+"Road"
+],
+[
+5,
+"Geological_Structures"
+],
+[
+6,
+"Contour"
+],
+[
+7,
+"Drainage"
+],
+[
+8,
+"Cadastral"
+],
+[
+9,
+"Water_Bodies"
+],
+[
+10,
+"Forest_Boundary"
+],
+[
+11,
+"Land_Use_Land_Cover"
+],
+[
+12,
+"Geomorophology"
+]
+],
+"created": null
+},
+{
+"service": "singareni_folder/Singareni_Land_Use_and_Other_Areas",
+"type": "MapServer",
+"folder": "singareni_folder",
+"layers": [
+[
+0,
+"Land_Use"
+],
+[
+1,
+"Others"
+]
+],
+"created": null
+},
+{
+"service": "singareni_folder/Singareni_mines",
+"type": "MapServer",
+"folder": "singareni_folder",
+"layers": [
+[
+0,
+"Buffer"
+],
+[
+1,
+"K_FORM"
+],
+[
+2,
+"Mining Lease Boundaries"
+],
+[
+3,
+"MINE STATUTATORY BOUNDARIES"
+],
+[
+4,
+"Chinthaguda Geological Block"
+]
+],
+"created": null
+},
+{
+"service": "singareni_folder/Singareni_Project_Area_New",
+"type": "MapServer",
+"folder": "singareni_folder",
+"layers": [
+[
+0,
+"Project Area 2017-2018"
+],
+[
+1,
+"Reclanation"
+],
+[
+2,
+"Quarry_Externaldumpyard_Others"
+],
+[
+3,
+"Broken_Unbroken_Area@Quarry_Area"
+],
+[
+4,
+"Active_Quarry_Area_Backfillingarea@Broken_Area"
+],
+[
+5,
+"Activearea_Completedbackfilling@Backfillingarea"
+],
+[
+6,
+"TechnicalReclamation_BiologicalReclamation@Completedbackfillingarea"
+],
+[
+7,
+"Proposed Plantation"
+],
+[
+8,
+"Combined Reclanations "
+],
+[
+9,
+"Project Area 2018-2019"
+],
+[
+10,
+"Reclanation"
+],
+[
+11,
+"Quarry_Externaldumpyard_Others"
+],
+[
+12,
+"Broken_Unbroken_Area@Quarry_Area"
+],
+[
+13,
+"Active_Quarry_Area_Backfillingarea@Broken_Area"
+],
+[
+14,
+"Activearea_Completedbackfilling@Backfillingarea"
+],
+[
+15,
+"TechnicalReclamation_BiologicalReclamation@Completedbackfillingarea"
+]
+],
+"created": null
+},
+{
+"service": "singareni_folder/Singareni_Project_Area",
+"type": "MapServer",
+"folder": "singareni_folder",
+"layers": [
+[
+0,
+"Reclanation"
+],
+[
+1,
+"Quarry_Externaldumpyard_Others"
+],
+[
+2,
+"Broken_Unbroken_Area@Quarry_Area"
+],
+[
+3,
+"Active_Quarry_Area_Backfillingarea@Broken_Area"
+],
+[
+4,
+"Activearea_Completedbackfilling@Backfillingarea"
+],
+[
+5,
+"TechnicalReclamation_BiologicalReclamation@Completedbackfillingarea"
+],
+[
+6,
+"Proposed Plantation"
+],
+[
+7,
+"Combined Reclanations "
+]
+],
+"created": null
+},
+{
+"service": "singareni_folder/Singareni_Satellite_Image",
+"type": "MapServer",
+"folder": "singareni_folder",
+"layers": [
+[
+0,
+"final.img"
+],
+[
+1,
+"final_3layers.img"
+]
+],
+"created": null
+},
+{
+"service": "singareni_folder/Singareni_Statistics",
+"type": "MapServer",
+"folder": "singareni_folder",
+"layers": [
+[
+0,
+"Singareni_Statistics"
+]
+],
+"created": null
+},
+{
+"service": "SoilAtlas_Folder/Soil_Atlas_Query",
+"type": "MapServer",
+"folder": "SoilAtlas_Folder",
+"layers": [
+[
+0,
+"Mudigonda_Chintakani_Bonakal1"
+]
+],
+"created": null
+},
+{
+"service": "SoilAtlas_Folder/Soil_Atlas",
+"type": "MapServer",
+"folder": "SoilAtlas_Folder",
+"layers": [
+[
+0,
+"Khammam_Mudigonda_Chintakani_Bonakal"
+],
+[
+1,
+"Khammam_Mudigonda_Chintakani_Bonakal"
+],
+[
+2,
+"LISS IV_2018.tif"
+],
+[
+3,
+"LISS III_09_apr_2016.img"
+],
+[
+4,
+"LISS IV_19apr2023.img"
+],
+[
+5,
+"LISS IV_01apr2024.img"
+]
+],
+"created": null
+},
+{
+"service": "StampsAndRegistrations_Folder/SRO_Query",
+"type": "MapServer",
+"folder": "StampsAndRegistrations_Folder",
+"layers": [
+[
+0,
+"Circle"
+]
+],
+"created": null
+},
+{
+"service": "StampsAndRegistrations_Folder/SRO",
+"type": "MapServer",
+"folder": "StampsAndRegistrations_Folder",
+"layers": [
+[
+0,
+"Circle"
+],
+[
+1,
+"Buildings"
+],
+[
+2,
+"Road Type"
+]
+],
+"created": null
+},
+{
+"service": "StampsAndRegistrations_Folder/StampsAndRegistrations",
+"type": "MapServer",
+"folder": "StampsAndRegistrations_Folder",
+"layers": [
+[
+0,
+"Circle"
+],
+[
+1,
+"Buildings"
+],
+[
+2,
+"Road Type"
+]
+],
+"created": null
+},
+{
+"service": "TCUR_Folder/TCUR_Telangana_Core_Urban_Region_Query",
+"type": "MapServer",
+"folder": "TCUR_Folder",
+"layers": [
+[
+0,
+"Navigation_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2",
+"type": "MapServer",
+"folder": "TCUR_Folder",
+"layers": [
+[
+0,
+"Airports"
+],
+[
+1,
+"Fair Price Shop"
+],
+[
+2,
+"Health Facilities"
+],
+[
+3,
+"LPG Agency Retail-Outlet"
+],
+[
+4,
+"Forest Boundary"
+],
+[
+5,
+"Inventory of Water & STP"
+],
+[
+6,
+"Water Quality Monitoring Station Locations"
+],
+[
+7,
+"STP_Locations"
+],
+[
+8,
+"Common Effluent Treatment Plants Locations"
+],
+[
+9,
+"Ambient Air Quality Locations"
+],
+[
+10,
+"Electric Transmission "
+],
+[
+11,
+"Towers"
+],
+[
+12,
+"Transmission Lines"
+],
+[
+13,
+"Sub Stations"
+],
+[
+14,
+"Administrative Unit"
+],
+[
+15,
+"Gram Panchayat Location  -  1021 Nos"
+],
+[
+16,
+"Merged - Gram Panchayath - 56"
+],
+[
+17,
+"Parilament Boundary - 6"
+],
+[
+18,
+"Assembly Boundary - 28"
+],
+[
+19,
+"District Boundary - 5 Nos"
+],
+[
+20,
+"Mandal Boundary - 47 Nos"
+],
+[
+21,
+"Village Boundary - 313 Nos"
+],
+[
+22,
+"Proposed Core Urban Area -2053 Sq.Km"
+],
+[
+23,
+"Revenue Division Boundary-9 Nos"
+],
+[
+24,
+"Waterbodies Resources"
+],
+[
+25,
+"Canal"
+],
+[
+26,
+"Streams TCUR"
+],
+[
+27,
+"Water bodies"
+],
+[
+28,
+"River"
+],
+[
+29,
+"Water Pipeline Network - HMWSSB"
+],
+[
+30,
+"Valve"
+],
+[
+31,
+"Source Line"
+],
+[
+32,
+"Supply Line"
+],
+[
+33,
+"Pumphouse"
+],
+[
+34,
+"Reservoir"
+],
+[
+35,
+"Docket  Boundary"
+],
+[
+36,
+"Section  Boundary"
+],
+[
+37,
+"Sewer Line - HMWSSB"
+],
+[
+38,
+"Core City Manholes"
+],
+[
+39,
+"Core City SewerLine"
+],
+[
+40,
+"Hyderabad Roads"
+],
+[
+41,
+"GHMC Nalas"
+],
+[
+42,
+"Present Nalas Centerline"
+],
+[
+43,
+"Present Nalas Existing Width"
+],
+[
+44,
+"Urban Local Bodies"
+],
+[
+45,
+"GHMC Boundary"
+],
+[
+46,
+"Merged Municipality"
+],
+[
+47,
+"Municipalty - Corporation"
+],
+[
+48,
+"Wards Municipality"
+],
+[
+49,
+"Outer Ring Road - 1448 Sq. Km"
+],
+[
+50,
+"Outer Ring Road 1Km Buffer - 1605 Sq.Km"
+],
+[
+51,
+"Regional Ring Road -  8589  Sq.Km"
+],
+[
+52,
+"HMDA Boundary"
+],
+[
+53,
+"Colony Boundary"
+],
+[
+54,
+"Docket Boundary"
+],
+[
+55,
+"Ward Boundary"
+],
+[
+56,
+"Circle Boundary"
+],
+[
+57,
+"Zone Boundary"
+],
+[
+58,
+"Police Department"
+],
+[
+59,
+"Police Stations"
+],
+[
+60,
+"Police Jurisdiction"
+],
+[
+61,
+"Fire Stations"
+],
+[
+62,
+"Traffic Light Poles"
+],
+[
+63,
+"Road Network"
+],
+[
+64,
+"National Highway (NH)"
+],
+[
+65,
+"State Highway (SH)"
+],
+[
+66,
+"Major District Road (MDR)"
+],
+[
+67,
+"Other District Road (ODR)"
+],
+[
+68,
+"Rural Roads"
+],
+[
+69,
+"RB Road Network Within RRR (Proposed to develop)"
+],
+[
+70,
+"R&B  Lane Details (Proposed to develop)"
+],
+[
+71,
+"Rail & Metro Rail Network"
+],
+[
+72,
+"Railway Stations"
+],
+[
+73,
+"Railway Line"
+],
+[
+74,
+"Metro Stations"
+],
+[
+75,
+"Metro Line"
+],
+[
+76,
+"Polylines"
+],
+[
+77,
+"TGIIC Industrial Parks"
+],
+[
+78,
+"IALA Boundary"
+],
+[
+79,
+"IALA Head Quarters"
+],
+[
+80,
+"TGIIC Industrial Parks"
+],
+[
+81,
+"Industrial Paks Boundary"
+],
+[
+82,
+"Industrial Parks Plot"
+],
+[
+83,
+"Economic Zones"
+],
+[
+84,
+"Mines"
+],
+[
+85,
+"TGRTC"
+],
+[
+86,
+"Bus Shelters"
+],
+[
+87,
+"Bus Terminals"
+],
+[
+88,
+"Revenue & Disaster"
+],
+[
+89,
+"Flooding Area"
+],
+[
+90,
+"Sesismic Zones"
+]
+],
+"created": null
+},
+{
+"service": "TGIIC_Folder/BaseLayers_DMV_New",
+"type": "MapServer",
+"folder": "TGIIC_Folder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"State Boundary"
+],
+[
+2,
+"District_Boundary"
+],
+[
+3,
+"Mandal_Boundary"
+],
+[
+4,
+"Village_Boundary"
+]
+],
+"created": null
+},
+{
+"service": "TGIIC_Folder/BaseLayers",
+"type": "MapServer",
+"folder": "TGIIC_Folder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"State Boundary"
+],
+[
+2,
+"District_Boundary"
+],
+[
+3,
+"Mandal_Boundary"
+],
+[
+4,
+"Village_Boundary"
+],
+[
+5,
+"Mandal HQ"
+],
+[
+6,
+"Infrastructure Layers"
+],
+[
+7,
+"National / State Highway"
+],
+[
+8,
+"Rail Network"
+],
+[
+9,
+"National / State Highway"
+],
+[
+10,
+"District / Village Road Network"
+],
+[
+11,
+"Fire Stations"
+],
+[
+12,
+"Airports"
+],
+[
+13,
+"Water Bodies"
+],
+[
+14,
+"Lakes / Ponds / Tanks"
+],
+[
+15,
+"Rivers"
+],
+[
+16,
+"Reservoirs"
+],
+[
+17,
+"Power Distribution Layers"
+],
+[
+18,
+"Sub Station"
+],
+[
+19,
+"Transformers"
+],
+[
+20,
+"Poles"
+],
+[
+21,
+"LT Lines"
+],
+[
+22,
+"HT Lines UG"
+],
+[
+23,
+"HT Lines OH"
+]
+],
+"created": null
+},
+{
+"service": "TGIIC_Folder/IILB_Complete_Parks_List",
+"type": "MapServer",
+"folder": "TGIIC_Folder",
+"layers": [
+[
+0,
+"Parks_05102026"
+],
+[
+1,
+"Plots_05102026"
+]
+],
+"created": null
+},
+{
+"service": "TGIIC_Folder/IILB",
+"type": "MapServer",
+"folder": "TGIIC_Folder",
+"layers": [
+[
+0,
+"Parks_IILB_05102026"
+],
+[
+1,
+"Plots_IILB_05102026"
+]
+],
+"created": null
+},
+{
+"service": "TGIIC_Folder/Industrial_Infrastructure_Layers_New",
+"type": "MapServer",
+"folder": "TGIIC_Folder",
+"layers": [
+[
+0,
+"TSIIC_PARKS_BOUNDARY"
+],
+[
+1,
+"TSIIC_PLOTS_DATA"
+]
+],
+"created": null
+},
+{
+"service": "TGIIC_Folder/Industrial_Infrastructure_Layers",
+"type": "MapServer",
+"folder": "TGIIC_Folder",
+"layers": [
+[
+0,
+"Pollution_Category_Boundaries"
+],
+[
+1,
+"Industrial_Plots_Status"
+],
+[
+2,
+"Industrial_Infrastructure_Layer"
+],
+[
+3,
+"Vacant_Plots"
+],
+[
+4,
+"Industrial_Plots_Status"
+],
+[
+5,
+"Rakamcherla_Plots_Data_GIS"
+]
+],
+"created": null
+},
+{
+"service": "TGIIC_Folder/Pollution_Category_Boundaries",
+"type": "MapServer",
+"folder": "TGIIC_Folder",
+"layers": [
+[
+0,
+"Pollution_Category_Points"
+],
+[
+1,
+"Pollution_Category_Boundaries"
+],
+[
+2,
+"park_boundary_geodatabase"
+],
+[
+3,
+"Industrial Points"
+]
+],
+"created": null
+},
+{
+"service": "TGSRTC_Folder/RTC_Admin_Layers",
+"type": "MapServer",
+"folder": "TGSRTC_Folder",
+"layers": [
+[
+0,
+"Administrative Layers"
+],
+[
+1,
+"State Boundary"
+],
+[
+2,
+"District Boundary"
+],
+[
+3,
+"Mandal Boundary"
+],
+[
+4,
+"Village Boundary"
+],
+[
+5,
+"MP Constituency Boundary"
+],
+[
+6,
+"MLA Constituency Boundary"
+],
+[
+7,
+"Habitations"
+],
+[
+8,
+"Gram Panchayats"
+],
+[
+9,
+"Road Layers"
+],
+[
+10,
+"R&B Roads"
+],
+[
+11,
+"PR Roads Show All"
+],
+[
+12,
+"National Highway (NH)"
+],
+[
+13,
+"State Highway"
+],
+[
+14,
+"Infrastructure Layers"
+],
+[
+15,
+"Fire Stations"
+],
+[
+16,
+"Airports"
+],
+[
+17,
+"Water Bodies"
+],
+[
+18,
+"Lakes - Ponds - Tanks"
+],
+[
+19,
+"Rivers"
+],
+[
+20,
+"Reservoirs"
+]
+],
+"created": null
+},
+{
+"service": "TGSRTC_Folder/RTC_Properties",
+"type": "MapServer",
+"folder": "TGSRTC_Folder",
+"layers": [
+[
+0,
+"RTC Property Boundary"
+],
+[
+1,
+"Cadastral Parcel (Base Survey No)"
+],
+[
+2,
+"TS_District"
+],
+[
+3,
+"Property Boundary Points"
+]
+],
+"created": null
+},
+{
+"service": "TIS_Folder/HMDA_ORR_GHMC_Water_Bodies_Query",
+"type": "MapServer",
+"folder": "TIS_Folder",
+"layers": [
+[
+0,
+"TS-WB_Final2"
+],
+[
+1,
+"HMDA ORR GHMC Water Bodies"
+],
+[
+2,
+"HMDA ORR GHMC Mandal Boundary"
+],
+[
+3,
+"HMDA ORR GHMC Village Boundary"
+],
+[
+4,
+"HMDA ORR GHMC Boundary"
+]
+],
+"created": null
+},
+{
+"service": "TIS_Folder/HMDA_ORR_GHMC_Water_Bodies",
+"type": "MapServer",
+"folder": "TIS_Folder",
+"layers": [
+[
+0,
+"HMDA ORR GHMC Administrative Unit"
+],
+[
+1,
+"Settlement_Habitation"
+],
+[
+2,
+"Gram Panchayat"
+],
+[
+3,
+"Mandal Head Quarter"
+],
+[
+4,
+"Revenue Head Quarter"
+],
+[
+5,
+"District Head Quarter"
+],
+[
+6,
+"HMDA ORR GHMC Boundary"
+],
+[
+7,
+"Distrct Boundary"
+],
+[
+8,
+"HMDA ORR GHMC Mandal Boundary"
+],
+[
+9,
+"HMDA ORR GHMC Village Boundary"
+],
+[
+10,
+"Urban Local Bodies"
+],
+[
+11,
+"Surface Water Resources "
+],
+[
+12,
+"Totally Encroached Water Bodies"
+],
+[
+13,
+"HMDA ORR GHMC Water Bodies"
+],
+[
+14,
+"HMDA ORR GHMC Stream Order"
+],
+[
+15,
+"Geotagged Waterbodies"
+],
+[
+16,
+"Water Bodies - Disappeared"
+],
+[
+17,
+"Water Bodies - Satellite Image 2022"
+],
+[
+18,
+"Survey of India Water Bodies"
+],
+[
+19,
+"Water Bodies / Tank"
+],
+[
+20,
+"River"
+],
+[
+21,
+"Reservoirs"
+],
+[
+22,
+"Stream Network / Drainage"
+],
+[
+23,
+"Canal"
+],
+[
+24,
+"Command Area"
+]
+],
+"created": null
+},
+{
+"service": "TIS_Folder/Tank_Information_System_Query",
+"type": "MapServer",
+"folder": "TIS_Folder",
+"layers": [
+[
+0,
+"District_Boundary"
+],
+[
+1,
+"Mandal_Boundary"
+],
+[
+2,
+"Village_Boundary"
+],
+[
+3,
+"Urban_Local_Bodies"
+],
+[
+4,
+"Waterbodies_SOI_Satellite_Revenue"
+],
+[
+5,
+"TS-WB_Final2"
+]
+],
+"created": null
+},
+{
+"service": "TIS_Folder/Tank_Information_System",
+"type": "MapServer",
+"folder": "TIS_Folder",
+"layers": [
+[
+0,
+"Administrative Unit"
+],
+[
+1,
+"Gram Panchayat"
+],
+[
+2,
+"Mandal Head Quarter"
+],
+[
+3,
+"Revenue Head Quarter"
+],
+[
+4,
+"District Head Quarter"
+],
+[
+5,
+"District Boundary"
+],
+[
+6,
+"Urban Local Bodies"
+],
+[
+7,
+"Revenue Divisions"
+],
+[
+8,
+"Mandal Boundary"
+],
+[
+9,
+"ULB - Mandal "
+],
+[
+10,
+"Village Boundary"
+],
+[
+11,
+"Road Network"
+],
+[
+12,
+"Outer Ring Road"
+],
+[
+13,
+"State Highway (SH)"
+],
+[
+14,
+"National Highway (Proposed)"
+],
+[
+15,
+"National Highway"
+],
+[
+16,
+"Rail Network"
+],
+[
+17,
+"Catchment to Mini Watershed"
+],
+[
+18,
+"Major Basin"
+],
+[
+19,
+"Minor Basin"
+],
+[
+20,
+"Sub Catchment"
+],
+[
+21,
+"Watershed"
+],
+[
+22,
+"Sub Watershed"
+],
+[
+23,
+"Mini Watershed"
+],
+[
+24,
+"Surface Water Resources "
+],
+[
+25,
+"Geotagged Waterbodies"
+],
+[
+26,
+"Settlement / Habitation"
+],
+[
+27,
+"HMDA ORR GHMC Boundary"
+],
+[
+28,
+"Waterbodies - SOI_Satellite_Revenue"
+],
+[
+29,
+"Waterbodies Status"
+],
+[
+30,
+"Water Bodies - Disappeared"
+],
+[
+31,
+"Water Bodies - Satellite Image 2022"
+],
+[
+32,
+"Survey of India Water Bodies"
+],
+[
+33,
+"River"
+],
+[
+34,
+"Water Bodies / Tank"
+],
+[
+35,
+"Reservoirs"
+],
+[
+36,
+"Stream Network / Drainage"
+],
+[
+37,
+"Canal"
+],
+[
+38,
+"Command Area"
+],
+[
+39,
+"Stream Order"
+],
+[
+40,
+"Order_1"
+],
+[
+41,
+"Order_2"
+],
+[
+42,
+"Order_3"
+],
+[
+43,
+"Order_4"
+],
+[
+44,
+"Order_5"
+],
+[
+45,
+"Order_6"
+],
+[
+46,
+"Order_7"
+],
+[
+47,
+"Order_8"
+],
+[
+48,
+"Order_9"
+],
+[
+49,
+"Order_10"
+],
+[
+50,
+"Order_11"
+]
+],
+"created": null
+},
+{
+"service": "TIS_Folder/TISMahabubnagar_Query",
+"type": "MapServer",
+"folder": "TIS_Folder",
+"layers": [
+[
+0,
+"FTL Coordinates"
+],
+[
+1,
+"FTL Boundary"
+],
+[
+2,
+"Buffer Zone Boundary"
+],
+[
+3,
+"Distrrict Boundary"
+],
+[
+4,
+"Mandal Boundary"
+],
+[
+5,
+"Village Boundary"
+]
+],
+"created": null
+},
+{
+"service": "TIS_Folder/TISMahabubnagar",
+"type": "MapServer",
+"folder": "TIS_Folder",
+"layers": [
+[
+0,
+"FTL Coordinates"
+],
+[
+1,
+"FTL Boundary"
+],
+[
+2,
+"Buffer Zone Boundary"
+],
+[
+3,
+"Distrrict Boundary"
+],
+[
+4,
+"Mandal Boundary"
+],
+[
+5,
+"Village Boundary"
+]
+],
+"created": null
+},
+{
+"service": "TribalWelfare_Folder/ITDA_All_layers",
+"type": "MapServer",
+"folder": "TribalWelfare_Folder",
+"layers": [
+[
+0,
+"TS Admin Layers"
+],
+[
+1,
+"ITDA Boundary"
+],
+[
+2,
+"District_Boundary"
+],
+[
+3,
+"Revenue Division Boundary"
+],
+[
+4,
+" District Head Quarters"
+],
+[
+5,
+"Revenue Head Quarters"
+],
+[
+6,
+"ITDA_Assets"
+],
+[
+7,
+"Health Assets"
+],
+[
+8,
+"Area Hospital"
+],
+[
+9,
+"CHC"
+],
+[
+10,
+"BHS"
+],
+[
+11,
+"CHNC"
+],
+[
+12,
+"PHC"
+],
+[
+13,
+"PHC 24/7"
+],
+[
+14,
+"Sub Center"
+],
+[
+15,
+"Anganwadi Centre"
+],
+[
+16,
+"Primary School"
+],
+[
+17,
+"Education"
+],
+[
+18,
+"Youth Training Centre"
+],
+[
+19,
+"Working Women Hostel"
+],
+[
+20,
+"Museum"
+],
+[
+21,
+"Girijan Community Bhavan"
+],
+[
+22,
+"Rural Godown"
+],
+[
+23,
+"Haat Bazar"
+],
+[
+24,
+"RoFR"
+],
+[
+25,
+"ITDA_Admin Layers"
+],
+[
+26,
+"ITDA Mandal Head Quarters (85)"
+],
+[
+27,
+"ITDA Scheduled Area Gram Panchayat"
+],
+[
+28,
+"ITDA Plain Area Gram Panchayat"
+],
+[
+29,
+"PESA Gram Sabha (1729)"
+],
+[
+30,
+"PESA_Habitations"
+],
+[
+31,
+"PVTG"
+],
+[
+32,
+"ITDA_Habitation"
+],
+[
+33,
+"ITDA Mandal_Boundary"
+],
+[
+34,
+"ITDA Scheduled Villages (1180)"
+],
+[
+35,
+"ITDA Plain Villages"
+],
+[
+36,
+"ITDA Other Layers"
+],
+[
+37,
+"Road Network"
+],
+[
+38,
+"Railway"
+],
+[
+39,
+"Settlements"
+],
+[
+40,
+"Forest"
+],
+[
+41,
+" LULC"
+],
+[
+42,
+"ITDA Waterbodies"
+],
+[
+43,
+"Reservoir"
+],
+[
+44,
+"Tanks"
+],
+[
+45,
+"River"
+],
+[
+46,
+"Streams"
+],
+[
+47,
+"Nagar Kurnool"
+],
+[
+48,
+"Mannanur Education"
+],
+[
+49,
+"Primary School"
+],
+[
+50,
+"Middle_School"
+],
+[
+51,
+"Secondary_School"
+],
+[
+52,
+"Senior_Secondary_School"
+],
+[
+53,
+"Mannanur Health"
+],
+[
+54,
+"CHC"
+],
+[
+55,
+"Primary_Health_Centre"
+],
+[
+56,
+"Sub_Center"
+],
+[
+57,
+"ANGANWADI"
+],
+[
+58,
+"Mannanur_Total_Villages"
+],
+[
+59,
+"Sum_Output_4"
+]
+],
+"created": null
+},
+{
+"service": "TribalWelfare_Folder/ITDA_Query",
+"type": "MapServer",
+"folder": "TribalWelfare_Folder",
+"layers": [
+[
+0,
+"ITDA Boundary"
+],
+[
+1,
+"District_Boundary"
+],
+[
+2,
+"TWIS_Mandals"
+],
+[
+3,
+"tribalwelfare_Districts_Join"
+],
+[
+4,
+"PRIMARY_SCHOOL"
+],
+[
+5,
+"ITDA_Habitation"
+]
+],
+"created": null
+},
+{
+"service": "Utilities/Geometry",
+"type": "GeometryServer",
+"folder": "Utilities",
+"layers": [],
+"created": null
+},
+{
+"service": "Utilities/PrintingTools",
+"type": "GPServer",
+"folder": "Utilities",
+"layers": [],
+"created": null
+},
+{
+"service": "Utilities/Search_indexer",
+"type": "GPServer",
+"folder": "Utilities",
+"layers": [],
+"created": null
+},
+{
+"service": "Utilities/Search",
+"type": "IndexGenerator",
+"folder": "Utilities",
+"layers": [],
+"created": null
+},
+{
+"service": "Utilities/Search",
+"type": "IndexingLauncher",
+"folder": "Utilities",
+"layers": [],
+"created": null
+},
+{
+"service": "Utilities/Search",
+"type": "SearchServer",
+"folder": "Utilities",
+"layers": [],
+"created": null
+},
+{
+"service": "WaterShed_Folder/WaterShed_Query",
+"type": "MapServer",
+"folder": "WaterShed_Folder",
+"layers": [
+[
+0,
+"Administrative"
+],
+[
+1,
+"Habitation / Village"
+],
+[
+2,
+"Settlement"
+],
+[
+3,
+"Village Boundary"
+],
+[
+4,
+"Forest Boundary"
+],
+[
+5,
+"Transport Network"
+],
+[
+6,
+"Geological Structure / Fracture"
+],
+[
+7,
+"Hydrology"
+],
+[
+8,
+"River / Stream"
+],
+[
+9,
+"Watershed Boundary"
+],
+[
+10,
+"Runoff Yield"
+],
+[
+11,
+"Micro Watershed"
+],
+[
+12,
+"Existing Recharge Structures"
+],
+[
+13,
+"Tank Bund"
+],
+[
+14,
+"Existing MI Tank (18 Nos)"
+],
+[
+15,
+"Field Bund (12 Nos)"
+],
+[
+16,
+"Existing Recharge Structures"
+],
+[
+17,
+"Farmpond (13 Nos)"
+],
+[
+18,
+"Mini Percolation Tank (14 Nos)"
+],
+[
+19,
+"Cadastral Parcels"
+],
+[
+20,
+"Roadside_Avenue_Plantation"
+],
+[
+21,
+"Contour"
+],
+[
+22,
+"Proposed Recharge Structures"
+],
+[
+23,
+"Recharge Shaft (31 Nos)"
+],
+[
+24,
+"Recharge Pit (164 Nos)"
+],
+[
+25,
+"Farm Pond (114 Nos)"
+],
+[
+26,
+"Desilting of Tank (11 Nos)"
+],
+[
+27,
+"Contour Trenches  (604 Nos, 82.82 Kms)"
+],
+[
+28,
+"Check Dam (27 Nos)"
+],
+[
+29,
+"Percolation Tank (13 Nos)"
+],
+[
+30,
+"Subsurface Dyke (16 Nos)"
+],
+[
+31,
+"Thematic Class"
+],
+[
+32,
+"Land Action Plan"
+],
+[
+33,
+"Land Use  / Land Cover"
+],
+[
+34,
+"Soil"
+],
+[
+35,
+"Weathering Profile"
+],
+[
+36,
+"Land Form / Geomorphology"
+],
+[
+37,
+"Slope (in %)"
+],
+[
+38,
+"liss4.img"
+],
+[
+39,
+"Survey of India Toposheet"
+]
+],
+"created": null
+},
+{
+"service": "WaterShed_Folder/WaterShed",
+"type": "MapServer",
+"folder": "WaterShed_Folder",
+"layers": [
+[
+0,
+"Administrative"
+],
+[
+1,
+"Habitation / Village"
+],
+[
+2,
+"Settlement"
+],
+[
+3,
+"Village Boundary"
+],
+[
+4,
+"Forest Boundary"
+],
+[
+5,
+"Transport Network"
+],
+[
+6,
+"Geological Structure / Fracture"
+],
+[
+7,
+"Hydrology"
+],
+[
+8,
+"River / Stream"
+],
+[
+9,
+"Watershed Boundary"
+],
+[
+10,
+"Runoff Yield"
+],
+[
+11,
+"Micro Watershed"
+],
+[
+12,
+"Existing Recharge Structures"
+],
+[
+13,
+"Tank Bund"
+],
+[
+14,
+"Existing MI Tank (18 Nos)"
+],
+[
+15,
+"Field Bund (12 Nos)"
+],
+[
+16,
+"Existing Recharge Structures"
+],
+[
+17,
+"Farmpond (13 Nos)"
+],
+[
+18,
+"Mini Percolation Tank (14 Nos)"
+],
+[
+19,
+"Cadastral Parcels"
+],
+[
+20,
+"Roadside_Avenue_Plantation"
+],
+[
+21,
+"Contour"
+],
+[
+22,
+"Proposed Recharge Structures"
+],
+[
+23,
+"Recharge Shaft (31 Nos)"
+],
+[
+24,
+"Recharge Pit (164 Nos)"
+],
+[
+25,
+"Farm Pond (114 Nos)"
+],
+[
+26,
+"Desilting of Tank (11 Nos)"
+],
+[
+27,
+"Contour Trenches  (604 Nos, 82.82 Kms)"
+],
+[
+28,
+"Check Dam (27 Nos)"
+],
+[
+29,
+"Percolation Tank (13 Nos)"
+],
+[
+30,
+"Subsurface Dyke (16 Nos)"
+],
+[
+31,
+"Thematic Class"
+],
+[
+32,
+"Land Action Plan"
+],
+[
+33,
+"Land Use  / Land Cover"
+],
+[
+34,
+"Soil"
+],
+[
+35,
+"Weathering Profile"
+],
+[
+36,
+"Land Form / Geomorphology"
+],
+[
+37,
+"Slope (in %)"
+],
+[
+38,
+"liss4.img"
+],
+[
+39,
+"Survey of India Toposheet"
+],
+[
+40,
+"State Water Resources"
+],
+[
+41,
+"District Head Quarter"
+],
+[
+42,
+"Project Locations"
+],
+[
+43,
+"State Boundary"
+],
+[
+44,
+"District Boundary"
+],
+[
+45,
+"Catchment to Mini Watershed"
+],
+[
+46,
+"Major Basin"
+],
+[
+47,
+"Minor Basin"
+],
+[
+48,
+"Sub Catchment"
+],
+[
+49,
+"Watershed"
+],
+[
+50,
+"Sub Watershed"
+],
+[
+51,
+"Mini Watershed"
+],
+[
+52,
+"Water Resources"
+],
+[
+53,
+"Canal Network"
+],
+[
+54,
+"Reservoir"
+],
+[
+55,
+"Water Bodies"
+],
+[
+56,
+"River"
+],
+[
+57,
+"Drainage / Stream Network"
+],
+[
+58,
+"Command Area"
+],
+[
+59,
+"Command Area"
+],
+[
+60,
+"Digial Elevation"
+]
+],
+"created": null
+}
+]

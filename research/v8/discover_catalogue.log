@@ -1,0 +1,231 @@
+folders 49 | services 171
+layers catalogued: 2038
+
+== FTL / lake boundary / buffer
+   AdministrativeInfoSystem_Folder/Administrative_Information_System layer 4: Water Body / Tank
+   Agri2/Agriculture2_Administrative_Layers                   layer 18: WaterBody
+   Agriculture/Agri_Admin                                     layer 14: Water Bodies
+   Archaeology_Folder/Archaeology_Admin                       layer 14: Water Bodies Infromation
+   Archaeology_Folder/Archaeology_Admin                       layer 16: WaterBody
+   Archaeology_Folder/Archaeology                             layer 42: Actual Wall 150 Meter Buffer (Inner)
+   Archaeology_Folder/Archaeology                             layer 43: Actual Wall 150 Meter Buffer (Outer)
+   GHMCNalas_Folder/GHMCNalas_vul                             layer 13: TANKS
+   GovtHospitals_Folder/Health_Facilities_Mapping             layer 2: PHC_10km_Buffer
+   GovtHospitals_Folder/Health_Facilities_Mapping             layer 4: Villages_15Km_Buffer
+   GovtHospitals_Folder/Health_Facilities_Mapping             layer 5: PHC_15Km_Buffer_Merge
+   GovtHospitals_Folder/Health_Facilities_Mapping             layer 29: Ambulances Gaps 10km Buffer
+   Hydra_Folder/Administrative_Layer                          layer None: Hydra_Folder/Administrative_Layer
+   Hydra_Folder/First_Window_Image                            layer None: Hydra_Folder/First_Window_Image
+   Hydra_Folder/First_Window                                  layer 0: ORR Tanks
+   Hydra_Folder/Fourth_Window                                 layer None: Hydra_Folder/Fourth_Window
+   Hydra_Folder/FTL_Query                                     layer None: Hydra_Folder/FTL_Query
+   Hydra_Folder/FTL_Tanks                                     layer None: Hydra_Folder/FTL_Tanks
+   Hydra_Folder/Second_Window_Image                           layer None: Hydra_Folder/Second_Window_Image
+   Hydra_Folder/Second_Window                                 layer 0: ORR Tanks
+   Hydra_Folder/Third_Window                                  layer None: Hydra_Folder/Third_Window
+   Hydra_Folder/Topo_Tanks                                    layer None: Hydra_Folder/Topo_Tanks
+   Hydra_Folder/WaterBody_Monitoring_Rasters                  layer None: Hydra_Folder/WaterBody_Monitoring_Rasters
+   IandCAD_Folder/I_and_CAD                                   layer 1: TANKS
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 19: Musi_Tanks
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 103: Confluence_Nala_Buffer_10m
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 104: Bufferzone 500 Meter
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 110: Water Body Information
+   PoliceProperties_Folder/Police_Admin_Layers                layer 17: Water Bodies
+   PoliceProperties_Folder/Police_Admin_Layers                layer 18: Lakes - Ponds - Tanks
+   RnB_Folder/RnB_Admin                                       layer 19: Tank
+   RRR_Folder/RRR                                             layer 10: Tank_Bunds
+   RRR_Folder/RRR                                             layer 12: WaterBodies_Southern_RRR_Image_Correction
+   RRR_Folder/RRR                                             layer 15: Southernpart_RRR_Buffer_100m
+   RRR_Folder/RRR                                             layer 16: Southernpart_RRR_Buffer50m
+   singareni_folder/Singareni_mines                           layer 0: Buffer
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 24: Waterbodies Resources
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 27: Water bodies
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 50: Outer Ring Road 1Km Buffer - 1605 Sq.Km
+   TGIIC_Folder/BaseLayers                                    layer 13: Water Bodies
+   TGIIC_Folder/BaseLayers                                    layer 14: Lakes / Ponds / Tanks
+   TGSRTC_Folder/RTC_Admin_Layers                             layer 17: Water Bodies
+   TGSRTC_Folder/RTC_Admin_Layers                             layer 18: Lakes - Ponds - Tanks
+   TIS_Folder/HMDA_ORR_GHMC_Water_Bodies_Query                layer 1: HMDA ORR GHMC Water Bodies
+   TIS_Folder/HMDA_ORR_GHMC_Water_Bodies                      layer 12: Totally Encroached Water Bodies
+   TIS_Folder/HMDA_ORR_GHMC_Water_Bodies                      layer 13: HMDA ORR GHMC Water Bodies
+   ...
+
+== master plan / zoning / land use
+   Agri2/Agriculture2_CropAnalysis_Layers                     layer 2: Land Use / Land Cover
+   Agri2/Agriculture2_LULC_Cadastral                          layer 1: Dagada_LULC_Cadastral
+   Agriculture/Agri_Cadastral1                                layer 3: Land Use / Land Cover
+   Agriculture/Agri_Cadastral1                                layer 15: LULC Map
+   Agriculture/Agri_Cadastral                                 layer 8: Land Use / Land Cover
+   Archaeology_Folder/Archaeology                             layer 49: Zones
+   CadastralAgricultureLULC/CadastralAgricultureLULC          layer None: CadastralAgricultureLULC/CadastralAgricultureLULC
+   GHMCNalas_Folder/GHMCNalas_vul                             layer 7: GHMC ZONES
+   GovtHospitals_Folder/Health_Facilities_Mapping             layer 58: Zone Boundary
+   IandCAD_Folder/I_and_CAD                                   layer 11: LULC50K_2011-12
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 52: GHMC_Zones
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 104: Bufferzone 500 Meter
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 114: Land Use / Land Cover
+   PoliceProperties_Folder/Police_District_Division_Zone_Boundaries layer 3: Police_Zone_Boundary
+   RythuBandhuFolder/RythuBandhu1                             layer 0: Village_Landuse_Map
+   RythuBandhuFolder/RythuBandhu2                             layer 0: Village_Landuse_Map
+   SchoolGIS_Folder/Schools                                   layer 15: Zone Boundary
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 57: Zone Boundary
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 83: Economic Zones
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 90: Sesismic Zones
+   TIS_Folder/TISMahabubnagar_Query                           layer 2: Buffer Zone Boundary
+   TIS_Folder/TISMahabubnagar                                 layer 2: Buffer Zone Boundary
+   TribalWelfare_Folder/ITDA_All_layers                       layer 41:  LULC
+   WaterShed_Folder/WaterShed_Query                           layer 33: Land Use  / Land Cover
+   WaterShed_Folder/WaterShed                                 layer 33: Land Use  / Land Cover
+
+== fire / emergency
+   GovtHospitals_Folder/Health_Facilities_Mapping             layer 19: Ambulances
+   GovtHospitals_Folder/Health_Facilities_Mapping             layer 20: Existing Ambulance Stations
+   GovtHospitals_Folder/Health_Facilities_Mapping             layer 21: Proposed Ambulance Stations
+   GovtHospitals_Folder/Health_Facilities_Mapping             layer 28: Ambulance Status
+   GovtHospitals_Folder/Health_Facilities_Query               layer 1: Ambulances
+   GovtHospitals_Folder/Health_Facilities_Query               layer 5: Health_Facilities_and_Ambulances
+   HIS_Folder/HIS_Health_Facilities_Mapping                   layer 18: Ambulances
+   PoliceProperties_Folder/Police_Admin_Layers                layer 15: Fire Stations
+   PoliceProperties_Folder/Police_District_Division_Zone_Boundaries layer 1: Police_SDPO_Boundary
+   PoliceProperties_Folder/Police_District_Division_Zone_Boundaries layer 2: Police_Circle_Boundary
+   PoliceProperties_Folder/Police_District_Division_Zone_Boundaries layer 3: Police_Zone_Boundary
+   PoliceProperties_Folder/Police_District_Division_Zone_Boundaries layer 4: Police_Division_Boundary
+   PoliceProperties_Folder/Police_Properties2_Hyderabad_Queries layer 0: Hyderabad Police Property Boundaries
+   PoliceProperties_Folder/Police_Properties2_Hyderabad_Queries layer 1: Hyderabad Police Property Cadastral
+   PoliceProperties_Folder/Police_Properties2_Hyderabad_Queries layer 3: Hyderabad Police Property Boundaries_Points
+   PoliceProperties_Folder/Police_Properties2_Hyderabad_Queries layer 4: Hyderabad Police Property Cadastral_Points
+   PoliceProperties_Folder/Police_Properties2_Points          layer 1: Hyderabad Police Property Boundaries Points
+   PoliceProperties_Folder/Police_Properties2_Points          layer 2: Hyderabad Police Property Cadastrall Points
+   PoliceProperties_Folder/Police_Properties2_Points          layer 3: Telangana Police Property Boundaries Points
+   PoliceProperties_Folder/Police_Properties2_Points          layer 4: Telangana Police Property Cadastral Points
+   PoliceProperties_Folder/Police_Properties2_Queries         layer 0: Telangana Police Property Boundaries
+   PoliceProperties_Folder/Police_Properties2_Queries         layer 1: Hyderabad Police Property Boundaries
+   PoliceProperties_Folder/Police_Properties2_Queries         layer 2: Telangana Police Property Cadastral
+   PoliceProperties_Folder/Police_Properties2_Queries         layer 3: Hyderabad Police Property Cadastral
+   PoliceProperties_Folder/Police_Properties2_Telangana_Queries layer 0: Telangana Police Property Boundaries
+   PoliceProperties_Folder/Police_Properties2_Telangana_Queries layer 1: Telangana Police Property Cadastral
+   PoliceProperties_Folder/Police_Properties2_Telangana_Queries layer 3: Telangana Police Property Boundaries Points
+   PoliceProperties_Folder/Police_Properties2_Telangana_Queries layer 4: Telangana Police Property Cadastral Points
+   PoliceProperties_Folder/Police_Properties2                 layer 0: Telangana Police Stations
+   PoliceProperties_Folder/Police_Properties2                 layer 1: Hyderabad Police Stations
+   PoliceProperties_Folder/Police_Properties2                 layer 3: Hyderabad Police Property Boundaries
+   PoliceProperties_Folder/Police_Properties2                 layer 4: Hyderabad Police Property Cadastral
+   PoliceProperties_Folder/Police                             layer None: PoliceProperties_Folder/Police
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 58: Police Department
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 59: Police Stations
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 60: Police Jurisdiction
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 61: Fire Stations
+   TGIIC_Folder/BaseLayers                                    layer 11: Fire Stations
+   TGSRTC_Folder/RTC_Admin_Layers                             layer 15: Fire Stations
+
+== flood / inundation
+   GHMCNalas_Folder/GHMCNalas_vul                             layer 1: Inundation Areas
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 89: Flooding Area
+
+== parcel / revenue / survey
+   AdministrativeInfoSystem_Folder/Administrative_Information_System_Query layer 2: Revenuen Division Boundary
+   AdministrativeInfoSystem_Folder/Administrative_Information_System_Query layer 4: Village Boundary
+   AdministrativeInfoSystem_Folder/Administrative_Information_System layer 12: Revenue Division Head Quarter
+   AdministrativeInfoSystem_Folder/Administrative_Information_System layer 25: Revenuen Division Boundary
+   AdministrativeInfoSystem_Folder/Administrative_Information_System layer 27: Village Boundary
+   Agri2/Agriculture2_CropAnalysis_Layers                     layer 0: Base Survey - Land Parcels
+   Agri2/Agriculture2_CropAnalysis_Layers                     layer 1: Field Level Parcels
+   Agri2/Agriculture2_CropAnalysis_Layers                     layer 8: All__Crops_Survey_CTO_Records
+   Agri2/Agriculture2_LULC_Cadastral                          layer 1: Dagada_LULC_Cadastral
+   Agri2/Agriculture2_LULC_Cadastral                          layer 3: Wanaparthy_Master_Cadastral
+   Agri2/Agriculture2_Query                                   layer 0: Dagada_Field_Parcels
+   Agriculture/Agri_Cadastral1                                layer 2: Chinnam Bavi Land Parcel 
+   Agriculture/Agri_Cadastral1                                layer 12: Land_Parcel_Map_-_Dagada
+   Agriculture/Agri_Cadastral1                                layer 17: Land Parcel Map old- Dagada
+   Agriculture/Agri_Cadastral_6Villages                       layer 0: Land Parcel Boundary
+   Agriculture/Agri_Cadastral_6Villages                       layer 1: Cadastral Boundary
+   Agriculture/Agri_Cadastral_Query                           layer 2: Dagada_with_dharani_data_Govtland
+   Agriculture/Agri_Cadastral_Wanaparthy                      layer None: Agriculture/Agri_Cadastral_Wanaparthy
+   Agriculture/Agri_Cadastral                                 layer 1: Dagada with dharani data
+   Agriculture/Agri_Cadastral                                 layer 2: Dagada with dharani data
+   Agriculture/Agri_Cadastral                                 layer 7: Land Parcel
+   Archaeology_Folder/Archaeology                             layer 16: GPR Survey Plan Site Location
+   Archaeology_Folder/Archaeology                             layer 19: DGPS Survey Locations
+   Archaeology_Folder/Archaeology                             layer 22: GPR Survey along Back Side Slope
+   Archaeology_Folder/Archaeology                             layer 23: GPR Survey along Axial Line
+   Bhubarathi_Folder/Bhubarathi_Query                         layer 0: Resurveyed_Field_Boundary_
+   Bhubarathi_Folder/Bhubarathi                               layer 0: Embhora_Cadastral Data_1950s
+   Bhubarathi_Folder/Bhubarathi                               layer 2: Resurveyed_Field_Boundary_
+   Bhunaksha_Folder/Bhunaksha_Cadastral                       layer 0: Cadastral 2.5m
+   Bhunaksha_Folder/Bhunaksha_Cadastral                       layer 1: Cadastral 30cm
+   Bhunaksha_Folder/Bhunaksha_query                           layer 0: Full Cadastral
+   Bhunaksha_Folder/Bhunaksha_query                           layer 1: ULB cadastral
+   Bhunaksha_Folder/Bhunaksha_query                           layer 7: Cadastral
+   Bhunaksha_Folder/Bhunaksha                                 layer 0: ULB_Cadastral_Prohibited
+   Bhunaksha_Folder/Bhunaksha                                 layer 1: ULB_Cadastral_Congested
+   Bhunaksha_Folder/Bhunaksha                                 layer 2: ULB cadastral
+   Bhunaksha_Folder/Bhunaksha                                 layer 3: Cadastral 30cm
+   CadastralAgricultureLULC/CadastralAgricultureLULC          layer None: CadastralAgricultureLULC/CadastralAgricultureLULC
+   DistrictFormation_Folder/DistrictFormation_Queries         layer 2: Revenue_Division_Boundary
+   DistrictFormation_Folder/DistrictFormation                 layer 9: Revenue_HQ
+   DistrictFormation_Folder/DistrictFormation                 layer 15: Revenue_Divisions
+   DLSFolder/Digital_Land_Survey_BKP                          layer 3: Village Boundary
+   DLSFolder/Digital_Land_Survey_BKP                          layer 4: Dharani_Database
+   DLSFolder/Digital_Land_Survey_BKP                          layer 5: Owners_Info_In_BaseSurvey_LandParcel_Final
+   DLSFolder/Digital_Land_Survey_BKP                          layer 8: Base Cadastral (Survey No)
+   DLSFolder/Digital_Land_Survey_Mobile                       layer 3: Village Boundary
+   ...
+
+== groundwater / geology
+   AdministrativeInfoSystem_Folder/Administrative_Information_System layer 3: Natural Stream - Drainage
+   Agri2/Agriculture2_Administrative_Layers                   layer 21: Stream / Drainage
+   Agri2/Agriculture2_CropAnalysis_Layers                     layer 20: Soil
+   Agri2/Agriculture2_CropAnalysis_Layers                     layer 21: Soil Nutrient Status
+   Agriculture/Agri_Admin                                     layer 16: Drainage / Stream Network
+   Agriculture/Agri_Cadastral1                                layer 4: Soil Type
+   Agriculture/Agri_Cadastral1                                layer 16: Soil_Map
+   Agriculture/Agri_Cadastral                                 layer 9: Soil Type
+   Archaeology_Folder/Archaeology_Admin                       layer 18: Stream / Drainage
+   GHMCNalas_Folder/GHMCNalas_vul                             layer 12: RIVER_STREAM
+   GWDPotential_Folder/Groundwater_Potential                  layer 12: Ground Water Potential
+   Mines_Folder/Mines_Geology_Layer                           layer 1: Lithology
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 20: Musi_Stream
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 37: Watersheds_Joining_Musi
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 38: GHMC_Watersheds2
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 39: GHMC_ORR_Selected_Watersheds
+   RnB_Folder/RnB_Admin                                       layer 21: Stream
+   RRR_Folder/RRR                                             layer 2: Cross Drainage Network
+   RRR_Folder/RRR                                             layer 11: Drainage_Stream
+   RRR_Folder/RRR                                             layer 39: Drainage_Intersect_SO_2
+   RRR_Folder/RRR                                             layer 40: Drainage_Intersect
+   SandReaches2_Folder/Sand_Drainage_Layers                   layer 0: Drainage
+   SandReaches2_Folder/Sand_Thematic_Layers                   layer 2: Lithology
+   SandReaches2_Folder/Sand_Thematic_Layers                   layer 5: Drainage
+   singareni_folder/Singareni_Admin                           layer 5: Geological_Structures
+   singareni_folder/Singareni_Admin                           layer 7: Drainage
+   singareni_folder/Singareni_mines                           layer 4: Chinthaguda Geological Block
+   SoilAtlas_Folder/Soil_Atlas_Query                          layer None: SoilAtlas_Folder/Soil_Atlas_Query
+   SoilAtlas_Folder/Soil_Atlas                                layer None: SoilAtlas_Folder/Soil_Atlas
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 26: Streams TCUR
+   TIS_Folder/HMDA_ORR_GHMC_Water_Bodies                      layer 14: HMDA ORR GHMC Stream Order
+   TIS_Folder/HMDA_ORR_GHMC_Water_Bodies                      layer 22: Stream Network / Drainage
+   TIS_Folder/Tank_Information_System                         layer 17: Catchment to Mini Watershed
+   TIS_Folder/Tank_Information_System                         layer 21: Watershed
+   TIS_Folder/Tank_Information_System                         layer 22: Sub Watershed
+   TIS_Folder/Tank_Information_System                         layer 23: Mini Watershed
+   TribalWelfare_Folder/ITDA_All_layers                       layer 46: Streams
+   WaterShed_Folder/WaterShed_Query                           layer 6: Geological Structure / Fracture
+   WaterShed_Folder/WaterShed_Query                           layer 8: River / Stream
+   WaterShed_Folder/WaterShed_Query                           layer 9: Watershed Boundary
+   WaterShed_Folder/WaterShed_Query                           layer 11: Micro Watershed
+   WaterShed_Folder/WaterShed                                 layer 6: Geological Structure / Fracture
+   WaterShed_Folder/WaterShed                                 layer 8: River / Stream
+   WaterShed_Folder/WaterShed                                 layer 9: Watershed Boundary
+   WaterShed_Folder/WaterShed                                 layer 11: Micro Watershed
+
+== air / pollution
+   MusiRiver/Musi_Basin_Web_Publication_vector                layer 74: Ambient_Air_Quality_Locations
+   PoliceProperties_Folder/Police_Admin_Layers                layer 16: Airports
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 0: Airports
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 1: Fair Price Shop
+   TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2            layer 9: Ambient Air Quality Locations
+   TGIIC_Folder/BaseLayers                                    layer 12: Airports
+   TGIIC_Folder/Industrial_Infrastructure_Layers              layer 0: Pollution_Category_Boundaries
+   TGIIC_Folder/Pollution_Category_Boundaries                 layer 0: Pollution_Category_Points
+   TGIIC_Folder/Pollution_Category_Boundaries                 layer 1: Pollution_Category_Boundaries
+   TGSRTC_Folder/RTC_Admin_Layers                             layer 16: Airports

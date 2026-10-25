@@ -1,0 +1,197 @@
+##### 1. FTL / lake boundary services (Hydra folder)
+
+== Hydra_Folder/FTL_Tanks: MapServer layers: [(0, '2014'), (3, '2023'), (6, '2025')]
+
+[FTL] Hydra_Folder/FTL_Tanks/0 '2014' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/FTL_Tanks/-1 'None' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/FTL_Tanks/-1 'None' type=None count=None
+   fields: 
+
+[FTL] Hydra_Folder/FTL_Tanks/3 '2023' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/FTL_Tanks/-1 'None' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/FTL_Tanks/-1 'None' type=None count=None
+   fields: 
+
+[FTL] Hydra_Folder/FTL_Tanks/6 '2025' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/FTL_Tanks/-1 'None' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/FTL_Tanks/-1 'None' type=None count=None
+   fields: 
+
+== Hydra_Folder/FTL_Query: MapServer layers: []
+
+== Hydra_Folder/Topo_Tanks: MapServer layers: [(0, '2014'), (3, '2023'), (6, '2025')]
+
+[FTL] Hydra_Folder/Topo_Tanks/0 '2014' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/Topo_Tanks/-1 'None' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/Topo_Tanks/-1 'None' type=None count=None
+   fields: 
+
+[FTL] Hydra_Folder/Topo_Tanks/3 '2023' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/Topo_Tanks/-1 'None' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/Topo_Tanks/-1 'None' type=None count=None
+   fields: 
+
+[FTL] Hydra_Folder/Topo_Tanks/6 '2025' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/Topo_Tanks/-1 'None' type=None count=None
+   fields: 
+
+[FTL > ] Hydra_Folder/Topo_Tanks/-1 'None' type=None count=None
+   fields: 
+
+== Hydra_Folder/WaterBody_Monitoring_Rasters: MapServer layers: [(0, 'Satellite Data 2014'), (1, 'Satellite Data 2023'), (2, 'Satellite Data 2025')]
+
+[FTL] Hydra_Folder/WaterBody_Monitoring_Rasters/0 'Satellite Data 2014' type=None count=None
+   fields: 
+
+[FTL] Hydra_Folder/WaterBody_Monitoring_Rasters/1 'Satellite Data 2023' type=None count=None
+   fields: 
+
+[FTL] Hydra_Folder/WaterBody_Monitoring_Rasters/2 'Satellite Data 2025' type=None count=None
+   fields: 
+
+== Hydra_Folder/First_Window: MapServer layers: [(0, 'ORR Tanks')]
+
+[FTL] Hydra_Folder/First_Window/0 'ORR Tanks' type=esriGeometryPolygon count=1122
+   fields: Base_Syno, District, Mandal, Village, DMV_1991, WB_Name, WBCP, WBS_2023, WBS_2014, 2014_class, ID, ID_1, Classi171, Admin
+   Charminar         0 within ~900 m
+   Gachibowli        1 within ~900 m e.g. {"Base_Syno": "81", "District": "Rangareddy", "Mandal": "Serilingampalle", "Village": "Gachibowli", "DMV_1991": "1505017", "WB_Name": "Kummari Kunta", "WBCP": "Before 1940s", "WBS_2023": "Live", "WBS_2014": "Live", "2014_class": "
+   Hussain Sagar     1 within ~900 m e.g. {"District": "Hyderabad", "Mandal": "Khairatabad", "Village": "Khairatabad", "DMV_1991": "9999009", "WB_Name": "Fox Sagar", "WBCP": "1940s to 1970s", "WBS_2023": "Partially Encroached - Built-up", "WBS_2014": "Partially Encroached
+   Saroornagar lake  2 within ~900 m e.g. {"District": "Rangareddy", "Mandal": "Saroornagar", "Village": "Gaddiannaram", "DMV_1991": "1515004", "WB_Name": "Sarurnagar Cheruvu", "WBCP": "1940s to 1970s", "WBS_2023": "Partially Encroached - Built-up", "WBS_2014": "Partially
+   Kukatpally        0 within ~900 m
+
+== Hydra_Folder/Third_Window: MapServer layers: [(0, 'Topo 25K')]
+
+[FTL] Hydra_Folder/Third_Window/0 'Topo 25K' type=None count=None
+   fields: 
+
+== Hydra_Folder/Fourth_Window: MapServer layers: [(0, 'Cadastral Parcels')]
+
+[FTL] Hydra_Folder/Fourth_Window/0 'Cadastral Parcels' type=esriGeometryPolygon count=63686
+   fields: Feature_Co, Descriptio, Parcel_num, Remarks, V_Name, M_Name, D_Name, DMV_Code, STCode, geodb_oid, TYPE
+   Charminar         0 within ~900 m
+   Gachibowli        5 within ~900 m e.g. {"Feature_Co": "1101", "Descriptio": "Parcel Boundary", "Parcel_num": "80", "V_Name": "Gachibowli", "M_Name": "Serilingampally", "D_Name": "Rangareddy", "DMV_Code": "1505017"}
+   Hussain Sagar     1 within ~900 m e.g. {"Feature_Co": "1101", "Descriptio": "Parcel Boundary", "Remarks": "Cheruvu", "V_Name": "Khairatabad", "M_Name": "Khairatabad", "D_Name": "Hyderabad", "DMV_Code": "1608030"}
+   Saroornagar lake  31 within ~900 m e.g. {"Feature_Co": "1101", "Descriptio": "Parcel Boundary", "Parcel_num": "259", "V_Name": "Gaddiannaram", "M_Name": "SAIDHABAD", "D_Name": "Hydarabad", "DMV_Code": "1610041"}
+   Kukatpally        28 within ~900 m e.g. {"Feature_Co": "1101", "Descriptio": "Parcel Boundary", "Parcel_num": "163/1", "V_Name": "Kukatpally", "M_Name": "Balanagar", "D_Name": "Rangareddy", "DMV_Code": "1506004"}
+
+##### 2. Cadastral with the old city?
+
+[Full Cadastral] Bhunaksha_Folder/Bhunaksha_query/0 'Full Cadastral' type=esriGeometryPolygon count=3823475
+   fields: Feature_Co, Descriptio, Parcel_num, Remarks, V_Name, M_Name, D_Name, DMV_Code, SNo, New_District, New_Revenue_Division, New_Mandal, DMV_Code_91, Census_Code_2011, New_Villagename, Classification_code, dmvcode91, dmv_syno
+   Charminar         1 within ~900 m e.g. {"Remarks": "to be checked", "V_Name": "GHMC", "M_Name": "GHMC", "D_Name": "Hyderabad", "DMV_Code": "1681100"}
+   Gachibowli        5 within ~900 m e.g. {"Feature_Co": "1101", "Descriptio": "Parcel Boundary", "Parcel_num": "80", "V_Name": "Gachibowli", "M_Name": "Serilingampally", "D_Name": "Rangareddy", "DMV_Code": "1505017", "SNo": 1669, "New_District": "Rangareddy", "New_Revenu
+   Hussain Sagar     1 within ~900 m e.g. {"Remarks": "to be checked", "V_Name": "GHMC", "M_Name": "GHMC", "D_Name": "Hyderabad", "DMV_Code": "1681100"}
+   Saroornagar lake  3 within ~900 m e.g. {"Feature_Co": "1101", "Descriptio": "Parcel Boundary", "Parcel_num": "10", "V_Name": "Tummalakunta", "M_Name": "Saroornagar", "D_Name": "Rangareddy", "DMV_Code": "1515003", "SNo": 1882, "New_District": "Rangareddy", "New_Revenue_
+   Kukatpally        1 within ~900 m e.g. {"Remarks": "Missing Village", "V_Name": "Kukatpalle", "M_Name": "Balanagar", "D_Name": "Rangareddy", "DMV_Code": "1506004", "SNo": 1682, "New_District": "Medchal_Malkajgiri", "New_Revenue_Division": "Malkajgiri", "New_Mandal": "K
+
+[Cadastral] Bhunaksha_Folder/Bhunaksha_query/7 'Cadastral' type=esriGeometryPolygon count=239986
+   fields: TARGET_FID, Parcel_num, Remarks, V_Name, M_Name, D_Name, DMV_Code, LandUse_Fr, LUCodeTiff, ULB_Villag, V_Name_1, Mandal_Nam, Dist_Name, V_Name_12, M_Name_1, D_Name_1, DMV_Code_1, ULB_Villag_1, SNo, New_Distri, New_Revenu, New_Mandal, DMV_Code_9, Census_Cod, New_Villag, Classifica, dmvcode91
+   Charminar         0 within ~900 m
+   Gachibowli        0 within ~900 m
+   Hussain Sagar     0 within ~900 m
+   Saroornagar lake  0 within ~900 m
+   Kukatpally        0 within ~900 m
+
+##### 3. TCUR fire stations, flooding area, seismic zones
+
+[Fire stations] TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2/61 'Fire Stations' type=esriGeometryMultipoint count=71
+   fields: FS_Dist, FS_Locatio, Remarks, Fire_Station_Id, Type
+   Charminar         1 within ~900 m e.g. {"FS_Dist": "Hyderabad", "FS_Locatio": "Moghalpura", "Remarks": "Moved", "Fire_Station_Id": "4", "Type": "Existing"}
+   Gachibowli        1 within ~900 m e.g. {"FS_Dist": "Rangareddy", "FS_Locatio": "Indiranagar", "Remarks": "Proposed", "Type": "Proposed"}
+   Hussain Sagar     0 within ~900 m
+   Saroornagar lake  0 within ~900 m
+   Kukatpally        0 within ~900 m
+
+[Flooding Area] TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2/89 'Flooding Area' type=esriGeometryPolygon count=30
+   fields: Flood
+   Charminar         0 within ~900 m
+   Gachibowli        0 within ~900 m
+   Hussain Sagar     0 within ~900 m
+   Saroornagar lake  0 within ~900 m
+   Kukatpally        0 within ~900 m
+
+[Seismic Zones] TCUR_Folder/TCUR_Telangana_Core_Urban_Region_V2/90 'Sesismic Zones' type=esriGeometryPolygon count=3
+   fields: Seismic_zo, Intensity
+   Charminar         1 within ~900 m e.g. {"Seismic_zo": "Zone II", "Intensity": "Low Risk Zone VI (and Lower)"}
+   Gachibowli        1 within ~900 m e.g. {"Seismic_zo": "Zone II", "Intensity": "Low Risk Zone VI (and Lower)"}
+   Hussain Sagar     1 within ~900 m e.g. {"Seismic_zo": "Zone II", "Intensity": "Low Risk Zone VI (and Lower)"}
+   Saroornagar lake  1 within ~900 m e.g. {"Seismic_zo": "Zone II", "Intensity": "Low Risk Zone VI (and Lower)"}
+   Kukatpally        1 within ~900 m e.g. {"Seismic_zo": "Zone II", "Intensity": "Low Risk Zone VI (and Lower)"}
+
+##### 4. other fire-station layers
+
+[Fire stations (police admin)] PoliceProperties_Folder/Police_Admin_Layers/15 'Fire Stations' type=esriGeometryMultipoint count=438
+   fields: DMNAME, dist, sub_distt, mand, dmcode, DNAME, FS_NAME, REMARKS
+
+[Fire stations (TGIIC)] TGIIC_Folder/BaseLayers/11 'Fire Stations' type=esriGeometryMultipoint count=438
+   fields: DMNAME, dist, sub_distt, mand, dmcode, DNAME, FS_NAME, REMARKS
+
+##### 5. Musi basin (GHMC watersheds, tanks, buffer)
+
+[Musi tanks] MusiRiver/Musi_Basin_Web_Publication_vector/19 'Musi_Tanks' type=esriGeometryPolygon count=3566
+   fields: Id, TYPE, AREA_Ha
+   Charminar         0 within ~900 m
+   Gachibowli        2 within ~900 m e.g. {"TYPE": "Tank", "AREA_Ha": 0.199144242149}
+   Hussain Sagar     1 within ~900 m e.g. {"TYPE": "Tank", "AREA_Ha": 547.311875277}
+   Saroornagar lake  1 within ~900 m e.g. {"TYPE": "Tank", "AREA_Ha": 61.4116498597}
+   Kukatpally        0 within ~900 m
+
+[GHMC watersheds] MusiRiver/Musi_Basin_Web_Publication_vector/38 'GHMC_Watersheds2' type=esriGeometryPolygon count=29
+   fields: Name
+
+[Bufferzone 500 m] MusiRiver/Musi_Basin_Web_Publication_vector/104 'Bufferzone 500 Meter' type=esriGeometryPolygon count=1
+   fields: Layer, Categories, PI_CODE, DR_Code, BUFF_DIST, ORIG_FID
+   Charminar         1 within ~900 m e.g. {"Layer": "Drainage", "Categories": "River", "PI_CODE": "Musi River", "DR_Code": "DRST", "BUFF_DIST": 600}
+   Gachibowli        0 within ~900 m
+   Hussain Sagar     0 within ~900 m
+   Saroornagar lake  0 within ~900 m
+   Kukatpally        0 within ~900 m
+
+[Water body information] MusiRiver/Musi_Basin_Web_Publication_vector/110 'Water Body Information' type=None count=None
+   fields: 
+
+[Water body information > Stream - Drainage - Canal] MusiRiver/Musi_Basin_Web_Publication_vector/111 'Stream - Drainage - Canal' type=esriGeometryPolyline count=9097
+   fields: Categories, PI_CODE, Layer
+   Charminar         0 within ~900 m
+   Gachibowli        13 within ~900 m e.g. {"Categories": "Stream", "Layer": "Stream"}
+   Hussain Sagar     0 within ~900 m
+   Saroornagar lake  4 within ~900 m e.g. {"Categories": "Stream", "Layer": "Stream"}
+   Kukatpally        12 within ~900 m e.g. {"Categories": "Stream", "Layer": "Stream"}
+
+[Water body information > Water Bodies] MusiRiver/Musi_Basin_Web_Publication_vector/112 'Water Bodies' type=esriGeometryPolygon count=929
+   fields: PI_CODE, Name
+   Charminar         0 within ~900 m
+   Gachibowli        2 within ~900 m e.g. {}
+   Hussain Sagar     1 within ~900 m e.g. {"Name": "Husain Sagar"}
+   Saroornagar lake  1 within ~900 m e.g. {"Name": "Sarurnagar Cheruvu"}
+   Kukatpally        0 within ~900 m
+
+[Water body information > Stream Polygon] MusiRiver/Musi_Basin_Web_Publication_vector/113 'Stream Polygon' type=esriGeometryPolygon count=26
+   fields: Id, Name
+   Charminar         0 within ~900 m
+   Gachibowli        0 within ~900 m
+   Hussain Sagar     0 within ~900 m
+   Saroornagar lake  0 within ~900 m
+   Kukatpally        0 within ~900 m
