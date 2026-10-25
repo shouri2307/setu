@@ -22,8 +22,11 @@ const LENS_INFO = {
   insurer: { t: 'Insurer report', w: 'The underwriting view of an address: motor, property and health-access risk tiers, plus a check of whether the rain on a claim date supports a water-damage claim.', u: 'Helps an insurer price risk by location and fast-track genuine claims, sending only doubtful ones for review.' }
 };
 const infoIcon = lens => `<span class="info" tabindex="0" role="button" aria-label="What is the ${LENS_NAME[lens]}?" data-lens="${lens}">i</span>`;
+const LENS_PERSONA = { customer: 'buyer', agent: 'agent', insurer: 'insurer' };   // old links said customer / agent / insurer
+function setPersona(p, keepView) { S.persona = Brief.PERSONAS[p] ? p : Brief.DEFAULT_P; S.lens = Brief.PERSONAS[S.persona].lens; try { localStorage.setItem('sethu.persona', S.persona); } catch (x) { } if (S.view === 'report') { renderReport(); syncHash(); } else if (!keepView) renderDock(); }
+const loadPersona = () => { try { const p = localStorage.getItem('sethu.persona'); return Brief.PERSONAS[p] ? p : Brief.DEFAULT_P; } catch (e) { return Brief.DEFAULT_P; } };
 const S = {
-  r: null, label: '', address: '', gp: null, fc: null, air: null, terrain: null, lens: 'customer', line: 'motor', view: 'explore',
+  persona: loadPersona(), _lay: new Set(), r: null, label: '', address: '', gp: null, fc: null, air: null, terrain: null, lens: 'customer', line: 'motor', view: 'explore',
   unlocked: { customer: true, agent: true, insurer: true }, open: {},
   cust: { price: '9000000', area: '1200', brokerage: '1' }, agent: { ask: '9500', area: '1200', comps: '8800, 9200, 9600', guide: '', fee: '1' },
   claim: { peril: 'rain_vehicle', date: '', amount: '', out: null, busy: false },
@@ -146,7 +149,7 @@ async function doSearch(q) {
 async function setPin(lat, lon, label, opts = {}) {
   if ((S.cmpPending || S.cmpBuilding) && S.cmpA && S.cmpA.ok) return startCompare(lat, lon, label);   // address A was fixed when Compare was pressed; this pick is B
   const seq = ++S.seq; S.busy = true;
-  S.label = label || ''; S.gp = null; S.fc = null; S.air = null; S.terrain = null; S.access = null; S.pdata = null; S.pref = loadRef(lat, lon); S.ai = { q: '', a: '', think: false }; S.claim.out = null;
+  S._lay = new Set(); S.label = label || ''; S.gp = null; S.fc = null; S.air = null; S.terrain = null; S.access = null; S.pdata = null; S.pref = loadRef(lat, lon); S.ai = { q: '', a: '', think: false }; S.claim.out = null;
   const r = await SETUE.report(lat, lon);
   if (seq !== S.seq) return;
   S.r = r; S.busy = false;
@@ -172,18 +175,18 @@ async function setPin(lat, lon, label, opts = {}) {
 }
 function syncHash() {
   if (!S.r || !S.r.ok) return;
-  const h = S.view === 'compare' && S.cmp ? `#/c/${S.cmp.a.lat.toFixed(5)},${S.cmp.a.lon.toFixed(5)}/${S.cmp.b.lat.toFixed(5)},${S.cmp.b.lon.toFixed(5)}` : S.view === 'report' ? `#/r/${S.lens}/${S.r.lat.toFixed(5)},${S.r.lon.toFixed(5)}` : `#/l/${S.r.lat.toFixed(5)},${S.r.lon.toFixed(5)}`;
+  const h = S.view === 'compare' && S.cmp ? `#/c/${S.cmp.a.lat.toFixed(5)},${S.cmp.a.lon.toFixed(5)}/${S.cmp.b.lat.toFixed(5)},${S.cmp.b.lon.toFixed(5)}` : S.view === 'report' ? `#/r/${S.persona}/${S.r.lat.toFixed(5)},${S.r.lon.toFixed(5)}` : `#/l/${S.r.lat.toFixed(5)},${S.r.lon.toFixed(5)}`;
   if (location.hash !== h) { try { history.replaceState(null, '', h); } catch (e) { } }
 }
 
 /* ------------------------------ rendering ------------------------------ */
 function renderDock() {
-  const d = $('dock'), r = S.r;
-  if (!r) { d.innerHTML = View.landing(S); return; }
+  const d = $('dock'), r = S.r, p = d.firstElementChild, sc = p ? p.scrollTop : 0;   // live data arrives in pieces: re-draw without losing the reader's place
+  if (!r) { d.innerHTML = Brief.landing(S); return; }
   if (!r.ok) { d.innerHTML = `<div class="v-panel"><h1 class="v-h1">Outside our <em>coverage</em></h1><p class="v-lead">SETHU covers Hyderabad. Pick a point on the map, or search a Hyderabad locality.</p><button class="v-btn" data-act="clear">Back</button></div>`; return; }
-  d.innerHTML = View.dock(S);
+  d.innerHTML = Brief.dock(S);
+  if (d.firstElementChild && sc) d.firstElementChild.scrollTop = sc;
 }
-const VIEW_TABS = [['customer', 'Buyer check'], ['agent', 'For agents'], ['insurer', 'For insurers']];
 function renderReport() {
   const v = $('report'), r = S.r; if (!r || !r.ok) return;
   const sc = v.scrollTop;
@@ -191,8 +194,8 @@ function renderReport() {
   v.innerHTML = `<div class="v-rhead"><div class="v-rin"><button class="v-btn ghost sm v-back" data-act="back">← Map</button>
     <div><h1>${esc(title)}</h1><div class="v-loc">${esc(r.ward.name)} · ${r.lat.toFixed(4)}, ${r.lon.toFixed(4)}</div></div>
     <div class="v-rtools noprint"><button class="v-btn ghost sm" data-act="cmp-start">⇄ Compare</button><button class="v-btn ghost sm" data-act="print">Print / PDF</button><button class="v-btn ghost sm" data-act="share">Copy link</button></div>
-    <div class="v-views noprint" role="tablist">${VIEW_TABS.map(([l, n]) => `<button role="tab" aria-selected="${S.lens === l}" data-act="tab" data-lens="${l}" class="${S.lens === l ? 'on' : ''}">${n}</button>`).join('')}</div></div></div>
-    <div class="rbody${S.lens === 'customer' ? '' : ' wide'}">${Reports.render(S.lens, S)}</div>`;
+    <div class="v-views noprint">${Brief.who(S)}</div></div></div>
+    <div class="rbody${S.open.fullreport && S.lens !== 'customer' ? ' wide' : ''}">${Brief.page(S)}</div>`;
   v.scrollTop = sc;
 }
 function renderCompare() {
@@ -233,9 +236,9 @@ function refresh(fresh) {
     renderReport();
   } else renderDock();
 }
-function openReport(lens) {
+function openReport(who) {
   if (!S.r || !S.r.ok) return;
-  S.lens = lens; S.view = 'report'; $('report').classList.remove('hide'); $('report').scrollTop = 0; renderReport(); syncHash();
+  S.persona = Brief.PERSONAS[who] ? who : (LENS_PERSONA[who] || S.persona); S.lens = Brief.PERSONAS[S.persona].lens; S.view = 'report'; $('report').classList.remove('hide'); $('report').scrollTop = 0; renderReport(); syncHash();
 }
 function closeReport(silent) { S.view = 'explore'; $('report').classList.add('hide'); if (!silent) { renderDock(); syncHash(); } }
 
@@ -246,15 +249,20 @@ document.addEventListener('click', e => {
   const t = e.target.closest('[data-act]'); if (!t) return;
   const a = t.dataset.act;
   if (a === 'place') { const p = PLACES[+t.dataset.i]; $('q').value = p[0]; S.address = ''; setPin(p[1], p[2], p[0]); }
+  else if (a === 'persona') { setPersona(t.dataset.p); }
+  else if (a === 'b-open') { const d = document.querySelector(`details.b-tile[data-tile="${t.dataset.tile}"]`); if (d) { d.open = true; S.open[d.dataset.id] = true; d.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }
+  else if (a === 'b-why') { S.open.b_allwhy = !S.open.b_allwhy; renderReport(); }
+  else if (a === 'full') { S.open.fullreport = !S.open.fullreport; renderReport(); if (S.open.fullreport) { const e = document.getElementById('fullreport'); if (e) e.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }
+  else if (a === 'open-full') { setPersona(t.dataset.p, true); S.open.fullreport = true; renderReport(); const e = document.getElementById('fullreport'); if (e) e.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   else if (a === 'open') openReport(t.dataset.lens);
   else if (a === 'back') closeReport();
   else if (a === 'cmp-start') { const A = S.view === 'compare' && S.cmp ? S.cmp.a : S.r; if (!A || !A.ok) return; S.cmpA = A; S.cmpPending = true; if (S.view !== 'explore') closeReport(true); renderDock(); toast('Now search or click the map for the second address', 6000); }
   else if (a === 'cmp-cancel') { S.cmpPending = false; S.cmpBuilding = false; S.cmpSeq++; S.cmpA = null; renderDock(); }
   else if (a === 'cmp-swap') { if (S.cmp) { S.cmp = { a: S.cmp.b, b: S.cmp.a, la: S.cmp.lb, lb: S.cmp.la }; syncHash(); renderCompare(); } }
-  else if (a === 'cmp-open') { const w = t.dataset.which === 'b' ? 'b' : 'a'; if (S.cmp) { S.r = S.cmp[w]; S.label = w === 'a' ? S.cmp.la : S.cmp.lb; MapKit.setPin(S.r.lat, S.r.lon, S.r.outside ? null : S.r.wid, false); openReport('customer'); } }
+  else if (a === 'cmp-open') { const w = t.dataset.which === 'b' ? 'b' : 'a'; if (S.cmp) { S.r = S.cmp[w]; S.label = w === 'a' ? S.cmp.la : S.cmp.lb; MapKit.setPin(S.r.lat, S.r.lon, S.r.outside ? null : S.r.wid, false); openReport(S.persona); } }
   else if (a === 'tab') { S.lens = t.dataset.lens; S.ai = { q: '', a: '', think: false }; renderReport(); $('report').scrollTop = 0; syncHash(); }
   else if (a === 'clear') { S.r = null; MapKit.clearPin(); renderDock(); history.replaceState(null, '', '#/'); }
-  else if (a === 'print') window.print();
+  else if (a === 'print') { if (S.view === 'report' && !S.open.fullreport) { S.open.fullreport = true; renderReport(); } window.print(); }
   else if (a === 'toggle-detail') { S.open.detail = !S.open.detail; renderReport(); }
   else if (a === 'share') { navigator.clipboard && navigator.clipboard.writeText(location.href).then(() => toast('Link copied')).catch(() => toast('Copy the address bar link to share')); }
   else if (a === 'line') { S.line = t.dataset.line; renderReport(); }
@@ -317,7 +325,7 @@ document.addEventListener('mouseout', e => { if (e.target.closest('.info') && !(
 document.addEventListener('focusin', e => { const i = e.target.closest && e.target.closest('.info'); if (i) showTip(i); });
 document.addEventListener('focusout', e => { if (e.target.closest && e.target.closest('.info')) hideTip(); });
 // keep collapsible sections open across re-renders, and open them all when printing
-document.addEventListener('toggle', e => { const d = e.target; if (d.matches && d.matches('details.more') && d.dataset.id) S.open[d.dataset.id] = d.open; }, true);
+document.addEventListener('toggle', e => { const d = e.target; if (d.matches && d.matches('details.more,details.b-tile,details.b-why,details.b-rest,details.b-id,details.b-sure') && d.dataset.id) { S.open[d.dataset.id] = d.open; } }, true);
 window.addEventListener('beforeprint', () => document.querySelectorAll('details.more,details.mini').forEach(d => { d.open = true; }));
 
 /* ------------------------------ modals ------------------------------ */
@@ -356,10 +364,10 @@ function showQR() {
 /* ------------------------------ routing + boot ------------------------------ */
 async function route() {
   const h = location.hash; let m;
-  if ((m = h.match(/^#\/r\/(customer|agent|insurer)\/(-?[\d.]+),(-?[\d.]+)/))) {
-    S.lens = m[1]; const lat = +m[2], lon = +m[3];
+  if ((m = h.match(/^#\/r\/(customer|agent|insurer|buyer|renter|investor|lender)\/(-?[\d.]+),(-?[\d.]+)/))) {
+    const lat = +m[2], lon = +m[3];
     if (!S.r || Math.abs(S.r.lat - lat) > 1e-5 || Math.abs(S.r.lon - lon) > 1e-5) await setPin(lat, lon, '', { keepView: true });
-    if (S.r && S.r.ok) openReport(S.lens);
+    if (S.r && S.r.ok) openReport(m[1]);
   } else if ((m = h.match(/^#\/c\/(-?[\d.]+),(-?[\d.]+)\/(-?[\d.]+),(-?[\d.]+)/))) {
     const la = +m[1], lo = +m[2], lb = +m[3], lob = +m[4];
     if (!S.r || Math.abs(S.r.lat - la) > 1e-5 || Math.abs(S.r.lon - lo) > 1e-5) await setPin(la, lo, '', { keepView: true });

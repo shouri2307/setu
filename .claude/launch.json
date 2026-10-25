@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "setu", "runtimeExecutable": ".venv/Scripts/python.exe", "runtimeArgs": ["serve.py"], "port": 8000 }
+  ]
+}

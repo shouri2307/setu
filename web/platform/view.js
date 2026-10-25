@@ -169,5 +169,12 @@ const View = (() => {
       <div class="v-proof">${stat('145', 'wards')}${stat(Math.floor(n('hospital') / 100) * 100 + '+', 'hospitals mapped')}${stat('8', 'real floods tested')}${stat(String(Object.keys((SETUE.D.quality || { factors: {} }).factors).length || '70'), 'checks per address')}</div>
       <p class="v-small">SETHU reads public data only. It cannot see title, ownership or what a seller has not shown you.</p></div>`;
   }
-  return { dock, landing, identity, shortVersion, beforePay, topics, tally, title, badge, STATUS, TOPICS, PLAIN, flat };
+  /* the one-line "what is this check about" used by the brief */
+  function idLine(r) {
+    const id = r.ev.identity, tone = id.status === 'none' ? (MISMATCH.has(id.reason) ? 'bad' : 'mute') : ({ verified: 'ok', approximate: 'warn' }[id.status] || 'mute');
+    const text = id.status === 'verified' ? 'Matched to a surveyed plot outline' : id.status === 'approximate' ? 'Probably this survey number: confirm it' : id.status === 'none' ? (MISMATCH.has(id.reason) ? 'Does not match the survey number entered' : id.reason === 'on-feature' ? 'On a road, canal or tank, not a plot' : 'Not on a mapped survey plot') : 'A map pin, not a verified plot';
+    return { tone, text, glyph: tone === 'ok' ? '✓' : tone === 'bad' ? '!' : tone === 'warn' ? '≈' : '📍' };
+  }
+  const HIGHSET = f => isHigh(f) ? 1 : 0;
+  return { dock, landing, identity, shortVersion, beforePay, topics, tally, title, badge, STATUS, TOPICS, PLAIN, flat, idLine, HIGHSET, SCOPE_WORD, KIND_SHORT };
 })();
